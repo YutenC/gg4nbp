@@ -1,0 +1,496 @@
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>shopProductList</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/shopSubNav.css">
+    <link rel="stylesheet" href="./css/shopMainNav.css">
+    <link rel="stylesheet" href="./css/shopRightSideMiniMenu.css">
+    <link rel="stylesheet" href="./css/shopLeftAsideBar.css">
+    <!-- <link rel="stylesheet" href="./css/Footer-with-social-media-icons.css"> -->
+    <link rel="stylesheet" href="./fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/coupon.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Sans TC', 'sans-serif', 'open-sans';
+        }
+
+
+
+        /*主呈現區*/
+        .shopmain {
+            width: 100%;
+            margin: 20px 0 0 0;
+            padding: 110px 0 0 0;
+            display: flex;
+            box-shadow: 0 1px #F5F5F5;
+        }
+
+        main {
+            width: 80%;
+            font-size: 16px;
+        }
+
+        .productShowcase {
+            width: 100%;
+            margin: auto;
+            padding: 0;
+        }
+
+        .productShowcase ul {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .productShowcase ul li {
+            width: 20%;
+            margin: 0 10px;
+        }
+
+        .productShowcase ul li a {
+            display: inline-block;
+            height: 80%;
+            width: 100%;
+        }
+
+        .productShowcase ul li img {
+            border-radius: 3px;
+            display: block;
+            max-width: 100%;
+            height: 200px;
+            margin: auto;
+            object-fit: scale-down;
+            box-shadow: 2px 3px 8px -5px #ccc;
+        }
+
+        .productShowcase ul li .productname {
+            height: 20%;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="subNav">
+            <div class="contact"><a href=""><img class="icons" src="./img/icon/square-envelope-solid.svg" alt=""></a><a
+                    href=""><img class="icons" src="./img/icon/square-facebook.svg" alt=""></a><a href=""><img
+                        class="icons" src="./img/icon/square-instagram.svg" alt=""></a></div>
+        </nav>
+        <nav class="mainNav">
+            <a href="" class="logo"><img src="./img/Logo-removebg.png" alt=""></a>
+            <ul class="productline">
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">NS</a>
+                        <div class="dropdown-content">
+                            <a href="#">遊戲軟體</a>
+                            <a href="#">遊戲主機</a>
+                            <a href="#">周邊設備</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">PS</a>
+                        <div class="dropdown-content">
+                            <a href="#">遊戲軟體</a>
+                            <a href="#">遊戲主機</a>
+                            <a href="#">周邊設備</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">XBOX</a>
+                        <div class="dropdown-content">
+                            <a href="#">遊戲軟體</a>
+                            <a href="#">遊戲主機</a>
+                            <a href="#">周邊設備</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">二手交易</a>
+                        <div class="dropdown-content">
+                            <a href="#">購買二手商品</a>
+                            <a href="#">我要販售二手商品</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <form action="./shopFNPage/shopProductList.html" class="search">
+                        <select name="productCondition" class="productCondition">
+                            <option value="new">新品</option>
+                            <option value="secondhand">二手商品</option>
+                        </select>
+                        <input name="keyword" class="searchinput" type="text" placeholder="請輸入商品名稱或關鍵字">
+                        <button type="submit" class="searchicon">
+                            <img class="icons" src="./img/icon/magnifying-glass-solid.svg" alt=""></button>
+                    </form>
+                </li>
+            </ul>
+            <div class="helping">
+                <div>
+                    <div class="centerFunc">
+                        <a href="">
+                            <img class="bigicon" src="./img/icon/newspaper-regular.svg" alt="">
+                            <span>論壇社群</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="./img/icon/champagne-glasses-solid.svg" alt="">
+                            <span>活動專區</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="./img/icon/user-regular.svg" alt="">
+                            <span>會員登入</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="./img/icon/handshake-simple-solid.svg" alt="">
+                            <span>客服中心</span>
+                        </a>
+                    </div>
+                    <a href="">
+                        <img class="bigicon" src="./img/icon/cart-shopping-solid.svg" alt="">
+                        <span>購物車</span>
+                    </a>
+                    <a href="" class="funcSelect">
+                        <img class="bigicon on" src="./img/icon/bars-solid.svg" alt="">
+                        <img class="bigicon" src="./img/icon/square-caret-left-regular.svg" alt="">
+                        <span>功能選單</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="shopmain">
+        <aside class="sidebar">
+            <!--依照先前首頁所點到的產品類別，對應的side-dropdown-content必須為class已加上"-on"的狀態-->
+            <!--各類展開的細項依???類別設定-->
+            <div>
+                <a href="" class="side-dropbtn">NS</a>
+                <div class="side-dropdown-content">
+                    <a href="#">遊戲軟體adfdsaffsfsaaaaaaaaaaaaaaaaaaaaa</a>
+                    <a href="#">遊戲主機</a>
+                    <a href="#">周邊設備</a>
+                </div>
+            </div>
+            <div>
+                <a href="" class="side-dropbtn">PS</a>
+                <div class="side-dropdown-content">
+                    <a href="#">遊戲軟體adfdsaffsfsaaaaaaaaaaaaaaaaaaaaa</a>
+                    <a href="#">遊戲主機</a>
+                    <a href="#">周邊設備</a>
+                </div>
+            </div>
+            <div>
+                <a href="" class="side-dropbtn">XBOX</a>
+                <div class="side-dropdown-content">
+                    <a href="#">遊戲軟體adfdsaffsfsaaaaaaaaaaaaaaaaaaaaa</a>
+                    <a href="#">遊戲主機</a>
+                    <a href="#">周邊設備</a>
+                </div>
+            </div>
+            <div>
+                <a href="" class="side-dropbtn">二手交易區</a>
+                <div class="side-dropdown-content">
+                    <a href="#">購買二手商品</a>
+                    <a href="#">我要賣二手商品</a>
+                </div>
+            </div>
+        </aside>
+        <main style="width: 100%; padding: 0;">
+            <img style="width: 100%; height: 160px;" src="./img/coupon.png">
+
+            <!-- <div id="testArea">
+            </div> -->
+
+            <div style="display: flex; flex-direction: row; justify-content: center; padding: 10px; ">
+                <ul class="item_list">
+                    <li v-for="item in couponActivity">
+                        <div style="display: flex; border:2px brown; ">
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px; background-color: orange; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">NPB購物
+                                </span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">ps 優惠券領取</span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <a style="text-decoration: none; width: 90px; height: 30px; border-style: none; background-color: darkgoldenrod; color: #ffffff; text-align: center;  "
+                                    role="button" href="#">
+                                    {{item.couponId}}
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <div style="display: flex; border:2px brown; ">
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px; background-color: orange; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">NPB購物
+                                </span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">NS 優惠券領取</span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <button
+                                    style="width: 90px; height: 30px; border-style: none; background-color: darkgoldenrod; color: #ffffff;">
+                                    領取優惠券
+                                </button>
+                            </div>
+                        </div>
+                        <!-- <a href="#">
+                            <div class="img_block">
+                                <img src="https://via.placeholder.com/400x300">
+                            </div>
+                            <span class="item_text">1這是影片標題影片標題這是影片標題影片標題</span>
+                        </a> -->
+                    </li>
+                    <li>
+                        <div style="display: flex; border:2px brown; ">
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px; background-color: orange; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">NPB購物
+                                </span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">ps 優惠券領取</span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <a style="text-decoration: none; width: 90px; height: 30px; border-style: none; background-color: darkgoldenrod; color: #ffffff; text-align: center;  "
+                                    role="button" href="#">
+                                    領取優惠券
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="display: flex; border:2px brown; ">
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px; background-color: orange; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">NPB購物
+                                </span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">XBOX 優惠券領取</span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <a style="text-decoration: none;" role="button" href="#">
+                                    領取優惠券
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </li>
+
+                    <li>
+                        <div style="display: flex; border:2px brown; ">
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px; background-color: orange; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">NPB購物
+                                </span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">XBOX 優惠券領取</span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <a style="text-decoration: none;" role="button" href="#">
+                                    領取優惠券
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </li>
+
+                    <li>
+                        <div style="display: flex; border:2px brown; ">
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px; background-color: orange; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">NPB購物
+                                </span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">XBOX 優惠券領取</span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <a style="text-decoration: none;" role="button" href="#">
+                                    領取優惠券
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </li>
+
+                    <li>
+                        <div style="display: flex; border:2px brown; ">
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px; background-color: orange; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">NPB購物
+                                </span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <span style="text-align: center;">XBOX 優惠券領取</span>
+                            </div>
+                            <div
+                                style="display: flex;flex-wrap: wrap; width: 100px; height: 100px;  align-content: center; justify-content: center; align-items: center;">
+                                <a style="text-decoration: none;" role="button" href="#">
+                                    領取優惠券
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </li>
+                </ul>
+            </div>
+
+        </main>
+    </div>
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./jquery/jquery-3.4.1.min.js"></script>
+    <script src="./js/shopMainNavSearchBar.js"></script>
+    <script src="./js/shopRightSideMiniMenu.js"></script>
+    <script src="./js/shopNavBarShowup.js"></script>
+    <script src="./js/shopMainNavHelping.js"></script>
+    <script>
+
+        // sidebar(left)下拉選單
+        $('.side-dropbtn').on('click', function (e) {
+            e.preventDefault();
+            $(this).next('div.side-dropdown-content').toggleClass('-on');
+        });
+    </script>
+</body>
+<!--添加瀏覽紀錄-->
+
+<!-- <script>
+    const testArea = document.getElementById("testArea");
+    query();
+
+    function query() {
+        jQuery.ajax({
+            url: "http://localhost:8080/shop/shopDispatcher/getAllCouponActivity", // API位置，要擷取資料的 URL
+            type: 'get', // HTTP 請求方法
+            dataType: 'json', // 預期從伺服器回傳的資料型別
+            data: { a: 123 }, // 傳甚麼資料過去 Object、String、Array
+            cache: false, //暫存(cache)在本地，以減少對伺服器的呼叫。
+            success: function (bookList) {
+                console.log(bookList);
+                testArea.innerHTML = '';
+                for (let book of bookList) {
+                    testArea.innerHTML += `
+            <tr>
+                <td>${book.activityName}</td>
+                <td>${book.activityCode}</td>
+                <td>${book.couponId}</td>
+                <td>
+                    <button onclick="deleteItem(${book.couponId})">-</button>
+                    </td>
+            </tr>`;
+                }
+            }
+        })
+    }
+
+    function deleteItem(id) {
+        jQuery.ajax({
+            url: "http://localhost:8080/shop/shopDispatcher/deleteCoupon", // API位置，要擷取資料的 URL
+            type: 'get', // HTTP 請求方法
+            dataType: 'text', // 預期從伺服器回傳的資料型別。若沒有回傳值，設為text
+            data: { couponId: id }, // 傳甚麼資料過去 Object、String、Array
+            cache: false, //暫存(cache)在本地，以減少對伺服器的呼叫。
+            success: function () {
+                console.log("deleteItem then");
+                query();
+            },
+            error: function (e) {
+                console.log("deleteItem error" + e);
+            }
+        })
+    }
+</script> -->
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script type="module" src="./js/coupon.js"></script>
+
+</html>

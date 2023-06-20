@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/SecondHand.css">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <style>
+        div.div_search div.search {
+            z-index: 100;
+        }
+
+        div.inputBlock {
+            height: auto;
+        }
+
+        div.inputBlock>div {
+            align-items: center;
+            display: flex;
+            flex-wrap: nowrap;
+            width: 70%;
+            z-index: 1;
+        }
+
+        div.inputBlock>div>input {
+            display: inline-block;
+            width: calc(100% - 50px);
+        }
+
+        div.inputBlock>div button {
+            width: auto;
+            min-width: 60px;
+            margin: 5px 0px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            border: 2px solid gray;
+            color: gray;
+        }
+
+        div.inputBlock>div button:hover {
+            font-weight: bolder;
+            color: red;
+            border: 2px solid red;
+        }
+
+        div.inputBlock div.return_box,
+        div.inputBlock div.returnInput_box {
+            line-height: 2.5;
+            font-size: 16px;
+            padding: 15px;
+            display: flex;
+            align-items: start;
+            height: auto;
+            width: 90%;
+            flex-wrap: wrap;
+            box-shadow: 0px 0px 4px rgb(32, 76, 71);
+            margin-bottom: 10px;
+            border-radius: 10px;
+
+        }
+
+
+        div.inputBlock div.returnInput_box>div,
+        div.inputBlock div.return_box>div {
+            width: 100%;
+            text-align: left;
+            display: inline-block;
+        }
+
+        div.inputBlock div.returnInput_box>div:last-child,
+        div.inputBlock div.return_box>div:last-child{
+            display: flex;
+            justify-content: center;
+
+        }
+
+
+        div.inputBlock div.returnInput_box>div:last-child>button,
+        div.inputBlock div.return_box>div:last-child>button{
+            margin: 5px;
+        }
+
+
+
+        div.inputBlock div.return_box img {
+            margin: 10px;
+            height: 200px;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 3px black;
+            object-fit: cover;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <div class="content" style="width: 70%;">
+            <div class="showArea">
+                <!-- 輸入主內容 -->
+                <div class="inputBlock">
+                    <hr>
+                    <div style="display: block; height: auto;">
+                        <input id="id" type="text" placeholder="請輸入ID">
+                        <button id="search_id">搜尋</button>
+                        <button id="search_all">搜全部</button>
+                    </div>
+                    <!-- <div style="display: block; height: auto;">
+                        <button id="start_btn">起始時間</button>
+                        <input id="start_input" style="display: block;" type="date">
+                        <button id="end_btn">結束時間</button>
+                        <input id="end_input" style="display: block;" type="date">
+                        <button id="search_time">go</button> -->
+                    </div>
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+
+</body>
+
+<script src="js/insertblock.js"></script>
+<script src="js/SecondHand_CheckBuylist.js"></script>
+<script>
+
+
+
+$('#search_id').on('click', function (e) {
+    fetch('selectone', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            str: $('#id').val()
+        })
+    })
+    .then(req => req.json())
+    .then(body => {
+        $('.return_box').remove();
+        $('.returnInput_box').remove();
+        returnIn(body);
+    });
+})
+
+$('#search_all').on('click', e => {
+    fetch('selectall', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(req => req.json())
+    .then(body => {
+        $('.return_box').remove();
+        $('.returnInput_box').remove();
+        reqaa=body;
+        body.reverse();
+        body.forEach(el => {
+            returnIn(el);
+            
+        });
+    });
+})
+
+
+function returnInput(el){
+    const div = document.createElement('div');
+    div.setAttribute('class', 'returnInput_box');
+    id_aa = el.buylistId ;
+    mana = el.managerId;
+    if (el.buylistId) {
+        div.innerHTML += `
+        <div>收購ID : ${el.buylistId}</div>
+        <div>會員ID : ${el.memberId}</div>
+        <div>管理員ID : <input id="managerId" type="text" value="${el.managerId}"></div>
+        <div>貨品名稱 : <input id="productName" type="text" value="${el.productName}"></div>
+        <div>貨品種類 : <input id="type" type="text" value="${el.type}"></div>
+        <div>貨品內容 : <input id="content" type="text" value="${el.content}"></div>
+        <div>預估價 : <input id="estimate" type="text" value="${el.estimate}"></div>
+        <div>審核金額 : <input id="price" type="text" value="${el.price}"></div>
+        <div>完成時間 :${el.confirmTime}</div>
+        <div>付款狀態 : <input id="payState" type="text" value="${el.payState}"></div>
+        <div>審核狀態 : <input id="approvalState" type="text" value="${el.approvalState}"></div>
+        <div>申請時間 : ${el.applyTime}</div>
+        <div>銀行帳戶 : <input id="applicantBankNumber" type="text" value="${el.applicantBankNumber}"></div>
+        <div>
+            <button onclick="EditCheck(${el.buylistId})">確認</button>
+        </div>`;
+        $('.inputBlock').append(div);
+
+    }
+   
+}
+
+
+
+
+function returnIn(el) {
+    const div = document.createElement('div');
+    div.setAttribute('class', 'return_box');
+
+    if (el.buylistId) {
+        div.innerHTML += `
+ <div>收購ID : ${el.buylistId}</div>
+<div>會員ID : ${el.memberId}</div>
+<div>管理員ID : ${el.managerId}</div>
+<div>貨品名稱 : ${el.productName}</div>
+<div>貨品種類 : ${el.type}</div>
+<div>貨品內容 : ${el.content}</div>
+<div>預估價 : ${el.estimate}</div>
+<div>審核金額 : ${el.price}</div>
+<div>完成時間 : ${el.confirmTime}</div>
+<div>付款狀態 : ${el.payState}</div>
+<div>審核狀態 : ${el.approvalState}</div>
+<div>申請時間 : ${el.applyTime}</div>
+<div>銀行帳戶 : ${el.applicantBankNumber}</div>
+<div class="img_box${el.buylistId}"></div>
+<div>
+    <button onclick="DelById(${el.buylistId})">刪除</button>
+    <button onclick="EditById(${el.buylistId})">修改</button>
+</div>`
+    ;
+    $('.inputBlock').append(div);
+        for (let i = 0; i < el.image.length; i++) {
+            fetch('selectimg?imgname=' + el.image[i].image)
+            .then(body => {
+                const img = document.createElement('img');
+                img.src = body.url;
+                $('.img_box'+el.buylistId).append(img);
+            })
+        }
+    } 
+    else {
+        div.innerHTML += el.str;
+        $('.inputBlock').append(div);
+    }
+    document.documentElement.scrollTop = 0;
+}
+
+
+let reqaa = null ;
+let id_aa = null ;
+let mana =null ;
+
+function DelById(id){
+        fetch('delbyid',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                str: id
+            })
+        })
+        .then(req => req.json())
+        .then(body => {
+            reqaa = body ;
+            $('.return_box').remove();
+            $('.returnInput_box').remove();
+            returnIn(body);
+            document.documentElement.scrollTop = 0;       
+        })
+}
+
+
+function EditById(id){
+    fetch('selectone', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            str: id
+        })
+    })
+    .then(req => req.json())
+    .then(body => {
+        reqaa = body;
+        $('.return_box').remove();
+        $('.returnInput_box').remove();
+        returnInput(body);
+    });
+
+}
+
+
+function EditCheck(id){
+    fetch('update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( {
+        buylistId: id_aa,
+        productName : productName.value,
+        type : type.value ,
+        content : content.value,
+        estimate : estimate.value,
+        payState : payState.value,
+        applicantBankNumber : applicantBankNumber.value})
+    })
+    .then(req => req.json())
+    .then(body => {
+        reqaa = body;
+        $('.return_box').remove();
+        $('.returnInput_box').remove();
+        returnIn(body);
+        document.documentElement.scrollTop = 0;       
+    });
+
+}
+
+</script>
+
+</html>

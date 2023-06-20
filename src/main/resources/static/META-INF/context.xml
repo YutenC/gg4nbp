@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource name="jdbc/five" type="javax.sql.DataSource"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              jdbcUrl="jdbc:mysql://localhost:3306/FIVE"
+              username="root"
+              password="jk4908709"
+              factory="com.zaxxer.hikari.HikariJNDIFactory"
+              minimumIdle="5"
+              maximumPoolSize="10"
+              connectionTimeout="30000"
+    />
+</Context>

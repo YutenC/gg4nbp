@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>論壇文章列表</title>
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_article_list.css">
+    <link rel="stylesheet" href="../css/Forum---Thread-listing-1.css">
+    <link rel="stylesheet" href="../css/Forum---Thread-listing.css">
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
+    <link rel="stylesheet" href="../fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/Carousel-Hero.css">
+    <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="../css/Main-Content.css">
+    <link rel="stylesheet" href="../css/Navbar-Centered-Brand.css">
+    <link rel="stylesheet" href="../css/Profile-Edit-Form-1.css">
+    <link rel="stylesheet" href="../css/Profile-Edit-Form.css">
+    <link rel="stylesheet" href="../css/Profile-with-data-and-skills.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center"></a>
+                <a href="#" style="width: 180px;height: 103.19px;">
+                    <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;">
+                                <img src="../img/gamepad-solid.svg">商城中心
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/dice-solid.svg">二手商城
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
+                                style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="#">
+                                <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
+                                    style="height: 50px;">論壇社群
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/champagne-glasses-solid.svg">活動專區
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="../member/member_home.html"
+                                style="margin-top: 10px;">
+                                <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
+                                    style="height: 50px;">會員中心
+                            </a>
+                        </li>
+                        <li class="nav-item" style="height: 80px;">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
+                                style="margin-top: 20px;color: var(--bs-dark);">
+                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
+                                    style="height: 40px;">客服中心
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
+                                href="#service_center"
+                                style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
+                                <div id="member_pic-1" class="avatar-bg center"
+                                    style="width: 60px;height: 60px;margin-left: 0px;"></div>登出
+                            </a>
+                        </li>
+                    </ul>
+                    <footer id="footerpad-1"></footer>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group"><span class="input-group-addon"> <i
+                                    class="glyphicon glyphicon-search"></i></span><input class="form-control"
+                                type="search" name="search"></div>
+                    </div>
+                </form>
+                <div>
+                    <div>
+                        <div>
+                            <button>最新消息</button>
+                            <button>心得分享</button>
+                            <button>問題交流</button>
+                            <button>新聞專區</button>
+                            <button>全部文章</button>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" role="tabpanel" id="tab-1">
+                            <div class="thread-list-head">
+                                <nav class="thread-pages">
+                                    <ul class="pagination">
+                                        <li><a aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                        <li><a>1</a></li>
+                                        <li><a>2</a></li>
+                                        <li><a>3</a></li>
+                                        <li><a>4</a></li>
+                                        <li><a>5</a></li>
+                                        <li><a aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <ul class="thread-list">
+                                <li class="thread" style="width: 920px;"><a href="#" style="font-size: 32px;">文章標題</a>
+                                    <img class="pull-left img-responsive" src="../img/Logo_removebg.png"
+                                        style="width: 172px;height: 136px;"><span class="icon"><span
+                                            class="time">發文時間</span></span>
+                                    <div class="text">
+                                        <h3></h3>
+                                        <p>文章內容文章內容<strong>文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容文章內容</strong><br>
+                                        </p>
+                                        <h4></h4>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="tab-2"></div>
+                        <div class="tab-pane" role="tabpanel" id="tab-3"></div>
+                        <div class="tab-pane" role="tabpanel" id="tab-4"></div>
+                        <div class="tab-pane" role="tabpanel" id="tab-5">
+                            <p>Tab content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i><i
+                                        class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min_article_list.js"></script>
+</body>
+
+</html>

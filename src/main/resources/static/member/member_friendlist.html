@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>member_blacklist</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
+    <link rel="stylesheet" href="../fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/Carousel-Hero.css">
+    <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="../css/Main-Content.css">
+    <link rel="stylesheet" href="../css/Navbar-Centered-Brand.css">
+    <link rel="stylesheet" href="../css/Profile-Edit-Form-1.css">
+    <link rel="stylesheet" href="../css/Profile-Edit-Form.css">
+    <link rel="stylesheet" href="../css/Profile-with-data-and-skills.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        div.friend_function {
+            width: fit-content;
+            margin-left: 520px;
+        }
+
+        span.friend_function {
+            width: fit-content;
+            margin-right: 15px;
+        }
+
+        div.row {
+            width: 100%;
+        }
+
+        th#friend_id {
+            width: 50px;
+        }
+
+        td#friend_id {
+            visibility: hidden;
+            width: 50px;
+        }
+
+        th#friend_name {
+            width: 200px;
+            text-align: center;
+        }
+
+        td#friend_name {
+            width: 200px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        th#game_label {
+            text-align: center;
+            width: 400px;
+        }
+
+        td#game_label {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 400px;
+            vertical-align: middle;
+        }
+
+        th#manage_function {
+            width: 250px;
+            text-align: center;
+        }
+
+        td#manage_function {
+            text-align: center;
+            width: 250px;
+            vertical-align: middle;
+        }
+
+        button.btn-warning {
+            margin-right: 10px;
+        }
+
+        div.pagination {
+            width: fit-content;
+            margin: auto;
+        }
+
+        input#search {
+            width: 200px;
+            margin: auto;
+            display: inline-block;
+
+        }
+        button{
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center"></a>
+                <a href="../index.html" style="width: 180px;height: 103.19px;">
+                    <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item" id="shop">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;">
+                                <img src="../img/gamepad-solid.svg">商城中心
+                            </a>
+                        </li>
+                        <li class="nav-item" id="shshop">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/dice-solid.svg">二手商城
+                            </a>
+                        </li>
+                        <li class="nav-item" id="actitcle">
+                            <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
+                                style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="#">
+                                <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
+                                    style="height: 50px;">論壇社群
+                            </a>
+                        </li>
+                        <li class="nav-item" id="activty">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/champagne-glasses-solid.svg">活動專區
+                            </a>
+                        </li>
+                        <li class="nav-item" id="member_home">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="member_home.html"
+                                style="margin-top: 10px;">
+                                <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
+                                    style="height: 50px;">會員中心
+                            </a>
+                        </li>
+                        <li class="nav-item" style="height: 80px;" id="help">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
+                                style="margin-top: 20px;color: var(--bs-dark);">
+                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
+                                    style="height: 40px;">客服中心
+                            </a>
+                        </li>
+                        <li class="nav-item logout">
+                            <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
+                                style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
+                                <div id="member_pic-1" class="avatar-bg center"
+                                    style="width: 60px;height: 60px;margin-left: 0px;"></div>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                    <footer id="footerpad-1"></footer>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+<div class="main-content">
+    <div class="row" style="height: 800px;">
+        <div class="col-lg-4 col-xl-2 offset-xl-1" style="height: 600px;">
+            <div class="list-group" >
+                <a data-bss-hover-animate="pulse" id="info"
+                class="list-group-item list-group-item-action"
+                    href="./member_info.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
+                </a>
+                <a data-bss-hover-animate="pulse" id="setBank" class="list-group-item list-group-item-action"
+                    href="./member_common_account.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">常用帳戶設定
+                </a>
+                <a data-bss-hover-animate="pulse" id="friend" class="list-group-item list-group-item-action"
+                    href="./member_friendlist.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">好友名單
+                </a>
+                <a data-bss-hover-animate="pulse" id="black" class="list-group-item list-group-item-action"
+                    href="./member_blacklist.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">黑名單
+                </a>
+                <a data-bss-hover-animate="pulse" id="trade" class="list-group-item list-group-item-action"
+                    href="./member_order_list.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢一般交易
+                </a>
+                <a data-bss-hover-animate="pulse" id="sh_trade" class="list-group-item list-group-item-action"
+                    href="./member_shordersearch.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手交易
+                </a>
+                <a data-bss-hover-animate="pulse" id="sh_buy" class="list-group-item list-group-item-action"
+                    href="./SecondHand_buylist_search.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手收購進度
+                </a>
+                <a data-bss-hover-animate="pulse" id="pro_follow" class="list-group-item list-group-item-action"
+                    href="./member_product_follow.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">一般商品追蹤清單
+                    <br>
+                </a>
+                <a data-bss-hover-animate="pulse" id="sh_follow" class="list-group-item list-group-item-action"
+                    href="./member_shloveList.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">二手商品追蹤清單
+                </a>
+                <a data-bss-hover-animate="pulse" id="act_follow" class="list-group-item list-group-item-action"
+                    href="#" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢參加活動
+                </a>
+                <a data-bss-hover-animate="pulse" id="notice" class="list-group-item list-group-item-action"
+                    href="member_noticelist.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看通知
+                </a>
+                <a data-bss-hover-animate="pulse" id="login_his" class="list-group-item list-group-item-action"
+                    href="member_loginhistory.html" data-bs-toggle="list"
+                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看登入紀錄
+                </a>
+            </div>
+        </div>
+        <div class="col" style="width: 50%;">
+            <div class="container profile profile-view" id="profile" style="height: 800px;">
+                <h1>好友名單</h1>
+                <div class="friend_function">
+                        <span class="friend_function">
+                            <input class="form-control" type="text" id="search" name="search">
+                        </span>
+                    <span class="friend_function">
+                            <img src="../img/magnifying-glass-solid.svg" style="width: 20px;">
+                        </span>
+                    <span class="friend_function">
+                            <button type="button" class="btn btn-primary">新增好友</button>
+                        </span>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col" id="friend_id"></th>
+                        <th scope="col" id="friend_name">好友名稱</th>
+                        <!-- <th scope="col" id="game_label">遊玩標籤</th> -->
+                        <th scope="col" id="manage_function">管理功能</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="friend_id">1</td>
+                        <td id="friend_name">
+                                    <span class="friend_pic">
+                                        <img src="../img/Logo-removebg%20(2).png" style="width: 100px; height: 100px;">
+                                    </span>
+                            <span>小虎</span>
+                        </td>
+                        <!-- <td id="game_label">
+                            <span class="game_label"><img src="" style="width: 100px; height: 100px;"></span>
+                            薩爾達傳說- 王國之淚
+                        </td> -->
+                        <td id="manage_function">
+                            <button type="button" class="btn btn-warning">刪除好友</button>
+                            <button type="button" class="btn btn-dark">加入黑名單</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="friend_id">2</td>
+                        <td id="friend_name">
+                                    <span class="friend_pic">
+                                        <img src="../img/Logo-removebg%20(2).png" style="width: 100px; height: 100px;">
+                                    </span>
+                            <span>小花</span>
+                        </td>
+                        <!-- <td id="game_label">
+                            <span class="game_label"><img src="" style="width: 100px; height: 100px;"></span>
+                            尼爾- 自動人形
+                        </td> -->
+                        <td id="manage_function">
+                            <button type="button" class="btn btn-warning">刪除好友</button>
+                            <button type="button" class="btn btn-dark">加入黑名單</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="friend_id">2</td>
+                        <td id="friend_name">
+                                    <span class="friend_pic">
+                                        <img src="../img/Logo-removebg%20(2).png" style="width: 100px; height: 100px;">
+                                    </span>
+                            <span>小黑</span>
+                        </td>
+                        <!-- <td id="game_label">
+                            <span class="game_label"><img src="" style="width: 100px; height: 100px;"></span>
+                            地平線 - 等待黎明
+                        </td> -->
+                        <td id="manage_function">
+                            <button type="button" class="btn btn-warning">刪除好友</button>
+                            <button type="button" class="btn btn-dark">加入黑名單</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="friend_id">2</td>
+                        <td id="friend_name">
+                                    <span class="friend_pic">
+                                        <img src="../img/Logo-removebg%20(2).png" style="width: 100px; height: 100px;">
+                                    </span>
+                            <span>小黑</span>
+                        </td>
+                        <!-- <td id="game_label">
+                            <span class="game_label"><img src="" style="width: 100px; height: 100px;"></span>
+                            地平線 - 等待黎明
+                        </td> -->
+                        <td id="manage_function">
+                            <button type="button" class="btn btn-warning">刪除好友</button>
+                            <button type="button" class="btn btn-dark">加入黑名單</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="friend_id">2</td>
+                        <td id="friend_name">
+                                    <span class="friend_pic">
+                                        <img src="../img/Logo-removebg%20(2).png" style="width: 100px; height: 100px;">
+                                    </span>
+                            <span>小黑</span>
+                        </td>
+                        <!-- <td id="game_label">
+                            <span class="game_label"><img src="" style="width: 100px; height: 100px;"></span>
+                            地平線 - 等待黎明
+                        </td> -->
+                        <td id="manage_function">
+                            <button type="button" class="btn btn-warning">刪除好友</button>
+                            <button type="button" class="btn btn-dark">加入黑名單</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<footer id="footerpad">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-8 mx-auto">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#"></a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../jquery/jquery-3.4.1.min.js"></script>
+<!-- <script src="../bootstrap/js/bootstrap.min.js"></script> -->
+<script src="../js/bs-init.js"></script>
+<script src="../js/Profile-Edit-Form.js"></script>
+
+</body>
+<script src="../js/member_logout.js"></script>
+<script>
+
+$("a.list-group").on("click", function (e) {
+console.log(e.target);
+});
+
+
+</script>
+
+</html>

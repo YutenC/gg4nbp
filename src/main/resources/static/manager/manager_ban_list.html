@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>NPB.GG管理系統-停權</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../fonts/material-icons.min.css">
+    <link rel="stylesheet" href="../css/x-dropdown.css">
+    <link rel="stylesheet" href="../css/custom.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- 左方導覽欄 -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <!-- 上方導覽欄 -->
+                <div class="container-fluid">
+                    <!-- card shadow 視窗整體
+                    mb-4 視窗間間距
+                    py-3 視窗內間距
+                    card-header 標題框
+                    card-body 視窗主體 -->
+
+                    <!-- Tcard -->
+
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">停權單列表</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 text-nowrap">
+                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                        <label class="form-label">Show&nbsp;
+                                            <select class="d-inline-block form-select form-select-sm">
+                                                <option value="10" selected="">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>&nbsp;
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                        <label class="form-label">
+                                            <input type="search" class="form-control form-control-sm"
+                                                aria-controls="dataTable" placeholder="Search">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                                aria-describedby="dataTable_info">
+                                <table class="table my-0" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>停權單ID</th>
+                                            <th>停權會員ID</th>
+                                            <th>停權管理者ID</th>
+                                            <th>停權時間</th>
+                                            <th>開始時間</th>
+                                            <th>結束時間</th>
+                                            <th>停權理由</th>
+                                            <th>停權設定</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>%%%停權單ID</td>
+                                            <td>
+                                                <a href="#">%%%會員ID</a>
+                                            </td>
+                                            <td>
+                                                <a href="#">%%%管理員ID</a>
+                                            </td>
+                                            <td>%%%停權時間</td>
+                                            <td>%%%開始時間</td>
+                                            <td>%%%結束時間</td>
+                                            <td>%%%停權理由</td>
+                                            <td>
+                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-ban-button"
+                                                    role="button" href="#">
+                                                    修改停權時間
+                                                </a>
+                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-ban-button btn-danger"
+                                                    role="button" href="#">
+                                                    解除停權
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>%%%停權單ID2</td>
+                                            <td>
+                                                <a href="#">%%%會員ID2</a>
+                                            </td>
+                                            <td>
+                                                <a href="#">%%%管理員ID2</a>
+                                            </td>
+                                            <td>%%%停權時間2</td>
+                                            <td>%%%開始時間2</td>
+                                            <td>%%%結束時間2</td>
+                                            <td>%%%停權理由2</td>
+                                            <td>
+                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-ban-button"
+                                                    role="button" href="#">
+                                                    修改停權時間
+                                                </a>
+                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-ban-button btn-danger"
+                                                    role="button" href="#">
+                                                    解除停權
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td><strong>ID</strong></td>
+                                            <td><strong>權限名稱</strong></td>
+                                            <td><strong>權限內容</strong></td>
+                                            <td><strong>設定</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 align-self-center">
+                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                                        Showing 1 to 10 of %%%總筆數/篩選筆數</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <nav
+                                        class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            <li class="page-item disabled">
+                                                <a class="page-link" aria-label="Previous" href="#">
+                                                    <span aria-hidden="true">«</span>
+                                                </a>
+                                            </li>
+                                            <li class="page-item active">
+                                                <a class="page-link" href="#">1</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">2</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">3</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" aria-label="Next" href="#">
+                                                    <span aria-hidden="true">»</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright">
+                        <span>Copyright © NBP.GG 2023</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+
+    <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
+    <!-- JavaScript JS放置區 -->
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <!-- JavaScript JS放置區 -->
+</body>
+
+</html>

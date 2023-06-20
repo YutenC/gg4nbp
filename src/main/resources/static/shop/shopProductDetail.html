@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>shopProductDetail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/shopSubNav.css">
+    <link rel="stylesheet" href="../css/shopMainNav.css">
+    <link rel="stylesheet" href="../css/shopRightSideMiniMenu.css">
+    <link rel="stylesheet" href="../css/shopProductDetailTag.css">
+    <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Sans TC', 'sans-serif', 'open-sans';
+        }
+
+        body {
+            color: #004B97;
+            font-size: 0;
+        }
+
+        /*主呈現區*/
+        .shopmain {
+            width: 100%;
+            margin: 20px 0 0 0;
+            padding: 110px 0 0 0;
+            display: flex;
+            box-shadow: 0 1px #F5F5F5;
+        }
+
+        main {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        /*商品詳情內頁*/
+        .productShowcase {
+            width: 90%;
+            margin: auto;
+            padding: 10px;
+        }
+
+        .detailUpper {
+            display: flex;
+            width: 100%;
+            height: 500px;
+        }
+
+        /*商品圖片*/
+        .productImg {
+            text-align: center;
+            margin: 8px;
+            height: 300px;
+            width: 40%;
+        }
+
+        .productImg div.mainPic {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .productImg img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            margin: auto;
+        }
+
+        /*商品小圖*/
+        .productsmallimgs-container {
+            font-size: 0;
+            width: 90%;
+            height: 100px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: auto;
+            margin-top: 10px;
+        }
+
+        .productsmallimgs-container a.productImg {
+            margin: 0 5px;
+            border: 1px solid #D0D0D0;
+            width: 25%;
+            height: 100%;
+        }
+
+        .productsmallimgs-container a.productImg img {
+            padding: 3px;
+            width: 100%;
+            height: 100%;
+        }
+
+        /*商品圖片控制*/
+        .productsmallimgs-container a {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            width: 20px;
+            height: 100%;
+            margin: 0;
+            cursor: pointer;
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        .productsmallimgs-container a::before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        .detailUpper .purchase {
+            margin-left: 10px;
+        }
+
+        .detailUpper .purchase div {
+            margin: 5px;
+        }
+
+
+        .detailUpper .purchase button {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin: 3px;
+        }
+
+
+        footer {
+            padding: 5px;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="subNav">
+            <div class="contact"><a href=""><img class="icons" src="../img/icon/square-envelope-solid.svg" alt=""></a><a
+                    href=""><img class="icons" src="../img/icon/square-facebook.svg" alt=""></a><a href=""><img
+                    class="icons" src="../img/icon/square-instagram.svg" alt=""></a></div>
+        </nav>
+        <nav class="mainNav">
+            <a href="" class="logo"><img src="../img/Logo-removebg.png" alt=""></a>
+            <ul class="productline">
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">NS</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">PS</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">XBOX</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">二手交易</a>
+                    </div>
+                </li>
+                <li>
+                    <form action="shopProductList.html" class="search">
+                        <select name="productCondition" class="productCondition">
+                            <option value="new">新品</option>
+                            <option value="secondhand">二手商品</option>
+                        </select>
+                        <input name="keyword" class="searchinput" type="text" placeholder="請輸入商品名稱或關鍵字">
+                        <button type="submit" class="searchicon">
+                            <img class="icons" src="../img/icon/magnifying-glass-solid.svg" alt=""></button>
+                    </form>
+                </li>
+            </ul>
+            <div class="helping">
+                <div>
+                    <div class="centerFunc">
+                        <a href="">
+                            <img class="bigicon" src="../img/icon/newspaper-regular.svg" alt="">
+                            <span>論壇社群</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
+                            <span>活動專區</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
+                            <span>會員登入</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="../img/icon/handshake-simple-solid.svg" alt="">
+                            <span>客服中心</span>
+                        </a>
+                    </div>
+                    <a href="">
+                        <img class="bigicon" src="../img/icon/cart-shopping-solid.svg" alt="">
+                        <span>購物車</span>
+                    </a>
+                    <a href="" class="funcSelect">
+                        <img class="bigicon on" src="../img/icon/bars-solid.svg" alt="">
+                        <img class="bigicon" src="../img/icon/square-caret-left-regular.svg" alt="">
+                        <span>功能選單</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="shopmain">
+        <div class="miniMenu">
+            <div class="miniMenuContent">
+                <div class="viewRecord">
+                    <a href=""><img
+                            src="../img/gameSoftware/Nitendo/NoPlaceLikeHome/8d49654f86cee337e2a7317d031l9ro5.jpg"
+                            alt=""></a>
+                    <a href=""><img src="../img/peripherals/Nintendo/Zelda/335ced22c1dbccd628a4001e9a1l4xo5.jpg"
+                            alt=""></a>
+                    <a href=""><img src="../img/peripherals/Nintendo/Zelda/4262aa92a53a61f67e57e46e0b1l4tv5.jpg"
+                            alt=""></a>
+                </div>
+                <div class="miniMenuBut">
+                    <a href="" class="goTop"><img src="../img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
+                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
+                    <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a>
+                </div>
+            </div>
+        </div>
+        <main>
+            <div class="productShowcase"> <!--產品詳情，從後端調資料動態產生-->
+                <div class="detailUpper">
+                    <div class="productImg">
+                        <div class="mainPic">
+                            <img src="../img/gameSoftware/Nitendo/Zelda/760223b6e6ed7be758630c9b5b1ic955.jpg" alt="商品圖片"
+                                 data-pic="0" class="mainPic">
+                        </div>
+                        <div class="productsmallimgs-container">
+                            <a class="prev">&#10094;</a>
+                            <a class="productImg" data-pic="0"><img
+                                    src="../img/gameSoftware/Nitendo/Zelda/760223b6e6ed7be758630c9b5b1ic955.jpg"></a>
+                            <a class="productImg" data-pic="1"><img
+                                    src="../img/gameSoftware/PS5/Final_Fantasy_XVI/19e80490e9e052547c129845bc1liee5.jpg"></a>
+                            <a class="productImg" data-pic="2"><img
+                                    src="../img/gameSoftware/PS5/RessidentEvilVillage/3.jpg"></a>
+                            <a class="next">&#10095;</a>
+                        </div>
+                    </div>
+                    <div class="purchase">
+                        <div>
+                            <h3 class="productname">商品名稱(+短廣告文案)</h3>
+                            <ul>
+                                <li>商品特點1</li>
+                                <li>商品特點2</li>
+                                <li>依需求產生特點介紹，最多5點</li>
+                            </ul>
+                            <div class="price">
+                                原價:<span>10,000</span>元
+                                特價:<span>9,990</span>元
+                            </div>
+                            <form class="orderselect" id="orderselect">
+                                <div class="purchaseSpec">
+                                    <label for="purchaseSpec">選擇商品規格：</label> <!--動態產生規格選項或無此選項-->
+                                    <select name="purchaseSpec" id="purchaseSpec">
+                                        <option value="black">黑</option>
+                                        <option value="white">白</option>
+                                        <option value="red">紅</option>
+                                    </select>
+                                </div>
+                                <div class="amount">
+                                    <label for="amount">數量：</label> <!--動態產生數量選項：依目前庫存判斷最大數量(是否要設定最大可購買量?)-->
+                                    <select name="amount" id="amount">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                <button>直接購買</button>
+                                <button>加入購物車</button>
+                                <button>加入追蹤</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tagPage">
+                    <div class="contentTabBlock">
+                        <ul class="contentTab">
+                            <li><a href="#" data-target="tab1" class="tab -on">商品特色</a></li>
+                            <li><a href="#" data-target="tab2" class="tab">商品規格</a></li>
+                            <li><a href="#" data-target="tab3" class="tab">注意事項</a></li>
+                        </ul>
+                    </div>
+                    <div class="contentPage">
+                        <div class="tab tab1 -on">商品特色描述：圖文</div>
+                        <div class="tab tab2">
+                            商品規格表列
+                            <dl>
+                                <dt>遊戲名稱：</dt>
+                                <dd>11111</dd>
+                            </dl>
+                            <dl>
+                                <dt>遊戲字幕：</dt>
+                                <dd>中文</dd>
+                            </dl>
+                            <dl>
+                                <dt>遊戲語音：</dt>
+                                <dd>日文</dd>
+                            </dl>
+                            <dl>
+                                <dt>遊戲版本：</dt>
+                                <dd>中文版</dd>
+                            </dl>
+                            <dl>
+                                <dt>遊戲類型：</dt>
+                                <dd>動作</dd>
+                            </dl>
+                            <dl>
+                                <dt>遊戲人數：</dt>
+                                <dd>......</dd>
+                            </dl>
+                            <span>遊玩注意事項：</span><span class="attention"></span>
+                        </div>
+                        <div class="tab tab3">購買注意事項(退換貨規定)</div>
+                    </div>
+                </div>
+                <div class="promotion">其他推薦商品</div>
+            </div>
+        </main>
+    </div>
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../jquery/jquery-1.9.1.min.js"></script>
+    <script src="../js/shopMainNavSearchBar.js"></script>
+    <script src="../js/shopRightSideMiniMenu.js"></script>
+    <script src="../js/shopNavBarShowup.js"></script>
+    <script src="../js/shopSwitchTag.js"></script>
+    <script src="../js/shopMainNavHelping.js"></script>
+    <script>
+        // 切換詳情圖片: 左右鍵
+        $('div.productsmallimgs-container').on('click', 'a.prev, a.next', function (e) {
+            let nowPicNum = $('.productImg img.mainPic').data('pic');
+            let pics = document.querySelectorAll('div.productsmallimgs-container a.productImg img');
+
+
+            if ($(this).hasClass('prev')) {
+                nowPicNum = (--nowPicNum < 0) ? pics.length - 1 : nowPicNum;
+            } else if ($(this).hasClass('next')) {
+                nowPicNum = (++nowPicNum > pics.length - 1) ? 0 : nowPicNum;
+            }
+
+            $('.productImg img.mainPic').attr('src', pics[nowPicNum].src).data('pic', nowPicNum);
+        });
+
+        // 切換詳情圖片: 針對下方小圖
+        $('div.productsmallimgs-container').on('click', 'a.productImg', function (e) {
+            let nowPicNum = $(this).data('pic');
+            let pics = document.querySelectorAll('div.productsmallimgs-container a.productImg img');
+            $('.productImg img.mainPic').attr('src', pics[nowPicNum].src).data('pic', nowPicNum);
+        });
+    </script>
+</body>
+
+</html>

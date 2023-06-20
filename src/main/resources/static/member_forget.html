@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBP.gg</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("./img/background_img.png");
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(197, 228, 235);
+            color: #555;
+            font-size: 14px;
+        }
+
+        div.bg_img {
+            width: 100%;
+            height: 100%;
+        }
+
+        form.forget {
+            width: 100%;
+            padding: 5vh 5vh;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        div.forget_block0 {
+            padding: 40px;
+            margin: 50px auto 50px;
+            background-color: #fafafa;
+            border-radius: 50px;
+        }
+
+        div.forget_block1 {
+            width: 400px;
+            margin: 0 auto;
+
+        }
+
+        div.forget_img {
+            width: 200px;
+            height: fit-content;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 0;
+        }
+
+        h1 {
+            width: fit-content;
+            font-size: 40px;
+            margin: 0 auto;
+        }
+
+        div.account {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        div.email {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            height: 38px;
+            margin: 10px 0 5px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid gray;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            height: 38px;
+            margin: 5px 0 5px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid gray;
+        }
+
+        div.resend {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        input.forget_btn1 {
+            border-radius: 8px;
+        }
+
+        button.forget_btn1 {
+            border-radius: 8px;
+        }
+
+        input[type="button"] {
+            width: 100%;
+            margin: 10px 0 30px 0;
+            background: #00A8FF;
+            color: #fff;
+            padding: 10px;
+            border: #00A8FF;
+            border-radius: 10px;
+        }
+
+        .btn {
+            margin: 0 0 10px 0;
+        }
+
+        input#submit {
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="bg_img">
+        <form class="forget" method="post" action="#">
+            <div class="forget_block0">
+                <div class="forget_img">
+                    <a href="./index.html">
+                        <img src="./img/Logo-removebg.png">
+                    </a>
+                </div>
+                <div class="forget_block1">
+                    <h1>忘記密碼</h1><br>
+                    <div class="account">
+                        <label for="account"></label>
+                        <input id="account" name="account" type="text" placeholder="請輸入帳號" required>
+                    </div>
+                    <div class="email">
+                        <label for="email"></label>
+                        <input id="email" name="email" type="email" placeholder="請輸入信箱" required>
+                    </div>
+                    <div class="resend">
+                        <input class="resend" id="submit" type="button" value="重新寄發密碼">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./jquery/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+</body>
+<script>
+    const resend = document.querySelector("input.resend");
+    const account = document.querySelector("input#account");
+    const email = document.querySelector("input#email");
+
+    $("input.resend").on("click", function () {
+        if (isEmpty($("input#account").val()) || isEmpty($("input#email").val())) {
+            Swal.fire({
+                icon: 'error',
+                title: '帳號及信箱不得空白',
+                text: '請輸入帳號及信箱！',
+            })
+            return;
+        }
+        $.ajax({
+            url: "/Five_NBP_gg/memberForgetServlet",
+            method: "POST",
+            dataType: "json",
+            data: {
+                account: $("input#account").val(),
+                email: $("input#email").val()
+            },
+            success: function (response) {
+                let member = response;
+                let isPass = member.successful;
+                if (isPass) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: member.message
+                    });
+                    window.location.href = "./member_login.html";
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: member.message
+                    });
+                }
+            }
+        })
+    });
+
+    function isEmpty(e) {
+        if (e.trim() === "") {
+            return true;
+        } else return false;
+    }
+
+</script>
+
+
+</html>

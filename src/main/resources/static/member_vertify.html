@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBP.gg</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("./img/background_img.png");
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(197, 228, 235);
+            color: #555;
+            font-size: 14px;
+        }
+
+        div.bg_img {
+            width: 100%;
+            height: 100%;
+        }
+
+        form.verify {
+            width: 100%;
+            padding: 5vh 5vh;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        div.verify_block0 {
+            padding: 40px;
+            margin: 50px auto 50px;
+            background-color: #fafafa;
+            border-radius: 50px;
+            height: 410px;
+        }
+
+        div.verify_block1 {
+            width: 400px;
+            margin: 0 5px;
+
+        }
+
+        div.verify_img {
+            width: 200px;
+            height: fit-content;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 0;
+        }
+
+        h1 {
+            width: fit-content;
+            font-size: 40px;
+            margin: 0 auto;
+        }
+
+        span.verification_code {
+            width: 250px;
+            margin: 0 10px 0 0;
+            display: inline-block;
+        }
+
+        span.email {
+            width: 250px;
+            margin: 0 10px 0 0;
+            display: inline-block;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            height: 38px;
+            margin: 10px 0 5px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid gray;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            height: 38px;
+            margin: 5px 0 5px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid gray;
+        }
+
+
+        input.verify_btn1 {
+            border-radius: 8px;
+        }
+
+        button.verify_btn1 {
+            border-radius: 8px;
+        }
+
+        div.verify_block2 {
+            width: fit-content;
+            margin: auto;
+        }
+
+        span.send_letter {
+            width: 120px;
+            margin: 0 auto;
+            display: inline-block;
+        }
+
+        input[type="button"] {
+            width: 100%;
+            margin: 10px 0 10px 0;
+            background: #00A8FF;
+            color: #fff;
+            padding: 10px;
+            border: #00A8FF;
+            border-radius: 10px;
+            display: inline;
+        }
+
+        span.verify_member {
+            width: 120px;
+            margin: 0 auto;
+            display: inline-block;
+        }
+
+        .btn {
+            margin: 0 0 10px 0;
+        }
+
+        input[disabled] {
+            background-color: #ded7d7;
+            color: #fff;
+        }
+
+        input.verify_member {
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+        }
+
+        input.send_letter {
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="bg_img">
+        <form class="verify" method="post" action="#">
+            <div class="verify_block0">
+                <div class="verify_img">
+                    <a href="./index.html">
+                        <img src="./img/Logo-removebg.png">
+                    </a>
+                </div>
+                <div class="verify_block1">
+                    <h1>會員驗證信</h1><br>
+                    <div class="verify_block2">
+                        <span class="email">
+                            <label for="email"></label>
+                            <input id="email" name="email" type="email" placeholder="請輸入信箱" required>
+                        </span>
+                        <span class="send_letter">
+                            <input class="send_letter" id="submit" type="button" value="寄驗證信">
+                        </span>
+                    </div>
+                    <div class="verify_block2">
+                        <span class="verification_code">
+                            <label for="verification_code"></label>
+                            <input id="verification_code" name="verification_code" type="text" placeholder="請先寄發會員驗證信"
+                                required disabled>
+                        </span>
+                        <span class="verify_member">
+                            <input class="verify_member" id="submit" type="button" value="確認驗證碼" disabled>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <script src="./jquery/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+</body>
+<script>
+    $(window).on("load", function () {
+        let data = sessionStorage.getItem("register");
+        let member = JSON.parse(data);
+        if (member !== null) {
+            console.log(member)
+            $("input#email").val(member.email);
+        } else {
+            $.ajax({
+                url: "/Five_NBP_gg/memberGetInforServlet",
+                method: "POST",
+                dataType: "json",
+                success: function (response) {
+                    let member = response;
+                    $("input#email").val(member.email);
+                }
+            })
+        }
+    })
+
+    $("input.send_letter").on("click", function () {
+        if (isEmpty($("input#email").val())) {
+            errMessage();
+            return;
+        } else {
+            $.ajax({
+                url: "/Five_NBP_gg/memberSendVertifyServlet",
+                method: "POST",
+                dataType: "json",
+                data: {
+                    email: $("input#email").val()
+                },
+                success: function (response) {
+                    let member = response;
+                    Swal.fire({
+                        icon: 'success',
+                        title: member.message
+                    });
+                    $("input.verify_member").removeAttr("disabled");
+                    $("input#verification_code").removeAttr("disabled");
+                    $("input.verify_member").attr("placeholder", "請填入驗證碼");
+
+                }
+            })
+        }
+    })
+
+    $("input.verify_member").on("click", function () {
+        if (isEmpty($("input#verification_code").val())) {
+            errMessage();
+            return;
+        } else {
+            $.ajax({
+                url: "/Five_NBP_gg/memberVertifyServlet",
+                method: "POST",
+                dataType: "json",
+                data: {
+                    email: $("input#email").val(),
+                    verification_code: $("input#verification_code").val()
+                },
+                success: function (response) {
+                    let member = response;
+                    let isPass = member.successful;
+                    if (!isPass) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '驗證失敗ˇ',
+                            text: member.message,
+                        });
+                        return;
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: member.message,
+                        }).then((result) => {
+                            sessionStorage.clear();
+                            window.location.href = "./member_login.html";
+                        })
+                    }
+                },
+                error: function (xhr, status, err) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err);
+                }
+            })
+        }
+    })
+
+
+
+    function isEmpty(e) {
+        if (e.trim() === "") {
+            return true;
+        } else return false;
+    }
+
+    function errMessage() {
+        Swal.fire({
+            icon: 'error',
+            title: '輸入欄位不得空白',
+            text: '請輸入資料！',
+        })
+    }
+
+
+
+</script>
+
+
+
+</html>

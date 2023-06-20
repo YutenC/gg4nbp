@@ -1,0 +1,38 @@
+.sidebar {
+    text-align: center;
+    font-size: 16px;
+    width: 20%;
+    box-shadow: 1px 0 #F5F5F5;
+}
+
+.sidebar div {
+    margin: 5px;
+    margin-top: 10px;
+}
+
+.sidebar .side-dropdown-content {
+    display: none;
+}
+
+.sidebar .side-dropdown-content.-on {
+    border-radius: 2px;
+    border: 1px solid #F5F5F5;
+    text-align: left;
+    display: block;
+}
+
+.sidebar .side-dropdown-content a {
+    padding: 0 3px;
+    text-decoration: none;
+    margin-bottom: 3px;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar .side-dropdown-content a:first-child {
+    border-top: 1px solid #Fff;
+}

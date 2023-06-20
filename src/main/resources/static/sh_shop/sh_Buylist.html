@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="..\css\sh_index.css">
+    <title>Document</title>
+    <script src="../jquery/jquery-3.7.0.js"></script>
+<style>
+        hr {
+            text-align: center;
+            width: 100%;
+            border: 1px solid;
+            color: rgba(184, 184, 184, 0.371);
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+
+        div.inputBlock {
+            padding: 30px;
+            text-align: right;
+            display: flex;
+            justify-content: start;
+            align-items: start;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        div.inputBlock input#getshot {
+            display: inline-block;
+            margin-left: 30px;
+            width: 80px;
+            height: 30px;
+            background-color: #ffffff;
+            border: 2px solid rgb(121, 121, 225);
+            border-radius: 5px;
+        }
+
+        div.inputBlock input#getshot:hover {
+            background-color: #d1d1d1;
+            border: 2px solid rgb(0, 0, 0);
+        }
+
+        div.inputBlock>div {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 15px;
+            height: 50px;
+            position: relative;
+        }
+
+        div.inputBlock>div#imgView {
+            height: auto;
+            min-height: 80px;
+        }
+
+        div.inputBlock>div#imgView img {
+            margin: 10px;
+            object-fit: cover;
+            border-radius: 3px;
+            box-shadow: 0px 0px 2px rgb(174, 173, 173);
+            height: 200px;
+            width: 200px;
+        }
+
+        div.inputBlock>div#imgView img:hover{
+            box-shadow: 0px 0px 2px black;
+            cursor: pointer;
+        }
+
+        div.inputBlock>div.btnArea {
+            display: flex;
+            width: 90%;
+            justify-content: center;
+            align-items: start;
+        }
+
+
+        div.inputBlock>div>button {
+            margin: 10px;
+            border: none;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            width: 60px;
+            height: 30px;
+        }
+
+        div.inputBlock>div>button#commit {
+            background-color: #fa4343;
+
+        }
+
+
+        div.inputBlock>div>button#commit:hover {
+            background-color: #e16262;
+            cursor: pointer;
+        }
+
+        div.inputBlock>div>button#cancel {
+            background-color: #e0b226;
+        }
+
+        div.inputBlock>div>button#cancel:hover {
+            background-color: #efc955;
+            cursor: pointer;
+        }
+
+
+        div.inputBlock>div>input {
+            font-size: 20px;
+            padding-left: 10px;
+            height: 40px;
+            width: 90%;
+            min-width: 200px;
+            border: 1px solid rgba(142, 142, 142, 0.522);
+            border-radius: 3px;
+
+        }
+
+        div.inputBlock>div>input:focus {
+            outline: none;
+            box-shadow: 0px 0px 2px 0.5px blue;
+        }
+
+
+        div.inputBlock>div>span.inValue {
+            font-size: 16px;
+            position: absolute;
+            top: 5px;
+            left: 20px;
+            color: gray;
+            background-color: #fff;
+        }
+
+        span.inputNotice {
+            display: inline-block;
+            color: red;
+            font-size: 10px;
+            min-width: 15px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <div class="content" style="width: 70%;">
+            <div class="showArea">
+                <!-- 輸入主內容 -->
+                <div class="inputBlock">
+                    <span class="inputNotice" style="padding-left: 10px;">＊為必填項目。</span>
+                    <hr>
+                    <div><span class="inputNotice">＊</span><input id="productName" type="text"><span class="inValue">名稱</span></div>
+                    <div><span class="inputNotice"></span><input id="type" type="text"><span class="inValue">種類</span></div>
+                    <div><span class="inputNotice">＊</span><input id="content" type="text"><span  class="inValue">內容</span></div>
+                    <div><span class="inputNotice"></span><input id="estimate" type="text"><span class="inValue">預估價格</span></div>
+                    <div><span class="inputNotice">＊</span><input id="applicantBankNumber" type="text"><span class="inValue">銀行帳戶</span></div>
+
+                    <hr>
+                    <input id="getshot" type="button" value="拍照上傳">
+                    <input  type="file" accept="image/*" value="拍照" style="display: none;" capture>
+                    <div id="imgView">
+
+                    </div>
+
+                    <hr>
+                    <div class="btnArea">
+                        <button id="cancel">取消</button>
+                        <button id="commit">送出</button>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+    
+
+</body>
+
+<script src="../js/sh_insertblock.js"></script>
+<script>
+
+
+
+    changeTitle('二手回收申請');
+    $('.search').remove();
+
+
+    $('div.inputBlock>div>input').on('focus', function (e) {
+        $(this).next().stop().animate({ top: "-8px", fontSize: "10px", color: "blue" }, 100, "linear", function (e) {
+            $(this).css('color', 'blue');
+        })
+    })
+
+
+    $('div.inputBlock>div>input').on('blur', function (e) {
+        if ($(this).val()) {
+            $(this).next().css('color', 'gray');
+            return;
+        }
+        $(this).next().stop().css('color', 'gray').animate({ top: "5px", fontSize: "16px" }, 200, "linear");
+    })
+
+
+    $('#getshot').on('click', function (e) {
+        $(this).next().click();
+    })
+
+
+    $('#getshot').next().on('change', function (e) {
+
+
+
+        // 選取多個圖片 ?
+        // $('#imgView>img').remove();
+
+
+        const img = document.createElement('img');
+        const reader = new FileReader();
+        $(img).attr('height', '200px').attr('width', '50%').attr('min-width','200px');
+        $('#imgView').append(img);
+
+        // 右邊保留做拖曳功能
+        let uploadImg = e.target.files || e.dataTransfer.files;
+        reader.readAsDataURL(uploadImg[0]);
+
+        reader.addEventListener('load', e => {
+            img.src = e.target.result;
+        })
+
+    })
+
+
+
+    $('#commit').on('click', function(e){
+
+        console.log(productName.value);
+        fetch('addbuylist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({productName: productName.value,
+        type: type.value,
+        content: content.value,
+        estimate: estimate.value,
+        applicantBankNumber: applicantBankNumber.value})
+    })
+        .then(location = 'sh_MainView.html');
+    })
+
+
+
+
+</script>
+
+</html>

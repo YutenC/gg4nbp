@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>NPB.GG管理系統-修改管理員</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../fonts/material-icons.min.css">
+    <link rel="stylesheet" href="../css/x-dropdown.css">
+    <link rel="stylesheet" href="../css/custom.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- 左方導覽欄 -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <!-- 上方導覽欄 -->
+                <div class="container-fluid">
+                    <!-- card shadow 視窗整體
+                    mb-4 視窗間間距
+                    py-3 視窗內間距
+                    card-header 標題框
+                    card-body 視窗主體 -->
+
+                    <!-- Ncard -->
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">修改管理員</p>
+                        </div>
+                        <div class="card-body">
+                            <form action="#" method="post">
+                                <div class="row profile-row">
+                                    <div class="col-md-8">
+                                        <h3>修改管理員</h3>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="manager_account">管理員帳號</label>
+                                                    <input class="form-control" type="text" id="manager_account"
+                                                        required name="manager_account">
+                                                </div>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="manager_password">管理員密碼</label>
+                                                    <input class="form-control" type="password" id="manager_password"
+                                                        required name="manager_password">
+                                                </div>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="manager_name">管理員名稱</label>
+                                                    <input class="form-control" type="text" id="manager_name" required
+                                                        name="manager_name">
+                                                </div>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="manager_email">管理員信箱</label>
+                                                    <input class="form-control" type="text" id="manager_email" required
+                                                        name="manager_email">
+                                                </div>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="manager_phone">管理員電話</label>
+                                                    <input class="form-control" type="text" id="manager_phone" required
+                                                        name="manager_phone">
+                                                </div>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="manager_address">管理員地址</label>
+                                                    <input class="form-control" type="text" id="manager_address"
+                                                        name="manager_address">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12 content-right">
+                                                <button class="btn btn-primary form-btn" id="manager_edit_btn"
+                                                    type="button">修改資料</button>
+                                            </div>
+                                            <div id="msg" class="error"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright">
+                        <span>Copyright © NBP.GG 2023</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+
+    <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
+    <!-- JavaScript JS放置區 -->
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <!-- JavaScript JS放置區 -->
+    <script src="../js/manager_edit.js"></script>
+</body>
+
+</html>

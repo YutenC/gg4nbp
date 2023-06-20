@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/SecondHand.css">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <style>
+        hr {
+            text-align: center;
+            width: 100%;
+            border: 1px solid;
+            color: rgba(184, 184, 184, 0.371);
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+
+
+
+        div.return_box{
+            display: flex;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        div.return_box div.return_title{
+            font-size: 36px;
+            display: flex;
+            justify-content: center;
+            color: rgb(10, 57, 10);
+        }
+
+
+        div.return_box>div{
+            width: 100%;
+            display: flex;
+            align-items: end;
+            margin: 5px;
+        }
+
+        div.return_box>div>div{
+            font-weight: 100;
+            display: inline-block;
+            width: 300px;
+            max-width: 40%;
+            height: 100%;
+            text-align: right;
+        }
+
+        div.return_box>div>span{
+            font-weight: bold;
+            font-size: 0.8em;
+            width: 50%;
+            text-align : left;
+            padding: 3px;
+            padding-left: 5px;
+        }
+
+
+        div.return_box div.btnArea{
+            display: flex;
+            justify-content: center;
+        }
+
+        div.return_box div.btnArea>button{
+            background-color: green;
+            border-radius: 5px;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border: 2px solid green;
+        }
+
+        div.return_box div.btnArea>button:hover{
+            background-color: rgb(177, 247, 177);
+            color: #fa4343;
+            font-weight: bold;
+
+        }
+
+
+        div.inputBlock {
+            padding: 30px;
+            text-align: right;
+            display: flex;
+            justify-content: start;
+            align-items: start;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        div.inputBlock input#getshot {
+            min-width: 80px;
+            display: inline-block;
+            margin-left: 30px;
+            width: 80px;
+            height: 30px;
+            background-color: #ffffff;
+            border: 2px solid rgb(53, 53, 92);
+            border-radius: 5px;
+            text-align: center;
+            padding: 0px;
+        }
+
+        div.inputBlock input#getshot:hover {
+            background-color: #d1d1d1;
+            border: 2px solid rgb(0, 0, 0);
+        }
+
+        div.inputBlock input#getshot:focus {
+            box-shadow: none;
+        }
+
+        div.inputBlock>div {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 15px;
+            height: 50px;
+            position: relative;
+        }
+
+        div.inputBlock>div#imgView {
+            height: auto;
+            min-height: 80px;
+        }
+
+        div.inputBlock>div#imgView>div{
+            display: inline-block;
+            position: relative;
+            height: auto;
+        }
+
+        div.inputBlock>div#imgView>div>button{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            font-size: 20px;
+            color: rgb(219, 219, 219);
+        }
+
+        div.inputBlock>div#imgView>div>button:hover{
+            color: rgb(251, 207, 197);
+        }
+
+
+        div.inputBlock>div#imgView img {
+            margin: 10px;
+            object-fit: cover;
+            border-radius: 3px;
+            box-shadow: 0px 0px 2px rgb(174, 173, 173);
+            height: 200px;
+            width: 200px;
+        }
+
+        div.inputBlock>div#imgView img.-warning {
+            box-shadow: 0px 0px 3px rgb(255, 0, 0);
+        }
+
+        div.inputBlock>div#imgView img:hover{
+            box-shadow: 0px 0px 2px black;
+            cursor: pointer;
+        }
+
+        div.inputBlock>div.btnArea {
+            user-select:none;
+            display: flex;
+            width: 90%;
+            justify-content: center;
+            align-items: start;
+        }
+
+
+        div.inputBlock>div>button {
+            margin: 10px;
+            border: none;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            width: 60px;
+            height: 30px;
+        }
+
+        div.inputBlock>div>button#commit {
+            background-color: #fa4343;
+
+        }
+
+
+        div.inputBlock>div>button#commit:hover {
+            background-color: #e16262;
+            cursor: pointer;
+        }
+
+        div.inputBlock>div>button#cancel {
+            background-color: #e0b226;
+        }
+
+        div.inputBlock>div>button#cancel:hover {
+            background-color: #efc955;
+            cursor: pointer;
+        }
+
+
+        div.inputBlock>div>input {
+            color: rgb(91, 91, 91);
+            font-size: 16px;
+            padding-left: 10px;
+            height: 40px;
+            width: 90%;
+            min-width: 200px;
+            border: 1px solid rgba(142, 142, 142, 0.522);
+            border-radius: 3px;
+
+        }
+
+        div.inputBlock>div>input:focus {
+            outline: none;
+            box-shadow: 0px 0px 2px 0.5px blue;
+        }
+
+
+        div.inputBlock>div>label.inValue {
+            user-select:none;
+            display: inline-block;
+            font-size: 16px;
+            position: absolute;
+            top: 5px;
+            left: 25px;
+            color: gray;
+            background-color: #fff;
+        }
+
+        span.inputNotice {
+            display: inline-block;
+            color: red;
+            font-size: 10px;
+            min-width: 15px;
+        }
+
+        div.inputBlock div.select{
+            /* border: 2px dashed gray; */
+            display: flex;
+            padding-left: 10px;
+            padding-top: 10px;
+            align-items: start;
+            height: auto;
+            min-height: 80px;
+            width: 95%;
+
+        }
+
+        div.inputBlock div.select>div{
+            width: 80%;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        div.inputBlock div.select select{
+            width: 100%;
+            height: 30px;
+            margin-bottom: 15px;
+            margin-left: 5px;
+            border: 1px solid rgb(184, 184, 184);
+            border-radius: 3px;
+            color: #224975;
+            font-weight: bold;
+            padding-left: 10px;
+        }
+
+        div.inputBlock div.select span{
+            color: gray;
+            font-size: 16px;
+        }
+
+
+
+        div.content{
+            width: 70%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <div class="content">
+            <div class="showArea">
+                <!-- 輸入主內容 -->
+                <div class="inputBlock">
+                    <span class="inputNotice" style="padding-left: 10px;">＊為必填項目。</span>
+                    <hr>
+                    <div class="select"> 
+                        <span>類別 :</span>
+                        <div>
+                            <select name="品牌" id="type_1">
+                                <option value="0">其他</option>
+                                <option value="1">任天堂</option>
+                                <option value="2">SONY</option>
+                                <option value="3">XBOX</option>
+                            </select>
+                            <select name="類型" id="type_2">
+                                <option value="0">主機</option>
+                                <option value="1">手把</option>
+                                <option value="2">卡帶 / 光碟</option>
+                                <option value="3" selected>周邊</option>
+                            </select>
+
+                        </div>
+                </div>
+
+                <hr>
+                    <div class="in_a"><span class="inputNotice">＊</span><input id="productName" type="text"><label for="productName" class="inValue">物品名稱</label></div>
+                    <div class="in_a"><span class="inputNotice">＊</span><input id="content" type="text"><label for="content" class="inValue">詳細內容</label></div>
+                    <div class="in_a"><span class="inputNotice"></span><input id="estimate" type="number" max="1000000" oninput="if(value>1000000)value=1000000"><label for="estimate" class="inValue">預估價格</label></div>
+                    <div class="in_a"><span class="inputNotice">＊</span><input id="applicantBankNumber" type="text" maxlength="14"><label for="applicantBankNumber" class="inValue">銀行帳戶</label   ></div>
+
+                    <hr>
+                    <div style="margin: 0px; font-size: 10px;color: red;">
+                    <input id="getshot" type="button" value="拍照上傳">
+                    <input  type="file" accept="image/*" value="拍照" style="display: none;" multiple capture>
+                    上限 5 MB</div>
+                    <div id="imgView">
+
+                    </div>
+
+                    <hr>
+                    <div class="btnArea">
+                        <button id="cancel">取消</button>
+                        <button id="commit">送出</button>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+    
+
+</body>
+
+<script src="js/insertblock.js"></script>
+<script src="js/SecondHand_Buylist.js"></script>
+
+<script>
+$('#applicantBankNumber').on('keydown', e => {
+    if (e.keyCode<48 || e.keyCode>57) {
+        e.preventDefault();
+    }
+})
+
+</script>
+
+</html>

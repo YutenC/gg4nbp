@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>shopProductList</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/shopSubNav.css">
+    <link rel="stylesheet" href="./css/shopMainNav.css">
+    <link rel="stylesheet" href="./css/shopRightSideMiniMenu.css">
+    <link rel="stylesheet" href="./css/shopLeftAsideBar.css">
+    <link rel="stylesheet" href="./css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="./fonts/font-awesome.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Sans TC', 'sans-serif', 'open-sans';
+        }
+
+        body {
+            font-size: 0;
+            color: #0066CC;
+        }
+
+        .mainNav ul li:nth-child(4) a {
+            background: #9BDFCA;
+            color: #A23400;
+        }
+
+        .mainNav ul li:nth-child(4) a:hover {
+            color: #fff;
+        }
+
+        /*主呈現區*/
+        .shopmain {
+            width: 100%;
+            margin: 20px 0 0 0;
+            padding: 110px 0 0 0;
+            display: flex;
+            box-shadow: 0 1px #F5F5F5;
+            text-align: center;
+            position: relative;
+        }
+
+
+        .shopmain .sidebar {
+            padding: 10px;
+            padding-top: 30px;
+            width: 15%;
+            min-width: 200px;
+            max-height: 100%;
+        }
+
+
+        .shopmain .sidebar div.brandlist {
+            flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 2;
+            text-align: center;
+
+        }
+
+        .shopmain .sidebar div.brandlist div.brandItem {
+            overflow: hidden;
+            height: 0px;
+        }
+
+
+
+        .shopmain .sidebar div.brandlist:nth-child(1) {
+            margin-top: 0px;
+        }
+
+        .shopmain .sidebar div.brandlist>span {
+            color: #faf8f8;
+            width: 95%;
+            border: 1px solid goldenrod;
+            border-radius: 50px;
+        }
+
+
+        .shopmain .sidebar div.brandlist>span.N_brand {
+            background-color: #cb4619;
+            border: 4px solid #cb4619;
+
+        }
+
+        .shopmain .sidebar div.brandlist>span.N_brand:hover {
+            cursor: pointer;
+            color: #cb4619;
+            border: 4px solid #cb4619;
+            background-color: #ffffff;
+
+        }
+
+
+        .shopmain .sidebar div.brandlist>span.B_brand {
+            background-color: #11942e;
+            border: 4px solid #11942e;
+
+        }
+
+        .shopmain .sidebar div.brandlist>span.B_brand:hover {
+            cursor: pointer;
+            color: #11942e;
+            border: 4px solid #11942e;
+            background-color: #ffffff;
+
+        }
+
+        .shopmain .sidebar div.brandlist>span.P_brand {
+            background-color: #255194;
+            border: 4px solid #255194;
+
+        }
+
+        .shopmain .sidebar div.brandlist>span.P_brand:hover {
+            cursor: pointer;
+            color: #255194;
+            border: 4px solid #255194;
+            background-color: #ffffff;
+
+        }
+
+        .shopmain .sidebar div.brandlist div.listtype {
+            display: inline-block;
+            font-size: 14px;
+            line-height: 2;
+            text-align: left;
+            padding: 5px;
+        }
+
+
+        .shopmain .sidebar div.brandlist div.listtype span {
+            align-items: center;
+            /* border: 1px solid black; */
+            border-radius: 15px;
+            margin-left: 10%;
+            padding-left: 15px;
+            display: flex;
+            width: 120px;
+            height: 30px;
+        }
+
+        .shopmain .sidebar div.brandlist div.listtype span:hover {
+            cursor: pointer;
+            font-size: 1.3em;
+            color: #2c477b;
+            font-weight: bold;
+        }
+
+        main {
+            width: 80%;
+            font-size: 16px;
+        }
+
+        .productShowcase {
+            width: 100%;
+            margin: auto;
+            padding: 0;
+        }
+
+        .productShowcase ul {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .productShowcase ul li {
+            width: 25%;
+            padding: 10px;
+        }
+
+        .productShowcase ul li a {
+            display: inline-block;
+            height: 80%;
+            width: 100%;
+        }
+
+
+        .productShowcase ul li img {
+            border-radius: 3px;
+            display: block;
+            max-width: 100%;
+            height: 200px;
+            margin: auto;
+            object-fit: scale-down;
+            box-shadow: 2px 3px 8px -5px #ccc;
+        }
+
+        .productShowcase ul li .productname {
+            height: 20%;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .productShowcase ul li div {
+            margin: 3px;
+            width: 100%;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .productShowcase ul li button:first-child {
+            font-size: 10px;
+            width: 60px;
+        }
+
+        .productShowcase ul li button {
+            border: 0px;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            width: 30px;
+            height: 100%;
+            margin: 2px;
+        }
+
+        .productShowcase ul li button img {
+            width: 25px;
+            height: 25px;
+        }
+
+        footer {
+            padding: 5px;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="subNav">
+            <div class="contact"><a href=""><img class="icons" src="./img/icon/square-envelope-solid.svg" alt=""></a><a
+                    href=""><img class="icons" src="./img/icon/square-facebook.svg" alt=""></a><a href=""><img
+                        class="icons" src="./img/icon/square-instagram.svg" alt=""></a></div>
+        </nav>
+        <nav class="mainNav">
+            <a href="" class="logo"><img src="./img/Logo-removebg.png" alt=""></a>
+            <ul class="productline">
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">NS</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">PS</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">XBOX</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">二手交易</a>
+                    </div>
+                </li>
+                <li>
+                    <form action="shopFNPage/shopProductList.html" class="search">
+                        <select name="productCondition" class="productCondition">
+                            <option value="new">新品</option>
+                            <option value="secondhand">二手商品</option>
+                        </select>
+                        <input name="keyword" class="searchinput" type="text" placeholder="請輸入商品名稱或關鍵字">
+                        <button type="submit" class="searchicon">
+                            <img class="icons" src="./img/icon/magnifying-glass-solid.svg" alt=""></button>
+                    </form>
+                </li>
+            </ul>
+            <div class="helping">
+                <div>
+                    <div class="centerFunc">
+                        <a href="">
+                            <img class="bigicon" src="./img/icon/newspaper-regular.svg" alt="">
+                            <span>論壇社群</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="./img/icon/champagne-glasses-solid.svg" alt="">
+                            <span>活動專區</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="./img/icon/user-regular.svg" alt="">
+                            <span>會員登入</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="./img/icon/handshake-simple-solid.svg" alt="">
+                            <span>客服中心</span>
+                        </a>
+                    </div>
+                    <a href="">
+                        <img class="bigicon" src="./img/icon/cart-shopping-solid.svg" alt="">
+                        <span>購物車</span>
+                    </a>
+                    <a href="" class="funcSelect">
+                        <img class="bigicon on" src="./img/icon/bars-solid.svg" alt="">
+                        <img class="bigicon" src="./img/icon/square-caret-left-regular.svg" alt="">
+                        <span>功能選單</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="shopmain">
+        <aside class="sidebar">
+            <div class="brandlist">
+                <span class="N_brand">
+                    Nitendo
+                </span>
+                <div class="brandItem">
+                    <div class="listtype"><span>主機</span></div>
+                    <div class="listtype"><span>手把</span></div>
+                    <div class="listtype"><span>卡帶</span></div>
+                    <div class="listtype"><span>周邊</span></div>
+                </div>
+            </div>
+
+            <div class="brandlist">
+                <span class="B_brand">
+                    XBOX
+                </span>
+                <div class="brandItem">
+                    <div class="listtype"><span>主機</span></div>
+                    <div class="listtype"><span>手把</span></div>
+                    <div class="listtype"><span>遊戲片</span></div>
+                    <div class="listtype"><span>周邊</span></div>
+                </div>
+            </div>
+            <div class="brandlist">
+                <span class="P_brand">
+                    PlayStation
+                </span>
+                <div class="brandItem">
+                    <div class="listtype"><span>主機</span></div>
+                    <div class="listtype"><span>手把</span></div>
+                    <div class="listtype"><span>遊戲片</span></div>
+                    <div class="listtype"><span>周邊</span></div>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <div class="productShowcase">
+                <ul>
+                    <li v-for="item in products">
+                        <a href="">
+                            <img :src=item.productIndexImage.image alt="商品圖片">
+                        </a>
+                        <a href="" class="productname">
+                            {{item.productName}}
+                        </a>
+                        <div>
+                            <button @click="addCart(item.id)">直接購買</button>
+                            <button><img src="./img/icon/cart-shopping-solid.svg" alt=""></button>
+                            <button><img src="./img/icon/heart-regular.svg" alt=""></button>
+                        </div>
+                    </li>
+
+                    <!-- <li v-for="item in products">
+                        <a href="">
+                            <img src="./img/gameSoftware/Nitendo/Zelda/81e40b6f7d7f88d24e680c7ddc1kz8f5.jpg"
+                                alt="商品圖片">
+                        </a>
+                        <a href="" class="productname">
+                            商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssssssssssssssssss
+                        </a>
+                        <div>
+                            <button>直接購買</button>
+                            <button><img src="./img/icon/cart-shopping-solid.svg" alt=""></button>
+                            <button><img src="./img/icon/heart-regular.svg" alt=""></button>
+                        </div>
+                    </li> -->
+
+                </ul>
+            </div>
+        </main>
+        <div class="miniMenu">
+            <div class="miniMenuContent">
+                <div class="viewRecord">
+                    <a href=""><img
+                            src="./img/gameSoftware/Nitendo/NoPlaceLikeHome/8d49654f86cee337e2a7317d031l9ro5.jpg"
+                            alt=""></a>
+                    <a href=""><img src="./img/peripherals/Nintendo/Zelda/335ced22c1dbccd628a4001e9a1l4xo5.jpg"
+                            alt=""></a>
+                    <a href=""><img src="./img/peripherals/Nintendo/Zelda/4262aa92a53a61f67e57e46e0b1l4tv5.jpg"
+                            alt=""></a>
+                </div>
+                <div class="miniMenuBut">
+                    <a href="" class="goTop"><img src="./img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
+                    <a href="" class="viewRecord"><img src="./img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
+                    <a href="" class="shoppingCart"><img src="./img/icon/cart-shopping-solid.svg" alt="購物車"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./jquery/jquery-3.4.1.min.js"></script>
+    <script src="./js/shopMainNavSearchBar.js"></script>
+    <script src="./js/shopRightSideMiniMenu.js"></script>
+    <script src="./js/shopNavBarShowup.js"></script>
+    <script src="./js/shopMainNavHelping.js"></script>
+    <script>
+        // 左側邊欄開關
+        $(".brandlist>span").on('click', function (e) {
+            $(this).toggleClass("-is_click");
+
+            if ($(this).hasClass("-is_click")) {
+                $(e.target).next().animate({ height: "180px" }, 200, 'linear')
+            } else {
+                $(e.target).next().animate({ height: "0px" }, 200)
+            }
+        })
+    </script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module" src="./js/shopProductList.js"></script>
+
+</body>
+<!--添加瀏覽紀錄-->
+
+</html>

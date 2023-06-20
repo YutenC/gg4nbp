@@ -1,0 +1,280 @@
+header {
+    color: #0066CC;
+}
+
+.mainNav {
+    font-size: 16px;
+    height: 90x;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 5px 3px#F5F5F5;
+    background-color: #fff;
+    width: 100%;
+    padding: 5px 0;
+    position: fixed;
+    top: 25px;
+    border-radius: 0 0 3px 7px;
+    z-index: 9999;
+    left: 0;
+    background-color: #82d6bd;
+}
+
+
+.mainNav a.logo {
+    height: 90px;
+    width: 80px;
+    margin: 0px 20px;
+    text-align: center;
+    flex: 0.8;
+}
+
+.mainNav .logo img {
+    padding: 0;
+    width: auto;
+    height: 100%;
+}
+
+/* 商品類別選單 */
+
+/*選單列表*/
+.mainNav ul.productline {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: space-between;
+    align-items: center;
+    flex: 4;
+    margin: 0;
+}
+
+/*選單按鈕外容器*/
+.mainNav ul.productline li {
+    height: 100%;
+    text-align: center;
+    padding: 0 5px;
+    width: 15%;
+    height: 100%;
+    flex: 2;
+    transition: flex 4s;
+}
+
+.mainNav ul.productline li a {
+    text-decoration: none;
+    background-color: #82d6bd;
+}
+
+.mainNav ul.productline.onsearch li {
+    flex: 1;
+    transition: flex 0s;
+}
+
+.mainNav ul.productline li:last-child {
+    text-align: right;
+    padding-right: 10px;
+}
+
+
+.mainNav ul.productline.onsearch li:last-child {
+    flex: 4;
+    padding: 0;
+}
+
+@media (max-width: 950px) {
+    .mainNav ul.productline.onsearch li:last-child {
+        flex: 3;
+    }
+}
+
+/* 下拉按鈕樣式 */
+.dropbtn {
+    display: inline-block;
+    border-radius: 3px;
+    background-color: #fff;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 50px;
+    line-height: 40px;
+}
+
+.dropbtn:hover {
+    color: #fff;
+}
+
+/* 容器 <div> - 需要定位下拉内容 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    color: #000080;
+    width: 100%;
+}
+
+.dropdown.onsearch>.dropdown a {
+    text-decoration: none;
+}
+
+/* 下拉内容 (預設隱藏) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0px;
+    background-color: #f9f9f9;
+    color: #171717;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* 下拉選單連結 */
+.dropdown-content a {
+    color: #fff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #AEE5D4;
+    color: #fff;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #AEE5D4;
+}
+
+/*搜尋列*/
+.mainNav ul.productline li form {
+    padding: 0;
+    margin: 0;
+}
+
+.mainNav ul.productline li select.productCondition {
+    border-radius: 3px;
+    color: #828282;
+    transition: width 1s;
+    display: none;
+    border: 1px solid #ccc;
+}
+
+.mainNav ul.productline li select.productCondition:focus {
+    outline: 1px solid #3DBD96;
+}
+
+
+.mainNav ul.productline li .searchinput {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: none;
+}
+
+.mainNav ul.productline.onsearch li .searchinput {
+    width: 60%;
+    transition: width 1s;
+}
+
+@media (max-width: 950px) {
+    .mainNav ul.productline.onsearch li .searchinput {
+        width: 80%;
+    }
+}
+
+.mainNav ul.productline li .searchinput:focus {
+    border: 0;
+    outline: 2px solid #3DBD96;
+    background-color: #fff;
+}
+
+.mainNav ul.productline li form button.searchicon {
+    padding-top: 3px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 3px;
+}
+
+.mainNav ul.productline li form button.searchicon:hover {
+    border: 1px solid #fff;
+}
+
+/*helpcenter*/
+.mainNav .helping {
+    margin: 0;
+    font-size: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+    flex: 0.8;
+}
+
+.mainNav .helping div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mainNav .helping .centerFunc {
+    display: none;
+}
+
+.mainNav .helping .centerFunc.on {
+    display: flex;
+}
+
+.mainNav .helping a {
+    width: 50px;
+    display: inline-block;
+    text-align: center;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.mainNav .helping img {
+    margin: 5px;
+}
+
+nav.mainNav .helping a span {
+    height: 10px;
+    display: inline-block;
+}
+
+.mainNav .helping a:hover {
+    border: 1px solid #fff;
+    border-radius: 3px;
+}
+
+.mainNav .helping a:hover span {
+    color: #fff;
+}
+
+.bigicon {
+    width: 36px;
+    height: 36px;
+}
+
+a.funcSelect img {
+    display: none;
+}
+
+a.funcSelect:hover img:first-child {
+    transform: rotate(-90deg);
+}
+
+a.funcSelect img:nth-child(2) {
+    transform: rotate(270deg);
+}
+
+a.funcSelect:hover img:nth-child(2) {
+    transform: rotate(0deg);
+}
+
+a.funcSelect img.on {
+    display: inline-block;
+}

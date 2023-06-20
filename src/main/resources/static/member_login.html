@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBP.gg</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("./img/background_img.png");
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(197, 228, 235);
+            color: #555;
+            font-size: 14px;
+            /* opacity: 0.8; */
+        }
+
+        div.bg_img {
+            /* background-image: url("/project/img/background_img.png");   */
+            width: 100%;
+            height: 100%;
+            /* opacity: 0.6; */
+            /* border: 1px solid red; */
+            /* position: absolute; */
+        }
+
+        form.login {
+            width: 100%;
+            padding: 5vh 5vh;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        div.login_block0 {
+            padding: 40px;
+            margin: 50px auto 50px;
+            background-color: #fafafa;
+            border-radius: 50px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+        }
+
+        div.login_block1 {
+            width: 400px;
+            margin: 0 auto;
+
+        }
+
+        div.login_img {
+            width: 200px;
+            height: fit-content;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 0;
+        }
+
+        h1 {
+            width: fit-content;
+            font-size: 40px;
+            margin: 0 auto;
+        }
+
+        div.username {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        div.password {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        input[type="username"] {
+            width: 100%;
+            height: 38px;
+            margin: 10px 0 5px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid gray;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            height: 38px;
+            margin: 5px 0 5px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid gray;
+        }
+
+        div.login_btn0 {
+            width: 75%;
+            margin: 0 auto;
+            
+        }
+
+        input.login_btn1 {
+            border-radius: 8px;
+        }
+
+        button.login_btn1 {
+            border-radius: 8px;
+        }
+
+        button[type="button"] {
+            width: 100%;
+            margin: 10px 0 0 0;
+            background: #00A8FF;
+            color: #fff;
+            padding: 10px;
+            border: #00A8FF;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+        }
+
+        input[type="checkbox"] {
+            margin: 10px 0 0 0;
+            border: none;
+        }
+
+        div.keepLogin0 {
+            width: fit-content;
+            margin: 0;
+            padding: 0 50px;
+        }
+
+        input.keepLogin1 {
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        .btn {
+            margin: 0 0 10px 0;
+        }
+
+        .member_btn {
+            margin: 10px 0 0 0;
+            padding: 0 50px;
+        }
+
+        hr {
+            width: 100%;
+            margin: 30px auto;
+            color: #555;
+        }
+
+        .other_login {
+            /* border: 1px solid red; */
+            font-size: 14px;
+        }
+
+        img#google_btn {
+            border-radius: 50%;
+            width: 100px;
+        }
+
+        img#fb_btn {
+            border-radius: 50%;
+            width: 99px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="bg_img">
+        <form class="login">
+
+            <div class="login_block0">
+                <div class="login_img">
+                    <a href="./index.html">
+                        <img src="./img/Logo-removebg.png">
+                    </a>
+                </div>
+                <div class="login_block1">
+                    <h1>會員登入</h1><br>
+                    <div class="username">
+                        <label for="account"></label>
+                        <input id="account" name="account" type="username" placeholder="請輸入帳號" required>
+                    </div>
+                    <div class="password">
+                        <label for="password"></label>
+                        <input id="password" name="password" type="password" placeholder="請輸入密碼" required>
+                    </div>
+                    <div class="login_btn0">                        
+                        <button class="login_btn1" id="submit" type="button" value="登入">登入</button>
+                    </div>
+                    <div class="keepLogin0">
+                        <span id="keepLogin0">
+                            <input id="keepLogin1" name="keepLogin" type="checkbox" required>
+                            <label for="keepLogin">保持登入7天</label>
+                        </span>
+                    </div>
+
+                    <div class="member_btn">
+                        <span>
+                            <a href="./member_forget.html" id="member_btn">忘記密碼</a>
+                        </span>
+                        <span>
+                            <a href="./member_register.html" id="register">註冊會員</a>
+                        </span>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="other_login">
+                    <div class="">或是使用下列外部方式登入：</div>
+                    <span>
+                        <img id="google_btn" src="./img/google-removebg.png">
+                    </span>
+                    <span>
+                        <img id="fb_btn" src="./img/fb-removebg.png">
+                    </span>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+</body>
+<script src="./js/member_logout.js"></script>
+<script>
+    $("button#submit").on("click", function () {
+        $.ajax({
+            url: "memberLoginServlet",
+            method: "POST",
+            dataType: "json",
+            enctype:"multipart/form-data",
+            data: {
+                account: $("#account").val(),
+                password: $("#password").val()
+            },
+            success: function (response) {
+                let member = response;    
+                let isPass = member.successful;
+                if (isPass) {
+                    sessionStorage.setItem("id", member.member_id);
+                    sessionStorage.setItem("id", member.account);
+                    window.location.href = "./member/member_home.html";
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '登入失敗',
+                        text: member.message,
+                    })
+                }
+            },
+            error: function (xhr, status, err) {
+                console.log(xhr);
+                console.log(status);
+                console.log(err)
+            }
+        })
+    })  
+
+
+</script>
+
+</html>

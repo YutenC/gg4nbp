@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>member_blacklist</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
+    <link rel="stylesheet" href="../fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/Carousel-Hero.css">
+    <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="../css/Main-Content.css">
+    <link rel="stylesheet" href="../css/Navbar-Centered-Brand.css">
+    <link rel="stylesheet" href="../css/Profile-Edit-Form-1.css">
+    <link rel="stylesheet" href="../css/Profile-Edit-Form.css">
+    <link rel="stylesheet" href="../css/Profile-with-data-and-skills.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="../css/act_iron_inform.css"> -->
+    <style>
+        table.table {
+            table-layout: fixed;
+        }
+
+        div.row {
+            width: 100%;
+        }
+
+        div.message_button {
+            width: fit-content;
+            margin-left: 485px;
+        }
+
+        span.message_button {
+            width: fit-content;
+            margin-right: 10px;
+        }
+
+        th#messgae_id {
+            width: 50px;
+        }
+
+        td#messgae_id {
+            visibility: hidden;
+            width: 50px;
+        }
+
+        th#time {
+            width: 120px;
+            text-align: center;
+        }
+
+        td#time {
+            width: 120px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        th#message_content {
+            text-align: center;
+            width: 400px;
+        }
+
+        td#message_content {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 400px;
+            vertical-align: middle;
+        }
+
+        th#is_read {
+            width: 10px;
+            font-size: 0px;
+        }
+
+        td#is_read {
+            width: 10px;
+            font-size: 0px;
+        }
+
+        th#manage_function {
+            width: 250px;
+            text-align: center;
+        }
+
+        td#manage_function {
+            text-align: center;
+            width: 200px;
+            vertical-align: middle;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- 引入 axios 库 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            axios.get("/api/data")
+                .then((response) => {
+                    let data = response.data;
+                    console.log(data.name);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center"></a>
+                <a href="#" style="width: 180px;height: 103.19px;">
+                    <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;">
+                                <img src="../img/gamepad-solid.svg">商城中心
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/dice-solid.svg">二手商城
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
+                                style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="#">
+                                <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
+                                    style="height: 50px;">論壇社群
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/champagne-glasses-solid.svg">活動專區
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="../member/member_home.html"
+                                style="margin-top: 10px;">
+                                <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
+                                    style="height: 50px;">會員中心
+                            </a>
+                        </li>
+                        <li class="nav-item" style="height: 80px;">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
+                                style="margin-top: 20px;color: var(--bs-dark);">
+                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
+                                    style="height: 40px;">客服中心
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
+                                href="#service_center"
+                                style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
+                                <div id="member_pic-1" class="avatar-bg center"
+                                    style="width: 60px;height: 60px;margin-left: 0px;"></div>登出
+                            </a>
+                        </li>
+                    </ul>
+                    <footer id="footerpad-1"></footer>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="row" style="height: 800px;">
+            <div class="col-lg-4 col-xl-2 offset-xl-1" style="height: 600px;">
+                <div class="list-group">
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                       href="../member/member_info.html" data-bs-toggle="list"
+                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                       href="../member/member_friendlist.html" data-bs-toggle="list"
+                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">好友名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                       href="../member/member_blacklist.html" data-bs-toggle="list"
+                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">黑名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                        href="#list-search-order" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢一般交易
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                        href="#list-search-sh-order" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手交易
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                       href="../member/SecondHand_buylist_search.html" data-bs-toggle="list"
+                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手收購進度
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                        href="#list-product-follow" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">一般商品追蹤清單
+                        <br>
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                        href="#list-sh-product-follow" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">二手商品追蹤清單
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                        href="#list-activity" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢參加活動
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                       href="../member/member_noticelist.html" data-bs-toggle="list"
+                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看通知
+                    </a>
+                    <a data-bss-hover-animate="pulse" class="list-group-item list-group-item-action"
+                       href="../member/member_loginhistory.html" data-bs-toggle="list"
+                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看登入紀錄
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container profile profile-view" id="profile" style="height: 800px;">
+                    <h1>活動通知</h1>
+                    <div class="message_button">
+                        <span class="message_button">
+                            <button type="button" class="btn btn-primary">查詢通知</button>
+                        </span>
+                        <span class="message_button">
+                            <button type="button" class="have_read btn btn-primary">已讀所有通知</button>
+                        </span>
+                        <span class="message_button">
+                            <button type="button" class="have_read btn btn-primary">刪除所有通知</button>
+                        </span>
+                    </div>
+
+
+                    <table class="table">
+                        <tr>
+                            <th scope="col" id="message_id"></th>
+                            <th scope="col" id="time">通知時間</th>
+                            <th scope="col" id="act_picture">圖片</th>
+                            <th scope="col" id="message_content">管理功能</th>
+
+                            <th scope="col" id="manage_function">活動資訊</th>
+                        </tr>
+                        </head>
+
+                        <body>
+                            <tr>
+
+                            </tr>
+                        </body>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="messgae_id">1</td>
+                                <td id="time">2023-05-22</td>
+                                <td id="act_picture"><img src="../img/img_act/4.jpg" style="width: 36px; height: 36px">
+                                <td id="manage_function">
+                                    <button class="btnI1">
+                                        <i class="fas fa-comment-alt-dots fa-spin"></i>
+                                        <input type="button" value="聊天室" class="ctrlbutton">
+                                    </button>
+                                    <button class="btnI2">
+                                        <i class="fas fa-radiation" style="color: #f00000;"></i>
+                                        <input type="button" value="檢舉" class="ctrlbutton">
+                                    </button>
+                                    <button class="btnI3">
+                                        <i class="fas fa-trash-alt"></i>
+                                        <input type="button" value="刪除" class="ctrlbutton">
+                                    </button>
+                                </td>
+                                </td>
+                                <td id=" message_content">
+                                    AAAAAAAAAAAAAA
+                                </td>
+
+
+
+                            </tr>
+                            <tr>
+                                <td id="messgae_id">2</td>
+                                <td id="time">2023-05-25</td>
+                                <td id="act_picture"><img src="../img/img_act/kita.jpg"
+                                        style="width: 36px; height: 36px">
+                                <td id="manage_function">
+                                    <button class="btnI1">
+                                        <i class="fas fa-comment-alt-dots fa-spin"></i>
+                                        <input type="button" value="聊天室" class="ctrlbutton">
+                                    </button>
+                                    <button class="btnI2">
+                                        <i class="fas fa-radiation" style="color: #f00000;"></i>
+                                        <input type="button" value="檢舉" class="ctrlbutton">
+                                    </button>
+                                    <button class="btnI3">
+                                        <i class="fas fa-trash-alt"></i>
+                                        <input type="button" value="刪除" class="ctrlbutton">
+                                    </button>
+                                </td>
+                                <td id="message_content">BBBBBBBB</td>
+
+
+                            </tr>
+                            <tr>
+                                <td id="messgae_id">3</td>
+                                <td id="time">2023-05-27</td>
+                                <td id="act_picture"><img src="../img/img_act/6.jpg" style="width: 36px; height: 36px">
+                                <td id="manage_function">
+                                    <button class="btnI1">
+                                        <i class="fas fa-comment-alt-dots fa-spin"></i>
+                                        <input type="button" value="聊天室" class="ctrlbutton">
+                                    </button>
+                                    <button class="btnI2">
+                                        <i class="fas fa-radiation" style="color: #f00000;"></i>
+                                        <input type="button" value="檢舉" class="ctrlbutton">
+                                    </button>
+                                    <button class="btnI3">
+                                        <i class="fas fa-trash-alt"></i>
+                                        <input type="button" value="刪除" class="ctrlbutton">
+                                    </button>
+                                </td>
+                                <td id="message_content">CCCCCCC</td>
+
+                                <td id="manage_function">
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
+    <!-- <script src="../bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="../js/bs-init.js"></script>
+    <script src="../js/Profile-Edit-Form.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+</body>
+<script>
+    $('table.table').on('click', 'td#message_content', function () {
+        Swal.fire({
+            title: `<strong>訊息內容</strong>`,
+            html: `${$(this).text()}`
+        });
+    });
+
+</script>
+
+</html>

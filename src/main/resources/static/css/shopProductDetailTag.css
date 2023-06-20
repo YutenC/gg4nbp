@@ -1,0 +1,75 @@
+ /*商品介紹切換欄位*/
+ /* 頁籤區塊 */
+ div.tagPage div.contentTabBlock {
+     padding-left: 20px;
+ }
+
+ /* 頁籤列表 */
+ div.tagPage div.contentTabBlock ul.contentTab {
+     list-style: none;
+     display: inline-block;
+     margin: 0;
+     padding: 0;
+ }
+
+ div.tagPage div.contentTabBlock ul.contentTab>li {
+     display: inline-block;
+ }
+
+ div.tagPage div.contentTabBlock ul.contentTab>li>a {
+     text-decoration: none;
+     display: inline-block;
+     border: 1px solid #ccc;
+     border-bottom: 0;
+     padding: 2px 20px;
+     border-radius: 5px 5px 0 0;
+     cursor: pointer;
+     color: #ccc;
+     position: relative;
+     top: 1px;
+ }
+
+ div.tagPage div.contentTabBlock ul.contentTab>li>a::after {
+     content: "";
+     position: absolute;
+     width: calc(100% + 2px);
+     height: 1px;
+     bottom: -1px;
+     left: 0;
+     z-index: 1;
+     border: 0;
+ }
+
+ div.tagPage div.contentTabBlock ul.contentTab>li>a.-on {
+     border: 1px solid #D9D9D9;
+     color: black;
+     top: 0;
+ }
+
+ /* 將底部黑線改成白色 */
+ div.tagPage div.contentTabBlock ul.contentTab>li>a.-on::after {
+     background-color: white;
+     /* border: 1px solid white; */
+     width: 100%;
+     left: 0;
+ }
+
+
+ /* 頁籤內容區塊 */
+ div.tagPage div.contentPage {
+     border: 1px solid #D9D9D9;
+     border-radius: 3px 3px 0 0;
+ }
+
+ div.tagPage div.contentPage div.tab {
+     padding: 10px;
+     display: none;
+ }
+
+ div.tagPage div.contentPage div.tab.-on {
+     display: block;
+ }
+
+ div.tagPage div.contentPage div.tab dl {
+     margin-bottom: 5px;
+ }

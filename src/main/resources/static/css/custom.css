@@ -1,0 +1,110 @@
+.nav-bar-top {
+
+  width: fit-content;
+
+  /* 如果你也想讓元素與畫面頂部保持20px的距離 */
+}
+
+.custom-index-content {
+  border-radius: 30px;
+  padding: 10px;
+  background-color: #f8f9fc;
+}
+
+.custom-index-text-primary {
+  color: black !important;
+}
+
+.custom-index-content-lastlist {
+  border-bottom: none;
+}
+
+.custom-manager-button,
+.custom-power-button,
+.custom-member-button,
+.custom-ban-button {
+  background-color: gray;
+  border: black;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.custom-col-newmanager,
+.custom-col-newpower,
+.custom-col-newmember {
+  padding: 10px;
+  width: 100%;
+}
+
+
+
+.custom-col-newmanager:first-child,
+.custom-col-newpower:first-child,
+.custom-col-newmember:first-child {
+  padding-top: 0px;
+}
+
+.custom-col-newmanager:last-child,
+.custom-col-newpower:last-child,
+.custom-col-newmember:last-child {
+  padding-bottom: 0px;
+}
+
+.custom-col-newmanager-btn,
+.custom-col-newpower-btn,
+.custom-col-newmember-btn {
+
+  text-align: center;
+
+}
+
+.btn-danger {
+  background-color: rgb(231, 74, 59);
+  border-color: rgb(231, 74, 59);
+}
+
+
+.table {
+  table-layout: auto;
+}
+
+th {
+  word-break: keep-all;
+}
+
+td {
+  word-break: break-all;
+}
+
+td:last-child {
+  word-break: normal;
+  white-space: nowrap;
+}
+
+
+
+@media (max-width: 600px) {
+  #member_list td {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  #member_list td {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 901px) {
+  #member_list td {
+    font-size: 18px;
+  }
+}
+
+div.profile-row {
+  margin: auto;
+}
+
+.dataTables_filter {
+  margin-right: 10px;
+}

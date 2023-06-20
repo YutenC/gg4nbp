@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="..\css\sh_index.css">
+    <title>Document</title>
+    <script src="../jquery/jquery-3.7.0.js"></script>
+    <!-- ===========boodstrap========== -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="../css/SecondHand_buy.css">
+
+
+</head>
+
+<body>
+
+    <main>
+        <div class="content">
+
+            <div class="showArea">
+
+
+
+                <!-- 直接購買 -->
+
+                <div class="buyDirectlyPage">
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-6" id="message">
+                            <fieldset>
+                                <legend>訂單確認</legend>
+                            </fieldset>
+
+
+
+
+
+                            <div class="has-feedback form-group mb-3">
+                                <!-- <label class="form-label"for="from_name">收件人姓名</label> -->
+                                <span class="form-label" for="from_name">收件人姓名</span>
+                                <input class="form-control" type="text" id="from_name" tabindex="-1" name="from_name"
+                                    required="" placeholder="請輸入全名">
+                            </div>
+
+                            <div class="has-feedback form-group mb-3"><label class="form-label"
+                                    for="from_email">連絡電話</label><input class="form-control" type="text" id="from_email"
+                                    name="from_email" required="" placeholder="請輸入連絡電話"></div>
+
+                            <div class="has-feedback form-group mb-3"><label class="form-label"
+                                    for="from_email">Email</label><input class="form-control" type="text"
+                                    id="from_email-5" name="from_email" required="" placeholder="請輸入Email"></div>
+
+
+                            <div class="has-feedback form-group mb-3"><label class="form-label"
+                                    for="from_email">取貨方式</label><select class="form-select">
+                                    <optgroup label="">
+                                        <option value="12" selected="" disabled>請選擇取貨方式</option>
+                                        <option value="12">郵寄/宅配</option>
+                                        <option value="13">超商取貨付款</option>
+                                    </optgroup>
+                                </select></div>
+
+                            <!-- 選項1 -->
+                            <div class="form-label">
+                                <label class="pay_bank">請填入收件資訊</label>
+
+
+                                <div>收件人</div><input type="text">
+                                <div>收件地址</div><input type="text">
+                            </div>
+
+                            <!-- 選項2 -->
+
+                            <div class="form-label">
+                                <label class="pay_market">請填入取貨超商</label>
+
+
+                                <div>超商名稱</div><input type="text">
+                                <div>超商代碼</div><input type="text">
+                            </div>
+
+
+                            <div class="has-feedback form-group mb-3"><label class="form-label"
+                                    for="from_email">匯款方式</label><select class="form-select">
+                                    <optgroup label="">
+                                        <option value="12" selected="" disabled>請選擇匯款方式</option>
+                                        <option value="12">銀行/郵局匯款</option>
+                                        <option value="13">信用卡</option>
+                                        <!-- <option value="14">超商取貨付款</option> -->
+                                    </optgroup>
+                                </select>
+
+                                <!-- 選項1 -->
+                                <!-- <div class="pay_bank">請填入匯款資訊
+                                            <span>銀行名稱</span><input type="text">
+                                            <span>匯款帳號</span><input type="text">
+                                        </div> -->
+
+                                <!-- 選項2 -->
+                                <!-- <div class="pay_credit">請填入信用卡資訊
+                                            <span>信用卡卡號</span><input type="text">
+                                            <span>驗證碼(?)</span><input type="text">
+                                        </div> -->
+
+
+
+                            </div>
+
+
+
+
+
+
+
+                            <div class="form-group mb-3"><button class="btn btn-primary d-block w-100"
+                                    type="submit">送出訂單<i class="fa fa-chevron-circle-right"></i></button></div>
+                            <hr>
+                        </div>
+                        <div class="col-md-6">
+                            <fieldset>
+                                <legend style="font-weight: bold;font-size: 22px;margin: 5px 0px 0px 0px;">Product
+                                </legend>
+                                <legend style="font-size: 20px;">Switch舊款初代整套</legend>
+                            </fieldset>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="static-map"><img class="img-fluid"
+                                            src="../img/secondHand/PlayStation_ProductTest01.jpg"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <fieldset>
+                                <legend
+                                    style="font-weight: bold;font-size: 20px;margin: 5px 0px 0px 0px;--bs-body-font-size: 1rem;">
+                                    金額</legend>
+                                <legend
+                                    style="font-weight: bold;font-size: 20px;margin: 5px 0px 0px 0px;--bs-body-font-size: 1rem;">
+                                    運費</legend>
+                                <legend style="font-weight: bold;font-size: 22px;margin: 5px 0px 0px 0px;">總金額</legend>
+                            </fieldset>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+
+                <!-- =========直接購買end========= -->
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+        </div>
+        </div>
+    </main>
+
+
+
+</body>
+
+<!-- ====bootstrap====== -->
+<script src="../js/sh_insertblock.js"></script>
+<script>
+insertSide();
+</script>
+</html>

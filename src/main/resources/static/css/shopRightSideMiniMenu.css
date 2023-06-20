@@ -1,0 +1,61 @@
+/*側邊迷你功能欄*/
+.shopmain {
+    position: relative;
+}
+
+.shopmain .miniMenu {
+    width: 90px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+}
+
+.shopmain .miniMenu .miniMenuContent {
+    height: 200px;
+    position: sticky;
+    top: 200px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.shopmain .miniMenu .miniMenuBut {
+    text-align: center;
+    border: 1px solid #EDEDED;
+    border-radius: 3px;
+    width: 30px;
+    top: 200px;
+    height: 84px;
+    background-color: #FAFAFA;
+}
+
+.shopmain .miniMenu .miniMenuBut a {
+    background-color: #F5F5F5;
+    text-align: center;
+    display: block;
+    width: 20px;
+    margin: 6px auto;
+}
+
+.shopmain .miniMenu img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.shopmain .miniMenu div.viewRecord {
+    height: 180px;
+    background-color: #fff;
+    width: 60px;
+    top: 200px;
+    display: none;
+}
+
+.shopmain .miniMenu div.viewRecord img {
+    width: 60px;
+    height: 60px;
+    object-fit: fill;
+    margin: 1px;
+}

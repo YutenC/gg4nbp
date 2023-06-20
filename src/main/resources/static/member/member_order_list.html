@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>memberOrderList</title>
+    <link rel="stylesheet" href="/Five_NBP.gg/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
+    <link rel="stylesheet" href="/Five_NBP.gg/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/Five_NBP.gg/css/Carousel-Hero.css">
+    <link rel="stylesheet" href="/Five_NBP.gg/css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="/Five_NBP.gg/css/Main-Content.css">
+    <link rel="stylesheet" href="/Five_NBP.gg/css/Navbar-Centered-Brand.css">
+    <link rel="stylesheet" href="/Five_NBP.gg/css/Profile-Edit-Form-1.css">
+    <link rel="stylesheet" href="/Five_NBP.gg/css/Profile-Edit-Form.css">
+    <link rel="stylesheet" href="/Five_NBP.gg/css/Profile-with-data-and-skills.css">
+    <link rel="stylesheet" href="/Five_NBP.gg/css/styles.css">
+    <style>
+        div.row {
+            width: 100%;
+        }
+
+
+        div.colRight {
+            padding: 0;
+        }
+
+        #profile {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 1px 10px 3px #FCFCFC;
+        }
+
+        .functionSelect {
+            margin-top: 10px;
+        }
+
+        .detailArea {
+            margin-top: 10px;
+        }
+
+        .detailArea table {
+            text-align: center;
+            border: 1px solid #ccc;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 3px;
+            width: 100%;
+            margin: 5px 0;
+            border: 3px;
+            padding: 0;
+        }
+
+        .detailArea table td {
+            border: 1px solid #ccc;
+            word-wrap: break-all;
+            white-space: pre-line;
+            width: 70px;
+        }
+
+        .detailArea table td span {
+            margin: 0;
+            font-size: 10px;
+        }
+
+        .detailArea table td:first-child {
+            width: 150px;
+            text-align: left;
+        }
+
+        .detailArea table tr:first-child td:first-child {
+            border-radius: 3px 0 0 0;
+        }
+
+        .detailArea table tr:first-child td:last-child {
+            border-radius: 0 3px 0 0;
+        }
+
+        .detailArea table tr:last-child td:first-child {
+            border-radius: 0 0 0 3px;
+        }
+
+        .detailArea table tr:last-child td:last-child {
+            border-radius: 0 0 3px 0;
+        }
+
+        button {
+            border-radius: 3px;
+            border: 0;
+            margin: 3px;
+            width: 20px;
+            text-align: center;
+            padding: 0;
+        }
+
+        button.openBtn.switch {
+            display: none;
+        }
+
+        button.closeBtn {
+            display: none;
+        }
+
+        button.closeBtn.switch {
+            display: inline;
+        }
+
+        div.detailContent {
+            display: none;
+        }
+
+        div.detailContent.on {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center"></a>
+                <a href="../index.html" style="width: 180px;height: 103.19px;">
+                    <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item" id="shop">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;">
+                                <img src="../img/gamepad-solid.svg">商城中心
+                            </a>
+                        </li>
+                        <li class="nav-item" id="shshop">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/dice-solid.svg">二手商城
+                            </a>
+                        </li>
+                        <li class="nav-item" id="actitcle">
+                            <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
+                                style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="#">
+                                <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
+                                    style="height: 50px;">論壇社群
+                            </a>
+                        </li>
+                        <li class="nav-item" id="activty">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/champagne-glasses-solid.svg">活動專區
+                            </a>
+                        </li>
+                        <li class="nav-item" id="member_home">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="member_home.html"
+                                style="margin-top: 10px;">
+                                <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
+                                    style="height: 50px;">會員中心
+                            </a>
+                        </li>
+                        <li class="nav-item" style="height: 80px;" id="help">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
+                                style="margin-top: 20px;color: var(--bs-dark);">
+                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
+                                    style="height: 40px;">客服中心
+                            </a>
+                        </li>
+                        <li class="nav-item logout">
+                            <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
+                                style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
+                                <div id="member_pic-1" class="avatar-bg center"
+                                    style="width: 60px;height: 60px;margin-left: 0px;"></div>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                    <footer id="footerpad-1"></footer>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="main-content">
+        <div class="row" style="height: 800px;">
+            <div class="col-lg-4 col-xl-2 offset-xl-1" style="height: 600px;">
+                <div class="list-group" >
+                    <a data-bss-hover-animate="pulse" id="info"
+                    class="list-group-item list-group-item-action"
+                        href="./member_info.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="setBank" class="list-group-item list-group-item-action"
+                        href="./member_common_account.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">常用帳戶設定
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="friend" class="list-group-item list-group-item-action"
+                        href="./member_friendlist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">好友名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="black" class="list-group-item list-group-item-action"
+                        href="./member_blacklist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">黑名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="trade" class="list-group-item list-group-item-action"
+                        href="./member_order_list.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢一般交易
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_trade" class="list-group-item list-group-item-action"
+                        href="./member_shordersearch.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手交易
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_buy" class="list-group-item list-group-item-action"
+                        href="./SecondHand_buylist_search.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手收購進度
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="pro_follow" class="list-group-item list-group-item-action"
+                        href="./member_product_follow.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">一般商品追蹤清單
+                        <br>
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_follow" class="list-group-item list-group-item-action"
+                        href="./member_shloveList.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">二手商品追蹤清單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="act_follow" class="list-group-item list-group-item-action"
+                        href="#" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢參加活動
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="notice" class="list-group-item list-group-item-action"
+                        href="member_noticelist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看通知
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="login_his" class="list-group-item list-group-item-action"
+                        href="member_loginhistory.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看登入紀錄
+                    </a>
+                </div>
+            </div>
+
+            <div class="col colRight">
+                <div class="container profile profile-view" id="profile">
+                    <h1>一般交易紀錄查詢</h1>
+                    <div class="functionSelect">
+                        <form action="" class="functionSelect">
+                            <select name="functionSelect" id="functionSelect">
+                                <option value="all">全部</option>
+                                <option value="unpaid">未付款</option>
+                                <option value="paid">已付款</option>
+                                <option value="shipped">已出貨</option>
+                                <option value="unship">未出貨</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="detailArea">
+                        <div class="detailUnit">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>訂單編號</td>
+                                        <td>日期</td>
+                                        <td>訂單狀態</td>
+                                        <td>總價</td>
+                                        <td>付款狀態</td>
+                                        <td>出貨狀態</td>
+                                        <td>說明</td>
+                                        <td>退貨</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11111111</td>
+                                        <td>2023/5/25</td>
+                                        <td>訂單成立</td>
+                                        <td>$2,000</td>
+                                        <td>已付款
+                                            <span>(信用卡一次付清)</span>
+                                        </td>
+                                        <td>已出貨</td>
+                                        <td>---</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="purchaseDetail">
+                                <button class="openBtn">+</button>
+                                <button class="closeBtn">-</button>
+                                <a href="" class="purchaseBtn">查看詳情</a>
+                                <div class="detailContent">
+                                    <table>
+                                        <tr>
+                                            <td><a href="">商品名稱~fadsfsfs</a></td>
+                                            <td>1件</td>
+                                            <td>$2,000</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/Five_NBP.gg/jquery/jquery-3.4.1.min.js"></script>
+    <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="/Five_NBP.gg/js/bs-init.js"></script>
+    <script src="/Five_NBP.gg/js/Profile-Edit-Form.js"></script>
+    <script>
+        $('div.detailArea').on('click', 'button.purchaseBtn, a.purchaseBtn', function (e) {
+            e.preventDefault();
+            $(this).closest('div.purchaseDetail').find('div.detailContent').toggleClass('on');
+            $(this).closest('div.purchaseDetail').find('button').toggleClass('switch');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+.subNav {
+    text-align: right;
+    background: linear-gradient(90deg, #fff, #FAFAFA, #F5F5F5);
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+    top: 0;
+    height: 25px;
+    line-height: 25px;
+    padding: 3px 0px;
+    left: 0;
+}
+
+.subNav .contact {
+    height: 100%;
+    line-height: 100%;
+}
+
+.subNav .contact::before {
+    content: '';
+    position: absolute;
+    left: 0;
+}
+
+.subNav .contact a {
+    padding: 0;
+    text-align: center;
+    line-height: 100%;
+    margin: 0 5px;
+}
+
+.icons {
+    width: 20px;
+    height: 20px;
+}

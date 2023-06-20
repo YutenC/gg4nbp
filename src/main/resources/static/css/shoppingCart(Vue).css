@@ -1,0 +1,464 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Geologica', sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+body {
+    text-align: center;
+    margin: auto;
+}
+
+.cartHeader {
+    width: 60%;
+    margin: auto;
+    text-align: left;
+}
+
+.cartHeader .ctHeaderUp {
+    height: 110px;
+    width: 100%;
+    padding: 3px;
+}
+
+.cartHeader .logo {
+    display: inline-block;
+    width: 150px;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.cartHeader .logo img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    margin: auto;
+}
+
+.cartHeader span {
+    vertical-align: middle;
+    width: 50%;
+    display: inline-block;
+}
+
+@media (max-width: 600px) {
+    .cartHeader span {
+        display: none;
+    }
+}
+
+div.cartHeader .addItem a.minus {
+    display: none;
+}
+
+
+.cartHeader div a.addItem {
+    text-decoration: none;
+    margin: 3px;
+}
+
+@media (max-width: 600px) {
+    .cartHeader div a.addItem {
+        display: block;
+    }
+}
+
+.cartHeader div a.addItem img.icon {
+    height: 10px;
+    width: 10px;
+    display: none;
+}
+
+.cartHeader div a.addItem img.icon.on {
+    display: inline-block;
+}
+
+.cartHeader div.addDetail table {
+    border-collapse: separate;
+    border-spacing: 0;
+    display: none;
+}
+
+.cartHeader div.addDetail table.on {
+    display: block;
+}
+
+.cartHeader div.addDetail table th,
+.cartHeader div.addDetail table td {
+    border: 1px solid #A6A6A6;
+    width: 15%;
+    text-align: center;
+}
+
+.cartHeader div.addDetail table thead tr th:nth-child(2) {
+    border-radius: 3px 0 0 0;
+}
+
+.cartHeader div.addDetail table thead tr th:last-child {
+    border-radius: 0 3px 0 0;
+}
+
+.cartHeader div.addDetail table tbody tr:last-child td:nth-child(2) {
+    border-radius: 0 0 0 3px;
+}
+
+.cartHeader div.addDetail table tbody tr:last-child td:last-child {
+    border-radius: 0 0 3px 0;
+}
+
+.cartHeader div.addDetail table tr th:first-child,
+.cartHeader div.addDetail table tr td:first-child {
+    display: none;
+}
+
+.cartHeader div.addDetail table tr th:nth-child(2),
+.cartHeader div.addDetail table tr td:nth-child(2) {
+    width: 30%;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+/*購物車內容*/
+.shoppingContent {
+    width: 65%;
+    margin: auto;
+    border-radius: 10px 10% 0 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.shoppingContent div {
+    text-align: left;
+}
+
+.shoppingContent h3 {
+    height: 40px;
+    line-height: 40px;
+    background-color: #C2C2FF;
+    margin-bottom: 2px;
+    border-radius: 10px 10px 0 0;
+    padding-left: 10px;
+    text-align: left;
+}
+
+/*選購商品明細*/
+.cart table {
+    margin: 0;
+    border: 1px solid #E3E3E3;
+    width: 100%;
+    border-radius: 0 0 3px 3px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 20px;
+}
+
+/*商品選取checkbox*/
+.cart table input {
+    width: 17px;
+    height: 17px;
+}
+
+.cart table tbody tr td {
+    border-top: 1px solid #E3E3E3;
+}
+
+@media (max-width: 950px) {
+    .cart table th:nth-child(2) {
+        display: none;
+    }
+
+    .cart table td:nth-child(2) {
+        display: none;
+    }
+}
+
+.cart table thead tr th:nth-child(6),
+.cart table thead tr th:nth-child(7) {
+    text-align: right;
+    width: 120px;
+}
+
+.cart table thead tr th {
+    margin: 3px;
+    width: 10%;
+    text-align: center;
+}
+
+.cart table thead tr th:first-child,
+.cart table thead tr th:last-child {
+    width: 5%;
+}
+
+.cart table thead tr th.productname {
+    width: 25%;
+}
+
+.cart table tbody tr td {
+    text-align: center;
+}
+
+.cart table tbody tr td:nth-child(3) a {
+    padding: 3px;
+    text-decoration: none;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+    height: 100%;
+}
+
+
+.cart table tbody tr td:nth-child(3),
+.cart table tbody tr td:nth-child(4) {
+    font-size: 14px;
+}
+
+.cart table tbody tr td:nth-child(6),
+.cart table tbody tr td:nth-child(7) {
+    text-align: right;
+    width: 120px;
+    padding: 3px;
+    letter-spacing: 2px;
+}
+
+.cart table td img {
+    text-align: center;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    margin: auto;
+}
+
+.cart table td.productImg {
+    width: 10%;
+    height: 100px;
+}
+
+.cart table tbody tr td:last-child {
+    width: 20px;
+    height: 20px;
+}
+
+/*購物數量調整*/
+.cart table td select {
+    text-align: center;
+    width: 40px;
+}
+
+.cart table button {
+    border-radius: 3px;
+    background-color: transparent;
+    border: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.cart table button:hover {
+    background-color: #ccc;
+}
+
+/*折購選項*/
+#discount ul {
+    padding: 0;
+    padding-left: 15px;
+    list-style: none;
+}
+
+#discount ul li {
+    margin: 5px;
+}
+
+#discount ul li input[type="text"] {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 500;
+    width: 170px;
+}
+
+#discount ul li:last-child input[type="text"] {
+    width: 60px;
+}
+
+.bonus input:last-child {
+    text-align: right;
+    width: 50px;
+    margin-left: 5px;
+}
+
+/*------輸入優惠券及使用紅利點數-----*/
+.cart div {
+    margin: 10px 0px;
+}
+
+.cart div.productTotal {
+    text-align: right;
+}
+
+.cart h4 {
+    display: inline-block;
+    margin: 0;
+}
+
+/*配送欄*/
+.shoppingContent .deliver {
+    position: relative;
+    line-height: 25px;
+    padding-left: 10px;
+}
+
+.shoppingContent .deliver form {
+    display: inline-block;
+}
+
+.shoppingContent .deliver form span {
+    margin-right: 20px;
+}
+
+.shoppingContent .deliver div select {
+    width: 70px;
+    margin-right: 10px;
+}
+
+.shoppingContent .deliver div input[type="text"] {
+    display: block;
+    width: 80%;
+    margin-top: 5px;
+}
+
+.shoppingContent .deliver div.deliFee {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/*總金額*/
+.shoppingContent .billTotal {
+    text-align: right;
+    padding: 5px;
+    height: 50px;
+    line-height: 40px;
+    background: linear-gradient(to right, #fff, #eaecbf5a, #f5f8a5);
+    border-radius: 5px;
+}
+
+.shoppingContent .billTotal a {
+    margin-left: 20px;
+}
+
+.shoppingContent .brLine {
+    margin: 5px;
+    height: 1px;
+    background: linear-gradient(to right, #fff, #F5F5F5 40%);
+}
+
+/*----- 付款選擇頁籤 ------*/
+/* 頁籤區塊 */
+.payment {
+    display: flex;
+}
+
+.payment>div:last-child {
+    margin: 5px;
+    margin-left: 20px;
+}
+
+.payment .paymentRadio form div {
+    margin: 5px;
+}
+
+.paymentContent {
+    flex-grow: 2;
+}
+
+.paymentContent .credit>div {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #C2C2FF;
+    border-radius: 10%;
+    text-align: center;
+}
+
+.paymentContent .credit>div button {
+    font-size: 20px;
+}
+
+.paymentContent .credit div {
+    margin-bottom: 5px;
+}
+
+.paymentContent .credit span {
+    display: block;
+}
+
+.paymentContent .credit div label {
+    display: inline-block;
+    width: 80px;
+}
+
+.paymentContent .credit div input {
+    margin: 0 5px;
+    width: 50px;
+}
+
+.paymentContent .credit div input#cardNum {
+    width: 180px;
+}
+
+/*送出付款*/
+div#submit {
+    text-align: right;
+    margin: 5px;
+}
+
+/*推薦商品區*/
+#promoProduct {
+    display: flex;
+    width: 90%;
+    border: 1px dotted #ccc;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+#promoProduct span {
+    width: 90px;
+    margin: 5px;
+}
+
+#promoProduct ul {
+    padding: 0;
+    display: flex;
+    list-style: none;
+    width: 90%;
+    height: 200px;
+    justify-content: flex-start;
+    align-items: center;
+    margin: auto;
+}
+
+#promoProduct ul li {
+    padding: auto;
+    width: 18%;
+    height: 100%;
+}
+
+#promoProduct ul li a {
+    text-align: center;
+    display: block;
+}
+
+#promoProduct ul li a:first-child {
+    display: inline-block;
+    width: 100%;
+    height: 60%;
+}
+
+#promoProduct ul li a img {
+    width: 100%;
+    height: 80%;
+}
