@@ -33,6 +33,9 @@ public class PoMAddServlet extends HttpServlet{
 	@Autowired
 	Power_of_ManagerService service;
 	
+	@Autowired
+	PowerService pService;
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -62,7 +65,6 @@ public class PoMAddServlet extends HttpServlet{
         }
 	    
 //    	servlet會先用 findAllId() 找出所有的power_id並做成list_allID <power_id>
-        PowerService pService = new PowerServiceImpl();
         List<Power> powerList= pService.findAll();
         List<Integer> powerIdList = new ArrayList<>();
         for (Power power : powerList) {
