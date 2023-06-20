@@ -33,37 +33,21 @@
                             <p class="text-primary m-0 fw-bold">權限列表</p>
                         </div>
                         <div class="card-body">
-                            <div class="col-md-6 custom-col-newpower">
-                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-col-newpower-btn"
-                                    role="button" href="#">
-                                    新增權限
-                                </a>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;
-                                        </label>
-                                    </div>
-                                </div>
+                            <!-- <div class="row">
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
+                                    <div class="text-md-start dataTables_filter" id="power_dataTable_filter">
+                                        <label class="power_form-label">
                                             <input type="search" class="form-control form-control-sm"
                                                 aria-controls="dataTable" placeholder="Search">
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-md-6 text-nowrap">
+                                </div>
+                            </div> -->
                             <div class="table-responsive table mt-2" id="dataTable" role="grid"
                                 aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
+                                <table class="table my-0" id="power_list">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -80,38 +64,10 @@
                                             <td>
                                                 <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-power-button"
                                                     role="button" href="#">
-                                                    詳細資料
-                                                </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-power-button"
-                                                    role="button" href="#">
-                                                    修改資料
-                                                </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-power-button"
-                                                    role="button" href="#">
-                                                    刪除權限
+                                                    詳細權限功能一覽
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>%%%權限ID</td>
-                                            <td>%%%權限名稱</td>
-                                            <td>%%%權限內容</td>
-                                            <td>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-power-button"
-                                                    role="button" href="#">
-                                                    詳細資料
-                                                </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-power-button"
-                                                    role="button" href="#">
-                                                    修改資料
-                                                </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-power-button"
-                                                    role="button" href="#">
-                                                    刪除權限
-                                                </a>
-                                            </td>
-                                        </tr>
-
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -122,45 +78,6 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of %%%總筆數/篩選筆數</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav
-                                        class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" aria-label="Previous" href="#">
-                                                    <span aria-hidden="true">«</span>
-                                                </a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" aria-label="Next" href="#">
-                                                    <span aria-hidden="true">»</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 custom-col-newpower">
-                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-col-newpower-btn"
-                                    role="button" href="#">
-                                    新增權限
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -187,6 +104,8 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/theme.js"></script>
     <!-- JavaScript JS放置區 -->
+    <script src="../js/manager_powerList.js"></script>
+
 </body>
 
 </html>

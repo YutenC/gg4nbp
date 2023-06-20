@@ -1,4 +1,5 @@
 $("input.login_btn1").on("click", () => {
+    event.preventDefault
 
     fetch('manager_logining', {
         method: 'POST',
@@ -33,4 +34,9 @@ $("input.login_btn1").on("click", () => {
         })
 })
 
-
+$("input").on("keydown", (event) => {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        $("input.login_btn1").click(); // 模拟点击登录按钮
+    }
+});

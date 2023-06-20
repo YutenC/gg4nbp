@@ -28,6 +28,11 @@
                     card-header 標題框
                     card-body 視窗主體 -->
 
+                    <!-- 打勾 -->
+                    <!-- <img src="../svg/check-svgrepo-com.svg"> -->
+                    <!-- 打叉  -->
+                    <!-- <img src="../svg/clear-svgrepo-com.svg">  -->
+
                     <div class="card shadow">
                         <div class="managerListContainer" id="managerListContainer"></div>
 
@@ -60,7 +65,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                    <div class="text-md-end dataTables_filter" id="manager_dataTable_filter">
                                         <select name="manager_search_type" class="manager_search_type" required>
                                             <option value="manager_id">ID</option>
                                             <option value="account">帳號</option>
@@ -71,7 +76,7 @@
                                             <option value="address">地址</option>
                                             <option value="is_working">在職狀況</option>
                                         </select>
-                                        <label class="form-label">
+                                        <label class="manager_form-label">
                                             <input type="search"
                                                 class="form-control form-control-sm manager_search_content"
                                                 aria-controls="dataTable" placeholder="搜尋...">
@@ -94,10 +99,8 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>帳號</th>
-                                            <th>密碼</th>
                                             <th>姓名</th>
-                                            <th>信箱</th>
-                                            <th>電話</th>
+                                            <th>權限</th>
                                             <th>在職狀態</th>
                                             <th>設定</th>
                                         </tr>
@@ -109,10 +112,8 @@
                                         <tr>
                                             <td><strong>ID</strong></td>
                                             <td><strong>帳號</strong></td>
-                                            <td><strong>密碼</strong></td>
                                             <td><strong>姓名</strong></td>
-                                            <td><strong>信箱</strong></td>
-                                            <td><strong>電話</strong></td>
+                                            <td><strong>權限</strong></td>
                                             <td><strong>在職狀態</strong></td>
                                             <td><strong>設定</strong></td>
                                         </tr>

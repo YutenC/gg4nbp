@@ -36,6 +36,20 @@
   width: 100%;
 }
 
+.is-workingState {
+  background-color: #2ecd70;
+  border: #2ecd70;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.isNot-workingState {
+  background-color: #eb4f52;
+  border: #eb4f52;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
 
 
 .custom-col-newmanager:first-child,
@@ -105,6 +119,7 @@ div.profile-row {
   margin: auto;
 }
 
-.dataTables_filter {
-  margin-right: 10px;
+.power_form-label {
+
+  margin-left: 10px;
 }

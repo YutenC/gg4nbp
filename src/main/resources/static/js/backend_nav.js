@@ -102,7 +102,7 @@ fetch('../manager/getName')
         <li class="nav-item dropdown no-arrow">
             <div class="nav-item dropdown no-arrow">
                 <span>你好，管理員：${manager_name}</span>
-                <a class="btn btn-primary btn-sm d-none d-sm-inline-block btn-danger btn_log_out" href="#">
+                <a class="btn btn-primary btn-sm d-none d-sm-inline-block btn-danger btn_log_out" >
                     <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
                     &nbsp;Logout
                 </a>
@@ -115,6 +115,24 @@ fetch('../manager/getName')
         wrapper.insertBefore(side_nav, wrapper.firstChild);
         content.insertBefore(top_nav, content.firstChild);
 
+        $("a.btn_log_out").on("click", () => {
+            event.preventDefault;
+
+            fetch('../manager/logout')
+                .then(resp => resp.json())
+                .then(body => {
+
+                    console.log(body);
+                    const { successful } = body;
+
+                    if (successful) {
+
+                        alert("登出成功");
+                        location.reload();
+                    }
+                });
+
+        })
     })
 
 
@@ -124,23 +142,6 @@ fetch('../manager/getName')
 
 
 
-$("a.btn_log_out").on("click", () => {
-    event.preventDefault;
 
-    fetch('../manager/logout')
-        .then(resp => resp.json())
-        .then(body => {
-
-            console.log(body);
-            const { successful } = body;
-
-            if (successful) {
-
-                alert("登出成功");
-                location.reload();
-            }
-        });
-
-})
 
 

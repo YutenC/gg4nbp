@@ -10,7 +10,49 @@
     const manager_phone = document.querySelector('#manager_phone');
     const manager_address = document.querySelector('#manager_address');
 
+    let pomSettingDiv = document.querySelector('div.pomSetting');
+
+    let power_array = [];
+
     const inputs = document.querySelectorAll('input');
+
+    let chekedIdList = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+        fetch('../manager/power_list', {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                // 獲取到 managerList 的資料後，動態生成 array 內容
+                data.powerList.forEach(power => {
+                    let power_array_item = {
+                        power_id: power.power_id,
+                        name: power.power_name,
+                        content: power.power_content,
+                    }
+                    power_array.push(power_array_item);
+                })
+
+                pomSettingDiv.innerHTML = `<p>管理員權限</p>`;
+                power_array.forEach(power => {
+                    console.log(power);
+
+                    pomSettingDiv.innerHTML +=
+                        `
+                        <input class="pomCheckbox ${power.power_id}" type="checkbox" id="${power.power_id}"
+                            name="${power.power_id}" value="${power.power_id}">
+                        <label for="${power.power_id}">${power.name}</label>
+                        `;
+                })
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    });
 
 
     add_btn.addEventListener('click', () => {
@@ -56,18 +98,60 @@
             .then(body => {
 
                 console.log(body);
-                const { successful, redirectUrl, message } = body;
+                const { successful, redirectUrl, message, manager_id } = body;
 
-                if (successful) {
-                    alert(message);
+                // if (successful) {
+                //     alert(message);
 
-                    if (redirectUrl) {
-                        window.location.href = redirectUrl; // 進行重導
+                //     if (redirectUrl) {
+                //         window.location.href = redirectUrl; // 進行重導
+                //     }
+
+                // } else {
+                //     alert(message);
+                // }
+
+                let pomCheckbox = document.querySelectorAll('input.pomCheckbox');
+                pomCheckbox.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        chekedIdList.push(checkbox.value);
                     }
+                });
+                console.log(chekedIdList);
 
-                } else {
-                    alert(message);
-                }
+                fetch('../manager/pom_add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        manager_id: manager_id,
+                        chekedIdList: chekedIdList,
+
+                    }),
+                })
+                    .then(resp => resp.json())
+                    .then(body => {
+
+                        console.log(body);
+                        const { successful, redirectUrl } = body;
+
+                        if (successful) {
+                            alert("成功");
+
+                            if (redirectUrl) {
+                                window.location.href = redirectUrl; // 進行重導
+                            }
+
+                        } else {
+                            msg.className = 'error';
+                            msg.textContent = '修改失敗';
+                        }
+
+
+                    });
+
+
             });
     });
 
