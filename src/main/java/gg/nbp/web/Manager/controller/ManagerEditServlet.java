@@ -70,7 +70,7 @@ public class ManagerEditServlet extends HttpServlet {
 	    
 	    
 	    responseJson.addProperty("successful", true); // 設置成功標誌，根據實際情況設置
-	    responseJson.addProperty("redirectUrl", request.getContextPath() + "/html/manager_list.html"); // 設置重導的網址
+	    responseJson.addProperty("redirectUrl", request.getContextPath() + "/manager/manager_list.html"); // 設置重導的網址
 	    
 	    // 設置回應的Content-Type為application/json
 	    

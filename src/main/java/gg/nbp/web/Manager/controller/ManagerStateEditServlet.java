@@ -68,7 +68,7 @@ public class ManagerStateEditServlet extends HttpServlet {
 	    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 	    response.setHeader("Pragma", "no-cache");
 	    response.setHeader("Expires", "0");
-	    response.sendRedirect(request.getContextPath() + "/html/manager_list.html");
+	    response.sendRedirect(request.getContextPath() + "/manager/manager_list.html");
 	    
 //	    // 創建回應JSON數據
 //	    JsonObject responseJson = new JsonObject();

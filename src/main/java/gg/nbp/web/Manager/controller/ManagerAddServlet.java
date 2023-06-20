@@ -61,12 +61,22 @@ public class ManagerAddServlet extends HttpServlet {
 	    // 在這裡執行相應的業務邏輯，例如將數據保存到數據庫中
 	    manager = service.register(manager);
 	    
+	    Integer manager_id= 0;
+	    
+	    for (Manager m: service.findAll()) {
+	    	if (m.getAccount().equals(manager.getAccount())) {
+	    		manager_id= m.getManager_id();
+	    		break;
+	    	}
+	    }
+	    
 	    
 	    // 創建回應JSON數據
 	    JsonObject responseJson = new JsonObject();
 	    responseJson.addProperty("successful", manager.isSuccessful()); // 設置成功標誌，根據實際情況設置
-	    responseJson.addProperty("redirectUrl", request.getContextPath() + "/html/manager_list.html"); // 設置重導的網址
+	    responseJson.addProperty("redirectUrl", request.getContextPath() + "/manager/manager_list.html"); // 設置重導的網址
 	    responseJson.addProperty("message", manager.getMessage()); //回傳訊息
+	    responseJson.addProperty("manager_id", manager_id);
 	    
 	    // 設置回應的Content-Type為application/json
 	    response.setContentType("application/json");

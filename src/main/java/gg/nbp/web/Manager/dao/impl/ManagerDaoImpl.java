@@ -17,7 +17,7 @@ import jakarta.persistence.criteria.Root;
 public class ManagerDaoImpl implements ManagerDao{ 
 	
 	@PersistenceContext
-	private Session session ;
+	private Session session;
 	
 	@Override
 	public int insert(Manager manager) {
