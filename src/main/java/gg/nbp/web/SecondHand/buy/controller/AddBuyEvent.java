@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.pojo.OneString;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
-import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
 import gg.nbp.web.SecondHand.buy.util.Toolbox;
 import jakarta.servlet.ServletException;
@@ -43,8 +42,7 @@ public class AddBuyEvent extends HttpServlet  {
 				throw new IOException() ;
 			
 			/* 回傳申請結果 */
-			buylist = service.submit(buylist);
-			writepojo2Json(resp, new BuyEvent(buylist));
+			writepojo2Json(resp, service.submit(buylist));
 						
 		} catch (Exception e) {
 			/* 回傳申請失敗 */

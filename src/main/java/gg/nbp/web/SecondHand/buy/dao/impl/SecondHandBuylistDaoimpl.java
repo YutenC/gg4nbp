@@ -1,6 +1,5 @@
 package gg.nbp.web.SecondHand.buy.dao.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -49,11 +48,13 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 	}
 
 	@Override
-	public List<SecondhandBuylist> selectByTime(Date starttime, Date endtime) {
+	public List<SecondhandBuylist> selectByName(String name) {
 
-		final String sql = "SELECT * FROM secondhand_buylist WHERE  Apply_time BETWEEN :starttime AND :endtime";
-		return session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("starttime", starttime)
-				.setParameter("endtime", endtime).getResultList();
+		final String sql = "SELECT * FROM secondhand_buylist WHERE Product_name LIKE `%:name%`";
+		return session
+				.createNativeQuery(sql, SecondhandBuylist.class)
+				.setParameter("name", name)
+				.getResultList();
 	}
 
 }

@@ -26,22 +26,22 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	/* 交易控制 : 新增事件 */
 	@Transactional
 	@Override
-	public SecondhandBuylist submit(SecondhandBuylist sl) {
+	public BuyEvent submit(SecondhandBuylist sl) {
 
 		/* 將文字資料放入資料庫 */
 		sl.setSuccessful(insert(sl));
 
 		/* 將圖片資料放入資料庫 */
 		int buylistId = sl.getBuylistId();
-
 		try {
 
 			for (SecondhandBuyPicture img : sl.getImage())
 				insertimg((SecondhandBuyPicture) img, buylistId);
+			
 		} catch (Exception e) {
 			sl.setMessage("沒有圖片");
 		}
-		return sl;
+		return new BuyEvent(sl);
 	};
 
 	/* 交易控制 : 刪除事件 */
@@ -50,7 +50,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	public boolean delete(Integer memberId, Integer eventId) throws SQLException {
 
 		/* 找到要刪除的事件 */
-		SecondhandBuylist sl = selectOne(eventId);
+		SecondhandBuylist sl = dao.selectById(eventId);
 
 		/* 驗證發出刪除請求的人是否為事件的所有人，若請求人非所有人則丟出例外 */
 		if (memberId != sl.getMemberId())
@@ -66,10 +66,9 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 
 	}
 
-	/* 交易控制 : 搜尋全部 */
-	@Transactional
+	/* 搜尋全部 */
 	@Override
-	public List<BuyEvent> selectAll() throws SQLException {
+	public List<BuyEvent> searchAll() throws SQLException {
 
 		/* 建立回傳用的List */
 		List<BuyEvent> listDTO = new ArrayList<>();
@@ -93,7 +92,44 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	}
 
 	
+	/* ID 搜尋 */
+	@Override
+	public BuyEvent searchById(Integer id) {
+		SecondhandBuylist sl = dao.selectById(id);
+		sl.setImage(selectimg(sl));
+		return new BuyEvent(sl);
+	}
 	
+	
+	/* 名字搜尋 */
+	@Override
+	public List<BuyEvent> searchByName(String name) throws SQLException {
+		/* 建立回傳用的List */
+		List<BuyEvent> listDTO = new ArrayList<>();
+		
+		/**************************************************************************************
+		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
+		 * 抓回來的結果，將其轉化為 DTO
+		 **************************************************************************************/
+		for (SecondhandBuylist sl : dao.selectByName(name)) {
+			sl.setImage(selectimg(sl));
+			listDTO.add(new BuyEvent(sl));
+		}
+		
+		/* 如果抓到 0 筆資料，則拋出例外 */
+		if (listDTO.size() == 0)
+			throw new SQLException();
+		
+		/* 回傳 */
+		return listDTO;
+	}
+	
+	
+	@Override
+	public BuyEvent update(SecondhandBuylist sl) {
+		dao.update(sl);
+		return new BuyEvent(dao.selectById(sl.getBuylistId()));
+	}
 	
 	
 	public void insertimg(SecondhandBuyPicture img, Integer id) {
@@ -109,15 +145,11 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		return true;
 	}
 
-	@Override
 	public List<SecondhandBuyPicture> selectimg(SecondhandBuylist s) {
 		return daoPic.selectBylistId(s.getBuylistId());
 	}
 
-	@Override
-	public SecondhandBuylist selectOne(Integer i) {
-		return dao.selectById(i);
-	}
+	
 
 	public boolean delImg(SecondhandBuyPicture s) {
 		daoPic.deleteById(s.getImageId());
@@ -129,10 +161,8 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		return true;
 	}
 
-	@Override
-	public boolean upDate(SecondhandBuylist sl) {
-		dao.update(sl);
-		return true;
-	}
+	
+	
+	
 
 }

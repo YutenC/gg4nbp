@@ -26,6 +26,7 @@ $('#getshot').on('click', function (e) {
 let del = [];
 
 $('#getshot').next().on('change', function (e) {
+    del = [];
     $('#imgView>div').remove();
 
     let uploadImg = e.target.files || e.dataTransfer.files;

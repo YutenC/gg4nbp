@@ -30,7 +30,7 @@ public class SelectAll extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("UTF-8"); 
 		try {
-			List<BuyEvent> listDTO =  service.selectAll();
+			List<BuyEvent> listDTO =  service.searchAll();
 			CommonUtil.writepojo2Json(resp, listDTO);
 			
 		} catch (Exception e) {
