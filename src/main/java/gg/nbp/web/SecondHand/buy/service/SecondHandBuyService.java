@@ -6,6 +6,7 @@ import java.util.List;
 import gg.nbp.core.service.CoreService;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
+import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 
 
 public interface SecondHandBuyService extends CoreService {
@@ -16,7 +17,7 @@ public interface SecondHandBuyService extends CoreService {
 	
 	public SecondhandBuylist selectOne(Integer i);
 	
-	public List<SecondhandBuylist> selectAll() ;
+	public List<BuyEvent> selectAll() throws SQLException ;
 	
 	public List<SecondhandBuyPicture> selectimg(SecondhandBuylist s) ;
 	

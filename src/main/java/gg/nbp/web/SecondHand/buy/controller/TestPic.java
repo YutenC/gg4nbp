@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
+import gg.nbp.web.SecondHand.buy.util.Constant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -27,12 +28,12 @@ public class TestPic extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Collection<Part> parts = req.getParts();
 		try {
-			File file = new File("C:\\Users\\Tibame_T14\\Desktop\\AppImage");
+			File file = new File(Constant.SAVE_URL);
 			if (!file.exists()) {
 				file.mkdirs();
 			}
 			for (Part part : parts) {
-				String url = "C:\\Users\\Tibame_T14\\Desktop\\AppImage\\" + part.getName();
+				String url = Constant.SAVE_URL + part.getName();
 				try (InputStream reader = part.getInputStream();
 					 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(url))) 
 				{
