@@ -18,10 +18,8 @@
     <link rel="stylesheet" href="../css/Profile-with-data-and-skills.css">
     <link rel="stylesheet" href="../css/styles.css">
     <style>
-        
-        
         table.table {
-            table-layout: fixed;            
+            table-layout: fixed;
         }
 
         div.row {
@@ -70,13 +68,15 @@
             width: 400px;
             vertical-align: middle;
         }
-        th#is_read{
+
+        th#is_read {
             width: 10px;
             font-size: 0px;
         }
-        td#is_read{
+
+        td#is_read {
             width: 10px;
-            font-size: 0px;            
+            font-size: 0px;
         }
 
         th#manage_function {
@@ -87,14 +87,16 @@
         td#manage_function {
             text-align: center;
             width: 200px;
-            vertical-align: middle;            
+            vertical-align: middle;
         }
-        input#search{
+
+        input#search {
             width: 200px;
             margin: auto;
-            display: inline-block;            
+            display: inline-block;
         }
-        button{
+
+        button {
             box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
         }
     </style>
@@ -171,9 +173,8 @@
     <div class="main-content">
         <div class="row" style="height: 800px;">
             <div class="col-lg-4 col-xl-2 offset-xl-1" style="height: 600px;">
-                <div class="list-group" >
-                    <a data-bss-hover-animate="pulse" id="info"
-                    class="list-group-item list-group-item-action"
+                <div class="list-group">
+                    <a data-bss-hover-animate="pulse" id="info" class="list-group-item list-group-item-action"
                         href="./member_info.html" data-bs-toggle="list"
                         style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
                     </a>
@@ -251,7 +252,7 @@
                                 <th scope="col" id="manage_function">管理功能</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="noticeTable">
                             <tr>
                                 <td id="messgae_id">1</td>
                                 <td id="time">2023-05-22</td>
@@ -259,24 +260,6 @@
                                     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                                 </td>
                                 <td id="is_read" value="1"></td>
-                                <td id="manage_function">
-                                    <button type="button" class="btn btn-warning">刪除通知</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td id="messgae_id">2</td>
-                                <td id="time">2023-05-25</td>
-                                <td id="message_content">BBBBBBBB</td>
-                                <td id="is_read" value="1"></td>
-                                <td id="manage_function">
-                                    <button type="button" class="btn btn-warning">刪除通知</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td id="messgae_id">3</td>
-                                <td id="time">2023-05-27</td>
-                                <td id="message_content">CCCCCCC</td>
-                                <td id="is_read" value="1"><div id="is_read"></div></td>
                                 <td id="manage_function">
                                     <button type="button" class="btn btn-warning">刪除通知</button>
                                 </td>
@@ -293,7 +276,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-8 mx-auto">
-                    <ul class="list-inline text-center">
+                    <ul id="noticeList" class="list-inline text-center">
                         <li class="list-inline-item">
                             <a href="#">
                                 <span class="fa-stack fa-lg">
@@ -335,15 +318,44 @@
 </body>
 <script src="../js/member_logout.js"></script>
 <script>
-    $('table.table').on('click', 'td#message_content', function(){
-        Swal.fire({
-            title:`<strong>訊息內容</strong>`,
-            html:`${$(this).text()}`            
-        });
-    });
-    
-    console.log($("td#is_read").val());
-    
+
+
+
+    $(window).on("load", function () {
+        $.ajax({
+            url: "memberNotiveServlet",
+            method: "POST",
+            dataType: "json",
+            success: function (response) {
+                // let notice = response;
+                render(response);
+            }
+        })
+    })
+
+
+    function render(notice) {
+        $('#noticeTable').remove();
+        const tbody = document.createElement('tbody');
+        tbody.setAttribute('id', 'noticeTable');
+
+        for (let i = 0; i < notice.length; i++) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+            <td id="messgae_id">${notice[i].notice_id}</td>
+            <td id="time">${notice[i].notice_time}</td>
+            <td id="message_content">${notice[i].notice_value}</td>
+            <td id="is_read" value=${notice[i].is_read}></td>
+            <td id="manage_function">
+            <button type="button" class="btn btn-warning">刪除通知</button>
+            `
+
+            tbody.append(tr);
+
+        }
+        $('.table').append(tbody);
+    }
+
 
 </script>
 
