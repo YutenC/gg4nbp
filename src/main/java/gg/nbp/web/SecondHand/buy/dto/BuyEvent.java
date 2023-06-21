@@ -2,12 +2,14 @@ package gg.nbp.web.SecondHand.buy.dto;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import gg.nbp.core.pojo.Core;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
+import lombok.Getter;
 
+
+@Getter
 public class BuyEvent extends Core {
 	private static final long serialVersionUID = -7518578406780806592L;
 	private Integer eventId;
@@ -31,7 +33,7 @@ public class BuyEvent extends Core {
 
 		try {
 			eventId = bs.getBuylistId();
-			memberName = "asdasd"; // 呼叫member_service 來查詢會員名字
+			memberName = "先寫死"; // 呼叫member_service 來查詢會員名字
 			productName = bs.getProductName();
 			type = getTypeValue(bs.getType());
 			content = bs.getContent();
@@ -129,27 +131,14 @@ public class BuyEvent extends Core {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(applicantBankNumber, applyTime, approvalState, confirmTime, content, estimate, eventId,
-				memberName, payState, price, productName, type);
+	public String toString() {
+		return "BuyEvent [eventId=" + eventId + ", memberName=" + memberName + ", productName=" + productName
+				+ ", type=" + type + ", content=" + content + ", estimate=" + estimate + ", price=" + price
+				+ ", confirmTime=" + confirmTime + ", payState=" + payState + ", approvalState=" + approvalState
+				+ ", applyTime=" + applyTime + ", applicantBankNumber=" + applicantBankNumber + ", image=" + image
+				+ "]";
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BuyEvent other = (BuyEvent) obj;
-		return Objects.equals(applicantBankNumber, other.applicantBankNumber)
-				&& Objects.equals(applyTime, other.applyTime) && Objects.equals(approvalState, other.approvalState)
-				&& Objects.equals(confirmTime, other.confirmTime) && Objects.equals(content, other.content)
-				&& Objects.equals(estimate, other.estimate) && Objects.equals(eventId, other.eventId)
-				&& Objects.equals(memberName, other.memberName) && Objects.equals(payState, other.payState)
-				&& Objects.equals(price, other.price) && Objects.equals(productName, other.productName)
-				&& Objects.equals(type, other.type);
-	}
+	
 
 }

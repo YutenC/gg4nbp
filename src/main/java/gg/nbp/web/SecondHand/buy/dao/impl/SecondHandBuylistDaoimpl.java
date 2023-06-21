@@ -32,7 +32,7 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 
 	@Override
 	public int update(SecondhandBuylist buylist) {
-		session.update(buylist);
+		session.merge(buylist);
 		return 1;
 	}
 
