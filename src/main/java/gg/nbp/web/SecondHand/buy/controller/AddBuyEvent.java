@@ -8,9 +8,11 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
+import gg.nbp.core.pojo.OneString;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
+import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
+import gg.nbp.web.SecondHand.buy.util.Toolbox;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,46 +31,27 @@ public class AddBuyEvent extends HttpServlet  {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8"); 
-		int buylistId = 0 ; 
-		SecondhandBuylist buylist = null ;
-		
-		
+		resp.setCharacterEncoding("UTF-8");
 		try {
-			buylist = json2pojo(req, SecondhandBuylist.class);
+			SecondhandBuylist buylist = json2pojo(req, SecondhandBuylist.class);
+			/* 對資料驗證是否為空值，如果空值丟出例外直接跳到catch*/
 			
-			/* 對資料驗證是否為空值 */
-			if (buylist.getProductName().isEmpty() || buylist.getContent().isEmpty() || buylist.getApplicantBankNumber().isEmpty()) 
+			String[] checks = {	buylist.getProductName(),
+								buylist.getContent(),
+								buylist.getApplicantBankNumber()};
+			if (Toolbox.isEmpty4Strings(checks)) 
 				throw new IOException() ;
 			
-			service.insert(buylist);
-			
-			buylist.setSuccessful(true);
-			
-			buylistId = buylist.getBuylistId();
-			
-//			if (buylist.isSuccessful()) {
-//				if (req.getSession(false) != null) {
-//					req.changeSessionId();
-//				}
-//				final HttpSession session = req.getSession();
-//				session.setAttribute("buylistId", buylistId);
-//			}
-			
+			/* 回傳申請結果 */
+			buylist = service.submit(buylist);
+			writepojo2Json(resp, new BuyEvent(buylist));
+						
 		} catch (Exception e) {
-			buylist = new SecondhandBuylist();
-			buylist.setSuccessful(false);
-		}
-		
-		
-		
-		try {
+			/* 回傳申請失敗 */
+			e.printStackTrace();
 			
-			for (SecondhandBuyPicture img : buylist.getImage()) 
-				service.insertimg((SecondhandBuyPicture)img, buylistId); 
-			
-		} catch (Exception e) {
+			writepojo2Json(resp, new OneString("申請失敗"));
 		}
-		writepojo2Json(resp, buylist);
 	}
 	
 	
