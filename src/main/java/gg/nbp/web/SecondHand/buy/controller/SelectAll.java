@@ -29,6 +29,7 @@ public class SelectAll extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setCharacterEncoding("UTF-8"); 
 		
 		List<SecondhandBuylist> list = service.selectAll();
 		for (SecondhandBuylist sl : list) {

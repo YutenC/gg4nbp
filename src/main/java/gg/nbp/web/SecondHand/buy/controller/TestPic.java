@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.Collection;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
 @WebServlet("/secondhand/testpic")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 设置文件大小阈值
+maxFileSize = 1024 * 1024 * 5, // 设置最大文件大小
+maxRequestSize = 1024 * 1024 * 10 // 设置最大请求大小
+)
 public class TestPic extends HttpServlet {
 	private static final long serialVersionUID = -6139457402422576192L;
 
