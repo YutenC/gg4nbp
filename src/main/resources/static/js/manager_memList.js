@@ -1,101 +1,56 @@
-let manager_array = [];
+let member_array = [];
 let filtered_array = [];
 let filtered = false;
-let managerListContainer = document.querySelector('table#manager_list tbody');
+let memberListContainer = document.querySelector('table#member_list tbody');
 
-let pomAll_array = [];
-let pom_array = [];
-let power_array = [];
+// 使用 AJAX 發送請求獲取 memberList 的資料
 
-// 使用 AJAX 發送請求獲取 managerList 的資料
-
-fetch('../manager/manager_list', {
+fetch('../manager/member_list', {
     method: 'GET',
 })
     .then(response => response.json())
     .then(data => {
 
-        // 獲取到 managerList 的資料後，動態生成 array 內容
-        data.managerList.forEach(manager => {
-            let manager_workingState;
-            if (manager.is_working === 1) {
-                manager_workingState = "在職";
-            } else {
-                manager_workingState = "離職";
-            }
+        // 獲取到 memberList 的資料後，動態生成 array 內容
+        data.memberList.forEach(member => {
 
-            let manager_array_item = {
-                manager_id: manager.manager_id,
-                account: manager.account,
-                password: manager.password,
-                name: manager.name,
-                email: manager.email,
-                phone: manager.phone,
-                address: manager.address,
-                is_working: manager_workingState
+
+            let member_array_item = {
+                member_id: member.member_id,
+                account: member.account,
+                password: member.password,
+                nick: member.nick,
+                email: member.email,
+                phone: member.phone,
+                birth: member.birth,
+                id_number: member.id_number,
+                address: member.address,
+                bonus: member.bonus,
+                member_ver_state: member.member_ver_state,
+                suspend_deadline: member.suspend_deadline,
+                headshot: member.headshot,
+                ver_deadline: member.ver_deadline,
+                violation: member.violation
             }
-            manager_array[manager.manager_id] = (manager_array_item);
+            member_array[member.manager_id] = (member_array_item);
 
             // console.log(manager_array_item);
-            // console.log(manager_array);
+            // console.log(member_array);
 
 
         })
 
-        fetch('../manager/pom_list', {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(data => {
 
-                // 獲取到 managerList 的資料後，動態生成 array 內容
-                data.pomList.forEach(pom => {
-                    let pomAll_array_item = {
-                        manager_id: pom.manager_id,
-                        power_id: pom.power_id,
-                    }
-                    pomAll_array.push(pomAll_array_item);
-                })
-
-                console.log(pomAll_array);
-
-                fetch('../manager/power_list', {
-                    method: 'GET',
-                })
-                    .then(response => response.json())
-                    .then(data => {
-
-                        // 獲取到 managerList 的資料後，動態生成 array 內容
-                        data.powerList.forEach(power => {
-                            let power_array_item = {
-                                power_id: power.power_id,
-                                name: power.power_name,
-                                content: power.power_content,
-                            }
-                            power_array.push(power_array_item);
-                        })
-
-                        power_array.sort((a, b) => a.power_id - b.power_id);
-                        console.log(power_array);
-
-                        showList();
-
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-
-
-
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        showList();
 
     })
     .catch(error => {
         console.error('Error:', error);
     });
+
+// WIP
+
+
 
 
 $("a.manager_search_button").on("click", () => {
@@ -107,7 +62,7 @@ $("a.manager_search_button").on("click", () => {
 
     // alert(typeof searchType + searchType + "\n" + typeof searchContent + searchContent);
 
-    filtered_array = manager_array.filter((manager) => {
+    filtered_array = member_array.filter((manager) => {
         if (typeof manager[searchType] === "number") {
             let searchContent_num = /^[0-9]+$/.test(searchContent) ? parseInt(searchContent) : NaN;
             if (searchContent_num === NaN) {
@@ -135,21 +90,10 @@ $("a.manager_default_list_button").on("click", () => {
 
 
 
-
-// function showAllInfoClick(id) {
-//     event.preventDefault();
-//     console.log(id);
-//     alert(manager_array[id].password +
-//         manager_array[id].email +
-//         manager_array[id].phone +
-//         manager_array[id].address);
-// }
-
-
 function changeStateClick(id) {
     event.preventDefault();
 
-    let confirmChangeWorkingState = confirm("確定更改" + manager_array[id].account + "的在職狀況嗎?")
+    let confirmChangeWorkingState = confirm("確定更改" + member_array[id].account + "的在職狀況嗎?")
 
     // 使用 AJAX 發送請求，將 ID 值傳送到後端
     if (confirmChangeWorkingState) {
@@ -157,14 +101,14 @@ function changeStateClick(id) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                manager_id: manager_array[id].manager_id,
-                manager_account: manager_array[id].account,
-                manager_password: manager_array[id].password,
-                manager_name: manager_array[id].name,
-                manager_email: manager_array[id].email,
-                manager_phone: manager_array[id].phone,
-                manager_address: manager_array[id].address,
-                manager_is_working: manager_array[id].is_working
+                manager_id: member_array[id].manager_id,
+                manager_account: member_array[id].account,
+                manager_password: member_array[id].password,
+                manager_name: member_array[id].name,
+                manager_email: member_array[id].email,
+                manager_phone: member_array[id].phone,
+                manager_address: member_array[id].address,
+                manager_is_working: member_array[id].is_working
             })
         })
             .then(response => {
@@ -190,7 +134,7 @@ function editClick(id) {
 function removeClick(id) {
     event.preventDefault();
 
-    let confirmRemove = confirm("確定刪除" + manager_array[id].account + "嗎?");
+    let confirmRemove = confirm("確定刪除" + member_array[id].account + "嗎?");
     if (confirmRemove) {
 
         // 使用 AJAX 發送請求，將 ID 值傳送到後端
@@ -198,14 +142,14 @@ function removeClick(id) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                manager_id: manager_array[id].manager_id,
-                manager_account: manager_array[id].account,
-                manager_password: manager_array[id].password,
-                manager_name: manager_array[id].name,
-                manager_email: manager_array[id].email,
-                manager_phone: manager_array[id].phone,
-                manager_address: manager_array[id].address,
-                manager_is_working: manager_array[id].is_working
+                manager_id: member_array[id].manager_id,
+                manager_account: member_array[id].account,
+                manager_password: member_array[id].password,
+                manager_name: member_array[id].name,
+                manager_email: member_array[id].email,
+                manager_phone: member_array[id].phone,
+                manager_address: member_array[id].address,
+                manager_is_working: member_array[id].is_working
             })
         })
             .then(resp => resp.json())
@@ -239,7 +183,7 @@ function removeClick(id) {
 }
 
 function showList() {
-    let showArray = manager_array;
+    let showArray = member_array;
     if (filtered) {
         showArray = filtered_array;
     }
@@ -349,8 +293,8 @@ function showList() {
       `;
     });
 
-    // 插入生成的 HTML 內容到 managerListContainer 元素中
-    managerListContainer.innerHTML = html;
+    // 插入生成的 HTML 內容到 memberListContainer 元素中
+    memberListContainer.innerHTML = html;
 
     $(".toggle-button").click(function () {
         event.preventDefault();

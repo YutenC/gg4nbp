@@ -41,12 +41,6 @@ function showList() {
     <td>${power.power_id}</td>
     <td>${power.name}</td>
     <td>${power.content}</td>
-    <td>
-        <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-power-button"
-            role="button" href="#">
-            詳細權限功能一覽
-        </a>
-    </td>
 </tr>
   `;
     });
