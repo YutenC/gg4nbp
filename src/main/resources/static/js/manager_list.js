@@ -136,14 +136,14 @@ $("a.manager_default_list_button").on("click", () => {
 
 
 
-function showAllInfoClick(id) {
-    event.preventDefault();
-    console.log(id);
-    alert(manager_array[id].password +
-        manager_array[id].email +
-        manager_array[id].phone +
-        manager_array[id].address);
-}
+// function showAllInfoClick(id) {
+//     event.preventDefault();
+//     console.log(id);
+//     alert(manager_array[id].password +
+//         manager_array[id].email +
+//         manager_array[id].phone +
+//         manager_array[id].address);
+// }
 
 
 function changeStateClick(id) {
@@ -312,11 +312,8 @@ function showList() {
             `  
           </td>
           <td>
-              <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-manager-button"
-                  role="button" 
-                  onclick="showAllInfoClick(${manager.manager_id})">
-                  詳細資料
-              </a>
+              <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-manager-button toggle-button"
+                  role="button">詳細資料</a>
               <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-manager-button"
                   role="button" 
                   onclick="changeStateClick(${manager.manager_id})">
@@ -335,11 +332,40 @@ function showList() {
               </a>
           </td>
         </tr>
+        <tr class="dropdown_row" style="display:none;" id="toggle_button_${manager.manager_id}">
+            <td colspan="6">
+                <div style="display: flex; flex-wrap: wrap;">
+                    <div style="width: 50%;">
+                        <span class="pwd-span">**密碼**</span>
+                        <button class="btn btn-primary btn-sm d-none d-sm-inline-block show-password" )">顯示</button>
+                        <button class="btn btn-primary btn-sm d-none d-sm-inline-block custom-manager-button hide-password" style="display: none;">隱藏</button>
+                    </div>
+                    <div style="width: 50%;">${manager.phone}</div>
+                    <div style="width: 100%;">${manager.email}</div>
+                    <div style="width: 100%;">${manager.address}</div>
+                </div>
+            </td>
+        </tr>
       `;
     });
 
     // 插入生成的 HTML 內容到 managerListContainer 元素中
     managerListContainer.innerHTML = html;
 
+    $(".toggle-button").click(function () {
+        event.preventDefault();
+        var dropdownRow = $(this).closest("tr").next(".dropdown_row");
+        dropdownRow.slideToggle("fast");
+
+        // 切換按鈕文字
+        $(this).text(function (_, text) {
+            return text.trim() === "詳細資料" ? "收回" : "詳細資料";
+        });
+        return false;
+    });
+
+
 }
+
+
 
