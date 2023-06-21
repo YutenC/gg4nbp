@@ -11,6 +11,7 @@ import gg.nbp.core.pojo.OneString;
 import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
+import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -43,11 +44,9 @@ public class SelectOne extends HttpServlet {
 				img.setImage(s[s.length - 1]);
 			}
 			sl.setImage(imgList);
-			CommonUtil.writepojo2Json(resp, sl);
+			CommonUtil.writepojo2Json(resp, new BuyEvent(sl));
 		} catch (Exception e) {
-			OneString error = new OneString();
-			error.setStr("查無結果");
-			CommonUtil.writepojo2Json(resp, error);
+			CommonUtil.writepojo2Json(resp, new OneString("查無結果"));
 		}
 
 	}
