@@ -23,60 +23,61 @@ public class SecondhandProductDaoImpl implements SecondhandProductDao {
 
     @Override
     public int insert(SecondhandProduct secondhandproduct) {
-        
+//        Session session = getSession();
 //        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 //        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();  // 有用spring就可以省略
+
+//        Transaction transaction = session.beginTransaction();  // 有用spring就可以省略
         session.persist(secondhandproduct);
-        transaction.commit();
+//        transaction.commit();
         return 1;
     }
 
     @Override
     public int deleteById(Integer productId) {
-        
-        Transaction transaction = session.beginTransaction();
+//        Session session = getSession();
+//        Transaction transaction = session.beginTransaction();
         SecondhandProduct secondhandproduct = session.load(SecondhandProduct.class, productId);
         session.remove(secondhandproduct);
-        transaction.commit();
+//        transaction.commit();
         return 1;
     }
 
 
     public int update(SecondhandProduct secondhandproduct) {
-        
-        session.beginTransaction();
+//        Session session = getSession();
+//        session.beginTransaction();
         session.update(secondhandproduct);
-        session.getTransaction().commit();
+//        session.getTransaction().commit();
         return 1;
     }
 
     @Override
     public SecondhandProduct selectById(Integer productId) {
-        
-        Transaction transaction = session.beginTransaction();
+//        Session session = getSession();
+//        Transaction transaction = session.beginTransaction();
         SecondhandProduct result = session.get(SecondhandProduct.class, productId);
-        transaction.commit();
+//        transaction.commit();
         return result;
     }
 
     @Override
     public List<SecondhandProduct> selectAll() {
-        
-        Transaction transaction = session.beginTransaction();
+//        Session session = getSession();
+//        Transaction transaction = session.beginTransaction();
         final String hql = "FROM SecondhandProduct ORDER BY productId";
         List<SecondhandProduct> result = session.createQuery(hql, SecondhandProduct.class).getResultList();
-        transaction.commit();
+//        transaction.commit();
         return result;
     }
 
     @Override
     public List<SecondhandProduct> selectByTime() {
-        
-        Transaction transaction = session.beginTransaction();
+//        Session session = getSession();
+//        Transaction transaction = session.beginTransaction();
         final String hql = "FROM SecondhandProduct ORDER BY launchTime";
         List<SecondhandProduct> result = session.createQuery(hql, SecondhandProduct.class).getResultList();
-        transaction.commit();
+//        transaction.commit();
         return result;
     }
 

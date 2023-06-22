@@ -1,7 +1,9 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.util.CommonUtil;
@@ -26,7 +28,11 @@ public class DeleteshpServlet extends HttpServlet {
 
         SecondhandProduct secondhandproduct = CommonUtil.json2pojo(req, SecondhandProduct.class);
 
-        SERVICE.delete(secondhandproduct.getProductId());
+        List<SecondhandProductImage> imgs = SERVICE.selectimg(secondhandproduct);
+        for(SecondhandProductImage img: imgs){
+            SERVICE.deleteimg(img);
+        }
 
+        SERVICE.delete(secondhandproduct.getProductId());
     }
 }

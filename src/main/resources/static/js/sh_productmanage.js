@@ -73,6 +73,7 @@ function sphDelete(productId){
                 type: shp_array[productId].type,
                 price: shp_array[productId].price,
                 isLaunch: shp_array[productId].isLaunch,
+
                 // launchTime: shp_array[productId].launchTime
             })
         }).then(
@@ -85,6 +86,8 @@ function sphDelete(productId){
 function btnSubmit() {
     console.log("新增頁面，跳轉頁面");
     window.location.href = "../manager/sh_productmanage.html";
+
+
 }
 
 

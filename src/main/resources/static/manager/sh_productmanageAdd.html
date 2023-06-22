@@ -12,8 +12,31 @@
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
     <link rel="stylesheet" href="../css/x-dropdown.css">
     <link rel="stylesheet" href="../css/custom.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ==================圖片設定==================-->
+    <style>
+        div#imgView img {
+            margin: 10px;
+            object-fit: cover;
+            border-radius: 3px;
+            box-shadow: 0px 0px 2px rgb(174, 173, 173);
+            height: 200px;
+            width: 200px;
+        }
+
+        div#imgView img.-warning {
+            box-shadow: 0px 0px 3px rgb(255, 0, 0);
+        }
+
+        div#imgView img:hover{
+            box-shadow: 0px 0px 2px black;
+            cursor: pointer;
+        }
+    </style>
+    <!-- ==================圖片設定END==================-->
 </head>
 
 <body id="page-top">
@@ -175,30 +198,31 @@
             <!-- ==================================== -->
 
 
-            <div id ="productManageEdit" style="min-width: 1000px;">
+            <div id="productManageEdit" style="min-width: 1000px;">
                 <h3 style="margin-left: 50px;">二手商品管理</h3>
 
                 <form action="#" method="post">
                     <table align="center" cellpadding="10">
 
-<!--                        <tr>-->
-<!--                            <td><span class="managerID">審核者ID</span></td>-->
-<!--                            <td>-->
-<!--                                <div>-->
-<!--                                    <select style="width: 140px;">-->
-<!--                                        <option value="" selected disabled></option>-->
-<!--                                        <option value="a">a</option>-->
-<!--                                        <option value="a">a</option>-->
-<!--                                        <option value="a">a</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                        </tr>-->
+                        <!--                        <tr>-->
+                        <!--                            <td><span class="managerID">審核者ID</span></td>-->
+                        <!--                            <td>-->
+                        <!--                                <div>-->
+                        <!--                                    <select style="width: 140px;">-->
+                        <!--                                        <option value="" selected disabled></option>-->
+                        <!--                                        <option value="a">a</option>-->
+                        <!--                                        <option value="a">a</option>-->
+                        <!--                                        <option value="a">a</option>-->
+                        <!--                                    </select>-->
+                        <!--                                </div>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
 
                         <!----- 商品名稱 ---------------------------------------------------------->
                         <tr>
                             <td><span class="SHproName">商品名稱</span></td>
-                            <td><input type="text" id="SHproName" name="SHproName" maxlength="30"/><span id="errorName"></span>
+                            <td><input type="text" id="SHproName" name="SHproName" maxlength="30"/><span
+                                    id="errorName"></span>
                             </td>
                         </tr>
 
@@ -242,7 +266,8 @@
                             <td>商品價格</td>
 
 
-                            <td>$ <input type="number" id="SHproPrice" min="0" name="SHproPrice" style="width: 85px;"> 元 <span id="errorPrice"></span></td>
+                            <td>$ <input type="number" id="SHproPrice" min="0" name="SHproPrice" style="width: 85px;"> 元
+                                <span id="errorPrice"></span></td>
 
                         </tr>
 
@@ -251,7 +276,8 @@
                             <td>商品內容</td>
                             <td>
                                 <div>
-                                    <textarea id="SHproContent" name="SHproContent" rows="30" cols="80" required></textarea>
+                                    <textarea id="SHproContent" name="SHproContent" rows="30" cols="80"
+                                              required></textarea>
                                 </div>
                                 <span id="errorContent"></span>
                             </td>
@@ -261,24 +287,37 @@
                         <tr>
                             <td>商品照片</td>
                             <td>
-                                <div class="SHproPho" id="SHproPho1" style="display: inline-block; height: 120px;
-                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"
-                                                                            src="../img/dogs/image2.jpeg"></div>
-                                <div class="SHproPho" id="SHproPho2" style="display: inline-block; height: 120px;
-                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"
-                                                                            src="../img/dogs/image2.jpeg"></div>
-                                <div class="SHproPho" id="SHproPho3" style="display: inline-block; height: 120px;
-                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"
-                                                                            src="../img/dogs/image2.jpeg"></div>
-                                <div class="SHproPho" id="SHproPho4" style="display: inline-block; height: 120px;
-                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"
-                                                                            src="../img/dogs/image2.jpeg"></div>
+                                <!--                                <div class="SHproPho" id="SHproPho1" style="display: inline-block; height: 120px;-->
+                                <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
+                                <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
+                                <!--                                <div class="SHproPho" id="SHproPho2" style="display: inline-block; height: 120px;-->
+                                <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
+                                <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
+                                <!--                                <div class="SHproPho" id="SHproPho3" style="display: inline-block; height: 120px;-->
+                                <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
+                                <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
+                                <!--                                <div class="SHproPho" id="SHproPho4" style="display: inline-block; height: 120px;-->
+                                <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
+                                <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
 
 
-                                <div class="SHproPhoEdit" style="margin-top: 10px;">
-                                    <button type="button" id="photoUploadBtn" class="btn btn-light btn-sm">選取照片</button>
-                                    <button type="button" id="photoDeleteBtn" class="btn btn-dark btn-sm">全部刪除</button>
+                                <!--                                <div class="SHproPhoEdit" style="margin-top: 10px;">-->
+                                <!--                                    <button type="button" id="photoUploadBtn" class="btn btn-light btn-sm">選取照片</button>-->
+                                <!--                                    <button type="button" id="photoDeleteBtn" class="btn btn-dark btn-sm">全部刪除</button>-->
+                                <!--                                </div>-->
+
+                                <!--   =======================  圖片-->
+                                <div style="margin: 0px; font-size: 10px;color: red;">
+                                    <input id="photoUploadBtn" type="button" value="選取照片" class="btn btn-dark btn-sm">
+                                    <input id="photoUploadBtn2" type="file" accept="image/*" value="選取照片" style="display: none;" multiple
+                                           capture>
+                                    上限 5 MB
                                 </div>
+                                <div id="imgView">
+
+                                </div>
+                                <!--   =======================  圖片-->
+
                                 <span id="errorPhoto"></span>
                             </td>
                         </tr>
@@ -288,7 +327,7 @@
                         <tr>
                             <td colspan="2" align="center">
 
-<!--                                <button type="button" class="btn btn-danger" id="saveBtn">存檔</button>-->
+                                <!--                                <button type="button" class="btn btn-danger" id="saveBtn">存檔</button>-->
                                 <button type="button" class="btn btn-success" id="addBtn">新增商品</button>
                                 <!-- <input type="submit" value="Submit"> -->
                                 <!-- <input type="reset" value="Reset"> -->
@@ -320,7 +359,7 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/theme.js"></script>
     <script src="../js/sh_productmanageAdd.js"></script>
-<!--    <script src="../jquery/jquery-3.7.0.js"></script>-->
+    <!--    <script src="../jquery/jquery-3.7.0.js"></script>-->
     <!-- JavaScript JS放置區 -->
 </body>
 

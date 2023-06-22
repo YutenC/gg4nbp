@@ -3,21 +3,29 @@ package gg.nbp.web.SecondHand.sale.service;
 import java.util.List;
 
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 
 public interface SecondhandProductService {
 
 
+    SecondhandProduct addshp(SecondhandProduct secondhandproduct);
 
-SecondhandProduct addshp(SecondhandProduct secondhandproduct);
+    SecondhandProduct editshp(SecondhandProduct secondhandproduct);
+
+    boolean delete(Integer productID);
+
+    SecondhandProduct selectOne(Integer productID);
+
+    List<SecondhandProduct> searchAll();
 
 
 
-SecondhandProduct editshp(SecondhandProduct secondhandproduct);
+    public boolean insertimg(SecondhandProductImage img , Integer id);
 
-boolean delete(Integer productID);
+    public boolean deleteimg(SecondhandProductImage img);
 
-SecondhandProduct selectOne(Integer productID);
+    public boolean updateimg(SecondhandProductImage img, Integer id);
 
-List<SecondhandProduct> searchAll();
+    public List<SecondhandProductImage> selectimg(SecondhandProduct shp) ;
 
 }

@@ -23,21 +23,20 @@ public class EditshpServlet extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-
+        boolean state = true;
 
         SecondhandProduct secondhandproduct = CommonUtil.json2pojo(req, SecondhandProduct.class);
-//        secondhandproduct = secondhandproduct.getProductId();
 
-        SERVICE.editshp(secondhandproduct);
+        secondhandproduct = SERVICE.editshp(secondhandproduct);
 
-        if (secondhandproduct == null){
+        if (secondhandproduct.getName().trim().isEmpty() || secondhandproduct.getContent().trim().isEmpty() || secondhandproduct.getType().trim().isEmpty()){
             secondhandproduct = new SecondhandProduct();
             secondhandproduct.setMessage("無二手商品資訊");
-            secondhandproduct.setSuccessful(false);
-            CommonUtil.writepojo2Json(resp, secondhandproduct);
-            return;
+            state = false;
         }
 
+
+        secondhandproduct.setSuccessful(state);
         CommonUtil.writepojo2Json(resp, secondhandproduct);
 
     }

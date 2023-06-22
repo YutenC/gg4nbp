@@ -22,15 +22,13 @@ public class SecondhandProductImage {
     @Column(name = "image_id", nullable = false)
     private Integer imageId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    private SecondhandProduct secondhandproduct;
+    @Column(name="product_id")
+    private Integer productId;
 
     @Column
     private String image;
 
     @Column(name = "is_use", nullable = false)
-    private Byte isUse;
+    private Byte isUse = 0;
 
 }

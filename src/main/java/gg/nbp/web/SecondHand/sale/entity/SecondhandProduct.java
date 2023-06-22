@@ -2,16 +2,13 @@ package gg.nbp.web.SecondHand.sale.entity;
 
 
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import gg.nbp.core.pojo.Core;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "secondhand_product", schema = "five")
 public class SecondhandProduct extends Core {
+
 
 
     @Id
@@ -48,10 +46,28 @@ public class SecondhandProduct extends Core {
     @CreationTimestamp
     private Date launchTime;
 
-    @Column(name = "Is_launch")
-    private Integer isLaunch = 0;
+//    @Column(name = "Is_launch")
+//    private Integer isLaunch = 0;
 
 //    @OneToMany(mappedBy = "secondhandproduct")
 //    private List<SecondhandProductImage> secondhandproductimages;
 
+    @Transient
+    @OneToMany
+    @JoinColumn(name = "product_id",referencedColumnName = "product_id")
+    private List<SecondhandProductImage> image ;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SecondhandProduct that = (SecondhandProduct) o;
+        return Objects.equals(productId, that.productId) && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(price, that.price) && Objects.equals(content, that.content) && Objects.equals(launchTime, that.launchTime) && Objects.equals(image, that.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), productId, name, type, price, content, launchTime);
+    }
 }

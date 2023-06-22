@@ -94,10 +94,10 @@
                     type,
                     price,
                     content,
-                    // SHproPho1
                 } = body;
 
                 console.log("傳入session並回傳取得DB資料")
+
                 SHproName.value = name;
                 SHproType.value = type;
                 SHproPrice.value = price;
@@ -105,8 +105,72 @@
                 // SHproPho1.value
 
             }
-        )
 
+    )
+
+
+    fetch('shpImg_Select', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            productId: sessionStorage.getItem('productId')
+
+        }),
+    })
+        .then(resp => resp.json()) // .then(function(resp){resp.json();})
+        .then(function (uploadImg) {
+            console.log(uploadImg);
+                // for(let file of uploadImg){
+                //     console.log(file);
+                //     console.log("傳入session並回傳取得DB資料")
+                //
+                // }
+
+
+            // $('#photoUploadBtn').next().on('change', function (e) {
+            //     $('#imgView>div').remove();
+                // uploadImg = e.target.files || e.dataTransfer.files;
+
+                if (!uploadImg.length) {
+                    return;
+                }
+
+                for (let i = 0; i < uploadImg.length; i++) {
+
+                    // const imageUrl = URL.createObjectURL(uploadImg[i]);
+
+                    const div = document.createElement('div');
+                    const img = document.createElement('img');
+                    const btn = document.createElement('button');
+                    $(btn).attr('class', 'del_btn').text('✖');
+                    // const reader = new FileReader();
+
+                    $('#imgView').append(div);
+                    div.append(img);
+                    div.append(btn);
+
+                    // reader.readAsDataURL(uploadImg[i]);
+                    // reader.addEventListener('load', e => {
+                    //     console.log("目標="+e.target.result)
+                    //     img.src = e.target.result;
+                    // });
+
+                    img.src = ".."+ uploadImg[i];
+                    console.log(img.src);
+
+                    btn.addEventListener('click', e => {
+                        del.push(i);
+                        div.remove();
+                    })
+
+                }}
+
+        // )
+            // }
+
+        )
 
     // 修改商品內容
     saveBtn.addEventListener("click", function () {
@@ -130,7 +194,7 @@
                 const {successful} = body;
                 if (successful) {
                     console.log("物件修改成功")
-                    // saveSubmit();
+                    saveSubmit();
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -144,10 +208,10 @@
     })
 
 
-    // function saveSubmit() {
-    //     console.log("更新成功，跳轉頁面");
-    //     window.location.href = "../manager/sh_productmanage.html";
-    // }
+    function saveSubmit() {
+        console.log("更新成功，跳轉頁面");
+        window.location.href = "../manager/sh_productmanage.html";
+    }
 
 
 
