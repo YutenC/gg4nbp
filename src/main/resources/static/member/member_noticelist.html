@@ -28,7 +28,7 @@
 
         div.message_button {
             width: fit-content;
-            margin-left: 340px;
+            margin-left: 600px;
         }
 
         span.message_button {
@@ -70,13 +70,22 @@
         }
 
         th#is_read {
-            width: 10px;
+            width: 30px;
             font-size: 0px;
         }
 
         td#is_read {
-            width: 10px;
+            width: 30px;
             font-size: 0px;
+            height: 30px;
+        }
+
+        div#is_read[value='1'] {
+            background-color: red;
+            margin: 15px 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 10px;
         }
 
         th#manage_function {
@@ -229,14 +238,14 @@
             <div class="container profile profile-view" id="profile" style="height: 800px;">
                 <h1>查看通知</h1>
                 <div class="message_button">
-                        <span class="message_button">
-                            <input class="form-control" type="text" id="search" name="search">
-                        </span>
+<!--                        <span class="message_button">-->
+<!--                            <input class="form-control" type="text" id="search" name="search">-->
+<!--                        </span>-->
+<!--                    <span class="message_button">-->
+<!--                            <img src="../img/magnifying-glass-solid.svg" style="width: 20px;">-->
+<!--                        </span>-->
                     <span class="message_button">
-                            <img src="../img/magnifying-glass-solid.svg" style="width: 20px;">
-                        </span>
-                    <span class="message_button">
-                            <button type="button" class="have_read btn btn-primary">已讀所有通知</button>
+                            <button type="button" class="have_read btn btn-primary readAll">已讀所有通知</button>
                         </span>
                     <span class="message_button">
                             <button type="button" class="have_read btn btn-primary removeAll">刪除所有通知</button>
@@ -332,7 +341,7 @@
             <td id="notice_id">${notice[i].notice_id}</td>
             <td id="time">${notice[i].notice_time}</td>
             <td id="notice_content">${notice[i].notice_value}</td>
-            <td id="is_read" value=${notice[i].is_read}></td>
+            <td id="is_read"><div id="is_read" value=${notice[i].is_read}></div></td>
             <td id="manage_function">
             <button type="button" class="btn btn-warning remove">刪除通知</button>`
             tbody.append(tr);
@@ -400,14 +409,36 @@
         })
     })
 
-    $(document).on("click", "td#notice_content", function (){
+    $(document).on("click", "td#notice_content", function () {
         const message = $(this).closest("tr").find("td#notice_content").text();
+        const isRead = $(this).closest("tr").find("div#is_read").attr("value");
+        const notice_id = $(this).closest("tr").find("td#notice_id").text();
         Swal.fire({
             title: '通知內容',
             text: message,
+        }).then((result) => {
+            $(this).closest("tr").find("div#is_read").attr("value", 0);
+            $.ajax({
+                url: "readOneNoticeServlet",
+                method: "POST",
+                dataType: "json",
+                data: {
+                    notice_id: notice_id
+                },
+            })
         })
     })
 
+    $(document).on("click", "button.readAll", function (){
+        $.ajax({
+            url: "readAllNoticeServlet",
+            method: "POST",
+            dataType: "json",
+            success:function (){
+                window.location.href = "member_noticelist.html";
+            }
+        })
+    })
 
 </script>
 

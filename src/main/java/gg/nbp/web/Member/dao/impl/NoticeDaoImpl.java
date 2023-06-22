@@ -18,7 +18,7 @@ public class NoticeDaoImpl implements NoticeDao {
 
     @Override
     public int update(Notice notice) {
-        final String sql = "UPDATE Notice SET isRead = :isRead WHERE notice_id = :notice_id";
+        final String sql = "UPDATE Notice SET is_read = :is_read WHERE notice_id = :notice_id";
         /*  原始寫法  */
 //        NativeQuery<?> nativeQuery = session.createNativeQuery(sql)
 //                .setParameter("isRead", notice.getIs_read())
@@ -28,8 +28,8 @@ public class NoticeDaoImpl implements NoticeDao {
 
         /*  簡化後  */
         return session.createNativeQuery(sql)
-                .setParameter("isRead", notice.getIs_read())
-                .setParameter("notice", notice.getNotice_id())
+                .setParameter("is_read", 0)
+                .setParameter("notice_id", notice.getNotice_id())
                 .executeUpdate();
     }
 
@@ -79,10 +79,10 @@ public class NoticeDaoImpl implements NoticeDao {
 
     @Override
     public int updateAll(Notice notice) {
-        final String sql = "UPDATE Notice SET isRead = :isRead WHERE member_id = :member_id";
+        final String sql = "UPDATE Notice SET is_read = :is_read WHERE member_id = :member_id";
 
         return session.createNativeQuery(sql)
-                .setParameter("isRead", notice.getIs_read())
+                .setParameter("is_read", 0)
                 .setParameter("member_id", notice.getMember_id())
                 .executeUpdate();
     }
