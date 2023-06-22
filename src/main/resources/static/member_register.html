@@ -300,7 +300,7 @@
 <script>
     $("button#submit").on("click", function () {
         $.ajax({
-            url: "/Five_NBP_gg/memberRegisterServlet",
+            url: "memberRegisterServlet",
             method: "POST",
             dataType: "json",
             data: {
@@ -322,7 +322,7 @@
                     // 將物件傳成json字串存取到sessionStorge
                     var regData = JSON.stringify(register);
                     sessionStorage.setItem("register", regData);
-                    window.location.href = "./member_vertify.html";
+                    window.location.href = "member_vertify.html";
                 } else {
                     Swal.fire({
                         icon: 'error',

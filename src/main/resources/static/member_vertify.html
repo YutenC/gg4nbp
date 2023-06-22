@@ -200,16 +200,15 @@
         let data = sessionStorage.getItem("register");
         let member = JSON.parse(data);
         if (member !== null) {
-            console.log(member)
             $("input#email").val(member.email);
         } else {
             $.ajax({
-                url: "/Five_NBP_gg/memberGetInforServlet",
+                url: "memberGetInforServlet",
                 method: "POST",
                 dataType: "json",
                 success: function (response) {
-                    let member = response;
-                    $("input#email").val(member.email);
+                    let rep = response;
+                    $("input#email").val(response.email);
                 }
             })
         }
