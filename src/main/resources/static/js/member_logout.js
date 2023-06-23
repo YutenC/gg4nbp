@@ -25,6 +25,9 @@ $(window).on("load", function () {
                     $("div#member_pic-1").css("background-image", `url(https://www.gravatar.com/avatar/1234566?size=200&d=mm)`);
                 }
             } 
+        },
+        error:function (err, xhr, status){
+
         }
     })
 })

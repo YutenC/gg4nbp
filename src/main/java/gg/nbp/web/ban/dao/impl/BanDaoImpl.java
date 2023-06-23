@@ -42,7 +42,7 @@ public class BanDaoImpl implements BanDao{
 			.append("manager_id = :manager_id,")
 			.append("ban_reason = :ban_reason,")
 			.append("startTime = :startTime,")
-			.append("endTime = :endTime,")
+			.append("ban_durationByDay = :ban_durationByDay,")
 			.append("WHERE ban_id = :ban_id");
 			
 		Query query = session.createQuery(hql.toString());
@@ -50,7 +50,7 @@ public class BanDaoImpl implements BanDao{
 				.setParameter("manager_id", ban.getManager_id())
 				.setParameter("ban_reason", ban.getBan_reason())
 				.setParameter("startTime", ban.getStartTime())
-				.setParameter("endTime", ban.getEndTime())
+				.setParameter("ban_durationByDay", ban.getBan_durationByDay())
 				.setParameter("ban_id", ban.getBan_id())
 				.executeUpdate();
 	}
