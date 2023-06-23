@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/html/member_loginhistory")
+@WebServlet("/member/member_loginhistory")
 public class MemberLoginHistoryServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

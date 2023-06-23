@@ -3,10 +3,14 @@ package gg.nbp.web.Member.dao;
 import gg.nbp.core.dao.CoreDao;
 import gg.nbp.web.Member.entity.Notice;
 
-public interface NoticeDao extends CoreDao<Notice, Integer> {
+import java.util.List;
 
+public interface NoticeDao {
     int insert(Notice notice);
-
-    int deleteById(Integer id);     // 刪除該筆通知
-    int delectByMember(Integer id);  // 刪除會員id的所有通知
+    int deleteById(Integer id);
+    int update(Notice notice);
+    Notice selectById(Integer id);
+    List<Notice> selectAll(Notice notice);
+    int delectByMemberId(Notice notice);
+    int updateAll(Notice notice);
 }

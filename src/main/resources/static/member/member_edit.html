@@ -276,7 +276,7 @@
 <script>
     $(window).on("load", function () {
         $.ajax({
-            url: "/Five_NBP_gg/memberGetInforServlet",
+            url: "memberGetInforServlet",
             method: "POST",
             dataType: "json",
             success: function (response) {
@@ -301,7 +301,7 @@
 
     $("button#submit").on("click", function () {
         $.ajax({
-            url: "/Five_NBP_gg/memberEditInforServlet",
+            url: "memberEditInforServlet",
             method: "POST",
             dataType: "json",
             data: {

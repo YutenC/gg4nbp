@@ -28,11 +28,11 @@ public class Notice extends Core {
     @Column
     private Integer notice_id;
     @Column
-    private String notive_value;
+    private String notice_value;
     @Column
     private Integer member_id;
     @Column
     private Date notice_time;
     @Column
-    private Boolean is_read;
+    private Integer is_read;
 }

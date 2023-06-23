@@ -328,7 +328,7 @@
 
     $("button#edit_infor").on("click", function () {
         $.ajax({
-            url: "member/member_edit.html",
+            url: "member_edit.html",
             success: function () {
                 window.location.href = "member_edit.html";
             }
@@ -336,15 +336,15 @@
     })
     $("button#vertify").on("click", function () {
         $.ajax({
-            url: "member_vertify.html",
+            url: "../member_vertify.html",
             success: function () {                
-                window.location.href = "member_vertify.html";
+                window.location.href = "../member_vertify.html";
             }
         })
     })
     $("button#change_password").on("click", function () {
         $.ajax({
-            url: "member/member_set_password.html",
+            url: "member_set_password.html",
             success: function () {
                 window.location.href = "member_set_password.html";
             }

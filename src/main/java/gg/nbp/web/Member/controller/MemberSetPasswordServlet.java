@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
-import gg.nbp.web.Member.util.MemerCommonUitl;
+import gg.nbp.web.Member.util.MemberCommonUitl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.util.DigestUtils;
 
 @WebServlet("/memberSetPasswordServlet")
 public class MemberSetPasswordServlet extends HttpServlet {
@@ -19,22 +20,21 @@ public class MemberSetPasswordServlet extends HttpServlet {
     @Autowired
 	private MemberService SERVICE ;
     
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        Member member = MemerCommonUitl.getMemberSession(request,"member");
+        Member member = MemberCommonUitl.getMemberSession(request,"member");
 
         if(member == null){
             Member visitor = new Member();
             visitor.setMessage("無會員資訊");
             visitor.setSuccessful(false);
-            MemerCommonUitl.gsonToJson(response, visitor);
+            MemberCommonUitl.gsonToJson(response, visitor);
             return;
         }
 
         String originPassword = member.getPassword();
-        String password = request.getParameter("originPassword");
+        /*  將重設的密碼用MD5轉換成雜湊值，後續比對是否符合原密碼  */
+        String password = DigestUtils.md5DigestAsHex(request.getParameter("originPassword").getBytes());
         String setPassword = request.getParameter("setPassword");
         String confirmPassword = request.getParameter("confirmPassword");
 
@@ -42,21 +42,23 @@ public class MemberSetPasswordServlet extends HttpServlet {
             Member visitor = new Member();
             visitor.setMessage("與原密碼不一致");
             visitor.setSuccessful(false);
-            MemerCommonUitl.gsonToJson(response, visitor);
+            MemberCommonUitl.gsonToJson(response, visitor);
             return;
         }
         if(!setPassword.equals(confirmPassword)){
             Member visitor = new Member();
             visitor.setMessage("修改密碼不一致");
             visitor.setSuccessful(false);
-            MemerCommonUitl.gsonToJson(response, visitor);
+            MemberCommonUitl.gsonToJson(response, visitor);
             return;
         }
-        member.setPassword(setPassword);
+
+        String hashedPassword = DigestUtils.md5DigestAsHex(setPassword.getBytes());
+        member.setPassword(hashedPassword);
         member = SERVICE.edit(member);
         System.out.println("訊息：會員 " + member.getNick() + " 重設密碼");
 
-        Member visitor = MemerCommonUitl.visitorData(member);
-        MemerCommonUitl.gsonToJson(response,visitor);
+        Member visitor = MemberCommonUitl.visitorData(member);
+        MemberCommonUitl.gsonToJson(response,visitor);
     }
 }
