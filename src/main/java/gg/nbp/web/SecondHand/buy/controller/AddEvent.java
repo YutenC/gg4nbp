@@ -18,8 +18,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/secondhand/addbuyevent")
-public class AddBuyEvent extends HttpServlet  {
+@WebServlet("/secondhand/addEvent")
+public class AddEvent extends HttpServlet  {
 	private static final long serialVersionUID = -4669764916210514485L;
 
 	@Autowired

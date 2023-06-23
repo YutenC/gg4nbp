@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/secondhand/selectall")
+@WebServlet("/secondhand/selectAll")
 public class SelectAll extends HttpServlet {
 	private static final long serialVersionUID = 5250110307973476208L;
 	

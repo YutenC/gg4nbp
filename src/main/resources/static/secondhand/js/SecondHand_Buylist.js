@@ -90,7 +90,7 @@ $('#commit').on('click', function (e) {
             }
         del = [];
 
-    fetch('addbuyevent', {
+    fetch('addEvent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

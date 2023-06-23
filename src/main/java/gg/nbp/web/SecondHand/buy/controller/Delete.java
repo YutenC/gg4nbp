@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/secondhand/delbyid")
-public class DelByListId extends HttpServlet  {
+@WebServlet("/secondhand/delete")
+public class Delete extends HttpServlet  {
 	private static final long serialVersionUID = -1806851938916882849L;
 
 	@Autowired
