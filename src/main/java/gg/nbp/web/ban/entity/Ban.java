@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table (name = "ban_list")
+@Table (name = "Ban_list")
 public class Ban extends Core{
 	private static final long serialVersionUID = 1L;
 
@@ -33,10 +35,21 @@ public class Ban extends Core{
 	private Integer manager_id;
 	@Column 
 	private String ban_reason;
-	@Column
+	@Column (name = "Starttime", updatable = false, nullable = false)
 	private LocalDateTime startTime;
-	@Column
-	private LocalDateTime endTime;
+	@Column(name = "Ban_duration")
+	private Integer ban_durationByDay;
 	
+	@PrePersist
+    protected void onCreate() {
+        if (startTime == null) {
+            startTime = LocalDateTime.now();
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        startTime = LocalDateTime.now();
+    }
 	
 }

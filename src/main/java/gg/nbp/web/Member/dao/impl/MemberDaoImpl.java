@@ -1,5 +1,7 @@
 package gg.nbp.web.Member.dao.impl;
 
+import java.sql.Date;
+
 //import static core.util.CommonUtil.getConnection;
 
 import java.util.List;
@@ -52,9 +54,17 @@ public class MemberDaoImpl implements MemberDao {
                 .append("UPDATE Member SET ");
 
         final String password = member.getPassword();
+        
+        final Date suspend_deadline = member.getSuspend_deadline();
+        
         if (password != null && !password.isEmpty()) {
             hql.append("password = :password, ");
         }
+        
+//        if (suspend_deadline != null) {
+            hql.append("suspend_deadline = :suspend_deadline, ");
+//        }
+        
         hql.append("email = :email, ")
                 .append("phone = :phone, ")
                 .append("address = :address, ")
@@ -68,7 +78,11 @@ public class MemberDaoImpl implements MemberDao {
         if (password != null && !password.isEmpty()) {
             query.setParameter("password", password);
         }
-
+        
+//        if (suspend_deadline != null) {
+            query.setParameter("suspend_deadline", suspend_deadline);
+//        }
+        
         return query
                 .setParameter("email", member.getEmail())
                 .setParameter("phone", member.getPhone())

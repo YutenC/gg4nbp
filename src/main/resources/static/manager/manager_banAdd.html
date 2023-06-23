@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>NPB.GG管理系統-新增停權單</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../fonts/material-icons.min.css">
+    <link rel="stylesheet" href="../css/x-dropdown.css">
+    <link rel="stylesheet" href="../css/custom.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- 左方導覽欄 -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <!-- 上方導覽欄 -->
+                <div class="container-fluid">
+                    <!-- card shadow 視窗整體
+                    mb-4 視窗間間距
+                    py-3 視窗內間距
+                    card-header 標題框
+                    card-body 視窗主體 -->
+
+                    <!-- Ncard -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">新增停權單</p>
+                        </div>
+                        <div class="card-body">
+                            <form action="#" method="post">
+                                <div class="row profile-row">
+                                    <div class="col-md-8">
+                                        <h3>新增停權單</h3>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <p>停權會員ID</p>
+                                                    <p id="ban_member" required name="ban_member"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <p>停權管理員ID</p>
+                                                    <p id="ban_manager" required name="ban_manager"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="ban_reason">停權緣由</label>
+                                                    <textarea class="form-control" id="ban_reason" required
+                                                        name="ban_reason"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label" for="ban_duration">停權天數</label>
+                                                    <input class="form-control" type="text" id="ban_duration" required
+                                                        name="ban_duration"><span>單位為天數</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12 content-right">
+                                                <button class="btn btn-primary form-btn" id="ban_add_btn"
+                                                    type="button">確認</button>
+                                                <button class="btn btn-danger form-btn" id="manager_add_btn_cancel"
+                                                    type="button">取消</button>
+                                            </div>
+                                            <div id="msg" class="error"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright">
+                        <span>Copyright © NBP.GG 2023</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+
+    <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
+    <!-- JavaScript JS放置區 -->
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <!-- JavaScript JS放置區 -->
+    <script src="../js/manager_banAdd.js"></script>
+</body>
+
+</html>

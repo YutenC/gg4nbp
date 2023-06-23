@@ -237,4 +237,12 @@ public class MemberServiceimpl implements MemberService {
         member.setSuccessful(true);
         return member;
     }
+    
+    @Override
+    public Member selectMember(Integer member_id) {
+    	Member member= dao.selectById(member_id);
+		return member;
+    }
+    
+    
 }

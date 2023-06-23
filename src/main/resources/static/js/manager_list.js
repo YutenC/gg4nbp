@@ -320,7 +320,7 @@ function showList() {
                   onclick="changeStateClick(${manager.manager_id})">
                   調整在職狀態
               </a>
-              <br style="padding-top: 3px; padding-buttom: 3px;">
+              <br style="padding-top: 3px; padding-bottom: 3px;">
               <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-manager-button"
                   role="button" href="manager_edit.html"
                   onclick="editClick(${manager.manager_id})">

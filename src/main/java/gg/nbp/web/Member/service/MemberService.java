@@ -13,4 +13,7 @@ public interface MemberService extends CoreService {
     List<Member> findAll();             //尋找所有會員
     boolean remove(Integer id);         //移除會員
     public Member forgetPassword(Member member);
+    
+    Member selectMember(Integer member_id);
+    
 }
