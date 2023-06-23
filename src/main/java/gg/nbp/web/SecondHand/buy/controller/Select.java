@@ -36,13 +36,16 @@ public class Select extends HttpServlet {
 		String str = CommonUtil.json2pojo(req, OneString.class).getStr();
 		
 		try {
+			str = str.trim();
 			Integer id = Integer.parseInt(str);
 			CommonUtil.writepojo2Json(resp, service.searchById(id));
 		} catch (Exception e) {
+			e.printStackTrace();
 			// 代表搜尋的字串不是數字 或是 數字查無結果
 			try {
 				CommonUtil.writepojo2Json(resp, service.searchByName(str));
 			} catch (Exception ee) {
+				ee.printStackTrace();
 				CommonUtil.writepojo2Json(resp, new OneString("查無結果"));
 			}
 		}

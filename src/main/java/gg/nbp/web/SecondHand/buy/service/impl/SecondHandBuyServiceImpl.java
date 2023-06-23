@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import gg.nbp.web.Member.dao.MemberDao;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
@@ -22,6 +23,9 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	private SecondHandBuylistDao dao;
 	@Autowired
 	private SecondHandBuylistPictureDao daoPic;
+	
+	@Autowired
+	private MemberDao daoMember;
 
 	/* 交易控制 : 新增事件 */
 	@Transactional
@@ -41,7 +45,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		} catch (Exception e) {
 			sl.setMessage("沒有圖片");
 		}
-		return new BuyEvent(sl);
+		return new BuyEvent(sl,daoMember);
 	};
 
 	/* 交易控制 : 刪除事件 */
@@ -80,7 +84,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		// 有辦法優化 ?
 		for (SecondhandBuylist sl : dao.selectAll()) {
 			sl.setImage(selectimg(sl));
-			listDTO.add(new BuyEvent(sl));
+			listDTO.add(new BuyEvent(sl,daoMember));
 		}
 
 		/* 如果抓到 0 筆資料，則拋出例外 */
@@ -97,7 +101,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	public BuyEvent searchById(Integer id) {
 		SecondhandBuylist sl = dao.selectById(id);
 		sl.setImage(selectimg(sl));
-		return new BuyEvent(sl);
+		return new BuyEvent(sl,daoMember);
 	}
 	
 	
@@ -107,13 +111,19 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		/* 建立回傳用的List */
 		List<BuyEvent> listDTO = new ArrayList<>();
 		
+		
+		
+		/* 如果傳入空字串，則拋出例外 ( trim()已經在controller層做過了 )*/
+		if(name.isEmpty())
+			throw new SQLException();
+		
 		/**************************************************************************************
 		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
 		for (SecondhandBuylist sl : dao.selectByName(name)) {
 			sl.setImage(selectimg(sl));
-			listDTO.add(new BuyEvent(sl));
+			listDTO.add(new BuyEvent(sl,daoMember));
 		}
 		
 		/* 如果抓到 0 筆資料，則拋出例外 */
@@ -128,7 +138,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	@Override
 	public BuyEvent update(SecondhandBuylist sl) {
 		dao.update(sl);
-		return new BuyEvent(dao.selectById(sl.getBuylistId()));
+		return new BuyEvent(dao.selectById(sl.getBuylistId()),daoMember);
 	}
 	
 	

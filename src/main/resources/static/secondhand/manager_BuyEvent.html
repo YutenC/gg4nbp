@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
     <link rel="stylesheet" href="../css/x-dropdown.css">
     <link rel="stylesheet" href="../css/custom.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -174,6 +175,32 @@
             margin-bottom: 5px;
             margin-top: 5px;
         }
+
+        div.toShow div.pageBar{
+            min-width: 715px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        div.toShow div.pageBar>button{
+            margin: 10px;
+            width: 42px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+
+        div.toShow div.pageBar>button.-isNow{
+            font-weight: bold;
+            color: rgb(19, 104, 117);
+        }
+
+
+
+
+
     </style>
 
 
@@ -198,7 +225,7 @@
                     <div class="card shadow">
                         <div class="toSearch">
                             <div class="searchBar">
-                                <span><input type="text" name="search" id="searchValue" placeholder="輸入查詢名稱"><button>搜尋
+                                <span><input type="text" name="search" id="searchValue" placeholder="輸入編號或名稱查詢"><button>搜尋
                                     </button></span>
                             </div>
                         </div>
@@ -247,12 +274,43 @@
     <script>
 
         let reqaa = [];
-        function itemDisplay(obj) {
-            $('.toItem').remove();
+        function itemDisplay(page=1) {
+            let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+            if (obj.eventId) {
+                obj = [obj];
+            }
+            const pageBar = document.createElement('div');
+            pageBar.setAttribute('class','pageBar');
+            const total = Math.floor(obj.length / 10)+1 ;
+            let start = 1 ;
+            let end = 7 > total ? total : 7 ;
+            if(obj.length>10){
+                if (total > 7 && page >3) {
+                    end = total > page +3 ? page +3 : total;
+                    start = end == total ?  total-6 :  page -3 ;
+                }
+
+                for (let i = start; i <= end; i++) {
+                    const btn = document.createElement('button');
+                    btn.setAttribute('id', `page_${i}`);
+                    btn.innerText = i ;
+                    if (i == page) {
+                        $(btn).addClass('-isNow');
+                    }
+
+                    btn.addEventListener('click',()=>{
+                        itemDisplay(i);
+                    })
+                    pageBar.append(btn);
+                }
+            }
             const div = document.createElement('div');
             div.setAttribute('class', 'toItem');
+
+            lastNum = page*10 > obj.length ?  obj.length :  page*10 ;
            
-            for (let i = 0; i < obj.length; i++) {
+            
+            for (let i = (page-1)*10 ; i < lastNum ; i++) {
                 const article = document.createElement('article');
                 article.setAttribute('class', 'ItemList');
                 article.innerHTML=`
@@ -264,7 +322,7 @@
                     <span>${obj[i].approvalState}</span>
                     <span>
                         <button>刪</button>
-                        <button>查</button>
+                        <button>改</button>
                     </span>
                 </div>
                 <div class="hrLine"></div>
@@ -272,7 +330,10 @@
                 `;            
                 div.append(article);
             }
+            $('.toItem').remove();
+            $('.pageBar').remove();
             $('.toShow')[0].append(div);
+            $('.toShow')[0].append(pageBar);
         }
 
 
@@ -281,26 +342,40 @@
 
         let obj = [{ a: 1 }, { b: 2 }];
         $('.searchBar>span>button').on('click', () => {
-            console.log('111');
-            // ItemDisplay(obj);
-
-            fetch('selectAll', {
+            fetch('select', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                body:JSON.stringify({
+                    str : $('#searchValue').val()
+                })
             })
 
                 .then(resp => resp.json())
                 .then(obj => {
+                    $('#searchValue').val("");
                     reqaa = obj;
-                    itemDisplay(obj);
+                    if (obj.str) {
+                        Swal.fire({
+                            icon: 'question',
+                            title: obj.str
+                        }
+                        )
+                    }else{
+                        sessionStorage.setItem('searcgResult',JSON.stringify(obj));
+                        itemDisplay();
+                    }
                 })
 
 
         })
 
 
-
-
+        $('#searchValue').on('keydown', function(e){
+            if (e.keyCode == 13 ) {
+                e.preventDefault();
+                $('.searchBar>span>button').click();
+            }
+         })
 
 
 

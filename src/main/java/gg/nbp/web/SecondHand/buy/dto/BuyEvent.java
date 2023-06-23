@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import gg.nbp.core.pojo.Core;
+import gg.nbp.web.Member.dao.MemberDao;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
+import gg.nbp.web.SecondHand.buy.util.Toolbox;
 import lombok.Getter;
 
 
@@ -29,11 +31,11 @@ public class BuyEvent extends Core {
 	/*****************************************************
 	 * 用來回應給會員前端頁面的物件 直接把SecondhandBuylist放到建構子裡面就行了
 	 ***************************************************/
-	public BuyEvent(SecondhandBuylist bs) {
+	public BuyEvent(SecondhandBuylist bs,MemberDao dao) {
 
 		try {
 			eventId = bs.getBuylistId();
-			memberName = "先寫死"; // 呼叫member_service 來查詢會員名字
+			memberName = Toolbox.memberId2Name(bs.getMemberId(),dao);
 			productName = bs.getProductName();
 			type = getTypeValue(bs.getType());
 			content = bs.getContent();
@@ -49,6 +51,7 @@ public class BuyEvent extends Core {
 			this.setMessage("成功");
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			this.setSuccessful(false);
 			this.setMessage("查詢失敗");
 		}

@@ -50,10 +50,9 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 	@Override
 	public List<SecondhandBuylist> selectByName(String name) {
 
-		final String sql = "SELECT * FROM secondhand_buylist WHERE Product_name LIKE `%:name%`";
+		final String sql = "SELECT * FROM secondhand_buylist WHERE Product_name LIKE '%"+name+"%'";
 		return session
 				.createNativeQuery(sql, SecondhandBuylist.class)
-				.setParameter("name", name)
 				.getResultList();
 	}
 
