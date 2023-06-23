@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.Member.dao.NoticeDao;
@@ -40,15 +41,20 @@ public class NoticeDaoImpl implements NoticeDao {
 
     @Override
     public List<Notice> selectAll(Notice notice) {
-        final String hql = "FROM Notice ORDER BY member_id";
-        return session.createQuery(hql, Notice.class).getResultList();
+        final String sql = "SELECT * FROM Notice WHERE member_id = :member_id ORDER BY notice_time DESC";
+//        return session.createQuery(sql, Notice.class)
+//                .setParameter("member_id", notice.getMember_id())
+//                .getResultList();
+        return session.createNativeQuery(sql, Notice.class)
+                .setParameter("member_id", notice.getMember_id())
+                .getResultList();
     }
 
     @Override
     public int insert(Notice notice) {
 
         final String sql = "INSERT INTO Notice (is_read, member_id, notice_value) VALUE (:is_read, :member_id, :notice_value)";
-        return session.createNativeQuery(sql)
+        return session.createNativeQuery(sql, Notice.class)
                 .setParameter("is_read", notice.getIs_read())
                 .setParameter("member_id", notice.getMember_id())
                 .setParameter("notice_value", notice.getNotice_value())
@@ -72,7 +78,7 @@ public class NoticeDaoImpl implements NoticeDao {
 //        int result = nativeQuery.executeUpdate();
 //        return result;
         /* 簡化寫法 */
-        return session.createNativeQuery(sql)
+        return session.createNativeQuery(sql, Notice.class)
                 .setParameter("member_id", notice.getMember_id())
                 .executeUpdate();
     }
@@ -81,7 +87,7 @@ public class NoticeDaoImpl implements NoticeDao {
     public int updateAll(Notice notice) {
         final String sql = "UPDATE Notice SET is_read = :is_read WHERE member_id = :member_id";
 
-        return session.createNativeQuery(sql)
+        return session.createNativeQuery(sql, Notice.class)
                 .setParameter("is_read", 0)
                 .setParameter("member_id", notice.getMember_id())
                 .executeUpdate();
