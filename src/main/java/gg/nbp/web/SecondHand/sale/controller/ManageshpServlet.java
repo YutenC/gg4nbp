@@ -40,6 +40,8 @@ public class ManageshpServlet extends HttpServlet {
             newsp.setName(sp.getName());
             newsp.setType(sp.getType());
             newsp.setPrice(sp.getPrice());
+            newsp.setIsLaunch(sp.getIsLaunch());
+
 //            newsp.setLaunchTime(sp.getLaunchTime());
             secondhandproductNewList.add(newsp);
             }

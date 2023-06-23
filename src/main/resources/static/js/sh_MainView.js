@@ -1,8 +1,8 @@
 
-let shp_array = [];
+let Mainshp_array = [];
 
-let shpListContainer = document.querySelector('div.product');
-console.log(shpListContainer);
+let MainshpListContainer = document.querySelector('div.product');
+console.log(MainshpListContainer);
 
 
 fetch('shp_main', {
@@ -17,13 +17,13 @@ fetch('shp_main', {
             console.log("jsondata" + jsondata);
             jsondata.forEach(
                 secondhandproduct => {
-                    let shp_array_item = {
+                    let Mainshp_array_item = {
                         productId: secondhandproduct.productId,
                         name: secondhandproduct.name,
                         image: secondhandproduct.image.map(item => item.image),}
-                    shp_array[secondhandproduct.productId] = (shp_array_item);
-                    console.log(shp_array)
-                    showList();
+                    Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
+                    console.log(Mainshp_array)
+                            showList();
                 }
             )
         }
@@ -38,13 +38,22 @@ function btnSubmit() {
 }
 
 
+
+
+
+
+
+
 function showList() {
 
-    let html = "";
-    shp_array.forEach(
-        secondhandproduct => {
 
-            html += `
+
+
+            let html = "";
+            Mainshp_array.forEach(
+                secondhandproduct => {
+
+                    html += `
        
                      <div class="showItem">
                         <div class="showItem_img" onclick="clickShp(${secondhandproduct.productId})">
@@ -68,12 +77,13 @@ function showList() {
        
             `
 
-        }
+                }
 
 
-    );
+            );
 
-    shpListContainer.innerHTML = html;
+            MainshpListContainer.innerHTML = html;
+
 
 }
 
@@ -82,5 +92,7 @@ function clickShp(productId) {
     sessionStorage.setItem('productId', productId);
     window.location.href = "../sh_shop/sh_Mall.html";
 }
+
+
 
 

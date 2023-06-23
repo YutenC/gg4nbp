@@ -81,5 +81,12 @@ public class SecondhandProductDaoImpl implements SecondhandProductDao {
         return result;
     }
 
+    @Override
+    public List<SecondhandProduct> selectLaunch() {
+        final String hql = "FROM SecondhandProduct WHERE isLaunch = '1'";
+        List<SecondhandProduct> result = session.createQuery(hql, SecondhandProduct.class).getResultList();
+        return result;
+    }
+
 
 }

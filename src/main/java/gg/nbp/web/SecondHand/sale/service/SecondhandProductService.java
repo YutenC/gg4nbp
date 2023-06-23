@@ -18,6 +18,8 @@ public interface SecondhandProductService {
 
     List<SecondhandProduct> searchAll();
 
+    List<SecondhandProduct> searchLaunch();
+
 
 
     public boolean insertimg(SecondhandProductImage img , Integer id);

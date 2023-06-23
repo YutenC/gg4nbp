@@ -1,3 +1,5 @@
+// let del = [];
+
 (() => {
 
     const SHproName = document.getElementById('SHproName');
@@ -30,7 +32,7 @@
     //     console.log(shname);})
 
 
-    // 錯誤訊息設定
+    // ===============錯誤訊息設定===============
     SHproName.addEventListener("blur", function () {
         const SHproValue = SHproName.value;
         if (SHproValue.trim() === "") {
@@ -72,7 +74,7 @@
     })
 
 
-// 讀取資料庫檔案到頁面
+//  ===============讀取資料庫資料(文字)到頁面===============
     fetch('shp_Select', {
         method: 'POST',
         headers: {
@@ -108,7 +110,7 @@
 
     )
 
-
+//  ===============讀取資料庫資料(圖片)到頁面===============
     fetch('shpImg_Select', {
         method: 'POST',
         headers: {
@@ -128,10 +130,15 @@
                 //
                 // }
 
-
+                // ======重打開======
+            //     photoUploadBtn.addEventListener('click', function (e) {
+            //         $(this).next().click();
+            //     })
+            //
             // $('#photoUploadBtn').next().on('change', function (e) {
             //     $('#imgView>div').remove();
-                // uploadImg = e.target.files || e.dataTransfer.files;
+            //     uploadImg = e.target.files || e.dataTransfer.files;
+                // ======重打開======
 
                 if (!uploadImg.length) {
                     return;
@@ -145,17 +152,22 @@
                     const img = document.createElement('img');
                     const btn = document.createElement('button');
                     $(btn).attr('class', 'del_btn').text('✖');
+
+                    // ======重打開======
                     // const reader = new FileReader();
+                    // ======重打開======
 
                     $('#imgView').append(div);
                     div.append(img);
                     div.append(btn);
 
+                    // ======重打開======
                     // reader.readAsDataURL(uploadImg[i]);
                     // reader.addEventListener('load', e => {
                     //     console.log("目標="+e.target.result)
                     //     img.src = e.target.result;
                     // });
+                    // ======重打開======
 
                     img.src = ".."+ uploadImg[i];
                     console.log(img.src);
@@ -167,14 +179,95 @@
 
                 }}
 
+                // ======重打開======
         // )
-            // }
-
+        //     }
+            // ======重打開======
         )
 
-    // 修改商品內容
+
+
+    //  ===============點擊新增圖片按鈕事件(重新抓圖)===============
+    photoUploadBtn.addEventListener('click', function (e) {
+        $(this).next().click();
+    })
+
+    $('#photoUploadBtn').next().on('change', function (e) {
+        $('#imgView>div').remove();
+
+        let uploadImg = e.target.files || e.dataTransfer.files;
+
+        if (!uploadImg.length) {
+            return;
+        }
+
+        for (let i = 0; i < uploadImg.length; i++) {
+
+
+            const div = document.createElement('div');
+            const img = document.createElement('img');
+            const btn = document.createElement('button');
+            $(btn).attr('class', 'del_btn').text('✖');
+            const reader = new FileReader();
+            if (uploadImg[i].size >= 5242880) {
+                $(img).addClass('-warning');
+            }
+            $('#imgView').append(div);
+            div.append(img);
+            div.append(btn);
+
+            reader.readAsDataURL(uploadImg[i]);
+            reader.addEventListener('load', e => {
+                img.src = e.target.result;
+            });
+
+
+            btn.addEventListener('click', e => {
+                del.push(i);
+                div.remove();
+            })
+
+        }})
+
+    $('#photoUploadBtn2').on('change',()=>{
+        del = [];
+    })
+
+
+
+    //  ===============修改商品內容===============
     saveBtn.addEventListener("click", function () {
         console.log("saveBtn");
+
+
+        // =========1. 重新上傳圖片進入本機端(測試可進入本機)=========
+        let img_list = [];
+        const file = $('#photoUploadBtn').next()[0].files;
+        filter:
+            for (let i = 0; i < file.length; i++) {
+                const formData = new FormData();
+
+                for (let j = 0; j < del.length; j++) {
+                    if (i === del[j]) {
+                        continue filter;
+                    }
+                }
+                formData.append(file[i].name, file[i]);
+                img_list.push({image : file[i].name});
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'testpic', true);
+                xhr.send(formData);
+            }
+        del = [];
+
+        console.log(img_list);
+
+
+
+
+
+    // =========2. 修改商品內容(文字OK，image不行，只能選擇無法進資料庫)=========
+
         fetch('shp_Edit', {
             method: 'POST',
             headers: {
@@ -186,7 +279,7 @@
                 type: SHproType.value,
                 price: SHproPrice.value,
                 content: SHproContent.value,
-                // SHproPho1: SHproPho1.value,
+                image: img_list
             }),
         }).then(resp => resp.json()) // .then(function(resp){resp.json();})
             .then(function (body) {

@@ -82,6 +82,9 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
         if (secondhandproduct.getContent() != null) {
             oshproduct.setContent(secondhandproduct.getContent());
         }
+        if (secondhandproduct.getIsLaunch() != null) {
+            oshproduct.setIsLaunch(secondhandproduct.getIsLaunch());
+        }
 
 
 //        System.out.println("有沒有圖傳進來");
@@ -123,6 +126,11 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
     public List<SecondhandProduct> searchAll() {
 
         return shpdao.selectAll();
+    }
+
+    @Override
+    public List<SecondhandProduct> searchLaunch() {
+        return shpdao.selectLaunch();
     }
 
 

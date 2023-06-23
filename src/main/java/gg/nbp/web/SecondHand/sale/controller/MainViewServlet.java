@@ -33,7 +33,7 @@ public class MainViewServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("image/gif");
 
-        List<SecondhandProduct> secondhandproductList = SERVICE.searchAll();
+        List<SecondhandProduct> secondhandproductList = SERVICE.searchLaunch();
 
         // 重新設定集合中物件的屬性(因關聯載入到sh_procudct_image，會有延遲載入的問題)
         Iterator<SecondhandProduct> iterator = secondhandproductList.iterator();
