@@ -55,7 +55,7 @@ public class NoticeDaoImpl implements NoticeDao {
 
         final String sql = "INSERT INTO Notice (is_read, member_id, notice_value) VALUE (:is_read, :member_id, :notice_value)";
         return session.createNativeQuery(sql, Notice.class)
-                .setParameter("is_read", notice.getIs_read())
+                .setParameter("is_read", 1)
                 .setParameter("member_id", notice.getMember_id())
                 .setParameter("notice_value", notice.getNotice_value())
                 .executeUpdate();
