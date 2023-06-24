@@ -115,7 +115,7 @@ orderListContainer.addEventListener("change", function (){
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    managerId: sessionStorage.getItem("logged_id"),
+                    // managerId: sessionStorage.getItem("logged_id"),
                     orderId: order_array[orderId].orderId,
                     payState: stateValue,
                 })
@@ -157,8 +157,9 @@ orderListContainer.addEventListener("change", function (){
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                managerId: sessionStorage.getItem("logged_id"),
+                // managerId: sessionStorage.getItem("logged_id"),
                 orderId: order_array[orderId].orderId,
+                memberId: order_array[orderId].memberId,
                 deliverState: stateValue,
             })
 

@@ -6,6 +6,7 @@ const shpImg1 = document.getElementById('small1');
 const shpImg2 = document.getElementById('small2');
 const shpImg3 = document.getElementById('small3');
 
+const buyBtn = document.querySelector('.direct_buybtn');
 
 fetch('shp_view', {
     method: 'POST',
@@ -43,3 +44,8 @@ fetch('shp_view', {
         }
 
     )
+
+
+buyBtn.addEventListener("click", function (){
+    window.location.href = "../sh_shop/sh_buy.html";
+})

@@ -39,8 +39,26 @@ public class SecondhandOrderServiceImpl implements SecondhandOrderService {
 
 
     @Override
-    public SecondhandOrder addOd(SecondhandOrder od, Member mem) {
+    public SecondhandOrder addOd(SecondhandOrder od) {
 
+
+        if (od.getProductId() == null) {
+            od.setMessage("請填入寄送地點");
+            od.setSuccessful(false);
+            return od;
+        }
+
+        if (od.getMemberId() == null) {
+            od.setMessage("請填入寄送地點");
+            od.setSuccessful(false);
+            return od;
+        }
+
+        if (od.getDeliverName().trim().isEmpty()) {
+            od.setMessage("請填入寄送地點");
+            od.setSuccessful(false);
+            return od;
+        }
 
         if (od.getDeliverLocation().trim().isEmpty()) {
             od.setMessage("請填入寄送地點");
@@ -48,18 +66,6 @@ public class SecondhandOrderServiceImpl implements SecondhandOrderService {
             return od;
         }
 
-
-//        if (bankdao.selectById(mem.getMember_id()).getBank_number().trim().isEmpty() || credao.selectById(mem.getMember_id()).getCred_number().trim().isEmpty()) {
-//            od.setMessage("請填入付款方式");
-//            od.setSuccessful(false);
-//            return od;
-//        }
-
-//        if (bankdao.selectById(mem.getMember_id()).getBank_number().trim().isEmpty() || credao.selectById(mem.getMember_id()).getCred_number().trim().isEmpty()) {
-//            od.setMessage("請填入付款方式");
-//            od.setSuccessful(false);
-//            return od;
-//        }
 
         final int resultCount = oddao.insert(od);
 

@@ -25,6 +25,8 @@ public class EditshpServlet extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("image/*");
+
         boolean state = true;
         int shpproductId = 0;
 

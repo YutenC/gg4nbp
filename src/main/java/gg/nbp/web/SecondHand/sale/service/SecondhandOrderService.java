@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface SecondhandOrderService {
 
-    SecondhandOrder addOd(SecondhandOrder od, Member mem);
+    SecondhandOrder addOd(SecondhandOrder od);
 
     boolean delOd(Integer orderId);
 
