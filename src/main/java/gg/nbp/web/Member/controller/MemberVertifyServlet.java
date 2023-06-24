@@ -37,7 +37,6 @@ public class MemberVertifyServlet extends HttpServlet {
             Member passRegister = MemberCommonUitl.getMemberSession(request,"register");   // 從session中取得註冊會員資訊
             Member passMember = MemberCommonUitl. getMemberSession(request,"member");
             if(passRegister != null){
-                System.out.println(1);
                 passRegister.setMember_ver_state(1);
                 passRegister = SERVICE.edit(passRegister);       // 修改會員驗證狀態
                 request.getSession().removeAttribute("register");   // 移除seesion中會員註冊資訊
@@ -46,14 +45,12 @@ public class MemberVertifyServlet extends HttpServlet {
                 Notice notice = new Notice();
 
                 notice.setMember_id(passRegister.getMember_id());
-                notice.setIs_read(1);
                 notice.setNotice_value("歡迎會員 " + passRegister.getNick() + " 加入NBPgg ");
                 NOTICE.addNotice(notice);
 
                 MemberCommonUitl.gsonToJson(response, passRegister);
 
             } else if(passMember != null){
-                System.out.println(2);
                 passMember.setMember_ver_state(1);
                 SERVICE.edit(passMember);
                 passMember.setMessage("驗證成功");

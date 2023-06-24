@@ -199,12 +199,12 @@
                 <div class="login_btn0">
                     <button class="login_btn1" id="submit" type="button" value="登入">登入</button>
                 </div>
-<!--                <div class="keepLogin0">-->
-<!--                        <span id="keepLogin0">-->
-<!--                            <input id="keepLogin1" name="keepLogin" type="checkbox" required>-->
-<!--                            <label for="keepLogin">保持登入7天</label>-->
-<!--                        </span>-->
-<!--                </div>-->
+                <!--                <div class="keepLogin0">-->
+                <!--                        <span id="keepLogin0">-->
+                <!--                            <input id="keepLogin1" name="keepLogin" type="checkbox" required>-->
+                <!--                            <label for="keepLogin">保持登入7天</label>-->
+                <!--                        </span>-->
+                <!--                </div>-->
 
                 <div class="member_btn">
                         <span>
@@ -241,59 +241,70 @@
 <script src="js/getLocation.js"></script>
 <script src="js/xml2json.js"></script>
 <script src="js/getCityData.js"></script>
+<script src="js/getDevice.js"></script>
 <script>
 
 
-    $("button#submit").on("click", function () {
-        $.ajax({
-            url: "memberLoginServlet",
-            method: "POST",
-            dataType: "json",
-            enctype: "multipart/form-data",
-            data: {
-                account: $("#account").val(),
-                password: $("#password").val()
-            },
-            success: function (response) {
-                let isPass = response.successful;
-                if (isPass) {
-                    sessionStorage.setItem("id", response.member_id);
-                    sessionStorage.setItem("id", response.account);
-                    window.location.href = "./member/member_home.html";
-                } else if (response.member_ver_state === 2) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '拒絕登入',
-                        text: response.message,
-                    })
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '登入失敗',
-                        text: response.message,
-                    })
+    $(document).on("DOMContentLoaded", function () {
+        check_geolocation_enabled();
+        getCityData();
+        const deviceType = checkDeviceType();
+        const operatingSystem = checkOperatingSystem();
+        const login_device = deviceType + "(" + operatingSystem + ")";
+
+
+        // console.log(login_city);                // 定位位置
+        //
+        // console.log(window.location.host);      // IP
+        // console.log(navigator.userAgent);       // 使用環境
+        // console.log(navigator.platform);        // 作業系統
+
+        $("button#submit").on("click", function () {
+            let data = sessionStorage.getItem("data");
+            const jsonData = JSON.parse(data);
+            const cityData = jsonData.townVillageItem;
+            login_city = cityData.ctyName + cityData.townName;
+
+            $.ajax({
+                url: "memberLoginServlet",
+                method: "POST",
+                dataType: "json",
+                enctype: "multipart/form-data",
+                data: {
+                    account: $("#account").val(),
+                    password: $("#password").val(),
+                    login_city: login_city,
+                    host_name: window.location.host,
+                    login_device:login_device,
+                },
+                success: function (response) {
+                    let isPass = response.successful;
+                    if (isPass) {
+                        sessionStorage.setItem("id", response.member_id);
+                        sessionStorage.setItem("id", response.account);
+                        window.location.href = "./member/member_home.html";
+                    } else if (response.member_ver_state === 2) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '拒絕登入',
+                            text: response.message,
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '登入失敗',
+                            text: response.message,
+                        })
+                    }
+                },
+                error: function (xhr, status, err) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err)
                 }
-            },
-            error: function (xhr, status, err) {
-                console.log(xhr);
-                console.log(status);
-                console.log(err)
-            }
+            })
         })
     })
-
-    // check_geolocation_enabled();
-    getCityData();
-
-    let data = sessionStorage.getItem("data");
-    const jsonData = JSON.parse(data);
-    const cityData = jsonData.townVillageItem;
-    let login_city = cityData.ctyName + cityData.townName;
-    console.log(login_city);
-
-    console.log(window.location.host);
-    console.log(navigator.userAgent);
-    console.log(navigator.platform);
 
 
 </script>

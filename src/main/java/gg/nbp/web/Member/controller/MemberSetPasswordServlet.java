@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.util.DigestUtils;
 
-@WebServlet("/memberSetPasswordServlet")
+@WebServlet("/member/memberSetPasswordServlet")
 public class MemberSetPasswordServlet extends HttpServlet {
     private static  final long serialVersionUID = 1L;
     @Autowired

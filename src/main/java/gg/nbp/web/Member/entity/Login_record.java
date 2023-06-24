@@ -1,6 +1,7 @@
 package gg.nbp.web.Member.entity;
 
 
+import java.io.Serial;
 import java.util.Date;
 
 import gg.nbp.core.pojo.Core;
@@ -10,21 +11,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "login_record", schema = "five")
 public class Login_record extends Core {
-    private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 2613430298482970208L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer login_id;
-    @Id
     @Column
     private Integer member_id;
     @Column
@@ -34,5 +40,6 @@ public class Login_record extends Core {
     @Column
     private String login_city;
     @Column
+    @CreationTimestamp
     private Date login_time;
 }

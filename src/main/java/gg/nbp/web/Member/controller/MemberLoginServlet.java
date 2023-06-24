@@ -3,6 +3,8 @@ package gg.nbp.web.Member.controller;
 import java.io.IOException;
 import java.io.Serial;
 
+import gg.nbp.web.Member.entity.Login_record;
+import gg.nbp.web.Member.service.LoginRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.web.Member.entity.Member;
@@ -22,12 +24,19 @@ public class MemberLoginServlet extends HttpServlet {
     private static final long serialVersionUID = -5239242805789930921L;
     @Autowired
    	private MemberService SERVICE ;
+    @Autowired
+    private LoginRecordService LOGIN_SERVICE;
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Member member = new Member();
+        Login_record loginRecord = new Login_record();
         member.setAccount(request.getParameter("account").trim());
         String password = request.getParameter("password").trim();
+        String loginDevice = request.getParameter("login_device");
+        String loginCity = request.getParameter("login_city");
+        String ip = request.getParameter("host_name");
+
         if ((member.getAccount().equals("")) || (password.equals(""))) {
             member = new Member();
             member.setMessage("請填寫帳號密碼");
@@ -44,6 +53,13 @@ public class MemberLoginServlet extends HttpServlet {
         //  是否登入成功的訊息
 
         if (member.isSuccessful()) {
+
+            loginRecord.setMember_id(member.getMember_id());
+            loginRecord.setLogin_device(loginDevice);
+            loginRecord.setLogin_city(loginCity);
+            loginRecord.setHost_name(ip);
+            LOGIN_SERVICE.record(loginRecord);
+
             System.out.println("訊息：會員 " + member.getNick() + " " + member.getMessage());
             if (request.getSession(false) != null) {
                 request.changeSessionId();

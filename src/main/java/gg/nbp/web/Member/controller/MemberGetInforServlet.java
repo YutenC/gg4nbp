@@ -2,6 +2,7 @@ package gg.nbp.web.Member.controller;
 
 
 import java.io.IOException;
+import java.io.Serial;
 
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.util.MemberCommonUitl;
@@ -13,7 +14,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/member/memberGetInforServlet")
 public class MemberGetInforServlet extends HttpServlet {
-
+    @Serial
+    private static final long serialVersionUID = 36282460994851823L;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Member member = MemberCommonUitl.getMemberSession(request,"member");

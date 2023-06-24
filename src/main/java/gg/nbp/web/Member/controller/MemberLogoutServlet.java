@@ -10,13 +10,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/member/memberLogoutServlet")
+@WebServlet({"/member/memberLogoutServlet","/memberLogoutServlet"})
 public class MemberLogoutServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Member member = MemberCommonUitl.getMemberSession(request,"member");
-        System.out.println("會員：" + member.getNick() + " 成功登出");
+        System.out.println("訊息：會員 " + member.getNick() + " 成功登出");
         request.getSession().setAttribute("isLogin", false);
 
         request.getSession().removeAttribute("isLogin");

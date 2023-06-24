@@ -12,7 +12,7 @@ $("li.logout").on("click", function (){
 
 $(window).on("load", function () {
     $.ajax({
-        url: "memberGetInforServlet",
+        url: "memberGetPictureServlet",
         method: "POST",
         dataType: "json",
         success: function (response) {
