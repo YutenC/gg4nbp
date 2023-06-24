@@ -119,7 +119,39 @@ document.addEventListener('DOMContentLoaded', e => {
 
     $('.gobuylist').on('click', e => {
         e.preventDefault;
-    window.location.href = 'SecondHand_Buylist.html';
+        fetch('addEvent', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(resp => {
+            if (resp.redirected == true) {
+                let timerInterval
+                Swal.fire({
+                    title: '您尚未登入！',
+                    html: ' <b></b> 秒後跳轉到登入頁面',
+                    timer: 3000,
+                    timerProgressBar: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Math.floor(Swal.getTimerLeft()/1000)
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        sessionStorage.setItem('backTo',location.href);
+                        location.href = resp.url;
+                    }
+                })
+            } else {
+                location.href = 'SecondHand_Buylist.html';
+            }
+        })
+
     })
 
 

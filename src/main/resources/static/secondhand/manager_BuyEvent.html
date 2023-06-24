@@ -273,6 +273,7 @@
 
     <script>
 
+        let onePage = 10 ;
         let reqaa = [];
         function itemDisplay(page=1) {
             let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
@@ -281,10 +282,10 @@
             }
             const pageBar = document.createElement('div');
             pageBar.setAttribute('class','pageBar');
-            const total = Math.floor(obj.length / 10)+1 ;
+            const total = Math.floor(obj.length / onePage)+1 ;
             let start = 1 ;
             let end = 7 > total ? total : 7 ;
-            if(obj.length>10){
+            if(obj.length>onePage){
                 if (total > 7 && page >3) {
                     end = total > page +3 ? page +3 : total;
                     start = end == total ?  total-6 :  page -3 ;
@@ -307,10 +308,10 @@
             const div = document.createElement('div');
             div.setAttribute('class', 'toItem');
 
-            lastNum = page*10 > obj.length ?  obj.length :  page*10 ;
-           
+            lastNum = page*onePage > obj.length ?  obj.length :  page*onePage ;
+           console.log(lastNum);
             
-            for (let i = (page-1)*10 ; i < lastNum ; i++) {
+            for (let i = (page-1)*onePage ; i < lastNum ; i++) {
                 const article = document.createElement('article');
                 article.setAttribute('class', 'ItemList');
                 article.innerHTML=`
@@ -340,7 +341,6 @@
 
 
 
-        let obj = [{ a: 1 }, { b: 2 }];
         $('.searchBar>span>button').on('click', () => {
             fetch('select', {
                 method: 'POST',

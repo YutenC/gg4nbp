@@ -30,7 +30,7 @@ $('#getshot').next().on('change', function (e) {
     $('#imgView>div').remove();
 
     let uploadImg = e.target.files || e.dataTransfer.files;
-    
+
     if (!uploadImg.length) {
         return;
     }
@@ -41,9 +41,9 @@ $('#getshot').next().on('change', function (e) {
         const div = document.createElement('div');
         const img = document.createElement('img');
         const btn = document.createElement('button');
-        $(btn).attr('class','del_btn').text('✖');
+        $(btn).attr('class', 'del_btn').text('✖');
         const reader = new FileReader();
-        if (uploadImg[i].size >=5242880) {
+        if (uploadImg[i].size >= 5242880) {
             $(img).addClass('-warning');
         }
         $('#imgView').append(div);
@@ -56,10 +56,10 @@ $('#getshot').next().on('change', function (e) {
         });
 
 
-        btn.addEventListener('click', e =>{
+        btn.addEventListener('click', e => {
             del.push(i);
-            div.remove(); 
-        })  
+            div.remove();
+        })
 
     }
 
@@ -71,24 +71,24 @@ $('#getshot').next().on('change', function (e) {
 $('#commit').on('click', function (e) {
     let type = $('#type_1').val() + $('#type_2').val();
     let s_estimate = estimate.value || 0;
-    let img_list = [];  
+    let img_list = [];
     const file = $('#getshot').next()[0].files;
-    
+
     filter:
     for (let i = 0; i < file.length; i++) {
-                const formData = new FormData();
-                for (let j = 0; j < del.length; j++) {
-                   if (i === del[j]) {
-                    continue filter;
-                   }
-                }
-                formData.append(file[i].name, file[i]);
-                img_list.push({image : file[i].name});
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'testpic', true);
-                xhr.send(formData);
+        const formData = new FormData();
+        for (let j = 0; j < del.length; j++) {
+            if (i === del[j]) {
+                continue filter;
             }
-        del = [];
+        }
+        formData.append(file[i].name, file[i]);
+        img_list.push({ image: file[i].name });
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'upFile', true);
+        xhr.send(formData);
+    }
+    del = [];
 
     fetch('addEvent', {
         method: 'POST',
@@ -99,18 +99,45 @@ $('#commit').on('click', function (e) {
             content: content.value,
             estimate: s_estimate,
             applicantBankNumber: applicantBankNumber.value,
-            image : img_list
+            image: img_list
         })
     })
-        .then(resp => resp.json())
+        .then(resp => {
+            if (resp.redirected == true) {
+                let timerInterval
+                Swal.fire({
+                    title: '您尚未登入！',
+                    html: ' <b></b> 秒後跳轉到登入頁面',
+                    timer: 3000,
+                    timerProgressBar: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Math.floor(Swal.getTimerLeft()/1000)
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        sessionStorage.setItem('backTo',location.href);
+                        location.href = resp.url;
+                    }
+                })
+            } else {
+                return resp.json();
+            }
+        })
         .then(obj => {
             checkpage(obj);
         })
-        
-            
-    
 
-      
+
+
+
+
 })
 
 
@@ -141,9 +168,9 @@ function checkpage(obj) {
     <button onclick="gohome(event || window.event)">回首頁</button>
     </div>
     `;
-    div.setAttribute('class','return_box');
+        div.setAttribute('class', 'return_box');
         $('.showArea').append(div);
-        $('.content').attr('style','width : 40%');
+        $('.content').attr('style', 'width : 40%');
     } else {
         $('.inputNotice')[0].innerHTML = '* 輸入錯誤'
 
