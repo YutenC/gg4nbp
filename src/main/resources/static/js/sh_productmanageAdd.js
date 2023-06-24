@@ -1,3 +1,5 @@
+let del = [];
+
 (() => {
 
     const SHproName = document.getElementById('SHproName');
@@ -71,8 +73,87 @@
         }
     })
 
+
+
+    // ======圖片選擇與刪除=====================
+
+
+
+    // const photoUploadBtn = document.getElementById('photoUploadBtn');
+
+    photoUploadBtn.addEventListener('click', function (e) {
+        $(this).next().click();
+    })
+
+    $('#photoUploadBtn').next().on('change', function (e) {
+        $('#imgView>div').remove();
+
+        let uploadImg = e.target.files || e.dataTransfer.files;
+
+        if (!uploadImg.length) {
+            return;
+        }
+
+        for (let i = 0; i < uploadImg.length; i++) {
+
+
+            const div = document.createElement('div');
+            const img = document.createElement('img');
+            const btn = document.createElement('button');
+            $(btn).attr('class', 'del_btn').text('✖');
+            const reader = new FileReader();
+            if (uploadImg[i].size >= 5242880) {
+                $(img).addClass('-warning');
+            }
+            $('#imgView').append(div);
+            div.append(img);
+            div.append(btn);
+
+            reader.readAsDataURL(uploadImg[i]);
+            reader.addEventListener('load', e => {
+                img.src = e.target.result;
+            });
+
+
+            btn.addEventListener('click', e => {
+                del.push(i);
+                div.remove();
+            })
+
+        }})
+
+    // ======圖片選擇與刪除END=====================
+
+        $('#photoUploadBtn2').on('change',()=>{
+            del = [];
+        })
+
     // 加入商品
     addBtn.addEventListener("click", function () {
+
+        // =========圖片=========
+        let img_list = [];
+        const file = $('#photoUploadBtn').next()[0].files;
+        filter:
+            for (let i = 0; i < file.length; i++) {
+                const formData = new FormData();
+
+                for (let j = 0; j < del.length; j++) {
+                    if (i === del[j]) {
+                        continue filter;
+                    }
+                }
+                formData.append(file[i].name, file[i]);
+                img_list.push({image : file[i].name});
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'testpic', true);
+                xhr.send(formData);
+            }
+        del = [];
+        // =========圖片=========
+        console.log(img_list);
+
+
         fetch('sh_productmanageAdd', {
             method: 'POST',
             headers: {
@@ -83,6 +164,7 @@
                 type: SHproType.value,
                 price: SHproPrice.value,
                 content: SHproContent.value,
+                image: img_list
                 // SHproPho1: SHproPho1.value,
             }),
         })
@@ -114,3 +196,5 @@
 
 
 })();
+
+

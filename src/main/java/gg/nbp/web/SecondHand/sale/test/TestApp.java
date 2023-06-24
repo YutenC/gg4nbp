@@ -3,25 +3,28 @@ package gg.nbp.web.SecondHand.sale.test;
 import java.util.Date;
 
 import gg.nbp.web.SecondHand.sale.dao.SecondhandProductDao;
+import gg.nbp.web.SecondHand.sale.dao.SecondhandProductImageDao;
 import gg.nbp.web.SecondHand.sale.dao.impl.SecondhandProductDaoImpl;
+import gg.nbp.web.SecondHand.sale.dao.impl.SecondhandProductImageDaoImpl;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
 
 public class TestApp {
+
 
     public static void main(String[] args) {
 //        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 //        Session session = sessionFactory.openSession();
 
 // ===========新增
-        SecondhandProduct sp = new SecondhandProduct();
-        sp.setName("PlayStationg.手把");
-        sp.setType("02");
-        sp.setPrice(500);
-        sp.setContent("ccccccc");
-        sp.setLaunchTime(new Date());
-
-        SecondhandProductDao spdao = new SecondhandProductDaoImpl();
-        spdao.insert(sp);
+//        SecondhandProduct sp = new SecondhandProduct();
+//        sp.setName("PlayStationg.手把");
+//        sp.setType("02");
+//        sp.setPrice(500);
+//        sp.setContent("ccccccc");
+//        sp.setLaunchTime(new Date());
+//
+//        SecondhandProductDao spdao = new SecondhandProductDaoImpl();
+//        spdao.insert(sp);
 
 
 // ===========刪除
@@ -29,7 +32,7 @@ public class TestApp {
 //        spdao.deleteById(1);
 
 
-// ===========修改
+// ===========修改(要改掉getSession)
 //        SecondhandProductDao spdao = new SecondhandProductDaoImpl();
 //        SecondhandProduct newsp = spdao.getSession().get(SecondhandProduct.class, 2);
 //        newsp.setContent("TESTnewcontentttttt");
@@ -90,6 +93,27 @@ public class TestApp {
 //        session.persist(sp);
 //        trans.commit();
 //        System.out.println(session.get(SecondhandProduct.class, 2).getContent());
+
+
+        // 圖片selectByProId
+//        SecondhandProductImageDao test = new SecondhandProductImageDaoImpl();
+//        List<SecondhandProductImage> imgs = test.selectByProId(55);
+//        if (!(imgs.isEmpty())) {
+//            for (SecondhandProductImage img : imgs) {
+//                System.out.println(img.getProductId());
+//                System.out.println(img.getImageId());
+//                System.out.println(img.getImage());
+//            }
+//        }else{
+//            System.out.println("未找到任何商品");
+//        }
+
+        // 圖片deleteById
+        SecondhandProductImageDao test = new SecondhandProductImageDaoImpl();
+        test.deleteById(16);
+        System.out.println("已刪除");
+
+
     }
 
 

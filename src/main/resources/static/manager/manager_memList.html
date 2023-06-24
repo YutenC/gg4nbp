@@ -71,72 +71,77 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>帳號</th>
-                                            <th>密碼</th>
                                             <th>暱稱</th>
-                                            <th>信箱</th>
-                                            <th>電話</th>
-                                            <th>停權狀態</th>
+                                            <th>累積紅利</th>
+                                            <th>帳號狀態</th>
+                                            <th>停權結束時間</th>
+                                            <th>被檢舉次數</th>
                                             <th>設定</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <!-- JS建立 -->
+                                        <!-- 隱藏內容：密碼、信箱、電話、生日、身分證字號、地址、大頭照 -->
                                         <tr>
-                                            <td>%%%會員ID 111111111111111111111111111111</td>
-                                            <td>%%%會員帳號</td>
-                                            <td>密碼</td>
-                                            <td>%%%會員姓名</td>
-                                            <td>%%%會員信箱</td>
-                                            <td>%%%會員電話</td>
-                                            <td>%%%會員停權狀態</td>
+                                            <td>member.member_id</td>
+                                            <td>member.account</td>
+                                            <td>member.nick</td>
+                                            <td>member.bonus</td>
+                                            <td>member.member_ver_state</td>
+                                            <td>member.suspend_deadline</td>
+                                            <td>member.violation</td>
                                             <td>
                                                 <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
                                                     role="button" href="#">
                                                     詳細資料
                                                 </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
-                                                    role="button" href="#">
-                                                    變更停權狀態
-                                                </a>
                                                 <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button btn-danger"
                                                     role="button" href="#">
                                                     刪除會員
                                                 </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>會員ID2</td>
-                                            <td>%%%會員帳號2</td>
-                                            <td>密碼2</td>
-                                            <td>%%%會員姓名2</td>
-                                            <td>%%%會員信箱2</td>
-                                            <td>%%%會員電話2</td>
-                                            <td>%%%會員停權狀態2</td>
-                                            <td>
+
+                                                <br style="padding-top: 3px; padding-bottom: 3px;">
                                                 <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
                                                     role="button" href="#">
-                                                    詳細資料
+                                                    停權會員
                                                 </a>
+                                                <!-- 二選一，根據現在有沒有停權決定展示哪個 -->
                                                 <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
                                                     role="button" href="#">
                                                     變更停權狀態
                                                 </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button btn-danger"
-                                                    role="button" href="#">
-                                                    刪除會員
-                                                </a>
                                             </td>
                                         </tr>
+                                        <tr class="dropdown_row" style="display:none;"
+                                            id="toggle_button_${member.member_id}">
+                                            <td colspan="6">
+                                                <div style="display: flex; flex-wrap: wrap;">
+                                                    <div style="width: 50%;">
+                                                        <span class="pwd-span">密碼：****</span>
+                                                        <button
+                                                            class="btn btn-primary btn-sm d-none d-sm-inline-block show-password"
+                                                            data-password="${manager.password}">顯示</button>
+                                                    </div>
+                                                    <div style="width: 50%;">電話：${manager.phone}</div>
+                                                    <div style="width: 50%;">信箱：${manager.email}</div>
+                                                    <div style="width: 50%;">生日：${manager.birth}</div>
+                                                    <div style="width: 50%;">身分證字號：${manager.id_number}</div>
+                                                    <div style="width: 100%;">地址：${manager.address}</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
 
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <td><strong>ID</strong></td>
                                             <td><strong>帳號</strong></td>
-                                            <td><strong>密碼</strong></td>
                                             <td><strong>暱稱</strong></td>
-                                            <td><strong>信箱</strong></td>
-                                            <td><strong>電話</strong></td>
-                                            <td><strong>停權狀態</strong></td>
+                                            <td><strong>累積紅利</strong></td>
+                                            <td><strong>帳號狀態</strong></td>
+                                            <td><strong>停權結束時間</strong></td>
+                                            <td><strong>被檢舉次數</strong></td>
                                             <td><strong>設定</strong></td>
                                         </tr>
                                     </tfoot>

@@ -1,7 +1,9 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.util.CommonUtil;
@@ -23,22 +25,34 @@ public class EditshpServlet extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+        boolean state = true;
+        int shpproductId = 0;
 
+        SecondhandProduct shp = CommonUtil.json2pojo(req, SecondhandProduct.class);
 
-        SecondhandProduct secondhandproduct = CommonUtil.json2pojo(req, SecondhandProduct.class);
-//        secondhandproduct = secondhandproduct.getProductId();
+        shpproductId = shp.getProductId();
 
-        SERVICE.editshp(secondhandproduct);
+        shp = SERVICE.editshp(shp);
 
-        if (secondhandproduct == null){
-            secondhandproduct = new SecondhandProduct();
-            secondhandproduct.setMessage("無二手商品資訊");
-            secondhandproduct.setSuccessful(false);
-            CommonUtil.writepojo2Json(resp, secondhandproduct);
-            return;
+        if (shp.getName().trim().isEmpty() || shp.getContent().trim().isEmpty() || shp.getType().trim().isEmpty()){
+            shp = new SecondhandProduct();
+            shp.setMessage("無二手商品資訊");
+            state = false;
         }
 
-        CommonUtil.writepojo2Json(resp, secondhandproduct);
+
+        // =========修改圖片(頁面能選擇刪除，但無法進資料庫修改)
+//        List<SecondhandProductImage> newImages = shp.getImage();
+//        if (newImages != null) {
+//            for (SecondhandProductImage img : newImages) {
+//                SERVICE.updateimg(img, shpproductId);
+//            }
+//        }
+        // =========
+
+        shp.setSuccessful(state);
+
+        CommonUtil.writepojo2Json(resp, shp);
 
     }
 }

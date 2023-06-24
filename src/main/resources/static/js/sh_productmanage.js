@@ -5,6 +5,7 @@
 // 4. 再寫刪除
 // 5. mySQL增加上架欄位
 //
+const saleState = document.getElementById('saleState');
 let shp_array = [];
 
 let shpListContainer = document.querySelector('table#sh_dataTable tbody');
@@ -72,7 +73,7 @@ function sphDelete(productId){
                 name: shp_array[productId].name,
                 type: shp_array[productId].type,
                 price: shp_array[productId].price,
-                isLaunch: shp_array[productId].isLaunch,
+                // isLaunch: shp_array[productId].isLaunch,
                 // launchTime: shp_array[productId].launchTime
             })
         }).then(
@@ -85,27 +86,74 @@ function sphDelete(productId){
 function btnSubmit() {
     console.log("新增頁面，跳轉頁面");
     window.location.href = "../manager/sh_productmanage.html";
+
+
 }
 
 
 function showList() {
 
     let html = "";
+
+
     shp_array.forEach(
         secondhandproduct => {
+
+            //======= type代碼判斷 =======
+            let typeValue = secondhandproduct.type;
+            switch (typeValue) {
+                case "00":
+                    typeValue = "NS主機";
+                    break;
+                case "01":
+                    typeValue = "NS手把";
+                    break;
+                case "02":
+                    typeValue = "NS卡帶";
+                    break;
+                case "03":
+                    typeValue = "NS周邊";
+                    break;
+                case "10":
+                    typeValue = "XBOX主機";
+                    break;
+                case "11":
+                    typeValue = "XBOX手把";
+                    break;
+                case "12":
+                    typeValue = "XBOX遊戲片";
+                    break;
+                case "13":
+                    typeValue = "XBOX周邊";
+                    break;
+                case "20":
+                    typeValue = "PS主機";
+                    break;
+                case "21":
+                    typeValue = "PS手把";
+                    break;
+                case "22":
+                    typeValue = "PS遊戲片";
+                    break;
+                case "23":
+                    typeValue = "PS周邊";
+                    break;
+            }
+
+
 
             html += `
        
             <tr>
-                                                                               <td>
-                                                                                 <div>
-                                                                                       <select class="saleornot" style="width: 90px;">
-                                                                                          <option value="" disabled></option> 
-                                                                                          <option value="0" selected>下架</option>
-                                                                                            <option value="${secondhandproduct.isLaunch}">上架</option>
-                                                                                     </select>
-                                                                                 </div>
-                                                                                </td>
+                <td>
+                 <div>
+                     <select id="saleState" style="width: 90px;">
+                     <option value="" disabled></option> 
+                     <option value="0" ${secondhandproduct.isLaunch === "0" ? 'selected' : ''}>下架</option>
+                     <option value="1" ${secondhandproduct.isLaunch === "1" ? 'selected' : ''}>上架</option>
+                     </select>
+                </div>
+                </td>
 
             <td><span>
             <!--之後連上架的商品頁面-->
@@ -114,7 +162,7 @@ function showList() {
             </span></td>
 
             <td><span class="SHproName">${secondhandproduct.name}</span></td>
-            <td><span class="SHproType">${secondhandproduct.type}</span></td>
+            <td><span class="SHproType">${typeValue}</span></td>
             <td>$<span class="SHproPrice">${secondhandproduct.price}</span>元</td>
 <!--            解開註解記得將\刪除-->
 <!--            <td><span class="SHproLaunchTime">\${secondhandproduct.launchTime}"</span></td>-->
@@ -143,3 +191,34 @@ function sphEdit(productId) {
     sessionStorage.setItem('productId', productId);
     window.location.href = "../manager/sh_productmanageEdit.html";
 }
+
+
+
+shpListContainer.addEventListener("change", function (){
+
+    if(event.target.id === "saleState") {
+        let stateValue = event.target.value;
+        console.log(stateValue);
+
+        // 获取当前行的 productId
+        let productId = event.target.closest("tr").querySelector(".SHproNum").innerText;
+        console.log(productId);
+
+        fetch('shp_launch', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                productId: shp_array[productId].productId,
+                isLaunch: stateValue,
+            })
+
+        })
+
+    }
+
+
+
+
+
+
+})

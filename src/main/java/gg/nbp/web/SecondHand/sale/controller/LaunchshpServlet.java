@@ -1,11 +1,5 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
-import java.io.IOException;
-import java.util.List;
-
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
 import gg.nbp.web.SecondHand.sale.service.SecondhandProductService;
@@ -14,11 +8,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@WebServlet("/manager/shp_delete")
-public class DeleteshpServlet extends HttpServlet {
-	@Autowired
-	private SecondhandProductService SERVICE;
+import java.io.IOException;
+
+@WebServlet("/manager/shp_launch")
+public class LaunchshpServlet extends HttpServlet {
+
+    @Autowired
+    private SecondhandProductService SERVICE;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,13 +24,12 @@ public class DeleteshpServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
 
-        SecondhandProduct secondhandproduct = CommonUtil.json2pojo(req, SecondhandProduct.class);
+        SecondhandProduct shp = CommonUtil.json2pojo(req, SecondhandProduct.class);
+//        SecondhandProduct oshp = new SecondhandProduct();
+//        oshp.setProductId(shp.getProductId());
+//        oshp.setIsLaunch(shp.getIsLaunch());
+        SERVICE.editshp(shp);
 
-        List<SecondhandProductImage> imgs = SERVICE.selectimg(secondhandproduct);
-        for(SecondhandProductImage img: imgs){
-            SERVICE.deleteimg(img);
-        }
 
-        SERVICE.delete(secondhandproduct.getProductId());
     }
 }
