@@ -46,26 +46,26 @@
         }
 
         th#time {
-            width: 120px;
+            width: 200px;
             text-align: center;
         }
 
         td#time {
-            width: 120px;
+            width: 200px;
             text-align: center;
             vertical-align: middle;
         }
 
         th#notice_content {
             text-align: center;
-            width: 400px;
+            width: 320px;
         }
 
         td#notice_content {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: 400px;
+            width: 320px;
             vertical-align: middle;
         }
 
@@ -186,18 +186,6 @@
                 <a data-bss-hover-animate="pulse" id="info" class="list-group-item list-group-item-action"
                    href="./member_info.html" data-bs-toggle="list"
                    style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
-                </a>
-                <a data-bss-hover-animate="pulse" id="setBank" class="list-group-item list-group-item-action"
-                   href="./member_common_account.html" data-bs-toggle="list"
-                   style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">常用帳戶設定
-                </a>
-                <a data-bss-hover-animate="pulse" id="friend" class="list-group-item list-group-item-action"
-                   href="./member_friendlist.html" data-bs-toggle="list"
-                   style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">好友名單
-                </a>
-                <a data-bss-hover-animate="pulse" id="black" class="list-group-item list-group-item-action"
-                   href="./member_blacklist.html" data-bs-toggle="list"
-                   style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">黑名單
                 </a>
                 <a data-bss-hover-animate="pulse" id="trade" class="list-group-item list-group-item-action"
                    href="./member_order_list.html" data-bs-toggle="list"
@@ -323,7 +311,7 @@
             method: "POST",
             dataType: "json",
             success: function (response) {
-                // let notice = response;
+                // let aaa = response;
                 render(response);
             }
         })
@@ -353,7 +341,7 @@
         const notice_id = $(this).closest("tr").find("td#notice_id").text();
         Swal.fire({
             title: '確定刪除?',
-            text: "確定刪除此筆通知",
+            text: "確定刪除此筆通知?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -383,7 +371,7 @@
     $(document).on("click", "button.removeAll", function () {
         Swal.fire({
             title: '確定刪除?',
-            text: "確定刪除此筆通知",
+            text: "確定刪除全部通知?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

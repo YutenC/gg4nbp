@@ -233,8 +233,10 @@
 </body>
 <script src="js/getLocation.js"></script>
 <script>
+    $(document).on("DOMContentLoaded", function () {
+        check_geolocation_enabled();
+    })
 
-    check_geolocation_enabled();
     // const arr = document.querySelectorAll('.showarea');
     // arr.forEach(e => (
     //     e.addEventListener('mouseenter', event => {
