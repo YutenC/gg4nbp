@@ -2,7 +2,7 @@ const orderId = document.getElementById('orderId');
 const memberId = document.getElementById('memberId');
 const orderPrice = document.getElementById('orderPrice');
 const payState = document.getElementById('payState');
-const delieverState = document.getElementById('delieverState');
+const deliverState = document.getElementById('deliverState');
 const managerID = document.getElementById('managerID');
 const orderListContainer = document.querySelector('table#orderTable tbody');
 console.log(orderListContainer);
@@ -25,6 +25,7 @@ fetch('sh_ordermanage',{
             };
             order_array[order.orderId] = (order_array_item);
             showList();
+
         }
     )
 })
@@ -64,13 +65,127 @@ order_array.forEach(
         `
     }
 
-
-
-
-
 )
-
     orderListContainer.innerHTML = html;
 
-
 }
+
+
+// function changePayState(){
+//     let stateValue = payState.value;
+//
+//     payState.addEventListener("change", function (){
+//
+//         fetch('payState', {
+//             method: 'GET',
+//             headers: {'Content-Type': 'application/json'},
+//             body: JSON.stringify({
+//                 productId: shp_array[orderId].productId,
+//                 payState: stateValue,
+//             })
+//
+//         }).then(function (){
+//             Swal.fire({
+//                 position: 'center',
+//                 icon: 'success',
+//                 title: '上下架狀態已變更',
+//                 showConfirmButton: false,
+//                 timer: 1500
+//             })
+//         })
+//     })
+//
+// }
+
+
+
+orderListContainer.addEventListener("change", function (){
+
+    if(event.target.id === "payState") {
+        let stateValue = event.target.value;
+        console.log(stateValue);
+
+        // 获取当前行的 orderId
+        let orderId = event.target.closest("tr").querySelector(".SHorderNum").innerText;
+        // 確認按鈕有空再更改
+        // let confirmOff = confirm("確定變更" + shp_array[productId].name + "上下架狀態嗎?");
+        console.log(orderId);
+
+            fetch('payState', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    managerId: sessionStorage.getItem("logged_id"),
+                    orderId: order_array[orderId].orderId,
+                    payState: stateValue,
+                })
+
+            }).then(
+                function () {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '付款狀態更新',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+
+            ).then(()=>{
+             setTimeout(()=>{
+                 location.reload()
+             }, 1800)
+                })
+
+
+
+
+
+    }
+
+    else if(event.target.id === "deliverState") {
+        let stateValue = event.target.value;
+        console.log(stateValue);
+
+        // 获取当前行的 orderId
+        let orderId = event.target.closest("tr").querySelector(".SHorderNum").innerText;
+        // 確認按鈕有空再更改
+        // let confirmOff = confirm("確定變更" + shp_array[productId].name + "上下架狀態嗎?");
+        console.log(orderId);
+
+        fetch('deliverState', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                managerId: sessionStorage.getItem("logged_id"),
+                orderId: order_array[orderId].orderId,
+                deliverState: stateValue,
+            })
+
+        }).then(
+            function () {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '出貨狀態更新',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+
+        ).then(()=>{
+            setTimeout(()=>{
+                location.reload()
+            }, 1800)
+        })
+
+
+
+
+
+    }
+
+
+
+
+})

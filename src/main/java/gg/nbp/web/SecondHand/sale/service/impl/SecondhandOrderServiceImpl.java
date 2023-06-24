@@ -39,18 +39,7 @@ public class SecondhandOrderServiceImpl implements SecondhandOrderService {
 
 
     @Override
-    public SecondhandOrder addOd(SecondhandOrder od, Member mem, Bank bank, Member_credit credit) {
-        if ((mem.getPhone().trim().isEmpty())) {
-            od.setMessage("請輸入電話");
-            od.setSuccessful(false);
-            return od;
-        }
-
-        if ((mem.getEmail().trim().isEmpty())) {
-            od.setMessage("請輸入電子郵件");
-            od.setSuccessful(false);
-            return od;
-        }
+    public SecondhandOrder addOd(SecondhandOrder od, Member mem) {
 
 
         if (od.getDeliverLocation().trim().isEmpty()) {
@@ -72,21 +61,22 @@ public class SecondhandOrderServiceImpl implements SecondhandOrderService {
 //            return od;
 //        }
 
-        final int resultCount1 = oddao.insert(od);
-        final int resultCount2 = memdao.insert(mem);
-        final int resultCount3 = bankdao.insert(bank);
-        final int resultCount4 = credao.insert(credit);
+        final int resultCount = oddao.insert(od);
 
-
-        if (resultCount1 < 1 && resultCount2 < 1 && resultCount3 < 1 && resultCount4 < 1) {
-            od.setMessage("商品上架失敗");
+        if (resultCount < 1) {
+            od.setMessage("訂單成立");
             od.setSuccessful(false);
             return od;
         } else {
-            od.setMessage("商品上架成功");
+            od.setMessage("訂單成立失敗");
             od.setSuccessful(true);
             return od;
         }
+
+
+
+
+
 
 
     }
@@ -98,36 +88,33 @@ public class SecondhandOrderServiceImpl implements SecondhandOrderService {
     }
 
     @Override
-    public SecondhandOrder editOd(SecondhandOrder od, Member mem, Bank bank, Member_credit credit) {
+    public SecondhandOrder editOd(SecondhandOrder od) {
 
         final SecondhandOrder ood = oddao.selectById(od.getOrderId());
-        final Member om = memdao.selectByAccount(mem.getAccount());
-        final Bank obank = bankdao.selectById(bank.getBank_id());
-        final Member_credit ocredit = credao.selectById(credit.getCredit_id());
 
 
-        if (mem.getPhone() != null) {
-            om.setPhone(mem.getPhone());
-        }
-        if (mem.getEmail() != null) {
-            om.setEmail(mem.getEmail());
-        }
         if (od.getDeliverLocation() != null) {
             ood.setDeliverLocation(od.getDeliverLocation());
         }
-        if (bank.getBank_number() != null || credit.getCred_number() != null) {
-            obank.setBank_number(bank.getBank_number());
-            ocredit.setCred_number(credit.getCred_number());
+
+        if (od.getPayState() != null) {
+            ood.setPayState(od.getPayState());
+        }
+
+        if (od.getDeliverState() != null) {
+            ood.setDeliverState(od.getDeliverState());
+        }
+
+        if (od.getManagerId() != null) {
+            ood.setManagerId(od.getManagerId());
         }
 
 
         final int resultCount1 = oddao.update(ood);
-        final int resultCount2 = memdao.update(om);
-        final int resultCount3 = bankdao.update(obank);
-        final int resultCount4 = credao.update(ocredit);
 
-        ood.setSuccessful(resultCount1 > 0 && resultCount2 > 0 && resultCount3 > 0 && resultCount4 > 0);
-        ood.setMessage(resultCount1 > 0 && resultCount2 > 0 && resultCount3 > 0 && resultCount4 > 0 ? "修改成功" : "修改失敗");
+
+        ood.setSuccessful(resultCount1 > 0);
+        ood.setMessage(resultCount1 > 0 ? "修改成功" : "修改失敗");
         return ood;
 
     }

@@ -61,7 +61,7 @@ function sphDelete(productId){
         // })
 
     // 確認按鈕有空再更改
-    let confirmDelete = confirm("確定刪除" + shp_array[productId].productId + "嗎?");
+    let confirmDelete = confirm("確定刪除商品ID：" + shp_array[productId].productId + "嗎?");
 
 
     if(confirmDelete){
@@ -77,18 +77,29 @@ function sphDelete(productId){
                 // launchTime: shp_array[productId].launchTime
             })
         }).then(
-            btnSubmit()
-        )
+            function () {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '商品已刪除',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+
+        ).then(()=>{
+            setTimeout(()=>{
+                location.reload()
+            }, 1800)
+        })
 
     }
 }
 
-function btnSubmit() {
-    console.log("新增頁面，跳轉頁面");
-    window.location.href = "../manager/sh_productmanage.html";
-
-
-}
+// function btnSubmit() {
+//     console.log("新增頁面，跳轉頁面");
+//     window.location.href = "../manager/sh_productmanage.html";
+// }
 
 
 function showList() {
@@ -165,7 +176,7 @@ function showList() {
             <td><span class="SHproType">${typeValue}</span></td>
             <td>$<span class="SHproPrice">${secondhandproduct.price}</span>元</td>
 <!--            解開註解記得將\刪除-->
-<!--            <td><span class="SHproLaunchTime">\${secondhandproduct.launchTime}"</span></td>-->
+<!--             <td><span class="SHproLaunchTime">\${secondhandproduct.launchTime}</span></td>-->
 
             <td>
                  <div class="game_label">
@@ -174,7 +185,7 @@ function showList() {
                  </div>
             </td>
 
-            <td><span class="managerID">Manager1990</span></td>
+<!--            <td><span class="managerID">Manager1990</span></td>-->
             </tr>
             
             `
@@ -202,17 +213,29 @@ shpListContainer.addEventListener("change", function (){
 
         // 获取当前行的 productId
         let productId = event.target.closest("tr").querySelector(".SHproNum").innerText;
+        // 確認按鈕有空再更改
+        // let confirmOff = confirm("確定變更" + shp_array[productId].name + "上下架狀態嗎?");
         console.log(productId);
 
-        fetch('shp_launch', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                productId: shp_array[productId].productId,
-                isLaunch: stateValue,
-            })
+            fetch('shp_launch', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    productId: shp_array[productId].productId,
+                    isLaunch: stateValue,
+                })
 
-        })
+            }).then(function (){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '上下架狀態已變更',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+
+            })
 
     }
 

@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface SecondhandOrderService {
 
-    SecondhandOrder addOd(SecondhandOrder od, Member mem, Bank bank, Member_credit credit);
+    SecondhandOrder addOd(SecondhandOrder od, Member mem);
 
     boolean delOd(Integer orderId);
 
-    SecondhandOrder editOd(SecondhandOrder od, Member mem, Bank bank, Member_credit credit);
+    SecondhandOrder editOd(SecondhandOrder od);
 
     SecondhandOrder selectOne(Integer orderId);
 
