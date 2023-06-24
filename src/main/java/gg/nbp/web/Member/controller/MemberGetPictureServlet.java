@@ -20,6 +20,13 @@ public class MemberGetPictureServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Member member = MemberCommonUitl.getMemberSession(request,"member");
+        if(member == null){
+            Member visitor = new Member();
+            visitor.setMessage("無會員資訊");
+            visitor.setSuccessful(false);
+            MemberCommonUitl.gsonToJson(response, visitor);
+            return;
+        }
         Member headshot = new Member();
         headshot.setHeadshot(member.getHeadshot());
         headshot.setSuccessful(true);
