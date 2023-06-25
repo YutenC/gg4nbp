@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/member/memberGetInforServlet")
+@WebServlet({"/member/memberGetInforServlet", "/memberGetInforServlet"})
 public class MemberGetInforServlet extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 36282460994851823L;
