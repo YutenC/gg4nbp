@@ -38,6 +38,7 @@ public class AddEvent extends HttpServlet  {
 		Member member = (Member) session.getAttribute("member");
 		if(member == null) {
 			resp.sendRedirect(req.getContextPath()+"/member_login.html");
+			return;
 		}
 		
 		
@@ -53,7 +54,7 @@ public class AddEvent extends HttpServlet  {
 				throw new IOException() ;
 			
 			/* 回傳申請結果 */
-			writepojo2Json(resp, service.submit(buylist));
+			writepojo2Json(resp, service.submit( buylist,member.getMember_id()));
 						
 		} catch (Exception e) {
 			/* 回傳申請失敗 */

@@ -79,7 +79,7 @@ public class BuyEvent extends Core {
 		case "0":
 			return "待審核";
 		case "1":
-			return "接受預估價";
+			return "查驗中";
 		case "2":
 			return "議價中";
 		case "3":

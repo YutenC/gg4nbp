@@ -30,21 +30,20 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	/* 交易控制 : 新增事件 */
 	@Transactional
 	@Override
-	public BuyEvent submit(SecondhandBuylist sl) {
+	public BuyEvent submit(SecondhandBuylist sl, Integer id) {
 
 		/* 將文字資料放入資料庫 */
-		sl.setSuccessful(insert(sl));
+		sl.setSuccessful(insert(sl,id));
 
 		/* 將圖片資料放入資料庫 */
-		int buylistId = sl.getBuylistId();
 		try {
 
 			for (SecondhandBuyPicture img : sl.getImage())
-				insertimg((SecondhandBuyPicture) img, buylistId);
+				insertimg((SecondhandBuyPicture) img, sl.getBuylistId());
 			
 		} catch (Exception e) {
 			sl.setMessage("沒有圖片");
-		}
+		}	
 		return new BuyEvent(sl,daoMember);
 	};
 
@@ -98,10 +97,12 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	
 	/* ID 搜尋 */
 	@Override
-	public BuyEvent searchById(Integer id) {
+	public List<BuyEvent> searchById(Integer id) {
 		SecondhandBuylist sl = dao.selectById(id);
 		sl.setImage(selectimg(sl));
-		return new BuyEvent(sl,daoMember);
+		List<BuyEvent> list = new ArrayList<>();
+		list.add(new BuyEvent(sl,daoMember));
+		return list;
 	}
 	
 	
@@ -146,9 +147,9 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		daoPic.insert(new SecondhandBuyPicture(id, img.getImage()));
 	}
 	
-	public boolean insert(SecondhandBuylist s) {
+	public boolean insert(SecondhandBuylist s , Integer id) {
 
-		s.setMemberId(1);
+		s.setMemberId(id);
 		s.setPayState(0); // 預設為 0
 		s.setApprovalState("0"); // 預設為 0
 		dao.insert(s);

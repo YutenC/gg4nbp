@@ -155,7 +155,7 @@ function checkpage(obj) {
         <div class="return_title">申請結果</div>
         <hr>
     <div><div>訂單編號 : </div><span>${obj.eventId}</span></div>
-    <div><div>會員編號 : </div><span>${obj.memberId}</span></div>
+    <div><div>會員名稱 : </div><span>${obj.memberName}</span></div>
     <div><div>商品名稱 : </div><span>${obj.productName}</span></div>
     <div><div>種類 : </div><span>${obj.type}</span></div>
     <div><div>內容 : </div><span>${obj.content}</span></div>
