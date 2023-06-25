@@ -46,9 +46,6 @@ function btnSubmit() {
 
 function showList() {
 
-
-
-
             let html = "";
             Mainshp_array.forEach(
                 secondhandproduct => {
@@ -70,7 +67,7 @@ function showList() {
                         </div>
 
                         <div class="showItem_buy">
-                            <input type="button" value="直接購買">
+                            <input type="button" value="直接購買" onclick="buyBtn(${secondhandproduct.productId})">
                         </div>
 
                     </div>
@@ -94,5 +91,8 @@ function clickShp(productId) {
 }
 
 
-
+function buyBtn(productId) {
+    sessionStorage.setItem('productId', productId);
+    window.location.href = "../sh_shop/sh_buy.html";
+}
 

@@ -9,6 +9,7 @@ const memEmail = document.getElementById('from_email');
 
 const shpName = document.getElementById('shpName');
 const shpPrice = document.getElementById('shpPrice');
+const totalPrice = document.getElementById('totalPrice');
 
 const deliverFee = document.getElementById('deliverFee');
 
@@ -19,15 +20,15 @@ const submitBtn = document.getElementById('sendOrder');
 
 // ===========選擇取貨方式=============
 deliverSelect.addEventListener("change", function (){
-    const deliverValue = deliverSelect.value;
+    let deliverValue = deliverSelect.value;
     if(deliverValue === "1"){
 
     let html=`
     
      <div class="form-label">
         <label class="pay_bank">請填入收件資訊</label>
-        <div>收件人</div><input type="text" class="form-control">
-        <div>收件地址</div><input type="text" class="form-control">
+        <div>收件人</div><input id="deliName" type="text" class="form-control">
+        <div>收件地址</div><input id="deliAddress" type="text" class="form-control">
      </div>
     
     `;
@@ -41,8 +42,8 @@ deliverSelect.addEventListener("change", function (){
   
      <div class="form-label">
         <label class="pay_market">請填入取貨超商</label>
-        <div>收件人</div><input type="text" class="form-control">
-        <div>超取門市及店號（Ex: 全家-12345-NPG門市）</div><input type="text" class="form-control">
+        <div>收件人</div><input id="deliName" type="text" class="form-control">
+        <div>超取門市及店號（Ex: 全家-12345-NPG門市）</div><input id="deliAddress" type="text" class="form-control">
     </div>
     
     `;
@@ -50,21 +51,47 @@ deliverSelect.addEventListener("change", function (){
         deliverWayContainer.innerHTML = html;
         deliverFee.innerHTML = "60";
     }
+
+    // totalPrice.innerText = (30 + parseFloat(deliverFee.innerText)).toString();
+
+    // 選擇運送方式跳轉總金額
+    fetch('priceChange', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+        ,
+        body: JSON.stringify({
+            productId: sessionStorage.getItem('productId'),
+            price: shpPrice.value,
+            receive: deliverValue
+        }),
+    })
+        .then(resp => resp.json()) // .then(function(resp){resp.json();})
+        .then(function (total) {
+                console.log("取得DB資料")
+                console.log(total);
+                total = total.toString();
+                totalPrice.innerHTML = total;
+            }
+
+        )
+
 })
 
 
 // ===========選擇付款方式=============
 
 paySelect.addEventListener("change", function (){
-    const payValue = paySelect.value;
+    let payValue = paySelect.value;
     if(payValue === "1"){
 
         let html=`
     
      <div class="form-label">
         <label class="pay_bank">請填入匯款資訊</label>
-        <div>銀行名稱</div><input type="text" class="form-control">
-        <div>匯款帳號</div><input type="text" class="form-control">
+        <div>銀行名稱</div><input id="bankName" type="text" class="form-control">
+        <div>匯款帳號</div><input id="bankNum" type="text" class="form-control">
      </div>
     
     `;
@@ -77,8 +104,8 @@ paySelect.addEventListener("change", function (){
   
      <div class="form-label">
         <label class="pay_credit">請填入信用卡資訊</label>
-        <div>銀行名稱</div><input type="text" class="form-control">
-        <div>信用卡卡號</div><input type="text" class="form-control">
+        <div>銀行名稱</div><input id="bankName" type="text" class="form-control">
+        <div>信用卡卡號</div><input id="bankNum" type="text" class="form-control">
      </div>
     
     `;
@@ -100,7 +127,7 @@ paySelect.addEventListener("change", function (){
 
 
 
-// 取得基本資訊
+// 取得會員&商品基本資訊
 
 fetch('/gg4nbp/member/preBuy', {
     method: 'POST',
@@ -137,44 +164,226 @@ fetch('/gg4nbp/member/preBuy', {
     )
 
 
-// 會員修改資料
-let emailValue;
-let phoneValue;
-
-memEmail.addEventListener('input', function(e){
-    emailValue = e.target.value;
-})
-
-memPhone.addEventListener('input', function(e){
-    phoneValue = e.target.value;
-})
 
 
 
-// // 送出訂單
-submitBtn.addEventListener("click", function (){
 
-// ==== 修改會員資料 ====
+// 點擊送出訂單
+submitBtn.addEventListener("click", function(e) {
+
+    console.log(submitBtn);
+
+    // 送出變更會員資料
+    let phoneValue = memPhone.value;
+    let emailValue = memEmail.value;
+    console.log(phoneValue);
+    console.log(emailValue);
+
+        fetch('/gg4nbp/member/orderMemChange', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+            ,
+            body: JSON.stringify({
+                account: sessionStorage.getItem('id'),
+                phone: phoneValue,
+                email: emailValue,
+            })
+        })
 
 
-    fetch('/gg4nbp/member/memberEditInforServlet', {
+    // 送出訂單資料
+    let receiveValue = parseInt($('#deliverSelect').val());
+    let deliNameValue = $('#deliName').val();
+    let deliAddressValue = $('#deliAddress').val();
+    let bankNameValue = $('#bankName').val();
+    let bankNumValue = $('#bankNum').val();
+
+
+    fetch('shp_buy', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         }
         ,
         body: JSON.stringify({
+            productId: sessionStorage.getItem('productId'),
+            memberId: sessionStorage.getItem('id'),
+            receive: receiveValue,
+            deliverName: deliNameValue,
+            deliverLocation: deliAddressValue,
+            payBank: bankNameValue,
+            payNumber: bankNumValue,
 
-            account: sessionStorage.getItem('id'),
-            email: emailValue,
-            value: phoneValue,
         })
     })
 
-    console.log("test" + emailValue)
-    console.log("submitBtn")
+     window.location.href="../sh_shop/sh_MainView.html"
 
-})
+    })
+
+
+
+// $('#deliverSelect, #paySelect').on('change', function (){
+//
+//     let deliNameValue = $('#deliName').val();
+//     let deliAddressValue = $('#deliAddress').val();
+//     let bankNameValue = $('#bankName').val();
+//     let bankNumValue = $('#bankNum').val();
+//
+//     console.log("選項變化")
+//
+// })
+
+
+// $('#submitBtn').on('click', function (){
+//
+//     let deliNameValue = $('#deliName').val();
+//     let deliAddressValue = $('#deliAddress').val();
+//     let bankNameValue = $('#bankName').val();
+//     let bankNumValue = $('#bankNum').val();
+//
+//
+//     fetch('shp_buy', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         }
+//         ,
+//         body: JSON.stringify({
+//             productId: sessionStorage.getItem('productId'),
+//             memberId: sessionStorage.getItem('id'),
+//             deliverName: deliNameValue,
+//             deliverLocation: deliAddressValue,
+//             payName: bankNameValue,
+//             payNumber: bankNumValue,
+//         })
+//     })
+//
+// })
+
+
+
+ // submitBtn.addEventListener("click", function(e) {
+ //    console.log(submitBtn);
+ //    let phoneValue;
+ //    let emailValue;
+ //
+ //    memPhone.addEventListener("input", function () {
+ //        phoneValue = memPhone.value;
+ //        // console.log(phoneValue);
+ //        fetch('/gg4nbp/member/orderMemChange', {
+ //            method: 'POST',
+ //            headers: {
+ //                'Content-Type': 'application/json',
+ //            }
+ //            ,
+ //            body: JSON.stringify(
+ //                 {
+ //                    account: sessionStorage.getItem('id'),
+ //                    phone: phoneValue}
+ //                )
+ //        })
+ //    })
+ //
+ //    memEmail.addEventListener("input", function () {
+ //        emailValue = memEmail.value;
+ //        // console.log(emailValue);
+ //
+ //        fetch('/gg4nbp/member/orderMemChange', {
+ //            method: 'POST',
+ //            headers: {
+ //                'Content-Type': 'application/json',
+ //            }
+ //            ,
+ //            body: JSON.stringify(
+ //                 {
+ //                    account: sessionStorage.getItem('id'),
+ //                    email: emailValue
+ //                })
+ //        })
+ //
+ //    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // 會員修改資料
+//
+// let deliverValue;
+// let deliNameValue;
+// let deliAddressValue;
+//
+// // memEmail.addEventListener('input', function(e){
+// //     emailValue = e.target.value;
+// // })
+// //
+// memPhone.addEventListener("change", function(){
+//     phoneValue = memPhone.value;
+//     // console.log(phoneValue);
+// })
+//
+//
+// deliverWayContainer.addEventListener("change", function (e){
+//     // const targetElement = e.target;
+//     // deliverValue = targetElement.getElementById('deliverSelect').value;
+//     deliverValue = e.target.value;
+//     // deliNameValue = targetElement.getElementById('deliName').value;
+//     // deliAddressValue = targetElement.getElementById('deliAddress').value;
+// })
+//
+//
+// console.log(phoneValue);
+// // console.log(deliNameValue);
+// console.log(deliverValue);
+//
+// // // 送出訂單
+// submitBtn.addEventListener("click", function (){
+//
+// // ==== 修改會員資料 ====
+//
+//
+//     fetch('/gg4nbp/member/memberEditInforServlet', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         }
+//         ,
+//         body: JSON.stringify(request => [
+//             member = {
+//                 account: sessionStorage.getItem('id'),
+//                 email: emailValue,
+//                 value: phoneValue,
+//         }, order = {
+//                 deliverState: deliverValue,
+//                 deliverName,
+//                 deliverLocation,
+//                 payState,
+//                 payBank,
+//                 payNumber,
+//                 totalPrice
+//             }] )
+//     })
+//
+//     console.log("test" + emailValue)
+//     console.log("submitBtn")
+//
+// })
 
 
 
