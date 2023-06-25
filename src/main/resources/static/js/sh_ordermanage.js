@@ -17,6 +17,7 @@ fetch('sh_ordermanage',{
         order => {
             let order_array_item = {
                 orderId: order.orderId,
+                productId: order.productId,
                 memberId: order.memberId,
                 totalPrice: order.totalPrice,
                 payState: order.payState,
@@ -38,7 +39,7 @@ order_array.forEach(
         html += `
         
             <tr>
-                <td><span><a id ="orderId" class="SHorderNum" href="#" style="text-decoration:none; color: rgb(93, 87, 87);">${order.orderId}</a></span></td>
+                <td><span onclick="getProductId(${order.productId}); getOrderId(${order.orderId})"><a id ="orderId" class="SHorderNum" href="#" style="text-decoration:none; color: rgb(93, 87, 87);">${order.orderId}</a></span></td>
                 <td><span id="memberId">${order.memberId}</span></td>
                 <td>$<span id="orderPrice">${order.totalPrice}</span>元</td>
             
@@ -54,8 +55,9 @@ order_array.forEach(
                 <td>
                 <div>
                     <select id="deliverState" style="width: 90px;">
-                    <option value="0" ${order.deliverState === 0 ? 'selected' : ''}>未出貨</option>
-                    <option value="1" ${order.deliverState === 1 ? 'selected' : ''}>已出貨</option>
+                    <option value="0" ${order.deliverState === 0 ? 'selected' : ''}>待出貨</option>
+                    <option value="1" ${order.deliverState === 1 ? 'selected' : ''}>出貨中</option>
+                    <option value="2" ${order.deliverState === 2 ? 'selected' : ''}>已到貨</option>
                     </select>
                 </div>
                 </td>
@@ -190,3 +192,15 @@ orderListContainer.addEventListener("change", function (){
 
 
 })
+
+
+
+function getProductId(productId){
+    sessionStorage.setItem("productId", productId);
+    window.open('../member/member_shorderinfo.html')
+}
+
+function getOrderId(orderId){
+    sessionStorage.setItem("orderId", orderId);
+    window.open('../member/member_shorderinfo.html')
+}

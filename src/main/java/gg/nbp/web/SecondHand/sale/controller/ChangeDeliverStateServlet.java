@@ -49,7 +49,18 @@ public class ChangeDeliverStateServlet extends HttpServlet {
         if(od.getDeliverState() == 1) {
             Notice notice = new Notice();
             notice.setMember_id(od.getMemberId());
+
+            System.out.println(od.getMemberId());
+
             notice.setNotice_value("二手訂單（訂單編號：" + od.getOrderId() + "）已出貨");
+            NOTICE.addNotice(notice);
+        } else if(od.getDeliverState() == 2) {
+            Notice notice = new Notice();
+            notice.setMember_id(od.getMemberId());
+
+            System.out.println(od.getMemberId());
+
+            notice.setNotice_value("二手訂單（訂單編號：" + od.getOrderId() + "）已到貨，訂單完成");
             NOTICE.addNotice(notice);
         }
 

@@ -66,6 +66,10 @@ public class AddOrderServlet extends HttpServlet {
             System.out.println("delivername=" + od.getDeliverName());
             SERVICE.addOd(od);
 
+            // 訂單成立修改為下架狀態
+            shp.setIsLaunch("0");
+            PROSERVICE.editshp(shp);
+
         } catch (Exception e) {
            e.printStackTrace();
         }

@@ -209,7 +209,7 @@ submitBtn.addEventListener("click", function(e) {
         ,
         body: JSON.stringify({
             productId: sessionStorage.getItem('productId'),
-            memberId: sessionStorage.getItem('id'),
+            // memberId: sessionStorage.getItem('id'),
             receive: receiveValue,
             deliverName: deliNameValue,
             deliverLocation: deliAddressValue,
