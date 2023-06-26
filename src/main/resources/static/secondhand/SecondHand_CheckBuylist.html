@@ -134,7 +134,7 @@
 
 
 $('#search_id').on('click', function (e) {
-    fetch('selectone', {
+    fetch('select', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -150,7 +150,7 @@ $('#search_id').on('click', function (e) {
 })
 
 $('#search_all').on('click', e => {
-    fetch('selectall', {
+    fetch('selectAll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -227,7 +227,7 @@ function returnIn(el) {
     ;
     $('.inputBlock').append(div);
         for (let i = 0; i < el.image.length; i++) {
-            fetch('selectimg?imgname=' + el.image[i].image)
+            fetch('select?imgname=' + el.image[i].image)
             .then(body => {
                 const img = document.createElement('img');
                 img.src = body.url;
@@ -248,7 +248,7 @@ let id_aa = null ;
 let mana =null ;
 
 function DelById(id){
-        fetch('delbyid',{
+        fetch('delete',{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -267,7 +267,7 @@ function DelById(id){
 
 
 function EditById(id){
-    fetch('selectone', {
+    fetch('select', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

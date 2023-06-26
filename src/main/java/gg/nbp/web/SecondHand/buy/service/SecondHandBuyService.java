@@ -4,23 +4,23 @@ import java.sql.SQLException;
 import java.util.List;
 
 import gg.nbp.core.service.CoreService;
-import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
+import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 
 
 public interface SecondHandBuyService extends CoreService {
 	
 	public boolean delete(Integer memberId , Integer eventId) throws SQLException;
 	
-	public SecondhandBuylist submit(SecondhandBuylist s);
+	public BuyEvent submit(SecondhandBuylist sl, Integer id);
 	
-	public SecondhandBuylist selectOne(Integer i);
+	public List<BuyEvent> searchById(Integer id);
 	
-	public List<SecondhandBuylist> selectAll() ;
+	public List<BuyEvent> searchByName(String str) throws SQLException;
 	
-	public List<SecondhandBuyPicture> selectimg(SecondhandBuylist s) ;
+	public List<BuyEvent> searchAll() throws SQLException ;
 	
-	public boolean upDate(SecondhandBuylist sl);
+	public boolean update(BuyEvent be);
 	
 	
 	

@@ -58,74 +58,28 @@
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid"
                                 aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
+                                <table class="table my-0" id="ban_list">
                                     <thead>
                                         <tr>
                                             <th>停權單ID</th>
                                             <th>停權會員ID</th>
                                             <th>停權管理者ID</th>
-                                            <th>停權時間</th>
-                                            <th>開始時間</th>
-                                            <th>結束時間</th>
                                             <th>停權理由</th>
-                                            <th>停權設定</th>
+                                            <th>停權異動時長(天數)</th>
+                                            <th>停權單建立時間</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>%%%停權單ID</td>
-                                            <td>
-                                                <a href="#">%%%會員ID</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">%%%管理員ID</a>
-                                            </td>
-                                            <td>%%%停權時間</td>
-                                            <td>%%%開始時間</td>
-                                            <td>%%%結束時間</td>
-                                            <td>%%%停權理由</td>
-                                            <td>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-ban-button"
-                                                    role="button" href="#">
-                                                    修改停權時間
-                                                </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-ban-button btn-danger"
-                                                    role="button" href="#">
-                                                    解除停權
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>%%%停權單ID2</td>
-                                            <td>
-                                                <a href="#">%%%會員ID2</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">%%%管理員ID2</a>
-                                            </td>
-                                            <td>%%%停權時間2</td>
-                                            <td>%%%開始時間2</td>
-                                            <td>%%%結束時間2</td>
-                                            <td>%%%停權理由2</td>
-                                            <td>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-ban-button"
-                                                    role="button" href="#">
-                                                    修改停權時間
-                                                </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-ban-button btn-danger"
-                                                    role="button" href="#">
-                                                    解除停權
-                                                </a>
-                                            </td>
-                                        </tr>
-
+                                        <!-- ajax插入 -->
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td><strong>ID</strong></td>
-                                            <td><strong>權限名稱</strong></td>
-                                            <td><strong>權限內容</strong></td>
-                                            <td><strong>設定</strong></td>
+                                            <td><strong>停權單ID</strong></td>
+                                            <td><strong>停權會員ID</strong></td>
+                                            <td><strong>停權管理者ID</strong></td>
+                                            <td><strong>停權理由</strong></td>
+                                            <td><strong>停權異動時長(天數)</strong></td>
+                                            <td><strong>停權單建立時間</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -187,6 +141,8 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/theme.js"></script>
     <!-- JavaScript JS放置區 -->
+    <script src="../js/manager_banList.js"></script>
+
 </body>
 
 </html>

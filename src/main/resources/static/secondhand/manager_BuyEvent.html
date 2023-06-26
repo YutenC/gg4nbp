@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>NPB.GG管理系統-停權</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../fonts/material-icons.min.css">
+    <link rel="stylesheet" href="../css/x-dropdown.css">
+    <link rel="stylesheet" href="../css/custom.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+
+        @font-face {
+            font-family: 'yonaka';
+            src: url(font/ZTMY_MOJI-R.otf);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        div.card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        hr {
+            width: 90%;
+            margin: 10px;
+        }
+
+
+        div.toSearch {
+            margin-top: 10px;
+            display: flex;
+            width: 100%;
+            justify-content: start;
+            overflow: hidden;
+        }
+
+        div.toSearch div.searchBar {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+
+
+        div.toSearch div.searchBar>span>input#searchValue {
+            display: inline-block;
+            min-width: 200px;
+            width: 40%;
+            height: 30px;
+            border-radius: 3px;
+            margin: 5px;
+            padding-left: 5px;
+            font-size: 0.8em;
+            outline: none;
+            border: 1px solid rgb(92, 34, 34);
+        }
+
+
+        div.toSearch div.searchBar>span>input#searchValue:focus {
+            box-shadow: 0px 0px 3px rgb(87, 25, 25);
+
+        }
+
+        div.toSearch div.searchBar>span {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding-right: 15px;
+        }
+
+        div.toSearch div.searchBar>span>button {
+            min-width: 60px;
+            ;
+            height: 25 px;
+            border-radius: 10px;
+            padding: 3px 8px 0px 8px;
+            text-align: center;
+            background-color: rgba(108, 40, 40, 0.397);
+            border: 1px solid rgb(97, 35, 35);
+            font-size: 0.6em;
+        }
+
+        div.toSearch div.searchBar>span>button:hover {
+            background-color: rgba(40, 108, 93, 0.397);
+            border: 1px solid rgb(35, 97, 97);
+        }
+
+        div.toShow {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%;
+            justify-content: start;
+            align-items: start;
+            padding-bottom: 20px;
+            overflow-x: scroll;
+        }
+
+
+        div.toItem {
+            width: 100%;
+        }
+
+        div.toShow article.ItemList {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            min-width: 715px;
+            height: 40px;
+        }
+
+
+        div.toShow article.ItemList>div {
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+
+        @media(min-width:1050px) {
+            div.toShow::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        div.toItem article.ItemList>div>span {
+            padding-left: 10px;
+            font-size: 0.9em;
+        }
+
+        div.toShow article.ItemList>div>span {
+            display: inline-block;
+            width: 120px;
+            white-space: pre;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+
+
+        div.toShow article.ItemList>div>span:last-child {
+            display: flex;
+            align-items: start;
+
+        }
+
+        div.toShow article.ItemList>div>span>button {
+            margin-right: 15px;
+            padding: 0px;
+            text-align: center;
+            border-radius: 25px;
+            width: 30px;
+            height: 30px;
+            font-size: .6em;
+            font-weight: bold;
+            background-color: rgb(78, 119, 74);
+            border: none;
+            color: aliceblue;
+            box-shadow: 0px 0px 3px gray;
+        }
+
+
+        div.toShow div.hrLine {
+            height: 1px;
+            display: inline-block;
+            width: 100%;
+            border: 1px solid rgba(128, 128, 128, 0.27);
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+
+        div.toShow div.pageBar {
+            min-width: 715px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        div.toShow div.pageBar>button {
+            margin: 10px;
+            width: 42px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+
+        div.toShow div.pageBar>button.-isNow {
+            font-weight: bold;
+            color: rgb(19, 104, 117);
+        }
+
+
+        div.swal2-html-container {
+            margin: 0px;
+        }
+
+        div.swal2-html-container>div {
+            margin: 10px;
+            height: 570px;
+            border-radius: 3px;
+
+        }
+
+        div.reviewMain {
+            flex-wrap: wrap;
+        }
+
+
+        div.reviewMain>div button{
+            padding: 0.5rem 0.75rem;
+            line-height: 1.25;
+            border-radius: 0.25rem;
+            margin: 0 0.5rem;
+            border: 1px solid transparent;
+            color: white;
+            
+        }
+
+        div.reviewMain>div button#cancel{
+            background-color: #dc3545;
+        }
+
+
+        div.reviewMain>div button#commit{
+            background-color: #28a745;
+        }
+
+        div.reviewMain>div {
+            display: inline-block;
+            width: 100%;
+        }
+
+        div.reviewMain div.editMain {
+            display: flex;
+            flex-wrap: wrap;
+            height: 80%;
+            justify-content: start;
+        }
+
+        div.reviewMain div.editMain div.Pic {
+            display: inline-block;
+            margin: 10px;
+            border: 2px solid black;
+            background-color: #ffeaeac6;
+            border-radius: 2px;
+            height: 260px;
+            width: calc(100% - 40% - 40px);
+            padding: 10px;
+            overflow: overlay;
+        }
+
+        div.reviewMain div.editMain div.Pic div.imgArea{
+            display: flex;
+            justify-content: start;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+
+        div.reviewMain div.editMain div.Pic div.imgArea>img{
+            margin: 5px;
+            height: 135px;
+            width: 135px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 3px black;
+            object-fit: cover;
+        }
+
+
+
+        div.reviewMain div.editMain div.Pic div.showContent {
+            display: flex;
+            justify-content: start;
+        }
+
+        div.reviewMain div.editMain div.Pic div.showContent>span {
+            text-align: left;
+        }
+
+        div.reviewMain div.editMain div.Change {
+            display: inline-block;
+            margin: 10px;
+            border: 2px solid black;
+            background-color: #ffffffc6;
+            border-radius: 2px;
+            height: 150px;
+            width: calc(100% - 20px);
+            padding: 10px;
+        }
+
+        div.reviewMain div.editMain div.Change>div {
+            display: flex;
+            justify-content: start;
+            height: 30px;
+        }
+
+        div.reviewMain div.editMain div.Change>div>span{
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+
+        div.reviewMain div.editMain div.Change>div>select,
+        div.reviewMain div.editMain div.Change>div>input{
+            border-radius: 5px;
+            padding-left: 10px;
+            margin-left: 10px;
+            background-color: #ffffff79;
+            border: none;
+            height: 25px;
+            font-size: 0.8em;
+            width: 40%;
+        }
+
+
+
+
+        div.reviewMain div.editMain div.notChange {
+            display: inline-block;
+            margin: 10px;
+            border: 2px solid black;
+            background-color: #f1ffeac6;
+            border-radius: 2px;
+            height: 260px;
+            width: 40%;
+            padding: 10px;
+        }
+
+        div.reviewMain div.editMain div.notChange>div {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            height: 33px;
+        }
+
+        div.reviewMain div.editMain div.notChange>div>span:first-child {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+
+        div.reviewMain div.editMain div.notChange>div>input,
+        div.reviewMain div.editMain div.notChange>div>span:last-child {
+            display: inline-block;
+            text-align: left;
+            padding-left: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: calc(100% - 120px);
+            border: none;
+            background-color: #ffffff50;
+            font-size: .9em;
+            border-radius: 5px;
+            width: 220px;
+            height: 25px;
+        }
+        
+
+        
+    </style>
+
+
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- 左方導覽欄 -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <!-- 上方導覽欄 -->
+                <div class="container-fluid">
+                    <!-- card shadow 視窗整體
+                    mb-4 視窗間間距
+                    py-3 視窗內間距
+                    card-header 標題框
+                    card-body 視窗主體 -->
+
+                    <!-- Tcard -->
+
+                    <div class="card shadow">
+                        <div class="toSearch">
+                            <div class="searchBar">
+                                <span><input type="text" name="search" id="searchValue"
+                                        placeholder="輸入編號或名稱查詢"><button>搜尋
+                                    </button></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="toShow">
+                            <article class="ItemList">
+                                <div>
+                                    <span>收購編號</span>
+                                    <span>商品名稱</span>
+                                    <span>請求人</span>
+                                    <span>預估價</span>
+                                    <span>審核狀態</span>
+                                    <span></span>
+                                </div>
+                            </article>
+                            
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+
+
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright">
+                        <span>Copyright © NBP.GG 2023</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+
+    <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
+    <!-- JavaScript JS放置區 -->
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <!-- JavaScript JS放置區 -->
+
+
+
+</body>
+<script>
+
+    let onePage = 10;
+    let reqaa = [];
+
+    function ReviewBox(i) {
+        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        obj = obj[i];
+        Swal.fire({
+            html: `
+                <div class="reviewMain">
+                    <div style="font-size: 2em;color: white;text-shadow: 0px 0px 2px burlywood;">收購審核</div>
+                <div class="editMain">
+                    <div class="notChange">
+                        <div><span>收購編號 :</span><span>${obj.eventId}</span></div>
+                        <div><span>請求人 :</span><span>${obj.memberName || ''}</span></div>
+                        <div><span>商品名稱 :</span><span>${obj.productName || ''}</span></div>
+                        <div><span>商品種類 :</span><span>${obj.type}</span></div>
+                        <div><span>預估價 :</span><span>${obj.estimate || '0'}</span></div>
+                        <div><span>申請時間 :</span><input  type="datetime-local" value="${obj.applyDate}" disabled></input></div>
+                        <div><span>銀行帳號 :</span><span>${obj.applicantBankNumber || ''}</span></div>
+                    </div>
+                    <div class="Pic">
+                        <div><span style="font-size:1.3em;font-weight: bold;">內容</span></div>
+                        <div class="showContent"><span>${obj.content || ''}</span></div>
+                        <div class="imgArea"></div>
+                    </div>
+                    <div class="Change">
+                        <div><span>收購價 :</span><input id="price" type="number" value="${obj.price || ''}"></div>
+                        <div><span>審核時間 :</span><input id="confirmTime" type="datetime-local" value="${obj.confirmDate || ''}"></div>
+                        <div>
+                            <span>付款狀態 :</span>
+                            <select id="payState"  value="${obj.payState}">
+                                <option value="待審核">待審核</option>
+                                <option value="待付款">待付款</option>
+                                <option value="已付款">已付款</option>
+                            </select>
+                        </div>
+                        <div>
+                            <span>審核狀態 :</span>
+                            <select id="approvalState" value="${obj.approvalState}">
+                                <option value="待審核">待審核</option>
+                                <option value="查驗中">查驗中</option>
+                                <option value="議價中">議價中</option>
+                                <option value="非收購品">非收購品</option>
+                                <option value="不合格品">不合格品</option>
+                                <option value="已退回">已退回</option>
+                                <option value="已完成">已完成</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button id="cancel">取消</button>
+                    <button id="commit">確定</button>
+                </div>
+                </div>
+                `,
+            background: 'rgba(255, 255, 255, 0)',
+            padding: 0,
+            width: 900,
+            showConfirmButton: false,
+        })
+
+        for (let i = 0; i < obj.image.length; i++) {
+            fetch('select?imgname=' + obj.image[i].image)
+                .then(body => {
+                    const img = document.createElement('img');
+                    img.src = body.url;
+                    $('.imgArea').append(img);
+                })
+        }
+
+
+        $('#cancel').on('click',e =>{
+            $('.swal2-container').remove();
+        })
+
+
+        $('#commit').on('click',e =>{
+            let p = price.value || -1 ;
+            let t = confirmTime.value ?  confirmTime.value+":00.000Z" :  new Date();
+            fetch('update',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                eventId : obj.eventId,
+                price : p,
+                confirmTime : t,
+                payState : payState.value,
+                approvalState : approvalState.value
+            })
+            })
+            .then(result  => {
+                reqaa = result;
+                Swal.fire(
+                '完成!',
+                `${result.str}`,
+                'success'
+                )
+            })
+        })
+
+        $('#payState').val(obj.payState);
+        $('#approvalState').val(obj.approvalState);
+
+    }
+
+
+
+
+
+    function itemDisplay(page = 1) {
+        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        if (obj.eventId) {
+            obj = [obj];
+        }
+        const pageBar = document.createElement('div');
+        pageBar.setAttribute('class', 'pageBar');
+        const total = Math.floor(obj.length / onePage) + 1;
+        let start = 1;
+        let end = 7 > total ? total : 7;
+        if (obj.length > onePage) {
+            if (total > 7 && page > 3) {
+                end = total > page + 3 ? page + 3 : total;
+                start = end == total ? total - 6 : page - 3;
+            }
+
+            for (let i = start; i <= end; i++) {
+                const btn = document.createElement('button');
+                btn.setAttribute('id', `page_${i}`);
+                btn.innerText = i;
+                if (i == page) {
+                    $(btn).addClass('-isNow');
+                }
+
+                btn.addEventListener('click', () => {
+                    itemDisplay(i);
+                })
+                pageBar.append(btn);
+            }
+        }
+        const div = document.createElement('div');
+        div.setAttribute('class', 'toItem');
+
+        lastNum = page * onePage > obj.length ? obj.length : page * onePage;
+
+        for (let i = (page - 1) * onePage; i < lastNum; i++) {
+            const article = document.createElement('article');
+            article.setAttribute('class', 'ItemList');
+            article.innerHTML = `
+                <div>
+                    <span>${obj[i].eventId}</span>
+                    <span>${obj[i].productName}</span>
+                    <span>${obj[i].memberName}</span>
+                    <span>${obj[i].estimate}</span>
+                    <span>${obj[i].approvalState}</span>
+                    <span>
+                        <button class="Review_${i}" onclick="ReviewBox(${i})">審</button>
+                    </span>
+                </div>
+                <div class="hrLine"></div>
+
+                `;
+            div.append(article);
+        }
+        $('.toItem').remove();
+        $('.pageBar').remove();
+        $('.toShow')[0].append(div);
+        $('.toShow')[0].append(pageBar);
+    }
+
+
+
+
+
+
+    $('.searchBar>span>button').on('click', () => {
+        fetch('select', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                str: $('#searchValue').val()
+            })
+        })
+
+            .then(resp => resp.json())
+            .then(obj => {
+                $('#searchValue').val("");
+                reqaa = obj;
+                if (obj.str) {
+                    Swal.fire({
+                        icon: 'question',
+                        title: obj.str
+                    }
+                    )
+                } else {
+                    sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                    itemDisplay();
+                }
+            })
+
+
+    })
+
+
+    $('#searchValue').on('keydown', function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            $('.searchBar>span>button').click();
+        }
+    })
+
+
+
+
+
+
+
+</script>
+
+</html>

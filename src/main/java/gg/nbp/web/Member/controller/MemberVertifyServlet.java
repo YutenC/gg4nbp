@@ -57,7 +57,6 @@ public class MemberVertifyServlet extends HttpServlet {
 
                 Notice notice = new Notice();
                 notice.setMember_id(passMember.getMember_id());
-                notice.setIs_read(1);
                 notice.setNotice_value("歡迎會員 " + passMember.getNick() + " 加入NBPgg ");
                 NOTICE.addNotice(notice);
 

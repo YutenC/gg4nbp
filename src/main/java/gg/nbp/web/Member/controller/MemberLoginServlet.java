@@ -3,6 +3,7 @@ package gg.nbp.web.Member.controller;
 import java.io.IOException;
 import java.io.Serial;
 
+import com.google.gson.JsonObject;
 import gg.nbp.web.Member.entity.Login_record;
 import gg.nbp.web.Member.service.LoginRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +46,9 @@ public class MemberLoginServlet extends HttpServlet {
             return;
         }
 
-        /*  將登入的密碼用MD5的方式轉換成雜湊值  */
         String hashedPassword = DigestUtils.md5DigestAsHex(password.getBytes());
         member.setPassword(hashedPassword);
-        /*  然後將密碼帶入比對是否登入成功  */
         member = SERVICE.login(member);
-        //  是否登入成功的訊息
 
         if (member.isSuccessful()) {
 
@@ -70,6 +68,13 @@ public class MemberLoginServlet extends HttpServlet {
         }
 
         Member visitor = MemberCommonUitl.visitorData(member);
-        MemberCommonUitl.gsonToJson(response, visitor);
+
+        JsonObject responseJson = new JsonObject();
+        responseJson.addProperty("account", visitor.getAccount());
+        responseJson.addProperty("member_id", visitor.getMember_id());
+        responseJson.addProperty("successful", visitor.isSuccessful());
+        responseJson.addProperty("redirectUrl", (String) request.getSession().getAttribute("location")); // 設置重導的網址
+
+        MemberCommonUitl.gsonToJson(response, responseJson);
     }
 }
