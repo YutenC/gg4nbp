@@ -145,7 +145,7 @@ let del = [];
                 }
                 formData.append(file[i].name, file[i]);
                 img_list.push({image : file[i].name});
-                var xhr = new XMLHttpRequest();
+                const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'testpic', true);
                 xhr.send(formData);
             }

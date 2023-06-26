@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="..\css\sh_index.css">
+    <title>Document</title>
+    <script src="../jquery/jquery-3.7.0.js"></script>
+    <!-- ===========boodstrap========== -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="../css/SecondHand_buy.css">
+
+
+</head>
+
+<body>
+
+    <main>
+        <div class="content">
+
+            <div class="showArea">
+
+
+
+                <!-- 直接購買 -->
+
+
+                <div class="buyDirectlyPage">
+
+                    <form id ="buyPage">
+                        <div class="row">
+                            <div class="col-md-6" id="message">
+                                <fieldset>
+                                    <legend>訂單確認</legend>
+                                    <legend id="shpName" style="font-size: 20px;">Switch舊款初代整套</legend>
+                                </fieldset>
+
+
+
+                                <div class="has-feedback form-group mb-3">
+                                    <!-- <label class="form-label"for="from_name">收件人姓名</label> -->
+                                    <label class="form-label" for="from_name">會員編號</label>
+                                    <input id="from_name" class="form-control" type="text" tabindex="-1" name="from_name" required="" placeholder="預設顯示會員編號" readonly>
+                                </div>
+
+                                <div class="has-feedback form-group mb-3"><label class="form-label" for="from_tel">連絡電話</label>
+                                    <input id="from_tel" class="form-control" type="text" name="from_tel" required="" readonly></div>
+
+                                <div class="has-feedback form-group mb-3"><label class="form-label" for="from_email">Email</label>
+                                    <input id="from_email" class="form-control" type="text" name="from_email" required="" readonly></div>
+
+                                <div class="has-feedback form-group mb-3"><label class="form-label" for="from_email">收件人</label>
+                                    <input id="deliverName" class="form-control" type="text"name="from_email" required="" readonly></div>
+
+                                <div class="has-feedback form-group mb-3"><label class="form-label" for="from_email">收件地址</label>
+                                    <input id="deliverAddress" class="form-control" type="text" name="from_email" required="" readonly></div>
+
+                                <div class="has-feedback form-group mb-3"><label class="form-label" for="from_email">匯款資訊</label>
+                                    <input id="payInfo1" class="form-control" type="text" name="from_email" required="" readonly></div>
+                                    <input id="payInfo2" class="form-control" type="text" name="from_email" required="" readonly></div>
+
+                                <!--無用處-->
+<!--                                <div class="has-feedback form-group mb-3"><label class="form-label"></label></div>-->
+<!--                                <div id="deliverWayContainer"></div>-->
+<!--                                <div class="has-feedback form-group mb-3"><label class="form-label" for="from_email"></label>-->
+<!--                                <div id="payWayContainer"></div>-->
+<!--                                </div><div>-->
+                                <!--無用處-->
+
+                            <fieldset>
+                                <legend style="font-weight: bold;font-size: 20px;margin: 5px 0px 0px 0px;--bs-body-font-size: 1rem;">金額     <span id="shpPrice" style="color: deeppink">XXXX</span> 元</legend>
+                                <legend style="font-weight: bold;font-size: 20px;margin: 5px 0px 0px 0px;--bs-body-font-size: 1rem;">運費     <span id="deliverFee" style="color: deeppink"></span> 元</legend>
+                                <legend style="font-weight: bold;font-size: 22px;margin: 5px 0px 0px 0px;">總金額     <span id="totalPrice" style="color: deeppink">XXXX</span> 元</legend>
+                            </fieldset>
+                        </div>
+
+
+
+
+<!--                            <div class="form-group mb-3"><button id="sendOrder" class="btn btn-primary d-block w-100"-->
+<!--                                    type="button">送出訂單<i class="fa fa-chevron-circle-right"></i></button></div>-->
+<!--                            <hr>-->
+<!--                        </div>-->
+
+<!--                        <div class="col-md-6">-->
+<!--                            <fieldset>-->
+<!--                                <legend style="font-weight: bold;font-size: 22px;margin: 5px 0px 0px 0px;">Product-->
+<!--                                </legend>-->
+<!--                                <legend style="font-size: 20px;">Switch舊款初代整套</legend>-->
+<!--                            </fieldset>-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-12">-->
+<!--                                    <div class="static-map"><img class="img-fluid"-->
+<!--                                            src="../img/secondHand/PlayStation_ProductTest01.jpg"></a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <fieldset>-->
+<!--                                <legend-->
+<!--                                    style="font-weight: bold;font-size: 20px;margin: 5px 0px 0px 0px;&#45;&#45;bs-body-font-size: 1rem;">-->
+<!--                                    金額</legend>-->
+<!--                                <legend-->
+<!--                                    style="font-weight: bold;font-size: 20px;margin: 5px 0px 0px 0px;&#45;&#45;bs-body-font-size: 1rem;">-->
+<!--                                    運費</legend>-->
+<!--                                <legend style="font-weight: bold;font-size: 22px;margin: 5px 0px 0px 0px;">總金額</legend>-->
+<!--                            </fieldset>-->
+<!--                        </div>-->
+
+
+                    </form>
+                </div>
+
+
+                <!-- =========直接購買end========= -->
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+        </div>
+        </div>
+    </main>
+
+
+
+</body>
+
+<!-- ====bootstrap====== -->
+<script src="../js/sh_insertblock.js"></script>
+<script>
+insertSide();
+</script>
+<script src="../js/sh_orderInfo.js"></script>
+</html>

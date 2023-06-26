@@ -1,4 +1,6 @@
-// let del = [];
+let olddel = [];
+let del = [];
+let imd = [];
 
 (() => {
 
@@ -104,7 +106,6 @@
                 SHproType.value = type;
                 SHproPrice.value = price;
                 SHproContent.value = content;
-                // SHproPho1.value
 
             }
 
@@ -118,19 +119,18 @@
         },
         body: JSON.stringify({
             productId: sessionStorage.getItem('productId')
-
         }),
     })
         .then(resp => resp.json()) // .then(function(resp){resp.json();})
         .then(function (uploadImg) {
-            console.log(uploadImg);
+            console.log("uploadImg" + uploadImg);
                 // for(let file of uploadImg){
                 //     console.log(file);
                 //     console.log("傳入session並回傳取得DB資料")
-                //
                 // }
 
                 // ======重打開======
+            // let del = [];
             //     photoUploadBtn.addEventListener('click', function (e) {
             //         $(this).next().click();
             //     })
@@ -146,7 +146,9 @@
 
                 for (let i = 0; i < uploadImg.length; i++) {
 
+                    // ======重打開======
                     // const imageUrl = URL.createObjectURL(uploadImg[i]);
+                    // ======重打開======
 
                     const div = document.createElement('div');
                     const img = document.createElement('img');
@@ -155,6 +157,9 @@
 
                     // ======重打開======
                     // const reader = new FileReader();
+                    // if (uploadImg[i].size >= 5242880) {
+                    //     $(img).addClass('-warning');
+                    // }
                     // ======重打開======
 
                     $('#imgView').append(div);
@@ -163,17 +168,17 @@
 
                     // ======重打開======
                     // reader.readAsDataURL(uploadImg[i]);
-                    // reader.addEventListener('load', e => {
-                    //     console.log("目標="+e.target.result)
-                    //     img.src = e.target.result;
+                    // document.addEventListener('load', e => {
+                        // console.log("目標="+e.target.result)
+                        // img.src = ".."+ uploadImg[i];
                     // });
                     // ======重打開======
 
                     img.src = ".."+ uploadImg[i];
-                    console.log(img.src);
+                    console.log("imgSrc=" + img.src);
 
                     btn.addEventListener('click', e => {
-                        del.push(i);
+                        olddel.push(uploadImg[i]);
                         div.remove();
                     })
 
@@ -187,7 +192,8 @@
 
 
 
-    //  ===============點擊新增圖片按鈕事件(重新抓圖)===============
+// ======圖片選擇與刪除=====================
+
     photoUploadBtn.addEventListener('click', function (e) {
         $(this).next().click();
     })
@@ -196,7 +202,7 @@
         $('#imgView>div').remove();
 
         let uploadImg = e.target.files || e.dataTransfer.files;
-
+        console.log(uploadImg);
         if (!uploadImg.length) {
             return;
         }
@@ -233,6 +239,8 @@
         del = [];
     })
 
+// ======圖片選擇與刪除END=====================
+
 
 
     //  ===============修改商品內容===============
@@ -240,31 +248,27 @@
         console.log("saveBtn");
 
 
-        // =========1. 重新上傳圖片進入本機端(測試可進入本機)=========
-        let img_list = [];
-        const file = $('#photoUploadBtn').next()[0].files;
-        filter:
-            for (let i = 0; i < file.length; i++) {
-                const formData = new FormData();
+    //  =========1. 重新上傳圖片進入本機端(測試可進入本機)=========
+    let img_list = [];
+    const file = $('#photoUploadBtn').next()[0].files;
+    filter:
+        for (let i = 0; i < file.length; i++) {
+            const formData = new FormData();
 
-                for (let j = 0; j < del.length; j++) {
-                    if (i === del[j]) {
-                        continue filter;
-                    }
+            for (let j = 0; j < del.length; j++) {
+                if (i === del[j]) {
+                    continue filter;
                 }
-                formData.append(file[i].name, file[i]);
-                img_list.push({image : file[i].name});
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', 'testpic', true);
-                xhr.send(formData);
             }
-        del = [];
+            formData.append(file[i].name, file[i]);
+            img_list.push({image : file[i].name});
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'testpic', true);
+            xhr.send(formData);
+        }
+    del = [];
 
-        console.log(img_list);
-
-
-
-
+    console.log(img_list);
 
     // =========2. 修改商品內容(文字OK，image不行，只能選擇無法進資料庫)=========
 
@@ -273,14 +277,16 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
+            body: JSON.stringify([shp = {
                 productId: sessionStorage.getItem('productId'),
                 name: SHproName.value,
                 type: SHproType.value,
                 price: SHproPrice.value,
                 content: SHproContent.value,
-                image: img_list
-            }),
+                image: img_list},
+                // oldImage = {deleteImage: olddel}]
+                oldImage = {olddel}]
+            ),
         }).then(resp => resp.json()) // .then(function(resp){resp.json();})
             .then(function (body) {
                 console.log(body);

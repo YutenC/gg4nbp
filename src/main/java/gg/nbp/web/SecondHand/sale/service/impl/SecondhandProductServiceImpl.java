@@ -87,20 +87,6 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
         }
 
 
-//        System.out.println("有沒有圖傳進來");
-//        System.out.println(memberData.getMemberPic4json());
-//        System.out.println(memberData.getMemberPic4json().equals("有傳圖進來"));
-//        if (memberData.getMemberPic4json().equals("有傳圖進來")) {
-//            oMember.setMemberPic(memberData.getMemberPic());
-//            oMember.setMemberPic4json("有圖");
-//        } else {
-//            oMember.setMemberPic(oMember.getMemberPic());
-//            oMember.setMemberPic4json("用舊圖");
-//        }
-//        if (memberData.getMemberCard() != null) {
-//            oMember.setMemberCard(memberData.getMemberCard());
-//        }
-
         final int resultCount = shpdao.update(oshproduct);
         oshproduct.setSuccessful(resultCount > 0);
         oshproduct.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
