@@ -32,7 +32,7 @@ public class SecondHandBuylistPictureDaoimpl implements SecondHandBuylistPicture
 
 	@Override
 	public int update(SecondhandBuyPicture pojo) {
-		session.update("SecondHandBuyPicture", pojo);
+		session.merge("SecondHandBuyPicture", pojo);
 		return 1;
 	}
 

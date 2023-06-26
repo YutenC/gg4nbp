@@ -1,62 +1,78 @@
 package gg.nbp.web.SecondHand.buy.dto;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Objects;
 
 import gg.nbp.core.pojo.Core;
+import gg.nbp.web.Member.dao.MemberDao;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
+import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
+import gg.nbp.web.SecondHand.buy.util.Toolbox;
+import lombok.Getter;
 
+
+@Getter
 public class BuyEvent extends Core {
 	private static final long serialVersionUID = -7518578406780806592L;
 	private Integer eventId;
+
 	private String memberName;
 	private String productName;
 	private String type;
 	private String content;
 	private Integer estimate;
 	private Integer price;
-	private Date confirmTime;
+	private Timestamp confirmTime;
+	private String confirmDate;
 	private String payState;
 	private String approvalState;
-	private Date applyTime;
+	private Timestamp applyTime;
+	private String applyDate;
 	private String applicantBankNumber;
 	private List<SecondhandBuyPicture> image;
 
 	/*****************************************************
 	 * 用來回應給會員前端頁面的物件 直接把SecondhandBuylist放到建構子裡面就行了
 	 ***************************************************/
-	public BuyEvent(SecondhandBuylist bs) {
+	public BuyEvent(SecondhandBuylist bs,MemberDao dao) {
 
 		try {
 			eventId = bs.getBuylistId();
-			memberName = "asdasd"; // 呼叫member_service 來查詢會員名字
+			memberName = Toolbox.memberId2Name(bs.getMemberId(),dao);
 			productName = bs.getProductName();
 			type = getTypeValue(bs.getType());
 			content = bs.getContent();
 			estimate = bs.getEstimate();
 			price = bs.getPrice();
 			confirmTime = bs.getConfirmTime();
+			confirmDate = confirmTime == null ? null : Toolbox.dateformat(confirmTime);
 			payState = getPayState(bs.getPayState());
-			approvalState = getApprovalState(bs.getApprovalState());
+			approvalState = getApprovalState(Integer.parseInt(bs.getApprovalState()));
 			applyTime = bs.getApplyTime();
+			applyDate = applyTime == null ? null :Toolbox.dateformat(applyTime);
 			applicantBankNumber = bs.getApplicantBankNumber();
 			image = bs.getImage();
 			this.setSuccessful(true);
 			this.setMessage("成功");
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			this.setSuccessful(false);
 			this.setMessage("查詢失敗");
 		}
 	}
+	
+	
+	
+	
+	
 
 	public BuyEvent() {
 
 	}
 
-	private String getPayState(Integer i) {
+	private static String getPayState(Integer i) {
 		switch (i) {
 		case 0:
 			return "待審核";
@@ -69,28 +85,28 @@ public class BuyEvent extends Core {
 		}
 	}
 
-	private String getApprovalState(String str) {
-		switch (str) {
-		case "0":
+	private static String getApprovalState(Integer i) {
+		switch (i) {
+		case 0:
 			return "待審核";
-		case "1":
-			return "接受預估價";
-		case "2":
+		case 1:
+			return "查驗中";
+		case 2:
 			return "議價中";
-		case "3":
+		case 3:
 			return "非收購品項";
-		case "4":
+		case 4:
 			return "不合格品";
-		case "5":
+		case 5:
 			return "已退回";
-		case "6":
+		case 6:
 			return "已完成";
 		default:
 			return "錯誤";
 		}
 	}
 
-	private String getTypeValue(String type) {
+	private static String getTypeValue(String type) {
 		String f = type.substring(0, 1);
 		String b = type.substring(1, 2);
 		String result ;
@@ -129,27 +145,33 @@ public class BuyEvent extends Core {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(applicantBankNumber, applyTime, approvalState, confirmTime, content, estimate, eventId,
-				memberName, payState, price, productName, type);
+	public String toString() {
+		return "BuyEvent [eventId=" + eventId + ", memberName=" + memberName + ", productName=" + productName
+				+ ", type=" + type + ", content=" + content + ", estimate=" + estimate + ", price=" + price
+				+ ", confirmTime=" + confirmTime + ", payState=" + payState + ", approvalState=" + approvalState
+				+ ", applyTime=" + applyTime + ", applicantBankNumber=" + applicantBankNumber + ", image=" + image
+				+ "]";
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BuyEvent other = (BuyEvent) obj;
-		return Objects.equals(applicantBankNumber, other.applicantBankNumber)
-				&& Objects.equals(applyTime, other.applyTime) && Objects.equals(approvalState, other.approvalState)
-				&& Objects.equals(confirmTime, other.confirmTime) && Objects.equals(content, other.content)
-				&& Objects.equals(estimate, other.estimate) && Objects.equals(eventId, other.eventId)
-				&& Objects.equals(memberName, other.memberName) && Objects.equals(payState, other.payState)
-				&& Objects.equals(price, other.price) && Objects.equals(productName, other.productName)
-				&& Objects.equals(type, other.type);
+	public static SecondhandBuylist toSecondhandBuylist(BuyEvent be ,SecondHandBuylistDao dao ) {
+		SecondhandBuylist sl = dao.selectById(be.eventId);
+		sl.setPrice(be.price == -1 ? null : be.price);
+		sl.setConfirmTime(be.confirmTime);
+		for(int i = 0 ; i < 3 ; i++) {
+			if(getPayState(i).equals(be.payState)) {
+				sl.setPayState(i);
+			} 
+		}
+		
+		for(int i = 0 ; i < 7 ; i++) {
+			if(getApprovalState(i).equals(be.approvalState)) {
+				sl.setApprovalState(i+"");
+			} 
+		}
+		
+		return sl ;
+		
+		
 	}
 
 }
