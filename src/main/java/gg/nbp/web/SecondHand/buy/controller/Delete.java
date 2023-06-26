@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/secondhand/delbyid")
-public class DelByListId extends HttpServlet  {
+@WebServlet("/secondhand/delete")
+public class Delete extends HttpServlet  {
 	private static final long serialVersionUID = -1806851938916882849L;
 
 	@Autowired
@@ -31,15 +31,11 @@ public class DelByListId extends HttpServlet  {
 		
 		String id = CommonUtil.json2pojo(req, OneString.class).getStr();
 		try {
-			
 			/*******************************************************
 			 * 第一個參數是發出請求人的ID : 之後從session中拿出
 			 * 第二個參數為事件ID
 			 *******************************************************/
 			service.delete(null, Integer.parseInt(id));
-			
-			
-			
 			
 			CommonUtil.writepojo2Json(resp, new OneString("刪除成功"));
 		}catch (Exception e) {
