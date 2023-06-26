@@ -172,7 +172,7 @@
                             <input id="email" name="email" type="email" placeholder="請輸入信箱" required>
                         </span>
                         <span class="send_letter">
-                            <input class="send_letter" id="submit" type="button" value="寄驗證信">
+                            <input class="send_letter" id="submit sendLetter" type="button" value="寄驗證信">
                         </span>
                     </div>
                     <div class="verify_block2">
@@ -200,16 +200,15 @@
         let data = sessionStorage.getItem("register");
         let member = JSON.parse(data);
         if (member !== null) {
-            console.log(member)
             $("input#email").val(member.email);
         } else {
             $.ajax({
-                url: "/Five_NBP_gg/memberGetInforServlet",
+                url: "memberGetInforServlet",
                 method: "POST",
                 dataType: "json",
                 success: function (response) {
-                    let member = response;
-                    $("input#email").val(member.email);
+                    let rep = response;
+                    $("input#email").val(response.email);
                 }
             })
         }
@@ -220,8 +219,10 @@
             errMessage();
             return;
         } else {
+            const countDownSeconds = 30;
+            countdown(countDownSeconds);
             $.ajax({
-                url: "/Five_NBP_gg/memberSendVertifyServlet",
+                url: "memberSendVertifyServlet",
                 method: "POST",
                 dataType: "json",
                 data: {
@@ -248,7 +249,7 @@
             return;
         } else {
             $.ajax({
-                url: "/Five_NBP_gg/memberVertifyServlet",
+                url: "memberVertifyServlet",
                 method: "POST",
                 dataType: "json",
                 data: {
@@ -271,7 +272,7 @@
                             title: member.message,
                         }).then((result) => {
                             sessionStorage.clear();
-                            window.location.href = "./member_login.html";
+                            window.location.href = "index.html";
                         })
                     }
                 },
@@ -298,6 +299,24 @@
             title: '輸入欄位不得空白',
             text: '請輸入資料！',
         })
+    }
+
+
+    function countdown(countDownSeconds) {
+        const button = $("input.send_letter");
+        button.attr("value", "倒數 " + countDownSeconds + " 秒");
+        button.attr("disabled", true);
+        countDownSeconds--;
+
+        if (countDownSeconds < 0) {
+            button.attr("value", "寄驗證信");
+            button.removeAttr("disabled");
+            return;
+        }
+
+        setTimeout(function() {
+            countdown(countDownSeconds);
+        }, 1000);
     }
 
 

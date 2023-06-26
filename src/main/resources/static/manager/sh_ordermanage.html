@@ -225,12 +225,12 @@ card-body 視窗主體 -->
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid"
                                  aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
+                                <table class="table my-0" id="orderTable">
                                     <thead>
                                     <tr>
                                         <th>訂單編號</th> <!--點擊進入原始頁面(含住址 出貨方式 如果有需要可以再從後台修改)-->
                                         <th>購買者ID</th>
-                                        <th>商品編號</th>
+<!--                                        <th>商品編號</th>-->
                                         <th>訂單金額</th>
                                         <th>付款狀態</th>
                                         <th>出貨狀態</th>
@@ -242,15 +242,15 @@ card-body 視窗主體 -->
                                     <!-- ======================一筆訂單END====================== -->
                                     <tr>
                                         <td><span>
-                                                    <a class="SHorderNum" href="#"
+                                                    <a id ="orderId" class="SHorderNum" href="#"
                                                        style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
                                                 </span></td>
-                                        <td><span class="memberID">Member1990</span></td>
-                                        <td><span class="SHproductNum">SH0000001</span></td>
-                                        <td>$<span class="SHorderPrice">5000</span>元</td>
+                                        <td><span id="memberId">Member1990</span></td>
+<!--                                        <td><span class="SHproductNum">SH0000001</span></td>-->
+                                        <td>$<span id="orderPrice">5000</span>元</td>
                                         <td>
                                             <div>
-                                                <select class="payornot" style="width: 90px;">
+                                                <select id="payState" style="width: 90px;">
                                                     <option value="" selected disabled></option>
                                                     <option value="0">未付款</option>
                                                     <option value="1">已付款</option>
@@ -261,7 +261,7 @@ card-body 視窗主體 -->
 
                                         <td>
                                             <div>
-                                                <select class="delieverornot" style="width: 90px;">
+                                                <select id="delieverState" style="width: 90px;">
                                                     <option value="" selected disabled></option>
                                                     <option value="0">未出貨</option>
                                                     <option value="1">已出貨</option>
@@ -269,207 +269,10 @@ card-body 視窗主體 -->
                                             </div>
                                         </td>
 
-                                        <td><span class="managerID">Manager1990</span></td>
+                                        <td><span id="managerID">Manager1990</span></td>
                                     </tr>
                                     <!-- ======================一筆訂單END====================== -->
 
-
-                                    <tr>
-                                        <td><span>
-                                                    <a class="SHorderNum" href="#"
-                                                       style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
-                                                </span></td>
-                                        <td><span class="memberID">Member1990</span></td>
-                                        <td><span class="SHproductNum">SH0000001</span></td>
-                                        <td>$<span class="SHorderPrice">5000</span>元</td>
-                                        <td>
-                                            <div>
-                                                <select class="payornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未付款</option>
-                                                    <option value="1">已付款</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-
-                                        <td>
-                                            <div>
-                                                <select class="delieverornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未出貨</option>
-                                                    <option value="1">已出貨</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td><span class="managerID">Manager1990</span></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td><span>
-                                                    <a class="SHorderNum" href="#"
-                                                       style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
-                                                </span></td>
-                                        <td><span class="memberID">Member1990</span></td>
-                                        <td><span class="SHproductNum">SH0000001</span></td>
-                                        <td>$<span class="SHorderPrice">5000</span>元</td>
-                                        <td>
-                                            <div>
-                                                <select class="payornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未付款</option>
-                                                    <option value="1">已付款</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-
-                                        <td>
-                                            <div>
-                                                <select class="delieverornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未出貨</option>
-                                                    <option value="1">已出貨</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td><span class="managerID">Manager1990</span></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td><span>
-                                                    <a class="SHorderNum" href="#"
-                                                       style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
-                                                </span></td>
-                                        <td><span class="memberID">Member1990</span></td>
-                                        <td><span class="SHproductNum">SH0000001</span></td>
-                                        <td>$<span class="SHorderPrice">5000</span>元</td>
-                                        <td>
-                                            <div>
-                                                <select class="payornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未付款</option>
-                                                    <option value="1">已付款</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-
-                                        <td>
-                                            <div>
-                                                <select class="delieverornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未出貨</option>
-                                                    <option value="1">已出貨</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td><span class="managerID">Manager1990</span></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td><span>
-                                                    <a class="SHorderNum" href="#"
-                                                       style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
-                                                </span></td>
-                                        <td><span class="memberID">Member1990</span></td>
-                                        <td><span class="SHproductNum">SH0000001</span></td>
-                                        <td>$<span class="SHorderPrice">5000</span>元</td>
-                                        <td>
-                                            <div>
-                                                <select class="payornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未付款</option>
-                                                    <option value="1">已付款</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-
-                                        <td>
-                                            <div>
-                                                <select class="delieverornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未出貨</option>
-                                                    <option value="1">已出貨</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td><span class="managerID">Manager1990</span></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td><span>
-                                                    <a class="SHorderNum" href="#"
-                                                       style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
-                                                </span></td>
-                                        <td><span class="memberID">Member1990</span></td>
-                                        <td><span class="SHproductNum">SH0000001</span></td>
-                                        <td>$<span class="SHorderPrice">5000</span>元</td>
-                                        <td>
-                                            <div>
-                                                <select class="payornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未付款</option>
-                                                    <option value="1">已付款</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-
-                                        <td>
-                                            <div>
-                                                <select class="delieverornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未出貨</option>
-                                                    <option value="1">已出貨</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td><span class="managerID">Manager1990</span></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td><span>
-                                                    <a class="SHorderNum" href="#"
-                                                       style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
-                                                </span></td>
-                                        <td><span class="memberID">Member1990</span></td>
-                                        <td><span class="SHproductNum">SH0000001</span></td>
-                                        <td>$<span class="SHorderPrice">5000</span>元</td>
-                                        <td>
-                                            <div>
-                                                <select class="payornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未付款</option>
-                                                    <option value="1">已付款</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-
-                                        <td>
-                                            <div>
-                                                <select class="delieverornot" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未出貨</option>
-                                                    <option value="1">已出貨</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td><span class="managerID">Manager1990</span></td>
-                                    </tr>
 
 
                                     <!-- ===================管理二手訂單END=================== -->
@@ -480,7 +283,7 @@ card-body 視窗主體 -->
                                     <tr>
                                         <th>訂單編號</th>
                                         <th>購買者ID</th>
-                                        <th>商品編號</th>
+<!--                                        <th>商品編號</th>-->
                                         <th>訂單金額</th>
                                         <th>付款狀態</th>
                                         <th>出貨狀態</th>
@@ -547,6 +350,7 @@ card-body 視窗主體 -->
 <!-- JavaScript JS放置區 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../js/theme.js"></script>
+<script src="../js/sh_ordermanage.js"></script>
 <!-- JavaScript JS放置區 -->
 </body>
 

@@ -1,5 +1,7 @@
 package gg.nbp.web.Member.dao.impl;
 
+import java.sql.Date;
+
 //import static core.util.CommonUtil.getConnection;
 
 import java.util.List;
@@ -14,32 +16,18 @@ import jakarta.persistence.PersistenceContext;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
-	
-	
 	@PersistenceContext
 	private Session session;
-
-//    Session session = session;
-
     @Override
     public int insert(Member member) {
-
-//        Transaction transaction = session.beginTransaction();   // 從session來，開始交易
-//        // 基本上上面3行是固定
-        session.persist(member);    // persist(填入要insert的物件)
-//        transaction.commit();   //
+        session.persist(member);
         return member.getMember_id();
     }
 
     @Override
     public int deleteById(Integer id) {
-//        session.beginTransaction();
-        // 不能直接用session.remove(id)，因為括弧內要放的想要刪除的物件
-        // 所以要把刪除整筆資料時需要把整個想要刪除的Member物件放進來
-        // 要"先查詢要刪除的會員id"，"再用該id指定給session，刪除該會員"
         Member member = session.get(Member.class, id);
         session.remove(member);
-//        session.getTransaction().commit();
         member.setMessage("刪除成功");
         return member.getMember_id();
     }
@@ -52,9 +40,17 @@ public class MemberDaoImpl implements MemberDao {
                 .append("UPDATE Member SET ");
 
         final String password = member.getPassword();
+        
+        final Date suspend_deadline = member.getSuspend_deadline();
+        
         if (password != null && !password.isEmpty()) {
             hql.append("password = :password, ");
         }
+        
+//        if (suspend_deadline != null) {
+            hql.append("suspend_deadline = :suspend_deadline, ");
+//        }
+        
         hql.append("email = :email, ")
                 .append("phone = :phone, ")
                 .append("address = :address, ")
@@ -68,7 +64,11 @@ public class MemberDaoImpl implements MemberDao {
         if (password != null && !password.isEmpty()) {
             query.setParameter("password", password);
         }
-
+        
+//        if (suspend_deadline != null) {
+            query.setParameter("suspend_deadline", suspend_deadline);
+//        }
+        
         return query
                 .setParameter("email", member.getEmail())
                 .setParameter("phone", member.getPhone())

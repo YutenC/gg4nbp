@@ -259,6 +259,7 @@ function showList() {
 
 
         // pomAll_array.forEach((pom) => {
+        let pfeCount = 0;
         power_array.forEach((power) => {
             if (pomAll_array.some(pom => pom.manager_id === manager.manager_id && pom.power_id === power.power_id)) {
                 powerStateHtml +=
@@ -268,15 +269,15 @@ function showList() {
                 powerStateHtml +=
                     `<img src="../svg/clear-svgrepo-com.svg">` +
                     `<span>${power.name}</span>`;
+            }
+            pfeCount += 1
 
+            if (pfeCount === 3) {
+                powerStateHtml += `<br style="padding-top: 3px; padding-buttom: 3px;">`
             }
         });
 
-
-
         // });
-
-
 
         let workingStateHtml = '';
         if (manager.is_working === "在職") {
@@ -319,7 +320,7 @@ function showList() {
                   onclick="changeStateClick(${manager.manager_id})">
                   調整在職狀態
               </a>
-              <br style="padding-top: 3px; padding-buttom: 3px;">
+              <br style="padding-top: 3px; padding-bottom: 3px;">
               <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-manager-button"
                   role="button" href="manager_edit.html"
                   onclick="editClick(${manager.manager_id})">
@@ -336,13 +337,12 @@ function showList() {
             <td colspan="6">
                 <div style="display: flex; flex-wrap: wrap;">
                     <div style="width: 50%;">
-                        <span class="pwd-span">**密碼**</span>
-                        <button class="btn btn-primary btn-sm d-none d-sm-inline-block show-password" )">顯示</button>
-                        <button class="btn btn-primary btn-sm d-none d-sm-inline-block custom-manager-button hide-password" style="display: none;">隱藏</button>
+                        <span class="pwd-span">密碼：****</span>
+                        <button class="btn btn-primary btn-sm d-none d-sm-inline-block show-password" data-password="${manager.password}")">顯示</button>
                     </div>
-                    <div style="width: 50%;">${manager.phone}</div>
-                    <div style="width: 100%;">${manager.email}</div>
-                    <div style="width: 100%;">${manager.address}</div>
+                    <div style="width: 50%;">電話：${manager.phone}</div>
+                    <div style="width: 100%;">信箱：${manager.email}</div>
+                    <div style="width: 100%;">地址：${manager.address}</div>
                 </div>
             </td>
         </tr>
@@ -361,6 +361,24 @@ function showList() {
         $(this).text(function (_, text) {
             return text.trim() === "詳細資料" ? "收回" : "詳細資料";
         });
+        return false;
+    });
+
+    $(".show-password").click(function () {
+        event.preventDefault();
+        var showButton = $(this);
+        var passwordSpan = showButton.prev(".pwd-span");
+        var password = showButton.data("password")
+
+        // 切换按钮文字和密码显示
+        if (passwordSpan.text().trim() === "密碼：****") {
+            showButton.text("隱藏");
+            passwordSpan.text("密碼：" + password);
+        } else {
+            showButton.text("顯示");
+            passwordSpan.text("密碼：****");
+        }
+
         return false;
     });
 

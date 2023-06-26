@@ -2,6 +2,8 @@ package gg.nbp.web.SecondHand.sale.service.impl;
 
 import java.util.List;
 
+import gg.nbp.web.SecondHand.sale.dao.SecondhandProductImageDao;
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,10 @@ import gg.nbp.web.SecondHand.sale.service.SecondhandProductService;
 public class SecondhandProductServiceImpl implements SecondhandProductService {
 
 	@Autowired
-    private SecondhandProductDao spdao ;
+    private SecondhandProductDao shpdao ;
+
+    @Autowired
+    private SecondhandProductImageDao shpdaoPic;
 
 
     @Override
@@ -48,7 +53,7 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
             return secondhandproduct;
         }
 
-        final int resultCount = spdao.insert(secondhandproduct);
+        final int resultCount = shpdao.insert(secondhandproduct);
         if (resultCount < 1) {
             secondhandproduct.setMessage("商品上架失敗");
             secondhandproduct.setSuccessful(false);
@@ -61,25 +66,9 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
     }
 
 
-//    @Override
-//    public SecondhandProduct editshp(SecondhandProduct secondhandproduct) {
-//        final SecondhandProduct oshproduct = spdao.selectById(secondhandproduct.getProductId());
-//        secondhandproduct.setName(oshproduct.getName());
-//        secondhandproduct.setType(oshproduct.getType());
-//        secondhandproduct.setPrice(oshproduct.getPrice());
-//        secondhandproduct.setContent(oshproduct.getContent());
-//        secondhandproduct.setLaunchTime(oshproduct.getLaunchTime());
-//
-//        final int resultCount = spdao.update(secondhandproduct);
-//        secondhandproduct.setSuccessful(resultCount > 0);
-//        secondhandproduct.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
-//        return secondhandproduct;
-//    }
-
-
     @Override
     public SecondhandProduct editshp(SecondhandProduct secondhandproduct) {
-        final SecondhandProduct oshproduct = spdao.selectById(secondhandproduct.getProductId());
+        final SecondhandProduct oshproduct = shpdao.selectById(secondhandproduct.getProductId());
 
         if (secondhandproduct.getName() != null) {
             oshproduct.setName(secondhandproduct.getName());
@@ -93,7 +82,9 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
         if (secondhandproduct.getContent() != null) {
             oshproduct.setContent(secondhandproduct.getContent());
         }
-
+        if (secondhandproduct.getIsLaunch() != null) {
+            oshproduct.setIsLaunch(secondhandproduct.getIsLaunch());
+        }
 
 
 //        System.out.println("有沒有圖傳進來");
@@ -110,7 +101,7 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
 //            oMember.setMemberCard(memberData.getMemberCard());
 //        }
 
-        final int resultCount = spdao.update(oshproduct);
+        final int resultCount = shpdao.update(oshproduct);
         oshproduct.setSuccessful(resultCount > 0);
         oshproduct.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
         return oshproduct;
@@ -122,19 +113,71 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
 
     @Override
     public boolean delete(Integer productID) {
-        final int resultCount = spdao.deleteById(productID);
+        shpdao.deleteById(productID);
         return true;
     }
 
     @Override
     public SecondhandProduct selectOne(Integer productID) {
-        return spdao.selectById(productID);
+        return shpdao.selectById(productID);
     }
 
     @Override
     public List<SecondhandProduct> searchAll() {
 
-        return spdao.selectAll();
+        return shpdao.selectAll();
+    }
+
+    @Override
+    public List<SecondhandProduct> searchLaunch() {
+        return shpdao.selectLaunch();
+    }
+
+
+    //================圖片======================
+
+    @Override
+    public boolean insertimg(SecondhandProductImage img, Integer id) {
+
+        String url = "/img/secondHand/"+img.getImage();
+
+        SecondhandProductImage pic = new SecondhandProductImage();
+        pic.setProductId(id);
+        pic.setImage(url);
+        shpdaoPic.insert(pic);
+        return true;
+    }
+
+    // check deletebyid可否用productid
+//    @Override
+//    public boolean deleteimg(SecondhandProduct shp) {
+//        shpdaoPic.deleteById(shp.getProductId());
+//        return true;
+//    }
+
+    //    ???? 先選擇 再刪除
+    @Override
+    public boolean deleteimg(SecondhandProductImage img) {
+        shpdaoPic.deleteById(img.getImageId());
+
+        return true;
+    }
+
+    @Override
+    public boolean updateimg(SecondhandProductImage img, Integer id) {
+        String url = "/img/secondHand/"+img.getImage();
+        img = shpdaoPic.selectById(id);
+        SecondhandProductImage pic = new SecondhandProductImage();
+//        pic.setProductId(id);
+        pic.setImage(img.getImage());
+        shpdaoPic.update(pic);
+        return true;
+    }
+
+
+    @Override
+    public List<SecondhandProductImage> selectimg(SecondhandProduct shp) {
+        return shpdaoPic.selectByProId(shp.getProductId());
     }
 
 

@@ -1,0 +1,45 @@
+const SHproName = document.querySelector('.productName');
+const SHproPrice = document.querySelector("div.price>span");
+const SHproContent = document.querySelector('.description_detail');
+const shpImg0 = document.getElementById('small0');
+const shpImg1 = document.getElementById('small1');
+const shpImg2 = document.getElementById('small2');
+const shpImg3 = document.getElementById('small3');
+
+
+fetch('shp_view', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        productId: sessionStorage.getItem('productId')
+
+    }),
+})
+    .then(resp => resp.json()) // .then(function(resp){resp.json();})
+    .then(function (body) {
+            let {
+                name,
+                price,
+                content,
+                image,
+            } = body;
+
+            console.log("傳入session並回傳取得DB資料")
+
+            SHproName.innerHTML = name;
+            SHproPrice.innerHTML = price;
+            SHproContent.innerHTML = content;
+            const urlList = body.image.map(item => item.image);
+        shpImg0.setAttribute('src', `..${urlList[0]}`)
+        shpImg1.setAttribute('src', `..${urlList[1]}`)
+        shpImg2.setAttribute('src', `..${urlList[2]}`)
+        shpImg3.setAttribute('src', `..${urlList[3]}`)
+
+
+
+
+        }
+
+    )

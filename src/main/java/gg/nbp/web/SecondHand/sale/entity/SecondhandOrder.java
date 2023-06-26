@@ -1,51 +1,51 @@
 package gg.nbp.web.SecondHand.sale.entity;
 
-import java.time.LocalDate;
-
-import gg.nbp.web.Manager.entity.Manager;
-import gg.nbp.web.Member.entity.Member;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import gg.nbp.core.pojo.Core;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
+import java.util.Objects;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "secondhand_order", schema = "five")
-public class SecondhandOrder {
+@Table(name = "secondhand_order")
+public class SecondhandOrder extends Core {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Order_id", nullable = false)
-    private Integer id;
+    private Integer orderId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "Product_id", nullable = false)
+//    private SecondhandProduct product;
     @JoinColumn(name = "Product_id", nullable = false)
-    private SecondhandProduct product;
+    private Integer productId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "Member_id", nullable = false)
+//    private Member member;
     @JoinColumn(name = "Member_id", nullable = false)
-    private Member member;
+    private Integer memberId;
 
-    @Column(name = "Order_date", nullable = false)
-    private LocalDate orderDate;
+    @Column(name = "Is_return")
+    private Byte isReturn;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "Manager_id")
+//    private Manager manager;
     @JoinColumn(name = "Manager_id")
-    private Manager manager;
+    private Integer managerId;
 
     @Column(name = "Deliver_state", nullable = false)
-    private Byte deliverState;
-
-    @Column(name = "Pay_state", nullable = false)
-    private Byte payState;
+    private Byte deliverState = 0;
 
     @Column(name = "Deliver_id", length = 30)
     private String deliverId;
@@ -56,10 +56,33 @@ public class SecondhandOrder {
     @Column(name = "Receive", nullable = false)
     private Byte receive;
 
-    @Column(name = "Deliver_fee", nullable = false)
-    private Integer deliverFee;
+    @Column(name = "Deliver_fee", columnDefinition = "int UNSIGNED")
+    private Long deliverFee;
 
-    @Column(name = "Total_price", nullable = false)
-    private Integer totalPrice;
+    @Column(name = "Total_price", columnDefinition = "int UNSIGNED not null")
+    private Long totalPrice;
 
+    @Column(name = "Pay_state", nullable = false)
+    private Byte payState = 0;
+
+    @Column(name = "Order_date", nullable = false)
+    @CreationTimestamp
+    private Date orderDate;
+
+    @Column(name = "Deliver_name", nullable = false, length = 10)
+    private String deliverName;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SecondhandOrder that = (SecondhandOrder) o;
+        return Objects.equals(orderId, that.orderId) && Objects.equals(productId, that.productId) && Objects.equals(memberId, that.memberId) && Objects.equals(isReturn, that.isReturn) && Objects.equals(managerId, that.managerId) && Objects.equals(deliverState, that.deliverState) && Objects.equals(deliverId, that.deliverId) && Objects.equals(deliverLocation, that.deliverLocation) && Objects.equals(receive, that.receive) && Objects.equals(deliverFee, that.deliverFee) && Objects.equals(totalPrice, that.totalPrice) && Objects.equals(payState, that.payState) && Objects.equals(orderDate, that.orderDate) && Objects.equals(deliverName, that.deliverName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), orderId, productId, memberId, isReturn, managerId, deliverState, deliverId, deliverLocation, receive, deliverFee, totalPrice, payState, orderDate, deliverName);
+    }
 }

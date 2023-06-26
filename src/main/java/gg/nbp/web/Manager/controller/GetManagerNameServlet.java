@@ -40,7 +40,7 @@ public class GetManagerNameServlet extends HttpServlet{
             // 在此處根據 manager 做相應的處理
             
             String loggedManager_name= loggedManager.getName();
-            
+            Integer loggedManager_id = loggedManager.getManager_id();
             
 
             // 將回應返回給前端
@@ -49,6 +49,7 @@ public class GetManagerNameServlet extends HttpServlet{
             
             JsonObject responseJson = new JsonObject();
             responseJson.add("loggedManager_name", JsonParser.parseString(json));
+            responseJson.addProperty("loggedManager_id", String.valueOf(loggedManager_id));
             
             // 在 responseJson 中設置相應的資料
             response.setContentType("application/json");

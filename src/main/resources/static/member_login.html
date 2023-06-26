@@ -104,7 +104,7 @@
         div.login_btn0 {
             width: 75%;
             margin: 0 auto;
-            
+
         }
 
         input.login_btn1 {
@@ -177,102 +177,135 @@
 </head>
 
 <body>
-    <div class="bg_img">
-        <form class="login">
+<div class="bg_img">
+    <form class="login">
 
-            <div class="login_block0">
-                <div class="login_img">
-                    <a href="./index.html">
-                        <img src="./img/Logo-removebg.png">
-                    </a>
+        <div class="login_block0">
+            <div class="login_img">
+                <a href="./index.html">
+                    <img src="./img/Logo-removebg.png">
+                </a>
+            </div>
+            <div class="login_block1">
+                <h1>會員登入</h1><br>
+                <div class="username">
+                    <label for="account"></label>
+                    <input id="account" name="account" type="username" placeholder="請輸入帳號" required>
                 </div>
-                <div class="login_block1">
-                    <h1>會員登入</h1><br>
-                    <div class="username">
-                        <label for="account"></label>
-                        <input id="account" name="account" type="username" placeholder="請輸入帳號" required>
-                    </div>
-                    <div class="password">
-                        <label for="password"></label>
-                        <input id="password" name="password" type="password" placeholder="請輸入密碼" required>
-                    </div>
-                    <div class="login_btn0">                        
-                        <button class="login_btn1" id="submit" type="button" value="登入">登入</button>
-                    </div>
-                    <div class="keepLogin0">
-                        <span id="keepLogin0">
-                            <input id="keepLogin1" name="keepLogin" type="checkbox" required>
-                            <label for="keepLogin">保持登入7天</label>
-                        </span>
-                    </div>
+                <div class="password">
+                    <label for="password"></label>
+                    <input id="password" name="password" type="password" placeholder="請輸入密碼" required>
+                </div>
+                <div class="login_btn0">
+                    <button class="login_btn1" id="submit" type="button" value="登入">登入</button>
+                </div>
+                <!--                <div class="keepLogin0">-->
+                <!--                        <span id="keepLogin0">-->
+                <!--                            <input id="keepLogin1" name="keepLogin" type="checkbox" required>-->
+                <!--                            <label for="keepLogin">保持登入7天</label>-->
+                <!--                        </span>-->
+                <!--                </div>-->
 
-                    <div class="member_btn">
+                <div class="member_btn">
                         <span>
                             <a href="./member_forget.html" id="member_btn">忘記密碼</a>
                         </span>
-                        <span>
+                    <span>
                             <a href="./member_register.html" id="register">註冊會員</a>
                         </span>
-                    </div>
                 </div>
-
-                <hr>
-
-                <div class="other_login">
-                    <div class="">或是使用下列外部方式登入：</div>
-                    <span>
-                        <img id="google_btn" src="./img/google-removebg.png">
-                    </span>
-                    <span>
-                        <img id="fb_btn" src="./img/fb-removebg.png">
-                    </span>
-                </div>
-
             </div>
 
-        </form>
-    </div>
+            <!--                <hr>-->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+            <!--                <div class="other_login">-->
+            <!--                    <div class="">或是使用下列外部方式登入：</div>-->
+            <!--                    <span>-->
+            <!--                        <img id="google_btn" src="./img/google-removebg.png">-->
+            <!--                    </span>-->
+            <!--                    <span>-->
+            <!--                        <img id="fb_btn" src="./img/fb-removebg.png">-->
+            <!--                    </span>-->
+            <!--                </div>-->
+
+        </div>
+
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
 </body>
-<script src="./js/member_logout.js"></script>
+
+<script src="js/getLocation.js"></script>
+<script src="js/xml2json.js"></script>
+<script src="js/getCityData.js"></script>
+<script src="js/getDevice.js"></script>
 <script>
-    $("button#submit").on("click", function () {
-        $.ajax({
-            url: "memberLoginServlet",
-            method: "POST",
-            dataType: "json",
-            enctype:"multipart/form-data",
-            data: {
-                account: $("#account").val(),
-                password: $("#password").val()
-            },
-            success: function (response) {
-                let member = response;    
-                let isPass = member.successful;
-                if (isPass) {
-                    sessionStorage.setItem("id", member.member_id);
-                    sessionStorage.setItem("id", member.account);
-                    window.location.href = "./member/member_home.html";
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '登入失敗',
-                        text: member.message,
-                    })
+
+
+    $(document).on("DOMContentLoaded", function () {
+        check_geolocation_enabled();
+        getCityData();
+        const deviceType = checkDeviceType();
+        const operatingSystem = checkOperatingSystem();
+        const login_device = deviceType + "(" + operatingSystem + ")";
+
+
+        // console.log(login_city);                // 定位位置
+        //
+        // console.log(window.location.host);      // IP
+        // console.log(navigator.userAgent);       // 使用環境
+        // console.log(navigator.platform);        // 作業系統
+
+        $("button#submit").on("click", function () {
+            let data = sessionStorage.getItem("data");
+            const jsonData = JSON.parse(data);
+            const cityData = jsonData.townVillageItem;
+            login_city = cityData.ctyName + cityData.townName;
+
+            $.ajax({
+                url: "memberLoginServlet",
+                method: "POST",
+                dataType: "json",
+                enctype: "multipart/form-data",
+                data: {
+                    account: $("#account").val(),
+                    password: $("#password").val(),
+                    login_city: login_city,
+                    host_name: window.location.host,
+                    login_device:login_device,
+                },
+                success: function (response) {
+                    let isPass = response.successful;
+                    if (isPass) {
+                        sessionStorage.setItem("id", response.member_id);
+                        sessionStorage.setItem("id", response.account);
+                        window.location.href = "./member/member_home.html";
+                    } else if (response.member_ver_state === 2) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '拒絕登入',
+                            text: response.message,
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '登入失敗',
+                            text: response.message,
+                        })
+                    }
+                },
+                error: function (xhr, status, err) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err)
                 }
-            },
-            error: function (xhr, status, err) {
-                console.log(xhr);
-                console.log(status);
-                console.log(err)
-            }
+            })
         })
-    })  
+    })
 
 
 </script>
-
 </html>

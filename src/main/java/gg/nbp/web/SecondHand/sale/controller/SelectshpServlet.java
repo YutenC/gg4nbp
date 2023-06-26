@@ -29,33 +29,25 @@ public class SelectshpServlet extends HttpServlet {
         // json回傳物件
 
         SecondhandProduct sp = CommonUtil.json2pojo(req, SecondhandProduct.class);
-
-
-
-
-
-//        if (secondhandproduct == null){
-//            secondhandproduct = new SecondhandProduct();
-//            secondhandproduct.setMessage("無二手商品資訊");
-//            secondhandproduct.setSuccessful(false);
-//            writePojo2Json(resp, secondhandproduct);
-//            return;
-//        }
-
         sp = SERVICE.selectOne(sp.getProductId());
+
+
+//        List<SecondhandProductImage> imgs = SERVICE.selectimg(sp);
 
 
         SecondhandProduct newsp = new SecondhandProduct();
         newsp.setProductId(sp.getProductId());
-        newsp.setIsLaunch(sp.getIsLaunch());
+//        newsp.setIsLaunch(sp.getIsLaunch());
         newsp.setName(sp.getName());
         newsp.setType(sp.getType());
         newsp.setPrice(sp.getPrice());
+        newsp.setContent(sp.getContent());
+
 //            newsp.setLaunchTime(sp.getLaunchTime());
 
 
 
-        CommonUtil.writepojo2Json(resp, sp);
+        CommonUtil.writepojo2Json(resp, newsp);
 
     }
 }

@@ -9,11 +9,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "secondhand_product_image", schema = "five")
 public class SecondhandProductImage {
@@ -22,15 +26,13 @@ public class SecondhandProductImage {
     @Column(name = "image_id", nullable = false)
     private Integer imageId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    private SecondhandProduct secondhandproduct;
+    @Column(name="product_id")
+    private Integer productId;
 
     @Column
     private String image;
 
     @Column(name = "is_use", nullable = false)
-    private Byte isUse;
+    private Byte isUse = 0;
 
 }

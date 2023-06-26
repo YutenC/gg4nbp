@@ -70,13 +70,6 @@
                                     style="height: 50px;">會員中心
                             </a>
                         </li>
-                        <li class="nav-item" style="height: 80px;" id="help">
-                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
-                                style="margin-top: 20px;color: var(--bs-dark);">
-                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
-                                    style="height: 40px;">客服中心
-                            </a>
-                        </li>
                         <li class="nav-item logout">
                             <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
                                 style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
@@ -98,18 +91,6 @@
                     <a data-bss-hover-animate="pulse" id="info" class="list-group-item list-group-item-action"
                         href="./member_info.html" data-bs-toggle="list"
                         style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
-                    </a>
-                    <a data-bss-hover-animate="pulse" id="setBank" class="list-group-item list-group-item-action"
-                        href="./member_common_account.html" data-bs-toggle="list"
-                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">常用帳戶設定
-                    </a>
-                    <a data-bss-hover-animate="pulse" id="friend" class="list-group-item list-group-item-action"
-                        href="./member_friendlist.html" data-bs-toggle="list"
-                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">好友名單
-                    </a>
-                    <a data-bss-hover-animate="pulse" id="black" class="list-group-item list-group-item-action"
-                        href="./member_blacklist.html" data-bs-toggle="list"
-                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">黑名單
                     </a>
                     <a data-bss-hover-animate="pulse" id="trade" class="list-group-item list-group-item-action"
                         href="./member_order_list.html" data-bs-toggle="list"
@@ -149,17 +130,17 @@
             <div class="col">
                 <div class="container profile profile-view" id="profile">
                     <h1>基本資料修改</h1>
-                    <form>
+                    <div>
                         <div class="row profile-row">
                             <div class="col-md-4 col-xxl-3 relative">
                                 <div class="avatar">
                                     <div id="member_info_pic" class="avatar-bg center"></div>
                                 </div>
-                                <label class="form-label">遊戲標籤</label>
-                                <input class="form-control" type="text" id="game_label" name="game_label"
-                                    style="margin-bottom: 20px; " readonly>
-                                <img class="game_label_pic"
-                                    style="margin-right: 0px;width: 230px;height: 230px;padding-left: 0px;padding-right: 0px;margin-left: 20px;background: url(&quot;../img/Logo-removebg.png&quot;) center / contain no-repeat, rgba(0,0,0,0);border-radius: 20px;border-color: rgb(136,138,140);">
+<!--                                <label class="form-label">遊戲標籤</label>-->
+<!--                                <input class="form-control" type="text" id="game_label" name="game_label"-->
+<!--                                    style="margin-bottom: 20px; " readonly>-->
+<!--                                <img class="game_label_pic"-->
+<!--                                    style="margin-right: 0px;width: 230px;height: 230px;padding-left: 0px;padding-right: 0px;margin-left: 20px;background: url(&quot;../img/Logo-removebg.png&quot;) center / contain no-repeat, rgba(0,0,0,0);border-radius: 20px;border-color: rgb(136,138,140);">-->
                             </div>
                             <div class="col-md-8 offset-xxl-0">
                                 <div class="row">
@@ -225,7 +206,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -276,7 +257,7 @@
 <script>
     $(window).on("load", function () {
         $.ajax({
-            url: "/Five_NBP_gg/memberGetInforServlet",
+            url: "memberGetInforServlet",
             method: "POST",
             dataType: "json",
             success: function (response) {
@@ -301,7 +282,7 @@
 
     $("button#submit").on("click", function () {
         $.ajax({
-            url: "/Five_NBP_gg/memberEditInforServlet",
+            url: "memberEditInforServlet",
             method: "POST",
             dataType: "json",
             data: {

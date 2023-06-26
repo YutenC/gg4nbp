@@ -1,20 +1,20 @@
 package gg.nbp.web.Member.controller;
 
-import static gg.nbp.web.Member.util.MemerCommonUitl.*;
+import static gg.nbp.web.Member.util.MemberCommonUitl.*;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
-import gg.nbp.web.Member.util.MemerCommonUitl;
+import gg.nbp.web.Member.util.MemberCommonUitl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/memberEditInforServlet")
+@WebServlet("/member/memberEditInforServlet")
 public class MemberEditInforServlet extends HttpServlet {
 	
 	@Autowired
@@ -23,14 +23,13 @@ public class MemberEditInforServlet extends HttpServlet {
 	
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        Member member = MemerCommonUitl.getMemberSession(request,"member");
+        Member member = MemberCommonUitl.getMemberSession(request,"member");
 
         if(member == null){
             Member visitor = new Member();
             visitor.setMessage("無會員資訊");
             visitor.setSuccessful(false);
-            MemerCommonUitl.gsonToJson(response, visitor);
+            MemberCommonUitl.gsonToJson(response, visitor);
             return;
         }
 

@@ -2,7 +2,10 @@ package gg.nbp.web.SecondHand.sale.controller;
 
 
 import java.io.IOException;
+import java.util.List;
 
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.util.CommonUtil;
@@ -26,17 +29,59 @@ public class AddshpServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
 
-        SecondhandProduct secondhandproduct = CommonUtil.json2pojo(req, SecondhandProduct.class);
+        int shpproductId = 0;
+        SecondhandProduct shp = null;
+        boolean state = true;
 
-        if (secondhandproduct == null){
-            secondhandproduct = new SecondhandProduct();
-            secondhandproduct.setMessage("無二手商品資訊");
-            secondhandproduct.setSuccessful(false);
-            CommonUtil.writepojo2Json(resp, secondhandproduct);
-            return;
+
+        shp = CommonUtil.json2pojo(req, SecondhandProduct.class);
+
+
+
+        try {
+
+
+
+            if (shp.getName().trim().isEmpty() || shp.getContent().trim().isEmpty() || shp.getType().trim().isEmpty()){
+                shp = new SecondhandProduct();
+                shp.setMessage("無二手商品資訊");
+                state = false;
+            }
+
+            SERVICE.addshp(shp);
+            shp.setSuccessful(true);
+            shpproductId = shp.getProductId();
+
+            if (shp.isSuccessful()) {
+                if (req.getSession(false) != null) {
+                    req.changeSessionId();
+                }
+                final HttpSession session = req.getSession();
+                session.setAttribute("productId", shpproductId);
+            }
+
+        } catch (Exception e) {
+            shp = new SecondhandProduct();
+            shp.setSuccessful(false);
         }
 
-        secondhandproduct = SERVICE.addshp(secondhandproduct);
-        CommonUtil.writepojo2Json(resp, secondhandproduct);
+
+
+
+// 圖
+//        for (SecondhandProductImage img : shp.getImage()) {
+//            SERVICE.insertimg((SecondhandProductImage)img, shpproductId);
+//        }
+
+        List<SecondhandProductImage> images = shp.getImage();
+        if (images != null) {
+            for (SecondhandProductImage img : images) {
+                SERVICE.insertimg(img, shpproductId);
+            }
+        }
+
+
+        CommonUtil.writepojo2Json(resp, shp);
+
     }
 }

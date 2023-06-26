@@ -45,9 +45,6 @@ public class ManagerListServlet extends HttpServlet{
         // 將 JSON 字串寫入回應中
         resp.getWriter().write(jsonObject.toString());
 		
-//		req.setAttribute("managerList", managerList);
-//		req.getRequestDispatcher( "/manager/manager_list.html").forward(req, resp);
-		
 	}
 	
 }
