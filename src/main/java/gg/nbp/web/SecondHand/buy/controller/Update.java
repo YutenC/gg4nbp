@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.pojo.OneString;
 import gg.nbp.core.util.CommonUtil;
-import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
+import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,27 +28,14 @@ public class Update extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		SecondhandBuylist sl = CommonUtil.json2pojo(req , SecondhandBuylist.class);
-		System.out.println(sl.getBuylistId());
-		
-		SecondhandBuylist sla = service.selectOne(sl.getBuylistId());
-		sla.setProductName(sl.getProductName());
-		sla.setType(sl.getType());
-		sla.setContent(sl.getContent());
-		sla.setEstimate(sl.getEstimate());
-		sla.setPrice(sl.getPrice());
-		sla.setPayState(sl.getPayState());
-		sla.setApplicantBankNumber(sl.getApplicantBankNumber());
-		
-		System.out.println(sla);
-		
-		
-		
-		service.upDate(sla);
-		
-		OneString secc = new OneString();
-		secc.setStr("修改成功");
-		CommonUtil.writepojo2Json(resp, secc);
+		try {
+			
+			BuyEvent be = CommonUtil.json2pojo(req,BuyEvent.class);
+			service.update(be);
+			CommonUtil.writepojo2Json(resp, new OneString("審核成功"));
+		} catch (Exception e) {
+			CommonUtil.writepojo2Json(resp, new OneString("更新失敗"));
+		}
 		
 		
 	}

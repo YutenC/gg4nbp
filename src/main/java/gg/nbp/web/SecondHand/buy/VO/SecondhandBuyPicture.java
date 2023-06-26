@@ -33,4 +33,10 @@ public class SecondhandBuyPicture implements Serializable{
 	private String image;
 	
 	
+	public SecondhandBuyPicture(Integer buylistId, String image){
+		this.buylistId = buylistId;
+		this.image = image;
+	}
+	
+	
 }
