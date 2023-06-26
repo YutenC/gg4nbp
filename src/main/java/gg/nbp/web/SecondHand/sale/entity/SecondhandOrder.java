@@ -72,17 +72,23 @@ public class SecondhandOrder extends Core {
     @Column(name = "Deliver_name", nullable = false, length = 10)
     private String deliverName;
 
+    @Column(name = "Pay_Bank", length = 20)
+    private String payBank;
+
+    @Column(name = "Pay_Number", length = 20)
+    private String payNumber;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         SecondhandOrder that = (SecondhandOrder) o;
-        return Objects.equals(orderId, that.orderId) && Objects.equals(productId, that.productId) && Objects.equals(memberId, that.memberId) && Objects.equals(isReturn, that.isReturn) && Objects.equals(managerId, that.managerId) && Objects.equals(deliverState, that.deliverState) && Objects.equals(deliverId, that.deliverId) && Objects.equals(deliverLocation, that.deliverLocation) && Objects.equals(receive, that.receive) && Objects.equals(deliverFee, that.deliverFee) && Objects.equals(totalPrice, that.totalPrice) && Objects.equals(payState, that.payState) && Objects.equals(orderDate, that.orderDate) && Objects.equals(deliverName, that.deliverName);
+        return Objects.equals(orderId, that.orderId) && Objects.equals(productId, that.productId) && Objects.equals(memberId, that.memberId) && Objects.equals(isReturn, that.isReturn) && Objects.equals(managerId, that.managerId) && Objects.equals(deliverState, that.deliverState) && Objects.equals(deliverId, that.deliverId) && Objects.equals(deliverLocation, that.deliverLocation) && Objects.equals(receive, that.receive) && Objects.equals(deliverFee, that.deliverFee) && Objects.equals(totalPrice, that.totalPrice) && Objects.equals(payState, that.payState) && Objects.equals(orderDate, that.orderDate) && Objects.equals(deliverName, that.deliverName) && Objects.equals(payBank, that.payBank) && Objects.equals(payNumber, that.payNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), orderId, productId, memberId, isReturn, managerId, deliverState, deliverId, deliverLocation, receive, deliverFee, totalPrice, payState, orderDate, deliverName);
+        return Objects.hash(super.hashCode(), orderId, productId, memberId, isReturn, managerId, deliverState, deliverId, deliverLocation, receive, deliverFee, totalPrice, payState, orderDate, deliverName, payBank, payNumber);
     }
 }

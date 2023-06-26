@@ -52,13 +52,13 @@ public class AddshpServlet extends HttpServlet {
             shp.setSuccessful(true);
             shpproductId = shp.getProductId();
 
-            if (shp.isSuccessful()) {
-                if (req.getSession(false) != null) {
-                    req.changeSessionId();
-                }
-                final HttpSession session = req.getSession();
-                session.setAttribute("productId", shpproductId);
-            }
+//            if (shp.isSuccessful()) {
+//                if (req.getSession(false) != null) {
+//                    req.changeSessionId();
+//                }
+//                final HttpSession session = req.getSession();
+//                session.setAttribute("productId", shpproductId);
+//            }
 
         } catch (Exception e) {
             shp = new SecondhandProduct();

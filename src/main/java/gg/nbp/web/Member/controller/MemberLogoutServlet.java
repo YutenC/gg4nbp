@@ -17,10 +17,11 @@ public class MemberLogoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Member member = MemberCommonUitl.getMemberSession(request,"member");
         System.out.println("訊息：會員 " + member.getNick() + " 成功登出");
-        request.getSession().setAttribute("isLogin", false);
 
         request.getSession().removeAttribute("isLogin");
         request.getSession().removeAttribute("member");
+        request.getSession().removeAttribute("successful");
+        request.getSession().removeAttribute("redirectUrl");
         MemberCommonUitl.gsonToJson(response,member);
     }
 }

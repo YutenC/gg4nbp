@@ -279,10 +279,15 @@
                 },
                 success: function (response) {
                     let isPass = response.successful;
+                    let redirectUrl = response.redirectUrl;
                     if (isPass) {
                         sessionStorage.setItem("id", response.member_id);
                         sessionStorage.setItem("id", response.account);
-                        window.location.href = "./member/member_home.html";
+                        if(redirectUrl){
+                            window.location.href = response.redirectUrl;
+                        } else {
+                            window.location.href = "index.html";
+                        }
                     } else if (response.member_ver_state === 2) {
                         Swal.fire({
                             icon: 'error',

@@ -7,9 +7,7 @@ import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
 @WebFilter("/member/*")
 public class MemberFilter extends HttpFilter implements Filter {
@@ -18,9 +16,13 @@ public class MemberFilter extends HttpFilter implements Filter {
         Member member = new Member();
         Object isLogin =  request.getSession().getAttribute("isLogin");
 
+        // 存取會員當前請求的網址
+        final HttpSession session = request.getSession();
+
         if(isLogin != null ){
             chain.doFilter(request,response);
         } else {
+            session.setAttribute("location", request.getRequestURI());
             response.sendRedirect(request.getContextPath()+"/member_login.html");
         }
     }
