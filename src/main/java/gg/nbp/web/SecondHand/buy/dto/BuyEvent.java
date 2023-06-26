@@ -155,7 +155,7 @@ public class BuyEvent extends Core {
 
 	public static SecondhandBuylist toSecondhandBuylist(BuyEvent be ,SecondHandBuylistDao dao ) {
 		SecondhandBuylist sl = dao.selectById(be.eventId);
-		sl.setPrice(be.price);
+		sl.setPrice(be.price == -1 ? null : be.price);
 		sl.setConfirmTime(be.confirmTime);
 		for(int i = 0 ; i < 3 ; i++) {
 			if(getPayState(i).equals(be.payState)) {
