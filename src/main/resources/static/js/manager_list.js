@@ -296,21 +296,59 @@ function showList() {
     </a>`
         }
 
-
-        html += `
+        if (manager.manager_id === 1) {
+            html += `
         <tr>
           <td>${manager.manager_id}</td>
           <td>${manager.account}</td>
           <td>${manager.name}</td>
           <td>
           `
-            + powerStateHtml +
-            `
+                + powerStateHtml +
+                `
           </td>
           <td>
           `
-            + workingStateHtml +
-            `  
+                + `<a class="btn btn-primary btn-sm d-none d-sm-inline-block is-workingState"
+                role="button">
+                ${manager.is_working}
+            </a>`
+                +
+                `  
+          </td>
+          <td>
+              
+          </td>
+        </tr>
+        <tr class="dropdown_row" style="display:none;" id="toggle_button_${manager.manager_id}">
+            <td colspan="6">
+                <div style="display: flex; flex-wrap: wrap;">
+                    <div style="width: 50%;">
+                        <span class="pwd-span">密碼：****</span>
+                        <button class="btn btn-primary btn-sm d-none d-sm-inline-block show-password" data-password="${manager.password}")">顯示</button>
+                    </div>
+                    <div style="width: 50%;">電話：${manager.phone}</div>
+                    <div style="width: 100%;">信箱：${manager.email}</div>
+                    <div style="width: 100%;">地址：${manager.address}</div>
+                </div>
+            </td>
+        </tr>
+      `;
+        } else {
+            html += `
+        <tr>
+          <td>${manager.manager_id}</td>
+          <td>${manager.account}</td>
+          <td>${manager.name}</td>
+          <td>
+          `
+                + powerStateHtml +
+                `
+          </td>
+          <td>
+          `
+                + workingStateHtml +
+                `  
           </td>
           <td>
               <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-manager-button toggle-button"
@@ -347,6 +385,7 @@ function showList() {
             </td>
         </tr>
       `;
+        }
     });
 
     // 插入生成的 HTML 內容到 managerListContainer 元素中

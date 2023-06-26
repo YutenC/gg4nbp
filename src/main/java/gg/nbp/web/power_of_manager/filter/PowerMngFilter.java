@@ -1,9 +1,13 @@
-package gg.nbp.web.Manager.filter;
+package gg.nbp.web.power_of_manager.filter;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.core.annotation.Order;
 
+import gg.nbp.web.power.entity.Power;
+import gg.nbp.web.power_of_manager.entity.Power_of_Manager;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -16,11 +20,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
-@WebFilter("/manager/*")
-@Order(1)
-public class ManagerLoginFilter extends HttpFilter implements Filter{
-
+@WebFilter("/manager/manager_list.html")
+@Order(2)
+public class PowerMngFilter extends HttpFilter implements Filter{
 	private static final long serialVersionUID = 1L;
 	private FilterConfig filterConfig;
 	
@@ -44,19 +46,24 @@ public class ManagerLoginFilter extends HttpFilter implements Filter{
 		HttpSession session= req.getSession();
 		// 判斷登入
 		
-		Object account= session.getAttribute("manager");
+		List<Power> powerList= (List<Power>) session.getAttribute("powerList");
+		Optional<Integer> powerMngIdOpt = powerList.stream()
+		        .filter(power -> "權限管理員".equals(power.getPower_name()))
+		        .map(Power::getPower_id)
+		        .findFirst();
+	    int powerMngId = powerMngIdOpt.get();
 		
-//		Manager manager= (Manager)session.getAttribute("manager");
-//		Object account= manager.getAccount();
+		List<Power_of_Manager> LoggedPomList= (List<Power_of_Manager>) session.getAttribute("loggedPomList");
 		
-		if (account== null) {
-			session.setAttribute("location", req.getRequestURI());
-			resp.sendRedirect(req.getContextPath()+ "/manager_login.html");
+		boolean hasPower = LoggedPomList.stream()
+		        .anyMatch(pom -> pom.getPower_id() == powerMngId);
+		
+		if (!(hasPower)) {
+			resp.sendRedirect(req.getContextPath()+ "/manager/backend_homepage.html"); 
 			return;
 		}else {
 			chain.doFilter(request, response);
 		}
 		
 	}
-	
 }

@@ -57,13 +57,13 @@
 
     add_btn.addEventListener('click', () => {
         const accLength = manager_account.value.length;
-        if (accLength <= 5 || accLength >= 32) {
+        if (accLength < 5 || accLength > 32) {
             msg.textContent = '帳號長度須介於5-32字元';
             return;
         }
 
         const pwdLength = manager_password.value.length;
-        if (pwdLength <= 6 || pwdLength >= 32) {
+        if (pwdLength < 6 || pwdLength > 32) {
             msg.textContent = '密碼長度須介於6~32字元';
             return;
         }
@@ -74,7 +74,7 @@
         }
 
         const nameLength = manager_name.value.length;
-        if (nameLength <= 1 || nameLength >= 20) {
+        if (nameLength < 1 || nameLength > 20) {
             msg.textContent = '暱稱長度須介於1~20字元';
             return;
         }
