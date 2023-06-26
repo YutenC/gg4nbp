@@ -71,7 +71,7 @@ function showList() {
 
                                 <td>
                                     <div class="shorder_number" onclick="getProductId(${secondhandorder.productId}); getOrderId(${secondhandorder.orderId})">
-                                        <a href="" style="text-decoration:none; color: rgb(64, 61, 61);">${secondhandorder.orderId}</a>
+                                        <a href="#" style="text-decoration:none; color: rgb(64, 61, 61);">${secondhandorder.orderId}</a>
                                     </div>
                                 </td>
 
@@ -106,10 +106,10 @@ function showList() {
 
 function getProductId(productId){
     sessionStorage.setItem("productId", productId);
-    window.open('../member/member_shorderinfo.html')
+    window.location.href="../member/member_shorderinfo.html";
 }
 
 function getOrderId(orderId){
     sessionStorage.setItem("orderId", orderId);
-    window.open('../member/member_shorderinfo.html')
+    window.location.href="../member/member_shorderinfo.html";
 }
