@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>member_info</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap_member_infor.min.css">
+    <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- <link rel="stylesheet" href="../css/Profile-Edit-Form-1.css"> -->
+    <link rel="stylesheet" href="../css/Profile-Edit-Form.css">
+    <!-- <link rel="stylesheet" href="../css/Profile-with-data-and-skills.css"> -->
+
+    <style>
+        div.row {
+            width: 100%;
+        }
+
+        div.button {
+            margin-top: 90px;
+        }
+
+        button {
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+        }
+
+        label.form-label {
+            margin-top: 10px;
+        }
+
+        div#member_info_pic {
+            margin-bottom: 10px;
+        }
+
+        div.list-group{
+            width: 100%;
+            margin: 0px;
+        }
+
+        div.MainShow{
+            margin: 0px;
+            padding: 0px;
+            display: inline-block;
+            height: 100%;
+            width: 65%;
+            background-color: #8036364e;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center"></a>
+                <a href="../index.html" style="width: 180px;height: 103.19px;">
+                    <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item" id="shop">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;">
+                                <img src="../img/gamepad-solid.svg">商城中心
+                            </a>
+                        </li>
+                        <li class="nav-item" id="shshop">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/dice-solid.svg">二手商城
+                            </a>
+                        </li>
+                        <li class="nav-item" id="actitcle">
+                            <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
+                                style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="#">
+                                <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
+                                    style="height: 50px;">論壇社群
+                            </a>
+                        </li>
+                        <li class="nav-item" id="activty">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/champagne-glasses-solid.svg">活動專區
+                            </a>
+                        </li>
+                        <li class="nav-item" id="member_home">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="member_home.html"
+                                style="margin-top: 10px;">
+                                <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
+                                    style="height: 50px;">會員中心
+                            </a>
+                        </li>
+                        <li class="nav-item" style="height: 80px;" id="help">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
+                                style="margin-top: 20px;color: var(--bs-dark);">
+                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
+                                    style="height: 40px;">客服中心
+                            </a>
+                        </li>
+                        <li class="nav-item logout">
+                            <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
+                                style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
+                                <div id="member_pic-1" class="avatar-bg center"
+                                    style="width: 60px;height: 60px;margin-left: 0px;"></div>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                    <footer id="footerpad-1"></footer>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="main-content">
+        <div class="row" style="height: 800px;">
+            <div class="col-lg-4 col-xl-2 offset-xl-1" style="height: 600px;">
+                <div class="list-group">
+                    <a data-bss-hover-animate="pulse" id="info" class="list-group-item list-group-item-action"
+                        href="./member_info.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="setBank" class="list-group-item list-group-item-action"
+                        href="./member_common_account.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">常用帳戶設定
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="friend" class="list-group-item list-group-item-action"
+                        href="./member_friendlist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">好友名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="black" class="list-group-item list-group-item-action"
+                        href="./member_blacklist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">黑名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="trade" class="list-group-item list-group-item-action"
+                        href="./member_order_list.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢一般交易
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_trade" class="list-group-item list-group-item-action"
+                        href="./member_shordersearch.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手交易
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_buy" class="list-group-item list-group-item-action"
+                        href="./SecondHand_buylist_search.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手收購進度
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="pro_follow" class="list-group-item list-group-item-action"
+                        href="./member_product_follow.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">一般商品追蹤清單
+                        <br>
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_follow" class="list-group-item list-group-item-action"
+                        href="./member_shloveList.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">二手商品追蹤清單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="act_follow" class="list-group-item list-group-item-action"
+                        href="#" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢參加活動
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="notice" class="list-group-item list-group-item-action"
+                        href="member_noticelist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看通知
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="login_his" class="list-group-item list-group-item-action"
+                        href="member_loginhistory.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看登入紀錄
+                    </a>
+                </div>
+            </div>
+                    <div class="MainShow">12313131212312312312312231</div>
+        </div>
+    </div>
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item"><a href="#"><span class="fa-stack fa-lg"><i
+                                        class="fa fa-circle fa-stack-2x"></i><i
+                                        class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
+                        <li class="list-inline-item"><a href="#"><span class="fa-stack fa-lg"><i
+                                        class="fa fa-circle fa-stack-2x"></i><i
+                                        class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a></li>
+                        <li class="list-inline-item"><a href="#"><span class="fa-stack fa-lg"><i
+                                        class="fa fa-circle fa-stack-2x"></i><i
+                                        class="fa fa-instagram fa-stack-1x fa-inverse"></i></span></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"></a></li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+</body>
+<script src="../js/member_logout.js"></script>
+<script>
+
+
+    $(window).on("load", function () {
+        $.ajax({
+            url: "memberGetInforServlet",
+            method: "POST",
+            dataType: "json",
+            success: function (response) {
+                let member = response;
+                sessionStorage.setItem("id", member.member_id);
+                let isPass = member.successful;
+                if (isPass) {
+                    $("input#member_account").val(member.account);
+                    $("input#nickname").val(member.nick);
+                    $("input#member_bonus").val(member.bonus);
+                    $("input#id_number").val(member.id_number);
+                    $("input#birth").val(member.birth);
+                    $("input#address").val(member.address);
+                    $("input#phone").val(member.phone);
+                    $("input#email").val(member.email);
+                    if (member.headshot) {
+                        $("div#member_info_pic").css("background-image", `url(${member.headshot})`);
+                    } else {
+                        $("div#member_info_pic").css("background-image", `url(https://www.gravatar.com/avatar/1234566?size=200&d=mm)`);
+                    }
+
+                    if (member.member_ver_state == 1) {
+                        $("button#vertify").css("display", "none")
+                    } else {
+                        $("button#edit_infor").css("display", "none");
+                        $("button#change_password").css("display", "none");
+                    }
+                } else {
+                    window.location.href = "../index.html";
+                }
+            }
+        })
+    })
+
+    $("button#edit_infor").on("click", function () {
+        $.ajax({
+            url: "member/member_edit.html",
+            success: function () {
+                window.location.href = "member_edit.html";
+            }
+        })
+    })
+    $("button#vertify").on("click", function () {
+        $.ajax({
+            url: "member_vertify.html",
+            success: function () {                
+                window.location.href = "member_vertify.html";
+            }
+        })
+    })
+    $("button#change_password").on("click", function () {
+        $.ajax({
+            url: "member/member_set_password.html",
+            success: function () {
+                window.location.href = "member_set_password.html";
+            }
+        })
+    })
+
+
+    $(document).ready(function () {
+        $("#imgFile").on("change", function (e) {
+            var picture_list = $("#member_info_pic");
+            picture_list.empty(); // 清空
+
+            if (this.files && this.files) {  // 只處理第一個選擇的檔案
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var imgData = new FormData();   // 建立一個圖片的data  
+                    imgData.append("image", this.files);
+                    var backgroundImage = `url(${e.target.result})`;
+                    picture_list.css("background-image", backgroundImage);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    })
+
+    $("button#pic_submit").on("click", function () {
+        if ($("#imgFile").val() === "") {
+            Swal.fire({
+                icon: 'error',
+                title: '上傳欄位為空白',
+                text: "請選擇上傳的圖片",
+            })
+            return;
+        } else {
+            var imgData = new FormData();   // 建立一個FormData物件
+            imgData.append("image", $("#imgFile")[0].files[0]); // 將圖片加入 FormData
+            $.ajax({
+                url: "memberGetPictureServlet", // 替換成你的後端接收圖片的 URL
+                method: "POST",
+                data: imgData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '上傳成功',
+                    }).then((result) => {
+                        window.location.href = "member_info.html";
+                    })
+                }
+            })
+        }
+    })
+
+
+
+</script>
+
+</html>

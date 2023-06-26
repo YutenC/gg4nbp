@@ -485,7 +485,7 @@
                                 <option value="待審核">待審核</option>
                                 <option value="查驗中">查驗中</option>
                                 <option value="議價中">議價中</option>
-                                <option value="非收購品">非收購品</option>
+                                <option value="非收購品項">非收購品項</option>
                                 <option value="不合格品">不合格品</option>
                                 <option value="已退回">已退回</option>
                                 <option value="已完成">已完成</option>
@@ -534,14 +534,17 @@
                 approvalState : approvalState.value
             })
             })
+            .then(res => res.json())
             .then(result  => {
+                sessionStorage.setItem('searcgResult', JSON.stringify(result));
                 reqaa = result;
                 Swal.fire(
                 '完成!',
-                `${result.str}`,
+                `審核完成`,
                 'success'
                 )
             })
+            .then(todo => itemDisplay());
         })
 
         $('#payState').val(obj.payState);

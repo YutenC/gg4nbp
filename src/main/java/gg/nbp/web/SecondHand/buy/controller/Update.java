@@ -28,11 +28,11 @@ public class Update extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
 		try {
 			
 			BuyEvent be = CommonUtil.json2pojo(req,BuyEvent.class);
-			service.update(be);
-			CommonUtil.writepojo2Json(resp, new OneString("審核成功"));
+			CommonUtil.writepojo2Json(resp, service.update(be));
 		} catch (Exception e) {
 			CommonUtil.writepojo2Json(resp, new OneString("更新失敗"));
 		}
