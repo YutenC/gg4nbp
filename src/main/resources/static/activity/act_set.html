@@ -276,70 +276,158 @@
 
                                                 <fieldset>
                                                     <!--這些的name裡面要填資料庫東西ec：act_id-->
-                                                    <h2 class="fs-title">主辦者會員</h2>
-                                                    <h3 class="fs-subtitle">step 1</h3>
-                                                    <label for="formFile" class="form-label">會員資料</label>
-                                                    <p></p>
-                                                    <input type="text" name="email" placeholder="Email" />
-                                                    <input type="password" name="pass" placeholder="Password" />
-                                                    <input type="password" name="cpass" placeholder="Confirm Password" />
-                                                    <h3 class="fs-subtitle">step2</h3>
+<!--                                                    <h2 class="fs-title">主辦者會員</h2>-->
+<!--                                                    <h3 class="fs-subtitle">step 1</h3>-->
+<!--                                                    <label for="formFile" class="form-label">會員資料</label>-->
+<!--                                                    <p></p>-->
+<!--                                                    <input type="text" name="email" placeholder="Email" />-->
+<!--                                                    <input type="password" name="pass" placeholder="Password" />-->
+<!--                                                    <input type="password" name="cpass" placeholder="Confirm Password" />-->
+<!--                                                    <h3 class="fs-subtitle">step2</h3>-->
                                                     <label for="formFile" class="form-label">活動名稱</label>
                                                     <p></p>
                                                     <input type="text" name="Act_name" placeholder="例如：閃電五連鞭" />
-                                                    <input type="text" name="lname" placeholder="線上or線下" />
-                                                    <h3 class="fs-subtitle">step3</h3>
-                                                    <label for="formFile" class="form-label">活動日期時間</label>
+<!--                                                    <input type="text" name="lname" placeholder="線上or線下" />-->
+<!--                                                    <h3 class="fs-subtitle">step3</h3>-->
+                                                    <label for="formFile" class="actTime">活動日期時間</label>
                                                     <p></p>
-                                                    <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                    <textarea class="form-control" id="actTime"
                                                               rows="1"placeholder="2000-1-1 9:00"></textarea>
-                                                    <h3 class="fs-subtitle">step4</h3>
+<!--                                                    <h3 class="fs-subtitle">step4</h3>-->
                                                     <label for="formFile" class="form-label">活動地點</label>
                                                     <p></p>
-                                                    <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                    <textarea class="form-control" id="actLocation"
                                                               rows="2"placeholder="ex:高雄市"></textarea>
                                                     <div class="mb-3">
                                                         <h3 class="fs-subtitle">step5</h3>
-                                                        <label for="formFile" class="form-label">傳送活動圖片</label>
-                                                        <input class="form-control" type="file" id="formFile">
-                                                        <div id="previewContainer"></div>
+                                                        <input class="form-control" type="file" id="formFile" onchange="handleFileSelect(event)">
+                                                        <div id="actImage"></div>
                                                     </div>
+
                                                     <h3 class="fs-subtitle">step6</h3>
-                                                    <p> <label for="exampleFormControlTextarea1" class="form-label">
+                                                    <p> <label for="actValue" class="form-label">
                                                             活動內容</label>
-                                                        <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                        <textarea class="form-control" id="actValue"
                                                             rows="4"></textarea>
                                                     <h3 class="fs-subtitle">step7</h3>
                                                     <label for="formFile" class="form-label">活動費用</label>
                                                     <p></p>
-                                                    <input type="text" name="Act_name" placeholder="填阿拉伯數字" />
-                                                    </p>
+                                                    <input type="text" name="actPrice" id="actPrice" placeholder="填阿拉伯數字" />
+
                                                     <h3 class="fs-subtitle">step8</h3>
-                                                    <label for="customRange2"
+                                                    <label for="actQuota"
                                                         class="form-label">活動人數Act-people-range</label>
                                                     <input type="range" class="form-range" min="0" max="300"
-                                                        id="customRange2">
+                                                        id="actQuota">
                                                     <span id="rangeValue"></span>
                                                     <h3 class="fs-subtitle">step9</h3>
                                                     <label for="formFile" class="form-label">活動限制</label>
                                                     <p></p>
-                                                    <input type="text" name="Act_name" placeholder="0 : 不限制 ; 1 : 限定參加者好友 請填0跟1" />
+                                                    <input type="text" name="inviteTarget" id="inviteTarget" placeholder="0 : 不限制 ; 1 : 限定參加者好友 請填0跟1" />
                                                     <h3 class="fs-subtitle">step11</h3>
                                                     <label for="formFile" class="form-label">你的銀行賬戶</label>
-                                                    <input type="text" name="Act_name" placeholder="填帳戶" />
+                                                    <input type="text" name="organizerBankNum" id="organizerBankNum"  placeholder="填帳戶" />
                                                     <h3 class="fs-subtitle">step12</h3>
                                                     <label for="formFile" class="form-label">活動報名開始時間</label>
                                                     <p></p>
-                                                    <input type="text" name="Act_name" placeholder="2000-1-1 9:00" />
+                                                    <input type="text" name="startTime" id="startTime" placeholder="2000-1-1 9:00" />
                                                     <h3 class="fs-subtitle">step13</h3>
                                                     <label for="formFile" class="form-label">活動報名結束時間</label>
                                                     <p></p>
-                                                    <input type="text" name="Act_name" placeholder="2000-1-1 9:00" />
+                                                    <input type="text" name="endTime"id="endTime" placeholder="2000-1-1 9:00" />
                                                     <p>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝</p>
 
                                                     <p>確認完內容後</p>
                                                     <input type="button" name="next" class="next action-button"
                                                         value="Summit" />
+
+
+                                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                                                    <script>
+                                                        document.querySelector("input[name='next']").addEventListener("click", function() {
+                                                            const actName = document.querySelector("input[name='Act_name']").value;
+                                                            const actTime = document.getElementById("actTime").value;
+                                                            const actLocation = document.getElementById("actLocation").value;
+                                                            const actQuota = document.getElementById("actQuota").value;
+                                                            const actPrice = document.getElementById("actPrice").value;
+                                                            const actValue = document.getElementById("actValue").value;
+                                                            const inviteTarget = document.getElementById("inviteTarget").value;
+                                                            const organizerBankNum = document.getElementById("organizerBankNum").value;
+                                                            const startTime = document.getElementById("startTime").value;
+                                                            const endTime = document.getElementById("endTime").value;
+
+                                                            const fileInput = document.getElementById("formFile");
+                                                            const file = fileInput.files[0];
+
+                                                            if (!file) {
+                                                                alert("Please select an image file.");
+                                                                return;
+                                                            }
+
+                                                            const reader = new FileReader();
+                                                            reader.onload = function(e) {
+                                                                const imageUrl = e.target.result;
+
+                                                                const act = {
+                                                                    actName: actName,
+                                                                    actTime: actTime,
+                                                                    actLocation: actLocation,
+                                                                    actQuota: actQuota,
+                                                                    actPrice: actPrice,
+                                                                    actValue: actValue,
+                                                                    inviteTarget: inviteTarget,
+                                                                    organizerBankNum: organizerBankNum,
+                                                                    delFrom: 2,
+                                                                    startTime: startTime,
+                                                                    endTime: endTime,
+                                                                    actImage: imageUrl // Include the image URL in the act object
+                                                                };
+
+                                                                axios.post("http://localhost:8000/act", act)
+                                                                    .then((response) => {
+                                                                        console.log(response.data);
+                                                                        fetchActData(); // Refresh act data after submission
+                                                                    })
+                                                                    .catch((error) => {
+                                                                        console.log(error);
+                                                                    });
+
+                                                                // Clear form inputs
+                                                                document.querySelector("input[name='Act_name']").value = "";
+                                                                document.getElementById("actTime").value = "";
+                                                                document.getElementById("actLocation").value = "";
+                                                                document.getElementById("actQuota").value = "";
+                                                                document.getElementById("actPrice").value = "";
+                                                                document.getElementById("actValue").value = "";
+                                                                document.getElementById("inviteTarget").value = "";
+                                                                document.getElementById("organizerBankNum").value = "";
+                                                                document.getElementById("startTime").value = "";
+                                                                document.getElementById("endTime").value = "";
+                                                                fileInput.value = null; // Clear the file input
+                                                            };
+
+                                                            reader.readAsDataURL(file);
+
+                                                        });
+                                                        function handleFileSelect(event) {
+                                                            const file = event.target.files[0];
+                                                            const reader = new FileReader();
+
+                                                            reader.onload = function(e) {
+                                                                const imageUrl = e.target.result;
+                                                                displayImage(imageUrl);
+                                                            };
+
+                                                            reader.readAsDataURL(file);
+                                                        }
+
+                                                        function displayImage(imageUrl) {
+                                                            const imageContainer = document.getElementById("actImage");
+                                                            const imgElement = document.createElement("img");
+                                                            imgElement.src = imageUrl;
+                                                            imageContainer.appendChild(imgElement);
+                                                        }
+                                                    </script>
 
                                                 </fieldset>
                                 </article>
@@ -472,7 +560,7 @@
                         <script src="./js/act_set.js"></script>
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
-                                var range = document.getElementById("customRange2");
+                                var range = document.getElementById("actQuota");
                                 var rangeValue = document.getElementById("rangeValue");
 
                                 // 在滑动条值改变时更新显示的数值
@@ -491,7 +579,7 @@
                         <!--控制預覽照片的圖片-->
                         <script>
                             const fileInput = document.getElementById("formFile");
-                            const previewContainer = document.getElementById("previewContainer");
+                            const actImage = document.getElementById("actImage");
 
                             fileInput.addEventListener("change", function (event) {
                                 const file = event.target.files[0];
@@ -501,8 +589,8 @@
                                     const img = document.createElement("img");
                                     img.src = e.target.result;
                                     img.classList.add("preview-image");
-                                    previewContainer.innerHTML = "";
-                                    previewContainer.appendChild(img);
+                                    actImage.innerHTML = "";
+                                    actImage.appendChild(img);
                                 };
 
                                 reader.readAsDataURL(file);
