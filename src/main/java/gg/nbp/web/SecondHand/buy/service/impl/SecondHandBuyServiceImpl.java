@@ -136,10 +136,12 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	}
 	
 	
+	
+	@Transactional
 	@Override
-	public BuyEvent update(SecondhandBuylist sl) {
-		dao.update(sl);
-		return new BuyEvent(dao.selectById(sl.getBuylistId()),daoMember);
+	public boolean update(BuyEvent be) {
+		dao.update(BuyEvent.toSecondhandBuylist(be, dao));
+		return true;
 	}
 	
 	

@@ -20,7 +20,7 @@ public interface SecondHandBuyService extends CoreService {
 	
 	public List<BuyEvent> searchAll() throws SQLException ;
 	
-	public BuyEvent update(SecondhandBuylist sl);
+	public boolean update(BuyEvent be);
 	
 	
 	

@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="../css/custom.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+
+        @font-face {
+            font-family: 'yonaka';
+            src: url(font/ZTMY_MOJI-R.otf);
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -201,7 +207,7 @@
 
         div.swal2-html-container>div {
             margin: 10px;
-            height: 540px;
+            height: 570px;
             border-radius: 3px;
 
         }
@@ -210,6 +216,25 @@
             flex-wrap: wrap;
         }
 
+
+        div.reviewMain>div button{
+            padding: 0.5rem 0.75rem;
+            line-height: 1.25;
+            border-radius: 0.25rem;
+            margin: 0 0.5rem;
+            border: 1px solid transparent;
+            color: white;
+            
+        }
+
+        div.reviewMain>div button#cancel{
+            background-color: #dc3545;
+        }
+
+
+        div.reviewMain>div button#commit{
+            background-color: #28a745;
+        }
 
         div.reviewMain>div {
             display: inline-block;
@@ -269,10 +294,36 @@
             border: 2px solid black;
             background-color: #ffffffc6;
             border-radius: 2px;
-            height: 130px;
+            height: 150px;
             width: calc(100% - 20px);
             padding: 10px;
         }
+
+        div.reviewMain div.editMain div.Change>div {
+            display: flex;
+            justify-content: start;
+            height: 30px;
+        }
+
+        div.reviewMain div.editMain div.Change>div>span{
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+
+        div.reviewMain div.editMain div.Change>div>select,
+        div.reviewMain div.editMain div.Change>div>input{
+            border-radius: 5px;
+            padding-left: 10px;
+            margin-left: 10px;
+            background-color: #ffffff79;
+            border: none;
+            height: 25px;
+            font-size: 0.8em;
+            width: 40%;
+        }
+
+
 
 
         div.reviewMain div.editMain div.notChange {
@@ -289,7 +340,8 @@
         div.reviewMain div.editMain div.notChange>div {
             display: flex;
             justify-content: start;
-            height: 30px;
+            align-items: center;
+            height: 33px;
         }
 
         div.reviewMain div.editMain div.notChange>div>span:first-child {
@@ -298,6 +350,7 @@
             text-align: right;
         }
 
+        div.reviewMain div.editMain div.notChange>div>input,
         div.reviewMain div.editMain div.notChange>div>span:last-child {
             display: inline-block;
             text-align: left;
@@ -305,7 +358,16 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: calc(100% - 120px);
+            border: none;
+            background-color: #ffffff50;
+            font-size: .9em;
+            border-radius: 5px;
+            width: 220px;
+            height: 25px;
         }
+        
+
+        
     </style>
 
 
@@ -347,10 +409,9 @@
                                     <span></span>
                                 </div>
                             </article>
-
-
+                            
                         </div>
-
+                        
 
                     </div>
                 </div>
@@ -379,14 +440,6 @@
 
 
 
-
-
-
-
-
-
-
-
 </body>
 <script>
 
@@ -403,28 +456,46 @@
                 <div class="editMain">
                     <div class="notChange">
                         <div><span>收購編號 :</span><span>${obj.eventId}</span></div>
-                        <div><span>請求人 :</span><span>${obj.memberName}</span></div>
-                        <div><span>商品名稱 :</span><span>${obj.productName}</span></div>
+                        <div><span>請求人 :</span><span>${obj.memberName || ''}</span></div>
+                        <div><span>商品名稱 :</span><span>${obj.productName || ''}</span></div>
                         <div><span>商品種類 :</span><span>${obj.type}</span></div>
-                        <div><span>預估價 :</span><span>${obj.estimate}</span></div>
-                        <div><span>申請時間 :</span><span>${obj.applyTime}</span></div>
-                        <div><span>銀行帳號 :</span><span>${obj.applicantBankNumber}</span></div>
+                        <div><span>預估價 :</span><span>${obj.estimate || '0'}</span></div>
+                        <div><span>申請時間 :</span><input  type="datetime-local" value="${obj.applyDate}" disabled></input></div>
+                        <div><span>銀行帳號 :</span><span>${obj.applicantBankNumber || ''}</span></div>
                     </div>
                     <div class="Pic">
                         <div><span style="font-size:1.3em;font-weight: bold;">內容</span></div>
-                        <div class="showContent"><span>${obj.content}</span></div>
+                        <div class="showContent"><span>${obj.content || ''}</span></div>
                         <div class="imgArea"></div>
                     </div>
                     <div class="Change">
-                        <div><span>收購價 :</span><span>${obj.price}</span></div>
-                        <div><span>審核時間 :</span><span>${obj.confirmTime}</span></div>
-                        <div><span>付款狀態 :</span><span>${obj.payState}</span></div>
-                        <div><span>審核狀態 :</span><span>${obj.approvalState}</span></div>
+                        <div><span>收購價 :</span><input id="price" type="number" value="${obj.price || ''}"></div>
+                        <div><span>審核時間 :</span><input id="confirmTime" type="datetime-local" value="${obj.confirmDate || ''}"></div>
+                        <div>
+                            <span>付款狀態 :</span>
+                            <select id="payState"  value="${obj.payState}">
+                                <option value="待審核">待審核</option>
+                                <option value="待付款">待付款</option>
+                                <option value="已付款">已付款</option>
+                            </select>
+                        </div>
+                        <div>
+                            <span>審核狀態 :</span>
+                            <select id="approvalState" value="${obj.approvalState}">
+                                <option value="待審核">待審核</option>
+                                <option value="查驗中">查驗中</option>
+                                <option value="議價中">議價中</option>
+                                <option value="非收購品">非收購品</option>
+                                <option value="不合格品">不合格品</option>
+                                <option value="已退回">已退回</option>
+                                <option value="已完成">已完成</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <button>取消</button>
-                    <button>確定</button>
+                    <button id="cancel">取消</button>
+                    <button id="commit">確定</button>
                 </div>
                 </div>
                 `,
@@ -443,6 +514,38 @@
                 })
         }
 
+
+        $('#cancel').on('click',e =>{
+            $('.swal2-container').remove();
+        })
+
+
+        $('#commit').on('click',e =>{
+            let p = price.value || -1 ;
+            let t = confirmTime.value ?  confirmTime.value+":00.000Z" :  new Date();
+            fetch('update',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                eventId : obj.eventId,
+                price : p,
+                confirmTime : t,
+                payState : payState.value,
+                approvalState : approvalState.value
+            })
+            })
+            .then(result  => {
+                reqaa = result;
+                Swal.fire(
+                '完成!',
+                `${result.str}`,
+                'success'
+                )
+            })
+        })
+
+        $('#payState').val(obj.payState);
+        $('#approvalState').val(obj.approvalState);
 
     }
 

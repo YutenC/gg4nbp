@@ -1,6 +1,6 @@
 package gg.nbp.web.SecondHand.buy.VO;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import gg.nbp.core.pojo.Core;
@@ -50,7 +50,7 @@ public class SecondhandBuylist extends Core {
 	private Integer price;
 	
 	@Column(name = "confirm_time")
-	private Date confirmTime;
+	private Timestamp confirmTime;
 	
 	@Column(name = "pay_state")
 	private Integer payState;
@@ -59,7 +59,7 @@ public class SecondhandBuylist extends Core {
 	private String approvalState;
 	
 	@Column(name = "apply_time" , insertable = false)
-	private Date applyTime;
+	private Timestamp applyTime;
 	
 	@Column(name = "applicant_bank_number")
 	private String applicantBankNumber;
