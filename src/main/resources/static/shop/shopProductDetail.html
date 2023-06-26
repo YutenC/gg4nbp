@@ -143,7 +143,21 @@
             text-align: center;
             font-size: 16px;
         }
+
+        .expend_outline {
+            width: 100px;
+            height: 300px;
+            background: rgb(213, 213, 213);
+            /* position: relative; */
+            /* display: flex; */
+
+            position: absolute;
+            top: 60px;
+            right: 30px;
+        }
     </style>
+
+
 </head>
 
 <body>
@@ -151,7 +165,7 @@
         <nav class="subNav">
             <div class="contact"><a href=""><img class="icons" src="../img/icon/square-envelope-solid.svg" alt=""></a><a
                     href=""><img class="icons" src="../img/icon/square-facebook.svg" alt=""></a><a href=""><img
-                    class="icons" src="../img/icon/square-instagram.svg" alt=""></a></div>
+                        class="icons" src="../img/icon/square-instagram.svg" alt=""></a></div>
         </nav>
         <nav class="mainNav">
             <a href="" class="logo"><img src="../img/Logo-removebg.png" alt=""></a>
@@ -199,7 +213,7 @@
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
-                        <a href="">
+                        <a href="" onClick="testLong(event)">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
                             <span>會員登入</span>
                         </a>
@@ -222,56 +236,72 @@
         </nav>
     </header>
     <div class="shopmain">
+
         <div class="miniMenu">
             <div class="miniMenuContent">
-                <div class="viewRecord">
-                    <a href=""><img
-                            src="../img/gameSoftware/Nitendo/NoPlaceLikeHome/8d49654f86cee337e2a7317d031l9ro5.jpg"
-                            alt=""></a>
-                    <a href=""><img src="../img/peripherals/Nintendo/Zelda/335ced22c1dbccd628a4001e9a1l4xo5.jpg"
-                            alt=""></a>
-                    <a href=""><img src="../img/peripherals/Nintendo/Zelda/4262aa92a53a61f67e57e46e0b1l4tv5.jpg"
-                            alt=""></a>
+                <div id="historyArea" class="viewRecord">
+                    <a href="" v-for="item in productHistory.productIndexImage">
+                        <div style="width: 30px; height: 20px; padding: 0;"> {{item.productName}}</div>
+                        <img :src=item.image alt="">
+                    </a>
+
+
+                    <!-- <a href=""><img src="../img/peripherals/Nintendo/Zelda/335ced22c1dbccd628a4001e9a1l4xo5.jpg"
+                                alt=""></a>
+                        <a href=""><img src="../img/peripherals/Nintendo/Zelda/4262aa92a53a61f67e57e46e0b1l4tv5.jpg"
+                                alt=""></a> -->
                 </div>
                 <div class="miniMenuBut">
                     <a href="" class="goTop"><img src="../img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
-                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
+                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
+                            onmouseenter="historymouseenter()" onmouseleave="historymouseleave()"></a>
                     <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a>
+
                 </div>
+                <!-- <div id="historyArea" class="expend_outline hidden">
+                        <div v-for="item in productHistory">
+                            {{item.productName}}
+                        </div>
+                    </div> -->
             </div>
         </div>
+
         <main>
             <div class="productShowcase"> <!--產品詳情，從後端調資料動態產生-->
+
+
+
                 <div class="detailUpper">
                     <div class="productImg">
                         <div class="mainPic">
                             <img src="../img/gameSoftware/Nitendo/Zelda/760223b6e6ed7be758630c9b5b1ic955.jpg" alt="商品圖片"
-                                 data-pic="0" class="mainPic">
+                                data-pic="0" class="mainPic">
                         </div>
                         <div class="productsmallimgs-container">
                             <a class="prev">&#10094;</a>
-                            <a class="productImg" data-pic="0"><img
-                                    src="../img/gameSoftware/Nitendo/Zelda/760223b6e6ed7be758630c9b5b1ic955.jpg"></a>
-                            <a class="productImg" data-pic="1"><img
+                            <a class="productImg" v-for="(item,index) in productDetail.productImages" :data-pic=index>
+                                <img :src=item.image>
+                            </a>
+                            <!-- <a class="productImg" data-pic="1"><img
                                     src="../img/gameSoftware/PS5/Final_Fantasy_XVI/19e80490e9e052547c129845bc1liee5.jpg"></a>
                             <a class="productImg" data-pic="2"><img
-                                    src="../img/gameSoftware/PS5/RessidentEvilVillage/3.jpg"></a>
+                                    src="../img/gameSoftware/PS5/RessidentEvilVillage/3.jpg"></a> -->
                             <a class="next">&#10095;</a>
                         </div>
                     </div>
                     <div class="purchase">
                         <div>
-                            <h3 class="productname">商品名稱(+短廣告文案)</h3>
+                            <h3 class="productname">{{product.productName}}(+短廣告文案)</h3>
                             <ul>
                                 <li>商品特點1</li>
                                 <li>商品特點2</li>
                                 <li>依需求產生特點介紹，最多5點</li>
                             </ul>
                             <div class="price">
-                                原價:<span>10,000</span>元
+                                原價:<span>{{product.price}}</span>元
                                 特價:<span>9,990</span>元
                             </div>
-                            <form class="orderselect" id="orderselect">
+                            <form class="orderselect" id="orderselect" onsubmit="return false;">
                                 <div class="purchaseSpec">
                                     <label for="purchaseSpec">選擇商品規格：</label> <!--動態產生規格選項或無此選項-->
                                     <select name="purchaseSpec" id="purchaseSpec">
@@ -290,9 +320,9 @@
                                         <option value="5">5</option>
                                     </select>
                                 </div>
-                                <button>直接購買</button>
-                                <button>加入購物車</button>
-                                <button>加入追蹤</button>
+                                <button @click="addCart(product.id)">直接購買</button>
+                                <button @click="addCart(product.id)">加入購物車</button>
+                                <button @click="addFollow(product.id)">加入追蹤</button>
                             </form>
                         </div>
                     </div>
@@ -306,7 +336,19 @@
                         </ul>
                     </div>
                     <div class="contentPage">
-                        <div class="tab tab1 -on">商品特色描述：圖文</div>
+                        <div class="tab tab1 -on">商品特色描述：圖文
+                            <div>
+                                {{product.content}}
+                            </div>
+
+                            <div v-for="(item) in productDetail.productImages">
+                                <img style="margin: 10px;" :src=item.image>
+
+                            </div>
+
+
+
+                        </div>
                         <div class="tab tab2">
                             商品規格表列
                             <dl>
@@ -411,5 +453,34 @@
         });
     </script>
 </body>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="module" src="../js/shopProductDetail.js"></script>
+<script src="../js/shopProductDetail2.js"></script>
+
+<script>
+    function testLong(e) {
+        e.preventDefault();
+
+        axios({
+            method: "Get",
+            // url: host_context + "shopDispatcher/login",
+            // url: "http://localhost:8080/shop/shopDispatcher/login",
+            url: "http://localhost:8080/gg4nbp/shopDispatcher/login",
+            withCredentials: true,
+            // crossDomain: true,
+        },)
+            .then(function (value) {
+                console.log("login then");
+
+            })
+            .catch(function (e) {
+                console.log("login error " + e);
+            });
+
+    }
+
+</script>
 
 </html>
