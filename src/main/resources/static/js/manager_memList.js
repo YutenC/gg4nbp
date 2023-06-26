@@ -14,6 +14,17 @@ fetch('../manager/member_list', {
         // 獲取到 memberList 的資料後，動態生成 array 內容
         data.memberList.forEach(member => {
 
+            let member_state = "";
+            if (member.member_ver_state === 0) {
+                member_state = "待驗證";
+            } else if (member.member_ver_state === 2) {
+                member_state = "停權中";
+            } else if (member.member_ver_state === 3) {
+                member_state = "永久停權";
+            } else {
+                member_state = "已驗證";
+            }
+
 
             let member_array_item = {
                 member_id: member.member_id,
@@ -26,8 +37,8 @@ fetch('../manager/member_list', {
                 id_number: member.id_number,
                 address: member.address,
                 bonus: member.bonus,
-                member_ver_state: member.member_ver_state,
-                suspend_deadline: member.suspend_deadline,
+                member_ver_state: member_state,
+                suspend_deadline: (member.suspend_deadline ?? ""),
                 headshot: member.headshot,
                 ver_deadline: member.ver_deadline,
                 violation: member.violation
@@ -142,45 +153,100 @@ function banClear(member_id) {
 
             let banDays = -99999;
 
+            let confirmClear = confirm(`會員ID${member_id}，確認解除停權嗎?`);
 
-            fetch('../manager/ban_readIn', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    member_id: member_id,
-                    manager_id: manager_id,
-                    ban_reason: "手動取消停權",
-                    ban_durationByDay: banDays,
-                }),
-            })
-                .then(resp => resp.json())
-                .then(body => {
+            if (confirmClear) {
+                fetch('../manager/ban_clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        member_id: member_id,
+                        manager_id: manager_id,
+                        ban_reason: "手動取消停權",
+                        ban_durationByDay: banDays,
+                    }),
+                })
+                    .then(resp => resp.json())
+                    .then(body => {
 
-                    console.log(body);
-                    const { successful, redirectUrl } = body;
+                        console.log(body);
+                        const { successful, redirectUrl } = body;
 
-                    if (successful) {
-                        alert("成功");
+                        if (successful) {
+                            alert("成功");
 
-                        if (redirectUrl) {
-                            window.location.href = redirectUrl; // 進行重導
+                            if (redirectUrl) {
+                                window.location.href = redirectUrl; // 進行重導
+                            }
+
+                        } else {
+                            alert = '修改失敗';
                         }
 
-                    } else {
-                        alert = '修改失敗';
-                    }
+                    });
+            }
 
-                });
 
         })
         .catch(error => {
             console.error('Error:', error);
         });
+}
+
+function banForever(member_id) {
+    fetch('../manager/getName')
+        .then(response => response.json())
+        .then(data => {
+            // 在此處處理後端回傳的資料
+
+            console.log(data);
+
+            manager_id = data.loggedManager_id;
+
+            let banDays = 99999;
+
+            let confirmBanForever = confirm(`會員ID${member_id}，確認永久停權嗎?`);
+
+            if (confirmBanForever) {
+                fetch('../manager/ban_forever', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        member_id: member_id,
+                        manager_id: manager_id,
+                        ban_reason: "手動取消停權",
+                        ban_durationByDay: banDays,
+                    }),
+                })
+                    .then(resp => resp.json())
+                    .then(body => {
+
+                        console.log(body);
+                        const { successful, redirectUrl } = body;
+
+                        if (successful) {
+                            alert("成功");
+
+                            if (redirectUrl) {
+                                window.location.href = redirectUrl; // 進行重導
+                            }
+
+                        } else {
+                            alert = '修改失敗';
+                        }
+
+                    });
+            }
 
 
-
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 // function removeClick(id) {
@@ -262,8 +328,19 @@ function showList() {
         //     ${manager.is_working}
         // </a>`
         //     }
+
+        let BanHtml = ''
+        if (member.member_ver_state !== "永久停權") {
+            BanHtml = `
+            <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button btn-danger"
+                role="button" onclick="banReadIn(${member.member_id})" href="manager_banAdd.html">
+                發起停權單
+            </a>
+            `;
+        }
+
         let cancelBanHtml = ''
-        if (member.member_ver_state === 2) {
+        if (member.member_ver_state === "停權中" || member.member_ver_state === "永久停權") {
             cancelBanHtml = `
         <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
         role="button" onclick="banClear(${member.member_id})">
@@ -271,6 +348,18 @@ function showList() {
         </a>
             `;
         }
+
+        let foreverBanHtml = ''
+        if (member.member_ver_state !== "永久停權") {
+            foreverBanHtml = `
+        <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button btn-danger"
+        role="button" onclick="banForever(${member.member_id})">
+        永久停權
+        </a>
+            `;
+        }
+
+
 
 
 
@@ -288,20 +377,19 @@ function showList() {
             role="button" >
             詳細資料
         </a>
-        <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button btn-danger"
-            role="button" onclick="banReadIn(${member.member_id})" href="manager_banAdd.html">
-            發起停權單
-        </a>
+        `
+            +
+            BanHtml
+            +
+            `
         <br style="padding-top: 3px; padding-bottom: 3px;">
         `
             +
             cancelBanHtml
             +
+            foreverBanHtml
+            +
             `
-        <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button btn-danger"
-            role="button" >
-            刪除會員
-        </a>
     </td>
 </tr>
 <tr class="dropdown_row" style="display:none;" id="toggle_button_${member.member_id}">
