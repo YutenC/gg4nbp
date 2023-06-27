@@ -58,5 +58,9 @@ public interface OrderMasterService extends CoreService{
 	 * @return List<MemberViewOrder>
 	 */
 	List<MemberViewOrder> memberOrderList(Map<String, Integer> whereCondition ,Map<String, Integer> limitAndOffset);
+	
+	TransOrderProduct getOneProduct(Integer productId);
+	
+	List<TransOrderProduct> getRecomendFromAll(Integer recomendAmount);
 
 }

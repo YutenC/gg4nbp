@@ -2,8 +2,7 @@ package gg.nbp.web.shop.shoporder.util;
 
 import java.util.List;
 
-import com.shop.shopproduct.entity.Coupon;
-
+import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

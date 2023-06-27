@@ -9,19 +9,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shop.product.dao.ProductDao;
-import com.shop.product.dao.impl.ProductDaoImpl;
-import com.shop.product.entity.Product;
-
 import gg.nbp.web.shop.shoporder.dao.OrderDetailDao;
 import gg.nbp.web.shop.shoporder.dao.OrderMasterDao;
-import gg.nbp.web.shop.shoporder.dao.impl.OrderDetailDaoImple;
-import gg.nbp.web.shop.shoporder.dao.impl.OrderMasterDaoImpl;
 import gg.nbp.web.shop.shoporder.entity.OrderDetail;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
 import gg.nbp.web.shop.shoporder.service.OrderDetailService;
 import gg.nbp.web.shop.shoporder.util.ResOrderDetail;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
+import gg.nbp.web.shop.shopproduct.dao.ProductDao;
+import gg.nbp.web.shop.shopproduct.entity.Product;
+import gg.nbp.web.shop.shopproduct.service.ProductService;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -33,6 +30,8 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	private OrderMasterDao omDao;
 	@Autowired
 	private ProductDao pdDao;
+	@Autowired
+	private ProductService pService;
 	
 	@Transactional
 	@Override
@@ -50,10 +49,10 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 				trPd.setPrice(pd.getPrice());
 				trPd.setProductId(od.getPkOrderDeatail().getProductID());
 				trPd.setProductName(pd.getProductName());
-				if (pd.getPoImages().isEmpty()) {
+				if (pd.getProductImages().isEmpty()) {
 					trPd.setProductImgUrl(null);
 				} else {
-					trPd.setProductImgUrl(pd.getPoImages().get(0).getImage());
+					trPd.setProductImgUrl(pService.getProductIndexImg(pd.getId()).getImage());
 				}
 				trPd.setStockAmount(pd.getAmount());
 				
@@ -84,10 +83,10 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 					Product pd = pdDao.selectById(od.getPkOrderDeatail().getProductID());
 					rsOD.setProductName(pd.getProductName());
 					rsOD.setProductPrice(pd.getPrice());
-					ResOrderDetail checkUnit = (ResOrderDetail)checkMap.get(pd.getProductId());
+					ResOrderDetail checkUnit = (ResOrderDetail)checkMap.get(pd.getId());
 					if (checkUnit == null ||
 							(checkUnit.getPurchaseDate().getTime() < rsOD.getPurchaseDate().getTime())) { 
-						checkMap.put(pd.getProductId(), rsOD);
+						checkMap.put(pd.getId(), rsOD);
 					} 
 				}
 			}

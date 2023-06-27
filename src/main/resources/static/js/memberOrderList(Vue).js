@@ -111,3 +111,10 @@ window.addEventListener('scroll', function () {
         scrollList();
     }
 });
+
+// 測試能否解決快取造成的頁面資訊顯示錯誤
+window.onpageshow = function (event) {
+    if (event.persisted) {
+        window.location.reload()
+    }
+};

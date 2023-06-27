@@ -35,20 +35,6 @@ public class EcpayController extends HttpServlet {
     	res.setContentType("text/html");
     	PrintWriter pw = res.getWriter();
     	
-    	HttpSession httpSession = req.getSession();
-    	Member login = new Member();
-    	login.setAccount("ReimuHakurei");
-    	login.setPassword("HakureiShrine");
-    	Member member = memServ.login(login);
-    	httpSession.setAttribute("member", member);
-    	
-    	Member getMember = (Member)httpSession.getAttribute("member");
-    	
-    	if (getMember == null) {
-    		res.sendRedirect("/Five_NBP.gg");
-    		return;
-    	} 
-    	
     	String order = req.getParameter("orderId");
     	if (order != null) {
     		Integer orderId = Integer.valueOf(order);

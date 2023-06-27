@@ -1,6 +1,6 @@
 package gg.nbp.web.shop.shoporder.dao;
 
-import gg.nbp.web.shop.shoporder.util.JedisUtil;
+import gg.nbp.web.shop.shopproduct.util.JedisUtil;
 import redis.clients.jedis.Jedis;
 
 public interface JedisOrderMasterDao {

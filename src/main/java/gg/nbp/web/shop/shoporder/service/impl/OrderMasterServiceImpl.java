@@ -14,19 +14,12 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.shop.product.dao.ProductDao;
-import com.shop.product.dao.impl.ProductDaoImpl;
-import com.shop.product.entity.Product;
 
 import gg.nbp.web.Member.dao.MemberDao;
-import gg.nbp.web.Member.dao.impl.MemberDaoImpl;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.shop.shoporder.dao.JedisOrderMasterDao;
 import gg.nbp.web.shop.shoporder.dao.OrderDetailDao;
 import gg.nbp.web.shop.shoporder.dao.OrderMasterDao;
-import gg.nbp.web.shop.shoporder.dao.impl.JedisOrderMasterDaoImpl;
-import gg.nbp.web.shop.shoporder.dao.impl.OrderDetailDaoImple;
-import gg.nbp.web.shop.shoporder.dao.impl.OrderMasterDaoImpl;
 import gg.nbp.web.shop.shoporder.entity.OrderDetail;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
 import gg.nbp.web.shop.shoporder.entity.PKOrderDeatail;
@@ -35,6 +28,10 @@ import gg.nbp.web.shop.shoporder.util.ManageOrder;
 import gg.nbp.web.shop.shoporder.util.MemberViewOrder;
 import gg.nbp.web.shop.shoporder.util.OrderSelection;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
+import gg.nbp.web.shop.shopproduct.dao.CouponDao;
+import gg.nbp.web.shop.shopproduct.dao.ProductDao;
+import gg.nbp.web.shop.shopproduct.entity.Product;
+import gg.nbp.web.shop.shopproduct.service.ProductService;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -49,9 +46,11 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 	@Autowired
 	private MemberDao mbDao;
 	@Autowired
-	private com.shop.coupon.dao.CouponDao cpDao;
+	private CouponDao cpDao;
 	@Autowired
 	private JedisOrderMasterDao jdOmDao;
+	@Autowired
+	private ProductService productService;
 	
 	private Gson gson;
 	
@@ -308,10 +307,10 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 					trPd.setPrice(pd.getPrice());
 					trPd.setProductId(od.getPkOrderDeatail().getProductID());
 					trPd.setProductName(pd.getProductName());
-					if (pd.getPoImages().isEmpty()) {
+					if (pd.getProductImages().isEmpty()) {
 						trPd.setProductImgUrl(null);
 					} else {
-						trPd.setProductImgUrl(pd.getPoImages().get(0).getImage());
+						trPd.setProductImgUrl(productService.getProductIndexImg(pd.getId()).getImage());
 					}
 					trPd.setStockAmount(pd.getAmount());
 					
@@ -327,6 +326,58 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 		}
 	}
 
+	@Transactional
+	@Override
+	public TransOrderProduct getOneProduct(Integer productId) {
+		try {
+			Product pd = pdDao.selectById(productId);
+			if (pd == null) {
+				return null;
+			}
+			TransOrderProduct trpd = new TransOrderProduct();
+			trpd.setBrand(pd.getBrand());
+			trpd.setBuyAmount(1);
+			trpd.setPrice(pd.getPrice());
+			trpd.setProductId(pd.getId());
+		
+			if (pd.getProductImages().isEmpty()) {
+				trpd.setProductImgUrl(null);
+			} else {
+				trpd.setProductImgUrl(productService.getProductIndexImg(pd.getId()).getImage());
+			}
+			trpd.setProductName(pd.getProductName());
+			trpd.setStockAmount(pd.getAmount());
+			return trpd;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Transactional
+	@Override
+	public List<TransOrderProduct> getRecomendFromAll(Integer recomendAmount) {
+		try {
+			List<TransOrderProduct> trPdList = new ArrayList<>();
+			
+			List<Product> pdList = pdDao.selectByBuyTimes(recomendAmount, "");
+			for (Product pd : pdList) {
+				TransOrderProduct trPd = new TransOrderProduct();
+				trPd.setPrice(pd.getPrice());
+				trPd.setProductId(pd.getId());
+				if (!pd.getProductImages().isEmpty()) {
+					trPd.setProductImgUrl(productService.getProductIndexImg(pd.getId()).getImage());
+				}
+				trPd.setProductName(pd.getProductName());
+				
+				trPdList.add(trPd);
+			}
+	
+			return trPdList;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	@Transactional
 	@Override
 	public List<ManageOrder> getJedisOrderMasterResults(OrderSelection selectionCode, Integer sortWay, Integer offset) {
