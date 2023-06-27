@@ -189,8 +189,21 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	/* 交易控制 : 修改資料 */
 	@Transactional
 	@Override
-	public List<BuyEvent> update(BuyEvent be) {
-		dao.update(BuyEvent.toSecondhandBuylist(be, dao));
+	public List<BuyEvent> update4Mana(BuyEvent be) {
+		dao.update(BuyEvent.trans4Mana(be, dao));
+		return searchById(be.getEventId());
+	}
+	
+	/* 交易控制 : 修改資料 */
+	@Transactional
+	@Override
+	public List<BuyEvent>  update4Mem(BuyEvent be, Member member) throws SQLException{
+		/* 如果訂單不屬於該會員則丟出例外 */
+		if(!searchById(be.getEventId()).get(0).getMemberId().equals(member.getMember_id()))
+			throw new SQLException();
+		
+		dao.update(BuyEvent.trans4Mem(be, dao));
+		daoPic.update(be);
 		return searchById(be.getEventId());
 	}
 	

@@ -22,8 +22,9 @@ public class Toolbox {
 	
 	public static String memberId2Name(Integer id ,MemberDao memberDao) {
 		return memberDao.selectById(id).getNick();
-		
 	}
+	
+	
 	
 	public static String dateformat(Timestamp timeStamp) {
 		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");

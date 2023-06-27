@@ -297,7 +297,7 @@
         }
 
 
-        div.reviewMain div.editMain div.Pic div.imgArea>img {
+        div.reviewMain div.editMain div.Pic div.imgArea>div>img {
             margin: 5px;
             height: 135px;
             width: 135px;
@@ -379,6 +379,49 @@
         div.reviewMain div.editMain div.notChange>div.change>span:last-child {
             background-color: #ffffffc0;
         }
+
+
+        div.btnArea{
+            margin: 10px; 
+            font-size: 10px;
+            color: red;
+            width: 100%;
+        }
+
+
+        div.btnArea input#getshot {
+            min-width: 80px;
+            display: inline-block;
+            margin-left: 30px;
+            width: 80px;
+            height: 30px;
+            background-color: #ffffff;
+            border: 2px solid rgb(53, 53, 92);
+            border-radius: 5px;
+            text-align: center;
+            padding: 0px;
+        }
+
+        div.imgArea>div{
+            display: inline-block;
+            position: relative;
+            height: auto;
+        }
+
+
+        div.imgArea>div>button{
+            position: absolute;
+            right: 6px;
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            font-size: 14px;
+            color: rgb(219, 219, 219) !important;
+            box-shadow: none;
+            height: 25px;
+            width: 25px;
+        }
+
+
     </style>
 </head>
 
@@ -525,6 +568,7 @@
                     </article>
 
                 </div>
+                
 
 
             </div>
@@ -678,6 +722,9 @@
 <script>
     let onePage = 10;
     let reqaa = [];
+    let del = [];
+    let upfile = [];
+    let upfiledel =[];
 
     function ReviewBox(i) {
         let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
@@ -710,7 +757,13 @@
                     <div class="Pic">
                         <div><span style="font-size:1.3em;font-weight: bold;">內容</span></div>
                         <div class="showContent"><textarea >${obj.content || ''}</textarea ></div>
-                        <div class="imgArea"></div>
+                        <div class="btnArea">
+                            <input id="getshot" type="button" value="拍照上傳">
+                            <input  type="file" accept="image/*" value="拍照" style="display: none;" capture>
+                            上限 5 MB
+                        </div>
+                        <div class="imgArea">
+                        </div>
                     </div>
                 <div>
                     <button id="cancel">取消</button>
@@ -731,9 +784,9 @@
             $(this).height(this.scrollHeight > 100 ? this.scrollHeight : 100);
         });
 
-
-
-
+        $('#getshot').on('click', function(e){
+            $(this).next().click();
+        })
 
         $('#applicantBankNumber').on('keydown', e => {
             if (e.keyCode < 48 || e.keyCode > 57) {
@@ -741,22 +794,56 @@
             }
         })
 
+        $('#getshot').next().on('change',function(e){
+            let uploadImg = e.target.files || e.dataTransfer.files;
+            upfile.push(uploadImg);
+            const div = document.createElement('div');
+            const img = document.createElement('img');
+            const btn = document.createElement('button');
+            $(btn).attr('class', 'del_btn').text('✖');
+            const reader = new FileReader();
+            if (uploadImg.size >= 5242880) {
+                $(img).addClass('-warning');
+            }
+            $('.imgArea').append(div);
+            div.append(img);
+            div.append(btn);
 
+            reader.readAsDataURL(uploadImg[0]);
+            reader.addEventListener('load', e => {
+                img.src = e.target.result;
+            });
+
+
+            btn.addEventListener('click', e => {
+                upfiledel.push(uploadImg[0].name);
+                div.remove();
+            })
+        })
 
         for (let i = 0; i < obj.image.length; i++) {
             fetch('select?imgname=' + obj.image[i].image)
                 .then(body => {
+                    const div = document.createElement('div');
                     const img = document.createElement('img');
+                    const btn = document.createElement('button');
+                    $(btn).attr('class', 'del_btn').text('✖');
                     img.src = body.url;
-                    $('.imgArea').append(img);
+                    div.append(img);
+                    div.append(btn);
+                    $('.imgArea').append(div);
+
+                    $(btn).on('click',()=>{
+                        del.push(obj.image[i].image);
+                        div.remove();
+                    })
+
                 })
         }
-
 
         $('#cancel').on('click', e => {
             $('.swal2-container').remove();
         })
-
 
         $('#commit').on('click', e => {
             let p = price.value || -1;
@@ -785,14 +872,11 @@
                 .then(todo => itemDisplay());
         })
 
-        $('#payState').val(obj.payState);
-        $('#approvalState').val(obj.approvalState);
+        $('#commit').on('click', e => {
+            /* 送出更新 待後端完成再補上 */
+        })
 
     }
-
-
-
-
 
     function itemDisplay(page = 1) {
         let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
@@ -854,11 +938,6 @@
         $('.toShow')[0].append(pageBar);
     }
 
-
-
-
-
-
     $('.searchBar>span>button').on('click', () => {
         fetch('select', {
             method: 'POST',
@@ -887,15 +966,12 @@
 
     })
 
-
     $('#searchValue').on('keydown', function (e) {
         if (e.keyCode == 13) {
             e.preventDefault();
             $('.searchBar>span>button').click();
         }
     })
-
-
 
     fetch('selectAll', {
         method: 'POST',
@@ -904,22 +980,20 @@
             str: $('#searchValue').val()
         })
     })
-
-        .then(resp => resp.json())
-        .then(obj => {
+    .then(resp => resp.json())
+    .then(obj => {
             $('#searchValue').val("");
-            reqaa = obj;
             if (obj.str) {
                 Swal.fire({
                     icon: 'question',
                     title: obj.str
-                }
-                )
+                })
             } else {
                 sessionStorage.setItem('searcgResult', JSON.stringify(obj));
                 itemDisplay();
             }
-        })
+    })
+
 </script>
 
 

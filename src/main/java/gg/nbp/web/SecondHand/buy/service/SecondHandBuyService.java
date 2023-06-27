@@ -25,7 +25,9 @@ public interface SecondHandBuyService extends CoreService {
 	
 	public List<BuyEvent> searchAll(Member member) throws SQLException ;
 	
-	public List<BuyEvent> update(BuyEvent be);
+	public List<BuyEvent> update4Mana(BuyEvent be);
+	
+	public List<BuyEvent>  update4Mem(BuyEvent be, Member member) throws SQLException;
 	
 	
 	
