@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
     <link rel="stylesheet" href="../css/x-dropdown.css">
     <link rel="stylesheet" href="../css/custom.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         a {
             color: blue;
@@ -36,6 +39,39 @@
 
         div.col-md-6 nav a {
             margin-top: 6px;
+        }
+
+        p.text-primary span {
+            margin: 10px;
+        }
+
+        .deliver input[type="text"] {
+            width: 150px;
+        }
+
+        .deliver span {
+            margin: 5px;
+        }
+
+        .row button {
+            border: 0;
+            border-radius: 5px;
+            margin: 5px;
+            font-weight: 500;
+            color: red;
+        }
+
+        .row button:last-child {
+            margin-left: 50px;
+            color: black;
+        }
+
+        .row nav {
+            text-align: center;
+        }
+
+        .row div {
+            text-align: right;
         }
     </style>
 </head>
@@ -192,7 +228,7 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3><a href="">後台一般訂單管理</a><span> / 訂單詳情查看</span></h3>
+                    <h3><a href="./orderManageIndex.html">後台一般訂單管理</a><span> / 訂單詳情查看</span></h3>
 
 
                     <!-- card shadow 視窗整體
@@ -204,9 +240,21 @@
 
 
 
-                    <div class="card shadow">
+                    <div class="card shadow" id="orderContent">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">訂單編號：<span>111111</span></p>
+                            <p class="text-primary m-0 fw-bold">
+                                訂單編號：<span>{{ order.orderId }}</span>
+                                <span
+                                    :style="(updateOrder.orderStatus === 3 || updateOrder.orderStatus === 4)? 'color:red' : '' ">
+                                    訂單狀態：{{ showOrderStatus[updateOrder.orderStatus] }}
+                                </span>
+                            <div v-show=" order.orderStatus===3">
+                                <button v-show="updateOrder.orderStatus === 3"
+                                    @click="updateOrderStatus(2)">同意取消</button>
+                                <button v-show="updateOrder.orderStatus === 2"
+                                    @click="updateOrderStatus(3)">不同意取消</button>
+                            </div>
+                            </p>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -216,7 +264,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        訂單日期：<span>2023/5/26</span>
+                                        訂單日期：<span>{{ order.commitDate }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -225,108 +273,57 @@
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th>(商品縮圖)</th>
-                                            <th>商品名稱</th>
-                                            <th>購買件數</th>
+                                            <th>商品資訊</th>
+                                            <th>購買數量</th>
                                             <th>單價</th>
                                             <th>小計</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar1.jpeg">Airi Satou</td>
-                                            <td><a href="">Accountant</a></td>
-                                            <td>Tokyo</td>
-                                            <td>33</td>
-                                            <td>$162,700</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar2.jpeg">Angelica Ramos</td>
-                                            <td><a href="">Chief Executive Officer(CEO)</a></td>
-                                            <td>London</td>
-                                            <td>47</td>
-                                            <td>$1,200,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar3.jpeg">Ashton Cox</td>
-                                            <td><a href="">Junior Technical Author</a></td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td>$86,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar4.jpeg">Bradley Greer</td>
-                                            <td><a href="">Software Engineer</a></td>
-                                            <td>London</td>
-                                            <td>41</td>
-                                            <td>$132,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar5.jpeg">Brenden Wagner</td>
-                                            <td><a href="">Software Engineer</a></td>
-                                            <td>San Francisco</td>
-                                            <td>28</td>
-                                            <td>$206,850</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar1.jpeg">Brielle Williamson
-                                            </td>
-                                            <td><a href="">Integration Specialist</a></td>
-                                            <td>New York</td>
-                                            <td>61</td>
-                                            <td>$372,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar2.jpeg">Bruno Nash<br></td>
-                                            <td><a href="">Software Engineer</a></td>
-                                            <td>London</td>
-                                            <td>38</td>
-                                            <td>$163,500</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar3.jpeg">Caesar Vance</td>
-                                            <td><a href="">Pre-Sales Support</a></td>
-                                            <td>New York</td>
-                                            <td>21</td>
-                                            <td>$106,450</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="../img/avatars/avatar4.jpeg">Cara Stevens</td>
-                                            <td><a href="">Sales Assistant</a></td>
-                                            <td>New York</td>
-                                            <td>46</td>
-                                            <td>$145,600</td>
-                                        </tr>
+                                        <template v-for="item in orderDetails">
+                                            <tr>
+                                                <td><img class="rounded-circle me-2" width="30" height="30"
+                                                        :src="item.productImgUrl" :alt="item.productName"><a href="">{{
+                                                        item.productName
+                                                        }}</a></td>
+                                                <td>{{ item.buyAmount }}</td>
+                                                <td>{{ item.price }}</td>
+                                                <td>{{ item.buyAmount * item.price }}</td>
+                                            </tr>
+                                        </template>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="underInfo">
-                                <div>
-                                    <span>配送方式：<span>宅配</span></span>
-                                    <span>運費：$<span>100</span></span>
+                                <div class="deliver">
+                                    <span>配送方式：<span>{{ showPickType[order.pickType] }}</span></span>
+                                    <span>運費：$<span>{{ order.deliverFee }}</span></span>
+                                    <label for="deliverNumber">填入物流編號：</label>
+                                    <input type="text" id="deliverNumber" v-model="updateOrder.deliverNumber">
+                                    <span>出貨狀態：{{ showDeliverState[updateOrder.deliverState] }}</span>
+                                    <select name="deliverState" id="" v-model="updateOrder.deliverState">
+                                        <option value="0">未出貨</option>
+                                        <option value="1">已出貨</option>
+                                        <option value="2">已到貨</option>
+                                    </select>
+                                </div>
+                                <div class="payment">
+                                    <span>付款方式：<span>{{ showCommitType[order.commitType] }}</span></span>
                                 </div>
                                 <div>
-                                    <span>付款方式：<span>信用卡一次付清</span></span>
-                                </div>
-                                <div>
-                                    訂單總價：$<strong>1,234</strong>
+                                    訂單總價：$<strong>{{ order.totalPrice }}</strong>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <nav
                                         class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <a href="">回上一頁</a>
+                                        <a href="" @click.prevent="goBack()">回上一頁</a>
                                     </nav>
+                                </div>
+                                <div>
+                                    <button @click="confirm()">確認修改訂單</button>
+                                    <button @click="cancel()">取消修改</button>
                                 </div>
                             </div>
                         </div>
@@ -349,6 +346,7 @@
     </div>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/theme.js"></script>
+    <script src="../js/orderManageDetail(Vue).js"></script>
 </body>
 
 </html>

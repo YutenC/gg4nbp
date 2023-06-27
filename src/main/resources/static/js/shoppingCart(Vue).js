@@ -1,3 +1,9 @@
+// 常數參數
+const href = window.location.href;
+const host = href.substring(0, href.indexOf('/', 8));
+const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
+const projectFolder = '/Five_NBP.gg';
+
 // 增添商品到購物車內按鈕變化
 
 // '+' 號按鈕預設展開
@@ -64,12 +70,12 @@ const byMyPick = Vue.createApp({
     methods: {
         addToCart: function (productId) {
             // 提取商品資訊
-            axios.get('/Five_NBP.gg/Product?getOneProduct=' + productId)
+            axios.get(projectFolder + '/Product?getOneProduct=' + productId)
                 .then(res => {
                     let newProduct = res.data;
                     axios({
                         method: 'post',
-                        url: '/Five_NBP.gg/ShoppingList',
+                        url: projectFolder + '/ShoppingList',
                         params: {
                             demand: 'addOneShoppingList',
                             transObj: JSON.stringify(newProduct)
@@ -96,7 +102,7 @@ const byMyPick = Vue.createApp({
         }
     },
     created() {
-        axios.get('/Five_NBP.gg/FollowList?getAll=true')
+        axios.get(projectFolder + '/FollowList?getAll=true')
             .then(res => this.mypick = res.data)
             .catch(error => console.log(error))
     }
@@ -116,12 +122,12 @@ const byPurchaseLog = Vue.createApp({
     methods: {
         addToCart: function (productId) {
             // 提取商品資訊
-            axios.get('/Five_NBP.gg/Product?getOneProduct=' + productId)
+            axios.get(projectFolder + '/Product?getOneProduct=' + productId)
                 .then(res => {
                     let newProduct = res.data;
                     axios({
                         method: 'post',
-                        url: '/Five_NBP.gg/ShoppingList',
+                        url: projectFolder + '/ShoppingList',
                         params: {
                             demand: 'addOneShoppingList',
                             transObj: JSON.stringify(newProduct)
@@ -145,7 +151,7 @@ const byPurchaseLog = Vue.createApp({
         }
     },
     created() {
-        axios.get('/Five_NBP.gg/OrderDetail?getMemberAll=true')
+        axios.get(projectFolder + '/OrderDetail?getMemberAll=true')
             .then(res => {
                 this.byPurchaseLog = res.data;
             })
@@ -172,8 +178,6 @@ $(document).ready(function () {
     });
 });
 
-const href = window.location.href;
-const host = href.substring(0, href.indexOf('/', 8));
 // 購物車商品
 const shoppingContent = Vue.createApp({
     data() {
@@ -185,7 +189,7 @@ const shoppingContent = Vue.createApp({
             discountRadio: 'coupon',
             couponCode: '',
             resCoupon: '',
-            bonusStock: 10000,
+            bonusStock: 0,
             bonus: '',
             // 配送方式
             deliver: 'takuhai',
@@ -201,7 +205,9 @@ const shoppingContent = Vue.createApp({
                 cardValidMon: '',
                 cardValidYr: '',
                 cardValidNum: '',
-            }
+            },
+            // 準備接收後端回傳的ID
+            orderId: '',
         }
     },
     methods: {
@@ -219,8 +225,7 @@ const shoppingContent = Vue.createApp({
             }).then(function (result) {
                 if (result.isConfirmed) {
                     // 向後端發送刪除
-                    console.log(shoppingList[index]);
-                    axios.get('/Five_NBP.gg/ShoppingList?removeItem=' + shoppingList[index].productId)
+                    axios.get(projectFolder + '/ShoppingList?removeItem=' + shoppingList[index].productId)
                         .then(res => console.log(res))
                         .catch(err => console.log(err));
                     shoppingList.splice(index, 1);
@@ -228,7 +233,7 @@ const shoppingContent = Vue.createApp({
             });
             if (this.shoppingList.length === 0) {
                 Swal.fire('購物車內已無商品，快去逛逛吧!');
-                let newHref = host + '/Five_NBP.gg/shopIndex3.html';
+                let newHref = projectHref + '/shopIndex3.html';
                 window.location.replace(newHref);
             }
         },
@@ -236,7 +241,7 @@ const shoppingContent = Vue.createApp({
         checkCoupon: function () {
             // 向後端確認是否為有效折購代碼
             // 查詢到資料後更新this.resCoupon
-            axios.get('/Five_NBP.gg/Coupon?couponCode=' + this.couponCode)
+            axios.get(projectFolder + '/Coupon?couponCode=' + this.couponCode)
                 .then(res => {
                     if (res.data != '') {
                         this.resCoupon = res.data;
@@ -250,7 +255,7 @@ const shoppingContent = Vue.createApp({
         },
         // (從後端)更新購物明細
         renewList: function () {
-            axios.get('/Five_NBP.gg/ShoppingList?getAll=true')
+            axios.get(projectFolder + '/ShoppingList?getAll=true')
                 .then(res => this.shoppingList = res.data)
                 .catch(err => console.log(err))
         },
@@ -279,24 +284,42 @@ const shoppingContent = Vue.createApp({
             }
             event.target.value = str;
         },
+        allProductCheckedSwitch: function (event) {
+            let allChecked = event.target.checked;
+            for (let item of this.shoppingList) {
+                item.checked = allChecked;
+            }
+        },
         // 結帳：將前端的結帳相關資料送到後端
-        checkOut: function (ecpay) {
+        checkOut: function (ecpay, event) {
+            let checkedItemAmount = 0
+            for (let item of this.shoppingList) {
+                if (item.checked === true) {
+                    checkedItemAmount++;
+                }
+            }
+            if (checkedItemAmount === 0) {
+                Swal.fire('未選擇結帳商品');
+                return;
+            }
             if (this.address.address === '' ||
                 ((this.payment === 'credit' && ecpay === false) &&
                     (this.card.cardNum.length < 16 || this.card.cardValidMon.length < 2 ||
                         this.card.cardValidYr.length < 4 || this.card.cardValidNum.length < 3))) {
                 let alertMsg = '以下資料不完整：';
                 this.address.address === '' ? alertMsg += '\n配送地址' : '';
-                this.card.cardNum.length < 16 ? alertMsg += '\n信用卡號' : '';
-                this.card.cardValidMon.length < 2 ? alertMsg += '\n信用卡有效月份' : '';
-                this.card.cardValidYr.length < 4 ? alertMsg += '\n信用卡有效年份' : '';
-                this.card.cardValidNum.length < 3 ? alertMsg += '\n信用卡驗證碼' : '';
+                if (this.payment === 'credit') {
+                    this.card.cardNum.length < 16 ? alertMsg += '\n信用卡號' : '';
+                    this.card.cardValidMon.length < 2 ? alertMsg += '\n信用卡有效月份' : '';
+                    this.card.cardValidYr.length < 4 ? alertMsg += '\n信用卡有效年份' : '';
+                    this.card.cardValidNum.length < 3 ? alertMsg += '\n信用卡驗證碼' : '';
+                }
                 Swal.fire(alertMsg);
                 return;
             }
             axios({
                 method: 'post',
-                url: '/Five_NBP.gg/OrderMaster',
+                url: projectFolder + '/OrderMaster',
                 params: {
                     demand: 'checkOut',
                     toEcpay: ecpay,
@@ -307,7 +330,7 @@ const shoppingContent = Vue.createApp({
                     payment: this.payment,
                 },
                 data: {
-                    transObj: [...this.shoppingList].filter(item => item.checked === true),
+                    transObj: this.shoppingList.filter(item => item.checked === true),
                     card: this.card,
                     address: this.address
                 }
@@ -317,8 +340,10 @@ const shoppingContent = Vue.createApp({
                 let checkCoupon = resJson.checkCoupon;
                 let usedBonus = resJson.usedBonus;
                 let nowBonus = resJson.nowBonus;
+                this.orderId = resJson.orderId;
+
                 sessionStorage.setItem("odProducts", JSON.stringify(odProducts));
-                if (checkCoupon !== undefined) {
+                if (res.checkCoupon !== undefined) {
                     sessionStorage.setItem("checkCoupon", JSON.stringify(checkCoupon));
                 }
                 sessionStorage.setItem("usedBonus", usedBonus);
@@ -326,9 +351,23 @@ const shoppingContent = Vue.createApp({
                 sessionStorage.setItem("payment", this.payment);
                 sessionStorage.setItem("deliver", this.deliver);
                 sessionStorage.setItem("address", JSON.stringify(this.address));
-                window.location.replace(host + '/Five_NBP.gg/')
+                if (ecpay === true) {
+                    // $('input#orderId').val(this.orderId); // 透過jQuery即刻更新DOM
+                    shoppingContent.$nextTick(() => {   // 透過Vue自身的nextTick方法，等Vue更新完DOM後再執行方法內的程序
+                        event.target.submit();
+                    });
+                } else {
+                    window.location.replace(projectHref + '/manager/orderResult(Vue).html')
+                }
             }).catch(err => console.log(err))
+
         },
+        // 與會員功能詢問由哪個功能提供現有紅利點數資訊
+        getBonusStock: function () {
+            axios.get(projectFolder + 'OrderMaster?nowBonus=y')
+                .then(res => this.bonusStock = res.data)
+                .catch(err => console.log(err))
+        }
     },
     computed: {
         productSubtotal: function () {
@@ -354,7 +393,7 @@ const shoppingContent = Vue.createApp({
                 productSub - couponDiscount : productSub - couponDiscount - bonus;
 
             if (finalPrice < 0) {
-                if (this.discountRadio === 'bonus' && productSub < bonus) {
+                if (this.discountRadio === 'bonus' && productSub < bonus && productSub < this.bonusStock) {
                     this.bonus = productSub;
                 }
                 finalPrice = 0;
@@ -368,6 +407,7 @@ const shoppingContent = Vue.createApp({
     },
     created() {
         this.renewList();
+        this.getBonusStock();
     }
 }).mount('.shoppingContent');
 
@@ -375,20 +415,20 @@ const shoppingContent = Vue.createApp({
 const promoProduct = Vue.createApp({
     data() {
         return {
-            promoProduct: [
-                {
-                    id: 1111, productName: 'abcdefg', link: 'dddddd', productImg: '../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg',
-                    price: 2000
-                },
-                {
-                    id: 1111, productName: 'abcdefg', link: 'dddddd', productImg: '../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg',
-                    price: 2000
-                },
-                {
-                    id: 1111, productName: 'abcdefg', link: 'dddddd', productImg: '../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg',
-                    price: 2000
-                }
-            ]
+            recomendAmount: 5,
+            promoProduct: []
         }
+    },
+    methods: {
+        leave: function (location, otherDetail) {
+            sessionStorage.clear();
+            sessionStorage.setItem('productId', otherDetail);
+            window.location.replace(projectHref + '/' + location);
+        }
+    },
+    created() {
+        axios.get(projectFolder + '/Product?recomendFromAll=' + this.recomendAmount)
+            .then(res => this.promoProduct = res.data)
+            .catch(err => console.log(err));
     }
 }).mount('#promoProduct');
