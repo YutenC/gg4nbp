@@ -3,19 +3,16 @@ package gg.nbp.web.shop.shopproduct.service.impl;
 import gg.nbp.web.shop.shoporder.dao.ShoppingListDao;
 import gg.nbp.web.shop.shoporder.entity.PKShoppingList;
 import gg.nbp.web.shop.shoporder.entity.ShoppingList;
-import gg.nbp.web.shop.shopproduct.dao.FollowDao;
 import gg.nbp.web.shop.shopproduct.dao.ProductDao;
 import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
 import gg.nbp.web.shop.shopproduct.entity.*;
 import gg.nbp.web.shop.shopproduct.redisdao.ProductRedisDao;
 import gg.nbp.web.shop.shopproduct.service.FollowService;
 import gg.nbp.web.shop.shopproduct.service.ProductService;
-import gg.nbp.web.shop.shopproduct.util.ObjectInstance;
-//import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
