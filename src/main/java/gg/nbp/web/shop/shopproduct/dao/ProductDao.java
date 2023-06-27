@@ -14,4 +14,8 @@ public interface ProductDao extends CoreDao<Product,Integer> {
     List<Product> selectByBuyTimes(Integer limit, String type);
 
     List<Product> searchProducts(String search);
+
+    int updateProductScore(Product product);
+
+    int updateProductAmountBuyTimes(Product product);
 }

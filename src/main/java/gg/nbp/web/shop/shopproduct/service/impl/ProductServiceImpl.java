@@ -126,6 +126,24 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
+    @Override
+    public List<Product> getProductByBuyTimes(Integer amount, Integer type) {
+        List<Product>  products= productDao.selectByBuyTimes(amount,type.toString());
+        setProductIndexImg(products);
+        return null;
+    }
+
+    @Override
+    public int updateProductScore(Product product) {
+
+        return productDao.updateProductScore(product);
+    }
+
+    @Override
+    public int updateProductAmountBuyTimes(Product product) {
+        return productDao.updateProductAmountBuyTimes(product);
+    }
+
 
 //    private ProductImage getProductIndexImg_(Product product) {
 //        List<ProductImage> productImages = productImageDao.selectByProductId(product.getId());

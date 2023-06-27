@@ -11,4 +11,9 @@ public class ConvertJson {
                 .create();
         return gson.toJson(obj);
     }
+
+    public static String toJson(Object obj) {
+        Gson gson = new Gson();
+        return gson.toJson(obj);
+    }
 }

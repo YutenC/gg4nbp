@@ -1,6 +1,7 @@
 package gg.nbp.web.shop.shopproduct.controller;
 
 import com.google.gson.Gson;
+import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class CouponController {
         return json_str;
     }
 
+    public String getCouponByDiscountCode(String discountCode) {
+        Coupon coupon = couponService.getCouponByDiscountCode(discountCode);
+        Gson gson = new Gson();
+        return gson.toJson(coupon);
+    }
 
     public String getCouponByActivity(HttpSession session, String activityCode) {
         System.out.println("getCouponByActivity");

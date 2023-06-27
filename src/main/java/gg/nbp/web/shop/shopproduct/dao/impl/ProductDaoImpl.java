@@ -87,8 +87,15 @@ public class ProductDaoImpl extends CoreDaoImpl<Product,Integer> implements Prod
             hql = "from Product where type = "+type +"order by buyTimes DESC";
         }
 
+        if(limit==-1){
+            return session.createQuery(hql, Product.class).getResultList();
+        }
+        else {
+            return session.createQuery(hql, Product.class).setMaxResults(limit).getResultList();
+        }
+
 //        System.out.println("hql: "+hql);
-        return session.createQuery(hql, Product.class).setMaxResults(limit).getResultList();
+
     }
 
     @Override
@@ -98,5 +105,44 @@ public class ProductDaoImpl extends CoreDaoImpl<Product,Integer> implements Prod
         return session.createQuery(hql, Product.class).getResultList();
     }
 
+
+
+    @Override
+    public int updateProductScore(Product product) {
+        final StringBuilder hql = new StringBuilder()
+                .append("UPDATE Product SET ");
+
+        hql.append("rate = :rate,")
+                .append("revieweCount = :revieweCount,")
+                .append("WHERE id = :id");
+
+        Query<?> query=session.createQuery(hql.toString());
+
+        return query
+                .setParameter("rate",product.getRate())
+                .setParameter("revieweCount",product.getRevieweCount())
+                .setParameter("id",product.getId())
+                .executeUpdate();
+
+    }
+
+    @Override
+    public int updateProductAmountBuyTimes(Product product) {
+        final StringBuilder hql = new StringBuilder()
+                .append("UPDATE Product SET ");
+
+
+        hql.append("amount = :amount,")
+                .append("buyTimes = :buyTimes,")
+                .append("WHERE id = :id");
+
+        Query<?> query=session.createQuery(hql.toString());
+
+        return query
+                .setParameter("amount",product.getAmount())
+                .setParameter("buyTimes",product.getBuyTimes())
+                .setParameter("id",product.getId())
+                .executeUpdate();
+    }
 
 }
