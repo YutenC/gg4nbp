@@ -38,6 +38,8 @@ public class ProductManagerServiceImpl implements ProductManagerService {
     @Autowired
     ProductImageDao productImageDao;
 
+    @Autowired
+    CreateProductDB<Product, ProductImage> createProductDB;
 
     public ProductManagerServiceImpl(){
     }
@@ -45,7 +47,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
     @Override
     public void createProductFromcsv(){
 
-        CreateProductDB<Product, ProductImage> createProductDB=  new CreateProductDB<Product,ProductImage>(Product.class, ProductImage.class);
+        //CreateProductDB<Product, ProductImage> createProductDB= new CreateProductDB<Product,ProductImage>(Product.class, ProductImage.class);
         try {
             List<Product> products= createProductDB.readCSV();
             for (Product value : products) {

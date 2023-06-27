@@ -43,8 +43,10 @@ public class ShopDispatcherServlet extends HttpServlet {
     FollowController followController;
 
     @Autowired
-    testMemberController testMemberController;
+    CouponController couponController;
 
+    @Autowired
+    testMemberController testMemberController;
 
 
     public ShopDispatcherServlet() {
@@ -94,7 +96,7 @@ public class ShopDispatcherServlet extends HttpServlet {
 //                break;
 
 
-            case  "/ecPay":
+            case "/ecPay":
                 StringBuilder requestData_ = new StringBuilder();
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
                     String line;
@@ -107,10 +109,10 @@ public class ShopDispatcherServlet extends HttpServlet {
                 String payloadData_ = requestData_.toString();
                 System.out.println(payloadData_);
 
-                Member member_=testMemberController.getDefaultMember();
+                Member member_ = testMemberController.getDefaultMember();
                 Gson gson__ = new Gson();
                 strOut = gson__.toJson(member_);
-                
+
                 break;
             case "/addProduct":
                 StringBuilder requestData = new StringBuilder();
@@ -162,7 +164,18 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
             case "/getProductByBuyTimes":
                 String type_ = req.getParameter("type");
-                strOut = productController.getProductByBuyTimes(Integer.valueOf(type_));
+                String amount_ = req.getParameter("amount");
+//                strOut = productController.getProductByBuyTimes(Integer.valueOf(type_));
+                if (type_==null||"".equals(type_)) {
+                    type_ = "0";
+                }
+
+                if (amount_ == null) {
+                    amount_ = "-1";
+                }
+
+                strOut = productController.getProductByBuyTimes(Integer.valueOf(amount_), Integer.valueOf(type_));
+
                 break;
 
 
@@ -176,27 +189,21 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
 
-
-
-
             case "/addCart":
                 String id_str = req.getParameter("id");
-                Integer productId_=Integer.valueOf(id_str);
+                Integer productId_ = Integer.valueOf(id_str);
 
-                Object isLogin_=  session.getAttribute("isLogin");
-                if(isLogin_!=null){
-                    Boolean isLogin=(Boolean)isLogin_;
-                    if(isLogin){
-                        Member member= (Member)session.getAttribute("member");
-                        productController.addCart(productId_,member.getMember_id());
-                    }
-                    else{
+                Object isLogin_ = session.getAttribute("isLogin");
+                if (isLogin_ != null) {
+                    Boolean isLogin = (Boolean) isLogin_;
+                    if (isLogin) {
+                        Member member = (Member) session.getAttribute("member");
+                        productController.addCart(productId_, member.getMember_id());
+                    } else {
 //                        res.sendRedirect("/Five_NBP_gg/member_login.html");
                     }
 
-                }
-                else
-                {
+                } else {
 //                    res.sendRedirect("/Five_NBP_gg/member_login.html");
                 }
 
@@ -241,18 +248,23 @@ public class ShopDispatcherServlet extends HttpServlet {
             case "/getAllCouponActivity":
                 strOut = couponManagerController.getAllCouponActivity(session);
                 break;
+            case "/getCouponByDiscountCode":
+                String discountCode = req.getParameter("discountCode");
+                strOut = couponController.getCouponByDiscountCode(discountCode);
+                break;
+
             case "/addCouponActivity":
                 String newCouponActivity = req.getParameter("newCouponActivity");
                 System.out.println("newCouponActivity: " + newCouponActivity);
                 couponManagerController.addCouponActivity(session, newCouponActivity);
                 break;
 
+
             case "/updateCouponActivity":
                 String json_newCouponActivity = req.getParameter("newCouponActivity");
 
                 strOut = couponManagerController.updateCouponActivity(json_newCouponActivity);
                 break;
-
 
             case "/addCoupon":
                 String json_newCoupon = req.getParameter("json_newCoupon");
@@ -263,7 +275,6 @@ public class ShopDispatcherServlet extends HttpServlet {
                 couponManagerController.deleteCoupon(couponId);
                 break;
 
-
             case "/longTimeProcess":
                 strOut = productManagerController.longTimeProcess();
                 break;
@@ -272,21 +283,35 @@ public class ShopDispatcherServlet extends HttpServlet {
                 strOut = backgroundMessageController.getBackgroundMessage(taskName);
                 break;
 
-            case "/getFollowByMemberId":
-                Object _isLogin__=  session.getAttribute("isLogin");
-                if(_isLogin__!=null){
-                    Boolean isLogin=(Boolean)_isLogin__;
-                    if(isLogin){
-                        Member _member_=  (Member)session.getAttribute("member");
-                        strOut = followController.getFollowByMemberId(_member_.getMember_id());
-                    }
-                    else{
+            case "/getFollowByMember":
+                Object __isLogin__ = session.getAttribute("isLogin");
+                if (__isLogin__ != null) {
+                    Boolean isLogin = (Boolean) __isLogin__;
+                    if (isLogin) {
+                        Member _member_ = (Member) session.getAttribute("member");
+                        strOut = followController.getFollowByMember(_member_);
+                    } else {
 //                        res.sendRedirect("/Five_NBP_gg/member_login.html");
                     }
 
+                } else {
+//                    res.sendRedirect("/Five_NBP_gg/member_login.html");
                 }
-                else
-                {
+
+
+                break;
+            case "/getFollowByMemberId":
+                Object _isLogin__ = session.getAttribute("isLogin");
+                if (_isLogin__ != null) {
+                    Boolean isLogin = (Boolean) _isLogin__;
+                    if (isLogin) {
+                        Member _member_ = (Member) session.getAttribute("member");
+                        strOut = followController.getFollowByMemberId(_member_.getMember_id());
+                    } else {
+//                        res.sendRedirect("/Five_NBP_gg/member_login.html");
+                    }
+
+                } else {
 //                    res.sendRedirect("/Five_NBP_gg/member_login.html");
                 }
 
@@ -294,22 +319,19 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
             case "/addFollow":
                 String id_str_ = req.getParameter("id");
-                Integer productId__=Integer.valueOf(id_str_);
+                Integer productId__ = Integer.valueOf(id_str_);
 
-                Object isLogin__=  session.getAttribute("isLogin");
-                if(isLogin__!=null){
-                    Boolean isLogin=(Boolean)isLogin__;
-                    if(isLogin){
-                        Member member= (Member)session.getAttribute("member");
-                        followController.addFollow(productId__,member.getMember_id());
-                    }
-                    else{
+                Object isLogin__ = session.getAttribute("isLogin");
+                if (isLogin__ != null) {
+                    Boolean isLogin = (Boolean) isLogin__;
+                    if (isLogin) {
+                        Member member = (Member) session.getAttribute("member");
+                        followController.addFollow(productId__, member.getMember_id());
+                    } else {
 //                        res.sendRedirect("/Five_NBP_gg/member_login.html");
                     }
 
-                }
-                else
-                {
+                } else {
 //                    res.sendRedirect("/Five_NBP_gg/member_login.html");
                 }
 
@@ -317,7 +339,7 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
             case "/login":
-                Member member=testMemberController.getDefaultMember();
+                Member member = testMemberController.getDefaultMember();
                 session.setAttribute("isLogin", true);
                 session.setAttribute("member", member);
 

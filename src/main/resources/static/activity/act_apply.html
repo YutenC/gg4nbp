@@ -16,6 +16,7 @@
 </head>
 
 <body id="page-top">
+
     <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
@@ -349,63 +350,7 @@
                             }
                         </script>
                         <article>
-                            <div class="compact"></div>
-                            <div class="inner">
-                                <div class="info">
-                                    <strong>校園嘉年華</strong>
-                                    <small>個人資料</small>
-                                </div>
-                                <div class="text">
-                                    <p>帳號</p>
-                                    <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com">
-                                        <label for="floatingInput">帳號</label>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
-                                        <label for="floatingPassword">密碼</label>
-                                    </div>
-                                    <p></p>
-                                    <button onclick="submitForm()">送出</button>
-                                    <script>
-                                        function submitForm() {
-                                            // 取得帳號和密碼的值
-                                            var account = document.getElementById('floatingInput').value;
-                                            var password = document.getElementById('floatingPassword').value;
 
-                                            // 執行相應的操作，例如送出表單或驗證帳號密碼
-
-                                            // 在這裡可以使用取得到的帳號和密碼進行後續處理
-                                            console.log('帳號:', account);
-                                            console.log('密碼:', password);
-
-                                            // 鎖定資料
-                                            document.getElementById('floatingInput').disabled = true;
-                                            document.getElementById('floatingPassword').disabled = true;
-
-                                            // 顯示警示框
-                                            alert('表單已提交成功！');
-                                        }
-
-
-                                    </script>
-                                    <script>
-
-                                    </script>
-                                    <p> 1.</p>
-                                    <p>資訊不完整：活動的組織者無法獲得您的必要資訊，如姓名、聯絡方式等，這可能影響他們與您的溝通以及您對活動的參與。</p>
-                                    <p>2.</p>
-                                    <p>參與限制：某些活動可能要求參與者提供特定的資訊或滿足一定條件才能參加。如果您不填寫活動資料，您可能無法完全參與活動或享受到相關的福利和特權。</p>
-                                    <p>3.</p>
-                                    <p>錯失機會：填寫活動資料可以使組織者更好地了解您的需求和興趣，進而提供更貼合您的活動體驗。如果您不提供資料，您可能錯失了個性化的活動安排或與其他參與者互動的機會。
-                                    </p>
-                                    <p>★★★★★★★★★★★★★注意事項★★★★★★★★★★★★</p>
-                                    <p>活動資料的收集和使用應符合相關的隱私政策和法規，組織者應該保護您的個人資訊並維護您的隱私權利。如果您對組織者的資料處理方式有疑慮，建議您詳細閱讀相關的隱私聲明或與組織者進行溝通以獲得更多資訊。
-                                    </p>
-                                </div>
-                            </div>
                         </article>
                         <article>
                             <div class="compact"></div>
@@ -414,9 +359,6 @@
                                     <div id="list-example" class="list-group">
                                         <label class="list-group-item">
                                             <strong>此活動為付費活動</strong>
-                                            <small>付費金額：2000000000元</small>
-
-
                                             <label class="list-group-item">
                                                 <input class="form-check-input" type="radio" name="list-item"
                                                     value="#list-item-1">
@@ -424,12 +366,12 @@
                                             </label>
                                             <label class="list-group-item">
                                                 <input class="form-check-input" type="radio" name="list-item"
-                                                    value="#list-item-2">
+                                                    value="#Organizer_bank_num">
                                                 ATM轉帳
                                             </label>
                                             <label class="list-group-item">
                                                 <input class="form-check-input" type="radio" name="list-item"
-                                                    value="#list-item-3">
+                                                    value="#card">
                                                 信用卡付款
                                             </label>
                                             <label class="list-group-item">
@@ -455,7 +397,7 @@
                                                 屁股不僅僅是我們身體的一部分，它還有著多種角色和意義。無論是在日常生活中的支撐和運動，還是在文化和藝術中的表現，屁股都在無形中為我們帶來了樂趣和驚喜。讓我們珍惜這個有趣且
                                             </p>
                                         </div>
-                                        <div id="list-item-2">
+                                        <div id="Organizer_bank_num">
                                             <h4>ATM轉帳</h4>
                                             <p style="color:gray;">
                                                 當談到ATM（自動提款機）這個話題時，我們不禁想到方便快捷的金融服務和現代生活中的重要角色。ATM的出現為我們的日常生活帶來了便利，讓我們可以隨時隨地處理金融交易。讓我們一起探討一下ATM在我們生活中的重要性和各種情境。
@@ -471,31 +413,31 @@
                                                 總的來說，ATM在現代生活中扮演著重要的角色。它為我們提供了便捷的金融服務，包括取款、存款、付款和其他金融交易。ATM的普及不僅節省了我們的時間和精力，還提供了便利的支付方式，
                                             </p>
                                         </div>
-                                        <div id="list-item-3">
+                                        <div id="card">
                                             <h4>信用卡付款</h4>
-                                            <p>
-                                            <form action="process_credit_card" method="POST">
-                                                <div class="form-group">
-                                                    <label for="card_number">信用卡密碼：</label>
-                                                    <input type="text" class="form-control" id="card_number"
-                                                        name="card_number" placeholder="请输入信用卡卡號" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="card_holder">持卡人姓名：</label>
-                                                    <input type="text" class="form-control" id="card_holder"
-                                                        name="card_holder" placeholder="請输入持卡人姓名" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="expiry_date">有效期限：</label>
-                                                    <input type="text" class="form-control" id="expiry_date"
-                                                        name="expiry_date" placeholder="MM/YY" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="cvv">CVV：</label>
-                                                    <input type="text" class="form-control" id="cvv" name="cvv"
-                                                        placeholder="请输入 CVV" required>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">提交</button>
+<!--                                            <p>-->
+<!--                                            <form action="process_credit_card" method="POST">-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label for="card_number">信用卡密碼：</label>-->
+<!--                                                    <input type="text" class="form-control" id="card_number"-->
+<!--                                                        name="card_number" placeholder="请输入信用卡卡號" required>-->
+<!--                                                </div>-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label for="card_holder">持卡人姓名：</label>-->
+<!--                                                    <input type="text" class="form-control" id="card_holder"-->
+<!--                                                        name="card_holder" placeholder="請输入持卡人姓名" required>-->
+<!--                                                </div>-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label for="expiry_date">有效期限：</label>-->
+<!--                                                    <input type="text" class="form-control" id="expiry_date"-->
+<!--                                                        name="expiry_date" placeholder="MM/YY" required>-->
+<!--                                                </div>-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label for="cvv">CVV：</label>-->
+<!--                                                    <input type="text" class="form-control" id="cvv" name="cvv"-->
+<!--                                                        placeholder="请输入 CVV" required>-->
+<!--                                                </div>-->
+<!--                                                <button type="submit" class="btn btn-primary">提交</button>-->
                                             </form>
                                             </p>
                                         </div>
@@ -544,91 +486,47 @@
                                     });
                                 </script>
                         </article>
-                        <article>
-                            <div class="compact"></div>
-                            <div class="inner">
-                                <div class="info">
-                                    <strong>活動資訊</strong>
-                                    <small>校園嘉年華</small>
-                                </div>
-                                <div class="text">
-                                    <p>國立東華大學學活</p>
-                                    <p>參加地點照片或相關圖片</p>
-                                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-indicators">
-                                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                                data-bs-slide-to="0" class="active" aria-current="true"
-                                                aria-label="Slide 1"></button>
-                                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                                data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                                data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                        </div>
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img src="../img/img_act/1.jpg" class="d-block w-100" alt="...">
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="../img/img_act/2.jpeg" class="d-block w-100" alt="...">
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="../img/img_act/3.jpeg" class="d-block w-100" alt="...">
-                                            </div>
-                                        </div>
-                                        <button class="carousel-control-prev" type="button"
-                                            data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
-                                        </button>
-                                        <button class="carousel-control-next" type="button"
-                                            data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
-                                        </button>
+                        <article id="mainTable">
 
-                                    </div>
-
-                                    <p>內容：</p>
-
-                                    <p>這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容
-                                    </p>
-                                    <p>目的：</p>
-                                    <p> 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情
-                                        為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情 為了增加大家的友情
-                                        為了增加大家的友情</p>
-                                    <div>
-                                        <input type="checkbox" class="form-check-input" id="validationFormCheck1"
-                                            required>
-                                        <label class="form-check-label" for="validationFormCheck1">關看完後請打勾</label>
-                                        <div class="invalid-feedback">請勾選此框</div>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary" id="submitBtn"
-                                        style="display: none;">確認參加</button>
-
-                                    <script>
-                                        var checkbox = document.getElementById('validationFormCheck1');
-                                        var submitBtn = document.getElementById('submitBtn');
-                                        var form = document.querySelector('form');
-
-                                        checkbox.addEventListener('change', function () {
-                                            submitBtn.style.display = this.checked ? 'block' : 'none';
-                                        });
-
-                                        form.addEventListener('submit', function (event) {
-                                            if (!checkbox.checked) {
-                                                event.preventDefault(); // 阻止表單的提交
-                                                checkbox.parentElement.classList.add('was-validated');
-                                            }
-                                        });
-                                    </script>
-
-
-                                    <p>時間:2023-07-23 8:00-17:00</p>
-
-                                </div>
-                            </div>
                         </article>
+                        <script>
+                            var checkbox = document.getElementById('validationFormCheck1');
+                            var submitBtn = document.getElementById('submitBtn');
+                            var form = document.querySelector('form');
+
+                            checkbox.addEventListener('change', function () {
+                                submitBtn.style.display = this.checked ? 'block' : 'none';
+                            });
+
+                            form.addEventListener('submit', function (event) {
+                                if (!checkbox.checked) {
+                                    event.preventDefault(); // 阻止表單的提交
+                                    checkbox.parentElement.classList.add('was-validated');
+                                }
+                            });
+                        </script>
+
+                        <script>
+                            function submitForm() {
+                                // 取得名字和帳號的值
+                                var name = document.getElementById('nameInput').value;
+                                var account = document.getElementById('accountInput').value;
+
+                                // 執行相應的操作，例如送出表單或驗證帳號密碼
+
+                                // 在這裡可以使用取得到的名字和帳號進行後續處理
+                                console.log('名字:', name);
+                                console.log('帳號:', account);
+
+                                // 鎖定資料
+                                document.getElementById('nameInput').disabled = true;
+                                document.getElementById('accountInput').disabled = true;
+
+                                // 顯示警示框
+                                alert('表單已提交成功！');
+                            }
+                        </script>
+
 
                     </div>
                 </div>
@@ -666,5 +564,117 @@
             </svg></a> -->
         <script src="../js/act_apply.js"></script>
 </body>
+<script src="../jquery/jquery-3.4.1.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+        integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+></script>
+<script>
+
+getAct(22);
+    function getAct(id) {
+        axios
+            .get("http://localhost:8000/gg4nbp/act/"+id)
+            .then((response) => {
+                let act = response.data;
+                // console.log(data.name);
+
+                let childContent=` <article>
+                            <div class="compact"></div>
+                            <div class="inner">
+                                <div class="info">
+                                    <strong>活動資訊</strong>
+                                    <small id="act_Name">校園嘉年華</small>
+                                </div>
+                                <div class="text">
+                                    <p>${act.actName}</p>
+                                    <p>參加地點照片或相關圖片</p>
+                                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                data-bs-slide-to="0" class="active" aria-current="true"
+                                                aria-label="Slide 1"></button>
+
+                                        </div>
+                                        <div class="carousel-inner" id="act_Image">
+                                            <div class="carousel-item active">
+                                                <img src="${act.actImage}" class="d-block w-100" alt="...">
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <p >內容：</p>
+
+                                    <p id="act_value">${act.actValue}</p>
+                                    <p id =Act_location>地點：</p>
+                                    <p> ${act.actLocation}</p>
+                                     <p id="act_Price">付費金額</p>
+                                    <small id="act_price">${act.actPrice}</small>
+
+                                    <p id="act_Time">${act.actTime}</p>
+                                    <div class="compact"></div>
+                                    <div class="inner">
+                                        <div class="info">
+                                            <strong >請填寫信箱很重要</strong>
+                                            <small>個人資料</small>
+                                        </div>
+                                        <div class="text">
+
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="nameInput" placeholder="王小明">
+                                                <label for="nameInput">名字</label>
+                                            </div>
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" id="accountInput" placeholder="name@example.com">
+                                                <label for="accountInput">帳號</label>
+                                            </div>
+                                            <p></p>
+                                            <button onclick="submitForm()">送出</button>
+                                            <p> 1.</p>
+                                            <p>資訊不完整：活動的組織者無法獲得您的必要資訊，如姓名、聯絡方式等，這可能影響他們與您的溝通以及您對活動的參與。</p>
+                                            <p>2.</p>
+                                            <p>參與限制：某些活動可能要求參與者提供特定的資訊或滿足一定條件才能參加。如果您不填寫活動資料，您可能無法完全參與活動或享受到相關的福利和特權。</p>
+                                            <p>3.</p>
+                                            <p>錯失機會：填寫活動資料可以使組織者更好地了解您的需求和興趣，進而提供更貼合您的活動體驗。如果您不提供資料，您可能錯失了個性化的活動安排或與其他參與者互動的機會。
+                                            </p>
+                                            <p>★★★★★★★★★★★★★注意事項★★★★★★★★★★★★</p>
+                                            <p>活動資料的收集和使用應符合相關的隱私政策和法規，組織者應該保護您的個人資訊並維護您的隱私權利。如果您對組織者的資料處理方式有疑慮，建議您詳細閱讀相關的隱私聲明或與組織者進行溝通以獲得更多資訊。
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" class="form-check-input" id="validationFormCheck1"
+                                            required>
+                                        <label class="form-check-label" for="validationFormCheck1">關看完後請打勾</label>
+                                        <div class="invalid-feedback">請勾選此框</div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" id="submitBtn"
+                                        style="display: none;">確認參加</button>
+
+
+                                </div>
+                            </div>
+                        </article>`
+
+                // childContent
+
+
+
+$("#mainTable").prepend(childContent);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+
+
+</script>
 
 </html>

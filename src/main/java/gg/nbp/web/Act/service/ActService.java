@@ -1,20 +1,25 @@
 package gg.nbp.web.Act.service;
 
+import gg.nbp.web.Act.dao.ActMessageRepository;
+import gg.nbp.web.Act.dao.ActRepository;
+import gg.nbp.web.Act.model.Act;
+import gg.nbp.web.Act.model.ActMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import gg.nbp.web.Act.dao.ActMessageRepository;
-import gg.nbp.web.Act.dao.ActRepository;
-import gg.nbp.web.Act.model.Act;
-import gg.nbp.web.Act.model.ActMessage;
 @Service
+@Transactional
 public class ActService {
 
     @Autowired
@@ -48,6 +53,7 @@ public class ActService {
     }
 
     // 新增
+    // 新增
     public Act createAct(Act act) {
         act.setOrganizerId(12);
         String img_ = act.getActImage();
@@ -55,17 +61,28 @@ public class ActService {
         System.out.println(imgBase64);
 
         byte[] imageBytes = Base64.getDecoder().decode(imgBase64);
-        String fileName = act.getActName() + ".jpg";
-        String pathName = "../imgact/" + fileName;
+        String fileName = null;  // 這裡我們替換掉所有非字母和數字的字符
+        try {
+            fileName = URLEncoder.encode(act.getActName(), "UTF-8")+ ".jpg";
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        String pathName = "/Users/wujoe/Documents/act_spring/src/main/resources/static/imgact";
+        String pathName2= "../imgact/" + fileName;
+        // 確保路徑存在
+        File directory = new File(pathName);
+        if (! directory.exists()){
+            directory.mkdir();
+        }
         // Create output file and write the byte array
-        Path path = Path.of(pathName);
+        Path path = Path.of(pathName+"/"+fileName);
         try {
             Files.write(path, imageBytes);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        act.setActImage(pathName);
-        act.setActLocation(pathName);
+        act.setActImage(pathName2);
+
         return actRepository.save(act);
     }
 
@@ -85,12 +102,26 @@ public class ActService {
 
     }
 
-    public void deleteAct(int id) {
-        actRepository.deleteById(id);
-    }
+//    public void deleteAct(int id) {
+//        actRepository.deleteById(id);
+//    }
 
     public void updateActMessage(int id, byte messageState) {
-        actMessageRepository.updateMessageStateById(id, messageState);
+//        actMessageRepository.updateMessageStateById(id, messageState);
+        List<ActMessage> actMessages = actMessageRepository.findByMemId(0L);
+
+        Integer actMessageId=0;
+        for (ActMessage actMessage : actMessages) {
+
+                if (actMessage.getActId() == id) {
+                    actMessageId=actMessage.getId();
+                    break;
+                }
+
+        }
+
+        actMessageRepository.updateMessageStateById(actMessageId, messageState);
+
     }
 }
 
