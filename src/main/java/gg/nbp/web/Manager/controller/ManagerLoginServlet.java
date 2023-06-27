@@ -4,6 +4,8 @@ package gg.nbp.web.Manager.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +14,10 @@ import com.google.gson.JsonParser;
 
 import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.Manager.service.ManagerService;
+import gg.nbp.web.power.entity.Power;
+import gg.nbp.web.power.service.PowerService;
+import gg.nbp.web.power_of_manager.entity.Power_of_Manager;
+import gg.nbp.web.power_of_manager.service.Power_of_ManagerService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -25,6 +31,12 @@ public class ManagerLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	ManagerService service ;
+	
+	@Autowired
+	Power_of_ManagerService pomService;
+	
+	@Autowired
+	PowerService pService;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -63,9 +75,19 @@ public class ManagerLoginServlet extends HttpServlet {
 			if (request.getSession(false) != null) {
 				request.changeSessionId();
 			}
+			
+			final int loggedId= manager.getManager_id();
+			List<Power_of_Manager> pomListAll= pomService.findAll();
+			List<Power_of_Manager> loggedPomList = pomListAll.stream()
+                    .filter(pom -> (int)pom.getManager_id()== loggedId)
+                    .collect(Collectors.toList());
+			List<Power> powerList= pService.findAll();
+			
 			final HttpSession session = request.getSession();
 			session.setAttribute("manager_loggedin", true);
 			session.setAttribute("manager", manager);
+			session.setAttribute("loggedPomList", loggedPomList);
+			session.setAttribute("powerList", powerList);
 		}
 	    
 	    // 創建回應JSON數據

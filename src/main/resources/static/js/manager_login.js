@@ -23,11 +23,6 @@ $("input.login_btn1").on("click", () => {
                 sessionStorage.setItem('logged_account', account);
 
                 window.location.href = redirectUrl;
-
-                if (redirectUrl) {
-                    window.location.href = redirectUrl; // 進行重導
-                }
-
             } else {
                 alert("登入失敗")
             }

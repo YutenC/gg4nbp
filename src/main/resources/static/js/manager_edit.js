@@ -126,7 +126,7 @@
     edit_btn.addEventListener('click', () => {
 
         const pwdLength = manager_password.value.length;
-        if (pwdLength <= 6 || pwdLength >= 32) {
+        if (pwdLength < 6 || pwdLength > 32) {
             msg.textContent = '密碼長度須介於6~32字元';
             return;
         }
