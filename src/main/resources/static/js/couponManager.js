@@ -169,7 +169,7 @@ const vm = Vue.createApp({
 
         },
     },
-}).mount("#page-top");
+}).mount("#vue-body");
 
 // vm.$data.message = 'SSSSS';
 vm.getAllCouponActivity();
