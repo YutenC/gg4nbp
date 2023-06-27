@@ -30,4 +30,10 @@ public interface ProductService {
 
 
     List<Product> getProductByBuyTimes(Integer type);
+
+    List<Product> getProductByBuyTimes(Integer amount,Integer type);
+
+
+    int updateProductScore(Product product);
+    int updateProductAmountBuyTimes(Product product);
 }

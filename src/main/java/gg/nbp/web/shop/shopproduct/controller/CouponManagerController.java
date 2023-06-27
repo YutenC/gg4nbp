@@ -48,6 +48,9 @@ public class CouponManagerController {
         return out;
     }
 
+
+
+
     public String addCouponActivity(HttpSession session, String newCouponActivity) {
         System.out.println("addCouponActivity");
 
