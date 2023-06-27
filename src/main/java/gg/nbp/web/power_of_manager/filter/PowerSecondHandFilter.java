@@ -20,7 +20,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-//@WebFilter("/manager/ ")
+@WebFilter(urlPatterns = {
+		"/manager/sh_ordermanage.html",
+		"/manager/sh_productmanage.html",
+		"/manager/sh_productmanageAdd.html",
+		"/manager/sh_productmanageEdit.html"
+		})
 @Order(2)
 public class PowerSecondHandFilter extends HttpFilter implements Filter{
 	private static final long serialVersionUID = 1L;
