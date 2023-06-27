@@ -52,7 +52,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 				if (pd.getProductImages().isEmpty()) {
 					trPd.setProductImgUrl(null);
 				} else {
-					trPd.setProductImgUrl(pd.getPoImages().get(0).getImage());
+					trPd.setProductImgUrl(pService.getProductIndexImg(pd.getId()).getImage());
 				}
 				trPd.setStockAmount(pd.getAmount());
 				

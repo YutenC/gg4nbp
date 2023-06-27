@@ -31,6 +31,7 @@ import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
 import gg.nbp.web.shop.shopproduct.dao.CouponDao;
 import gg.nbp.web.shop.shopproduct.dao.ProductDao;
 import gg.nbp.web.shop.shopproduct.entity.Product;
+import gg.nbp.web.shop.shopproduct.service.ProductService;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -48,6 +49,8 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 	private CouponDao cpDao;
 	@Autowired
 	private JedisOrderMasterDao jdOmDao;
+	@Autowired
+	private ProductService productService;
 	
 	private Gson gson;
 	
@@ -307,7 +310,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 					if (pd.getProductImages().isEmpty()) {
 						trPd.setProductImgUrl(null);
 					} else {
-						trPd.setProductImgUrl(pd.getPoImages().get(0).getImage());
+						trPd.setProductImgUrl(productService.getProductIndexImg(pd.getId()).getImage());
 					}
 					trPd.setStockAmount(pd.getAmount());
 					
@@ -340,7 +343,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			if (pd.getProductImages().isEmpty()) {
 				trpd.setProductImgUrl(null);
 			} else {
-				trpd.setProductImgUrl(pd.getPoImages().get(0).getImage());
+				trpd.setProductImgUrl(productService.getProductIndexImg(pd.getId()).getImage());
 			}
 			trpd.setProductName(pd.getProductName());
 			trpd.setStockAmount(pd.getAmount());
@@ -356,13 +359,13 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 		try {
 			List<TransOrderProduct> trPdList = new ArrayList<>();
 			
-			List<Product> pdList = pdDao.selectByProductBuyTimes(recomendAmount, 0);
+			List<Product> pdList = pdDao.selectByBuyTimes(recomendAmount, "");
 			for (Product pd : pdList) {
 				TransOrderProduct trPd = new TransOrderProduct();
 				trPd.setPrice(pd.getPrice());
 				trPd.setProductId(pd.getId());
 				if (!pd.getProductImages().isEmpty()) {
-					trPd.setProductImgUrl(pd.getPoImages().get(0).getImage());
+					trPd.setProductImgUrl(productService.getProductIndexImg(pd.getId()).getImage());
 				}
 				trPd.setProductName(pd.getProductName());
 				

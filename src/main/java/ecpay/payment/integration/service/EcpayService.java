@@ -8,19 +8,15 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shop.product.dao.ProductDao;
-import com.shop.product.dao.impl.ProductDaoImpl;
-import com.shop.product.entity.Product;
-
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
 import gg.nbp.core.service.CoreService;
 import gg.nbp.web.shop.shoporder.dao.OrderDetailDao;
 import gg.nbp.web.shop.shoporder.dao.OrderMasterDao;
-import gg.nbp.web.shop.shoporder.dao.impl.OrderDetailDaoImple;
-import gg.nbp.web.shop.shoporder.dao.impl.OrderMasterDaoImpl;
 import gg.nbp.web.shop.shoporder.entity.OrderDetail;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
+import gg.nbp.web.shop.shopproduct.dao.ProductDao;
+import gg.nbp.web.shop.shopproduct.entity.Product;
 import jakarta.transaction.Transactional;
 
 @Service
