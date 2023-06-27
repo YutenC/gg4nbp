@@ -1,5 +1,6 @@
 package gg.nbp.web.Act.controller;
 
+
 import gg.nbp.web.Act.model.Act;
 import gg.nbp.web.Act.service.ActService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("/")
 @CrossOrigin
 public class ActController {
 
@@ -25,7 +26,7 @@ public class ActController {
 
 
     // 新增
-    @PostMapping("/a")
+    @PostMapping("/act")
     public Act processAct(@RequestBody Act act) {
         return actService.createAct(act);
     }
@@ -67,6 +68,6 @@ public class ActController {
 //        }
 //
 
-    }
+}
 
 
