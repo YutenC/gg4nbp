@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>shopIndex3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/shopSubNav.css">
+    <link rel="stylesheet" href="../css/shopIndexCmCarousel.css">
+    <link rel="stylesheet" href="../css/shopRightSideMiniMenu.css">
+    <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="../fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/shopMainNav.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Sans TC', 'sans-serif', 'open-sans';
+        }
+
+        body {
+            font-size: 0;
+            padding: 0;
+            background-color: #FCFCFC;
+        }
+
+        a {
+            color: #0066CC;
+        }
+
+        /*主呈現區*/
+        main {
+            margin: 10px 0 0 0;
+            padding: 130px 0 0 0;
+            font-size: 16px;
+        }
+
+        /*優惠券廣告*/
+        main div.couponCMContainer {
+            display: flex;
+            width: 98%;
+            height: 150px;
+            margin: 20px auto;
+            align-items: center;
+            background-color: #fff;
+            box-shadow: 1px 1px 3px 5px #FCFCFC;
+            border-radius: 3px 3px 5% 5%;
+            position: relative;
+        }
+
+        main div.couponCMContainer span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 5px;
+            color: #fff;
+            border-radius: 3px;
+            padding: 3px;
+        }
+
+        main div.couponCMContainer span:hover {
+            background-color: #82d6bd;
+        }
+
+
+        main div.couponCMContainer div.couponCM {
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+            margin: auto;
+            height: 90%;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .couponCMContainer div.couponCM img {
+            max-height: 100%;
+            width: 100%;
+            height: auto;
+        }
+
+        /*商品展示區*/
+        .mainlist {
+            width: 80%;
+            margin: auto;
+            box-shadow: 1px 1px 3px 2px #FCFCFC;
+            margin-bottom: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .mainlist>span {
+            margin: 5px;
+            width: 10%;
+            text-align: left;
+            margin: 5px;
+        }
+
+        .mainlist span a {
+            display: inline-block;
+            width: 75px;
+            padding: 3px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .mainlist>span a:hover {
+            color: #fff;
+            background-color: #82d6bd;
+        }
+
+        .product {
+            width: 80%;
+            margin: auto;
+        }
+
+        .product ul {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            list-style: none;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product ul li {
+            width: 25%;
+            margin: 0 10px;
+            height: 90%;
+        }
+
+        .product ul li a {
+            display: inline-block;
+            height: 80%;
+            width: 100%;
+        }
+
+        .product ul li img {
+            display: block;
+            max-width: 100%;
+            height: 200px;
+            margin: auto;
+            object-fit: scale-down;
+        }
+
+        .product ul li .productname {
+            height: 20%;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        footer {
+            font-size: 16px;
+            text-align: center;
+            padding: 5px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="subNav">
+            <div class="contact"><a href=""><img class="icons" src="../img/icon/square-envelope-solid.svg" alt=""></a><a
+                    href=""><img class="icons" src="../img/icon/square-facebook.svg" alt=""></a><a href=""><img <<<<<<<
+                        HEAD:src/main/webapp/shop/shopIndex3.html class="icons" src="../img/icon/square-instagram.svg"
+                        alt=""></a></div>
+            =======
+            class="icons" src="../img/icon/square-instagram.svg" alt=""></a>
+            </div>
+            >>>>>>> origin/seagal:src/main/webapp/html/shopIndex3.html
+        </nav>
+        <nav class="mainNav">
+            <a href="" class="logo"><img src="../img/Logo-removebg.png" alt=""></a>
+            <ul class="productline">
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">NS</a>
+                        <div class="dropdown-content">
+                            <a href="#">遊戲軟體</a>
+                            <a href="#">遊戲主機</a>
+                            <a href="#">周邊設備</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">PS</a>
+                        <div class="dropdown-content">
+                            <a href="#">遊戲軟體</a>
+                            <a href="#">遊戲主機</a>
+                            <a href="#">周邊設備</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">XBOX</a>
+                        <div class="dropdown-content">
+                            <a href="#">遊戲軟體</a>
+                            <a href="#">遊戲主機</a>
+                            <a href="#">周邊設備</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a href="" class="dropbtn">二手交易</a>
+                        <div class="dropdown-content">
+                            <a href="#">購買二手商品</a>
+                            <a href="#">我要販售二手商品</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <form action="shopProductList.html" class="search">
+                        <select name="productCondition" class="productCondition">
+                            <option value="new">新品</option>
+                            <option value="secondhand">二手商品</option>
+                        </select>
+                        <input name="keyword" class="searchinput" type="text" placeholder="請輸入商品名稱或關鍵字">
+                        <button type="submit" class="searchicon">
+                            <img class="icons" src="../img/icon/magnifying-glass-solid.svg" alt=""></button>
+                    </form>
+                </li>
+            </ul>
+            <div class="helping">
+                <div>
+                    <div class="centerFunc">
+                        <a href="">
+                            <img class="bigicon" src="../img/icon/newspaper-regular.svg" alt="">
+                            <span>論壇社群</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
+                            <span>活動專區</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
+                            <span>會員登入</span>
+                        </a>
+                        <a href="">
+                            <img class="bigicon" src="../img/icon/handshake-simple-solid.svg" alt="">
+                            <span>客服中心</span>
+                        </a>
+                    </div>
+                    <a href="">
+                        <img class="bigicon" src="../img/icon/cart-shopping-solid.svg" alt="">
+                        <span>購物車</span>
+                    </a>
+                    <a href="" class="funcSelect">
+                        <img class="bigicon on" src="../img/icon/bars-solid.svg" alt="">
+                        <img class="bigicon" src="../img/icon/square-caret-left-regular.svg" alt="">
+                        <span>功能選單</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="CM mainlist">
+            <div class="slideshow-container">
+
+                <div class="mySlides fade">
+                    <div class="numbertext">第一張</div>
+                    <img src="../img/gameSoftware/PS5/RessidentEvilVillage/3.jpg">
+                    <div class="text">商品說明文字</div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">第二張</div>
+                    <img src="../img/gameSoftware/Nitendo/NoPlaceLikeHome/6aaa6ba4e72083b4a131b480aa1l9ru5.jpg">
+                    <div class="text">商品說明文字</div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">第三張</div>
+                    <img src="../img/gameSoftware/Xbox/APlagueTaleRequiem/71f1f728084288700f873190711eniv5.jpg">
+                    <div class="text">商品說明文字</div>
+                </div>
+
+                <!-- Next and previous buttons -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                <!-- The dots/circles -->
+                <div class="dots" style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </div>
+        <div class="shopmain">
+            <div class="miniMenu">
+                <div class="miniMenuContent">
+                    <div class="viewRecord">
+                        <a href=""><img
+                                src="../img/gameSoftware/Nitendo/NoPlaceLikeHome/8d49654f86cee337e2a7317d031l9ro5.jpg"
+                                alt=""></a>
+                        <a href=""><img src="../img/peripherals/Nintendo/Zelda/335ced22c1dbccd628a4001e9a1l4xo5.jpg"
+                                alt=""></a>
+                        <a href=""><img src="../img/peripherals/Nintendo/Zelda/4262aa92a53a61f67e57e46e0b1l4tv5.jpg"
+                                alt=""></a>
+                    </div>
+                    <div class="miniMenuBut">
+                        <a href="" class="goTop"><img src="../img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
+                        <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
+                        <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="couponCMContainer">
+                <span>領取優惠券</span>
+                <div class="couponCM">
+                    <a href="">
+                        <img src="../img/gameSoftware/Nitendo/Zelda/c59e85747d3493c9e1bae630d61i82i5.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="mainlist">
+                <span><a href="">熱銷商品</a></span>
+                <div class="product">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/Nitendo/Zelda/81e40b6f7d7f88d24e680c7ddc1kz8f5.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssssssssssssssssss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/PS5/NarutoXBoruto/b188a106bf4ea35363463e47fc1l9i05.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：一二三 ddsfdfdsfsfd五六七拉fssssssssssssssssssssss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfsssssssssssssss六七發九時一一sss五六七八sss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/Xbox/APlagueTaleRequiem/71f1f728084288700f873190711eniv5.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssu -4n0 sfdsdf3一二三四ssssssssssssssss
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mainlist">
+                <span><a href="">新品</a></span>
+                <div class="product">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/Nitendo/Zelda/81e40b6f7d7f88d24e680c7ddc1kz8f5.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssssssssssssssssss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/PS5/NarutoXBoruto/b188a106bf4ea35363463e47fc1l9i05.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：一二三 ddsfdfdsfsfd五六七拉fssssssssssssssssssssss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfsssssssssssssss六七發九時一一sss五六七八sss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/Xbox/APlagueTaleRequiem/71f1f728084288700f873190711eniv5.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssu -4n0 sfdsdf3一二三四ssssssssssssssss
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mainlist">
+                <span><a href="">商城商品</a></span>
+                <div class="product">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/Nitendo/Zelda/81e40b6f7d7f88d24e680c7ddc1kz8f5.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssssssssssssssssss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/PS5/NarutoXBoruto/b188a106bf4ea35363463e47fc1l9i05.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：一二三 ddsfdfdsfsfd五六七拉fssssssssssssssssssssss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfsssssssssssssss六七發九時一一sss五六七八sss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/Xbox/APlagueTaleRequiem/71f1f728084288700f873190711eniv5.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssu -4n0 sfdsdf3一二三四ssssssssssssssss
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mainlist">
+                <span><a href="">二手商品</a></span>
+                <div class="product">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/Nitendo/Zelda/81e40b6f7d7f88d24e680c7ddc1kz8f5.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssssssssssssssssss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/PS5/NarutoXBoruto/b188a106bf4ea35363463e47fc1l9i05.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：一二三 ddsfdfdsfsfd五六七拉fssssssssssssssssssssss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfsssssssssssssss六七發九時一一sss五六七八sss
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../img/gameSoftware/Xbox/APlagueTaleRequiem/71f1f728084288700f873190711eniv5.jpg"
+                                    alt="商品圖片">
+                            </a>
+                            <a href="" class="productname">
+                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssu -4n0 sfdsdf3一二三四ssssssssssssssss
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
+    <script src="../js/shopIndexCmCarousel.js"></script>
+    <script src="../js/shopRightSideMiniMenu.js"></script>
+    <script src="../js/shopMainNavSearchBar.js"></script>
+    <script src="../js/shopNavBarShowup.js"></script>
+    <script src="../js/shopMainNavHelping.js"></script>
+</body>
+
+</html>
