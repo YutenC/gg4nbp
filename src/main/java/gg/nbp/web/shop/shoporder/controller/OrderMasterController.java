@@ -476,6 +476,8 @@ public class OrderMasterController extends HttpServlet {
 			
 			resOM.setOrderId(om.getOrderId());
 			
+			resOM.setGetBonus((int) (om.getTotalPrice() * 0.05));
+			
 			List<TransOrderProduct> odProducts = orderDetailService.getOrderDetailByOrderId(om.getOrderId());
 			resOM.setOdProducts(odProducts);
 			

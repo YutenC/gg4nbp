@@ -288,13 +288,12 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			List<OrderMaster> omlist = omdao.selectWithConditionAndLimitOffset(whereCondition, limitAndOffset);
 			for (OrderMaster om : omlist) {
 				MemberViewOrder mvod = new MemberViewOrder();
-				om.setDeliverNumber("");
-				om.setBonusUse(0);
 				mvod.setOrderMaster(om);
 				if (om.getCouponId() != null) {
 					mvod.setCoupon(cpDao.selectById(om.getCouponId()));
 				}
 				
+				mvod.setGetBonus((int)(om.getTotalPrice() * 0.05));
 				List<TransOrderProduct> trProdcuts = new ArrayList<>();
 				List<OrderDetail> orderDetails = odDao.selectByOrderId(om.getOrderId());
 				for (OrderDetail od : orderDetails) {

@@ -1,8 +1,8 @@
 // 路徑常數
 const href = window.location.href;
 const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
-const projectFolder = '/Five_NBP.gg';
+const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 11);
+const projectFolder = '/gg4nbp';
 
 const memberOrder = Vue.createApp({
     data() {
@@ -111,10 +111,3 @@ window.addEventListener('scroll', function () {
         scrollList();
     }
 });
-
-// 測試能否解決快取造成的頁面資訊顯示錯誤
-window.onpageshow = function (event) {
-    if (event.persisted) {
-        window.location.reload()
-    }
-};

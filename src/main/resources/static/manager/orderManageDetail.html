@@ -45,8 +45,14 @@
             margin: 10px;
         }
 
+        .card-header button {
+            border: 0;
+            border-radius: 5px;
+        }
+
         .deliver input[type="text"] {
             width: 150px;
+            margin-right: 10px;
         }
 
         .deliver span {
@@ -192,6 +198,7 @@
                             <i class="fas fa-bars"></i>
                         </button>
                         <h3 class="navbar-nav flex-nowrap text-dark mb-0 nav-bar-top">頁面標題</h3>
+                        </h3>
                         <ul class="navbar-nav flex-nowrap ms-auto nav-bar-top">
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow">
@@ -300,7 +307,7 @@
                                     <span>運費：$<span>{{ order.deliverFee }}</span></span>
                                     <label for="deliverNumber">填入物流編號：</label>
                                     <input type="text" id="deliverNumber" v-model="updateOrder.deliverNumber">
-                                    <span>出貨狀態：{{ showDeliverState[updateOrder.deliverState] }}</span>
+                                    <span>出貨狀態：</span>
                                     <select name="deliverState" id="" v-model="updateOrder.deliverState">
                                         <option value="0">未出貨</option>
                                         <option value="1">已出貨</option>
@@ -309,6 +316,11 @@
                                 </div>
                                 <div class="payment">
                                     <span>付款方式：<span>{{ showCommitType[order.commitType] }}</span></span>
+                                    <select name="payStatus" id="" v-model="updateOrder.payStatus">
+                                        <option value="1">待付款</option>
+                                        <option value="2">已付款</option>
+                                        <option value="3">貨到付款</option>
+                                    </select>
                                 </div>
                                 <div>
                                     訂單總價：$<strong>{{ order.totalPrice }}</strong>
@@ -323,7 +335,7 @@
                                 </div>
                                 <div>
                                     <button @click="confirm()">確認修改訂單</button>
-                                    <button @click="cancel()">取消修改</button>
+                                    <button @click="cancel()">重置輸入項目</button>
                                 </div>
                             </div>
                         </div>
