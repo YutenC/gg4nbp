@@ -39,6 +39,10 @@ public interface SecondhandProductDao extends CoreDao<SecondhandProduct, Integer
 
     List<SecondhandProduct> selectLaunch();
 
+    List<SecondhandProduct> searchType(String type);
+
+    List<SecondhandProduct> searchKeyWord(String keyword);
+
 
 }
 

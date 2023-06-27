@@ -119,6 +119,16 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
         return shpdao.selectLaunch();
     }
 
+    @Override
+    public List<SecondhandProduct> searchByType(String type) {
+        return  shpdao.searchType(type);
+    }
+
+    @Override
+    public List<SecondhandProduct> searchByName(String keyword) {
+        return shpdao.searchKeyWord(keyword);
+    }
+
 
     //================圖片======================
 

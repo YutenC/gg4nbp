@@ -89,4 +89,20 @@ public class SecondhandProductDaoImpl implements SecondhandProductDao {
     }
 
 
+    @Override
+    public List<SecondhandProduct> searchType(String type) {
+        String sql = "select * from secondhand_product where Type = :type";
+        List <SecondhandProduct> result = session.createNativeQuery(sql, SecondhandProduct.class).setParameter("type", type).getResultList();
+        return result;
+    }
+
+    @Override
+    public List<SecondhandProduct> searchKeyWord(String keyword) {
+        String sql = "select * from secondhand_product where Name like CONCAT('%',:keyword, '%',)";
+        List <SecondhandProduct> result = session.createNativeQuery(sql, SecondhandProduct.class).setParameter("keyword", keyword).getResultList();
+        return result;
+
+    }
+
+
 }

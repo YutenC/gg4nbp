@@ -20,6 +20,11 @@ public interface SecondhandProductService {
 
     List<SecondhandProduct> searchLaunch();
 
+    List<SecondhandProduct> searchByType(String type);
+
+    List<SecondhandProduct> searchByName(String keyword);
+
+
 
 
     public boolean insertimg(SecondhandProductImage img , Integer id);
