@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>NPB.GG管理系統</title>
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min_backend.css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel="stylesheet" href="./fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="./fonts/material-icons.min.css">
-    <link rel="stylesheet" href="./css/x-dropdown.css">
-    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../fonts/material-icons.min.css">
+    <link rel="stylesheet" href="../css/x-dropdown.css">
+    <link rel="stylesheet" href="../css/custom.css">
 </head>
 
 <body id="page-top">
@@ -21,7 +21,7 @@
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-icon ">
-                        <img class="" src="./img/Logo-removebg.png">
+                        <img class="" src="../img/Logo-removebg.png">
                     </div>
                     <div class="sidebar-brand-text mx-3">
                         <span>NBP.GG管理</span>
@@ -138,7 +138,8 @@
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
                                         href="#">
                                         <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                        <img class="border rounded-circle img-profile" src="./img/avatars/avatar1.jpeg">
+                                        <img class="border rounded-circle img-profile"
+                                            src="../img/avatars/avatar1.jpeg">
                                     </a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                         <a class="dropdown-item" href="#">
@@ -292,11 +293,15 @@
                                             <tr v-for="item in couponActivity">
                                                 <td>{{item.activityName}}</td>
                                                 <td>{{item.activityCode}}</td>
-                                                <td>{{item.coupon.discountCode}}</td>
+                                                <td><input v-model="item.coupon.discountCode" type="text"></td>
+                                                <!--                                                <td>{{item.coupon.discountCode}}</td>-->
                                                 <td>{{item.coupon.discount}}</td>
                                                 <td>{{item.coupon.conditionPrice}}</td>
                                                 <td>{{item.coupon.deadline}}</td>
 
+                                                </td>
+                                                <td><button style="width: 50px; height: 20px;"
+                                                        @click="updateCouponActivity(item.coupon.id)">更新</button>
                                                 </td>
                                                 <td><button style="width: 50px; height: 20px;"
                                                         @click="deleteCouponActivity(item.coupon.id)">刪除</button>
@@ -379,12 +384,12 @@
 
 </body>
 
-<script src="./bootstrap/js/bootstrap.min.js"></script>
-<script src="./js/theme.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/theme.js"></script>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="module" src="./js/couponManager.js"></script>
+<script type="module" src="../js/couponManager.js"></script>
 
 
 

@@ -5,14 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>NPB.GG管理系統1</title>
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min_backend.css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel="stylesheet" href="./fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="./fonts/material-icons.min.css">
-    <link rel="stylesheet" href="./css/x-dropdown.css">
-    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../fonts/material-icons.min.css">
+    <link rel="stylesheet" href="../css/x-dropdown.css">
+    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../css/productManagerMain.css">
 </head>
+
 
 <body id="page-top">
     <div id="wrapper">
@@ -21,7 +23,7 @@
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-icon ">
-                        <img class="" src="./img/Logo-removebg.png">
+                        <img class="" src="../img/Logo-removebg.png">
                     </div>
                     <div class="sidebar-brand-text mx-3">
                         <span>NBP.GG管理</span>
@@ -122,7 +124,7 @@
                 </ul>
             </div>
         </nav>
-        <!-- 左方導覽欄 -->
+
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <!-- 上方導覽欄 -->
@@ -138,7 +140,8 @@
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
                                         href="#">
                                         <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                        <img class="border rounded-circle img-profile" src="./img/avatars/avatar1.jpeg">
+                                        <img class="border rounded-circle img-profile"
+                                            src="../img/avatars/avatar1.jpeg">
                                     </a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                         <a class="dropdown-item" href="#">
@@ -166,14 +169,18 @@
                         </ul>
                     </div>
                 </nav>
-                <!-- 上方導覽欄 -->
+
+
+                <div class="mainguide">
+                    <ul>
+                        <li v-for="item in mainguideContent" @click="changeMainContent(item.id)">
+                            <span>{{item.text}}</span>
+                        </li>
+                    </ul>
+                </div>
+
 
                 <div class="container-fluid">
-                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" @click="createProductFromcsv()" >
-                            檔案讀取
-                        </a>
-                    </div>
 
                     <!-- card shadow 視窗整體
                     mb-4 視窗間間距
@@ -192,94 +199,147 @@
                         </div>
                     </div> -->
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">新增商品</p>
-                        </div>
-                        <div class="table-responsive table mt-2" id="dataTable" role="grid"
-                            aria-describedby="dataTable_info">
-                            <table class="table my-0" id="dataTable">
-                                <thead>
-                                    <tr>
-                                        <td><strong>產品名稱</strong></td>
-                                        <td><strong>產品分類</strong></td>
-                                        <td><strong>產品價格</strong></td>
-                                        <td><strong>產品品牌</strong></td>
-                                        <td><strong>產品庫存</strong></td>
-                                        <td><strong>產品上架日期</strong></td>
-                                        <td><strong>產品上架</strong></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-
-                                        <td><input v-model.lazy="newProduct.productName"
-                                                class="form-control form-control-sm"></td>
-                                        <td><input v-model.lazy="newProduct.type" class="form-control form-control-sm">
-                                        </td>
-                                        <td><input v-model.lazy="newProduct.price" class="form-control form-control-sm">
-                                        </td>
-                                        <td><input v-model.lazy="newProduct.brand" class="form-control form-control-sm">
-                                        </td>
-                                        <td><input v-model.lazy="newProduct.amount"
-                                                class="form-control form-control-sm"></td>
-                                        <td><input type="date" v-bind:value="newProduct.launchTime"
-                                                v-bind:min="minDate" v-model.lazy="newProduct.launchTime"
-                                                class="form-control form-control-sm">
-                                        </td>
-
-                                        <td><button class="d-sm-flex justify-content-between align-items-center mb-4"
-                                                @click="takeOnProduct()">新增</button>
-                                        </td>
-
-                                    </tr>
 
 
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td><strong>產品名稱</strong></td>
-                                        <td><strong>產品分類</strong></td>
-                                        <td><strong>產品價格</strong></td>
-                                        <td><strong>產品品牌</strong></td>
-                                        <td><strong>產品庫存</strong></td>
-                                        <td><strong>產品上架日期</strong></td>
-                                        <td><strong>產品上架</strong></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                    <div v-if="currentMainguideContent==1">
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 fw-bold">一般商城商品</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 text-nowrap">
+                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                            <label class="form-label">Show&nbsp;
+                                                <select class="d-inline-block form-select form-select-sm">
+                                                    <option value="10" selected="">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>&nbsp;
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                            <label class="form-label">
+                                                <input type="search" class="form-control form-control-sm"
+                                                    aria-controls="dataTable" placeholder="Search">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                                    aria-describedby="dataTable_info">
+                                    <table class="table my-0" id="dataTable">
+                                        <thead>
+                                            <tr>
+                                                <td><strong>產品名稱</strong></td>
+                                                <td><strong>產品分類</strong></td>
+                                                <td><strong>產品價格</strong></td>
+                                                <td><strong>產品庫存</strong></td>
+                                                <td><strong>產品購買數量</strong></td>
+                                                <td><strong>產品品牌</strong></td>
+                                                <td><strong>產品總評價</strong></td>
+                                                <td><strong>產品評價人數</strong></td>
+                                                <td><strong>產品上架日期</strong></td>
+                                                <td><strong>產品上架</strong></td>
+                                                <td><strong>產品下架日期</strong></td>
+                                                <td><strong>產品下架</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="item in products">
+                                                <!-- <td><img class="rounded-circle me-2" width="30" height="30"
+                                                        src="images/avatars/avatar1.jpeg">Airi Satou</td> -->
+                                                <td>{{item.productName}}</td>
+                                                <td>{{item.type}}</td>
+                                                <td>{{item.price}}</td>
+                                                <td>{{item.amount}}</td>
+                                                <td>{{item.buyTimes}}</td>
+                                                <td>{{item.brand}}</td>
+                                                <td>{{item.rate}}</td>
+                                                <td>{{item.revieweCount}}</td>
+                                                <td>{{item.launchTime}}</td>
+                                                <td><button style="width: 40px; height: 20px;"
+                                                        @click="takeOnProduct(item.id)"></button></td>
+                                                <td><input type="date" v-bind:value="takeOffTime" v-bind:min="minDate"
+                                                        v-model.lazy="takeOffTime" class="form-control form-control-sm">
+                                                </td>
+                                                <td><button style="width: 40px; height: 20px;"
+                                                        @click="takeOffProduct(item.id)"></button></td>
+                                            </tr>
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td><strong>產品名稱</strong></td>
+                                                <td><strong>產品分類</strong></td>
+                                                <td><strong>產品價格</strong></td>
+                                                <td><strong>產品庫存</strong></td>
+                                                <td><strong>產品購買數量</strong></td>
+                                                <td><strong>產品品牌</strong></td>
+                                                <td><strong>產品總評價</strong></td>
+                                                <td><strong>產品評價人數</strong></td>
+                                                <td><strong>產品上架日期</strong></td>
+                                                <td><strong>產品上架</strong></td>
+                                                <td><strong>產品下架日期</strong></td>
+                                                <td><strong>產品下架</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 align-self-center">
+                                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                                            Showing 1 to 10 of 27</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <nav
+                                            class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                            <ul class="pagination">
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" aria-label="Previous" href="#">
+                                                        <span aria-hidden="true">«</span>
+                                                    </a>
+                                                </li>
+
+
+
+                                                <li class="page-item " v-for="index in 3" :key="index">
+                                                    <a class="page-link" @click="pageBtn(index)" href="#">{{index}}</a>
+                                                </li>
+                                                <!-- <li class="page-item active">
+                                                    <a class="page-link" href="#">2</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">3</a>
+                                                </li> -->
+                                                <li class="page-item">
+                                                    <a class="page-link" aria-label="Next" href="#">
+                                                        <span aria-hidden="true">»</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
-
-
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">一般商城商品</p>
+                    <div v-else-if="currentMainguideContent==2">
+                        <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                            <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button"
+                                @click="createProductFromcsv()">
+                                檔案讀取
+                            </a>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm"
-                                                aria-controls="dataTable" placeholder="Search">
-                                        </label>
-                                    </div>
-                                </div>
+
+
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 fw-bold">新增商品</p>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid"
                                 aria-describedby="dataTable_info">
@@ -289,30 +349,43 @@
                                             <td><strong>產品名稱</strong></td>
                                             <td><strong>產品分類</strong></td>
                                             <td><strong>產品價格</strong></td>
-                                            <td><strong>產品庫存</strong></td>
-                                            <td><strong>產品購買數量</strong></td>
                                             <td><strong>產品品牌</strong></td>
-                                            <td><strong>產品總評價</strong></td>
-                                            <td><strong>產品評價人數</strong></td>
+                                            <td><strong>產品庫存</strong></td>
+                                            <td><strong>產品內容</strong></td>
                                             <td><strong>產品上架日期</strong></td>
-                                            <td><strong>產品下架</strong></td>
+                                            <td><strong>新增產品</strong></td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in products">
-                                            <!-- <td><img class="rounded-circle me-2" width="30" height="30"
-                                                    src="images/avatars/avatar1.jpeg">Airi Satou</td> -->
-                                            <td>{{item.productName}}</td>
-                                            <td>{{item.type}}</td>
-                                            <td>{{item.price}}</td>
-                                            <td>{{item.amount}}</td>
-                                            <td>{{item.buyTimes}}</td>
-                                            <td>{{item.brand}}</td>
-                                            <td>{{item.rate}}</td>
-                                            <td>{{item.revieweCount}}</td>
-                                            <td>{{item.launchTime}}</td>
-                                            <td><button style="width: 40px; height: 20px;"
-                                                    @click="takeOffProduct(item.id)"></button></td>
+                                        <tr>
+
+                                            <td><input v-model.lazy="newProduct.productName"
+                                                    class="form-control form-control-sm"></td>
+                                            <td><input v-model.lazy="newProduct.type"
+                                                    class="form-control form-control-sm">
+                                            </td>
+                                            <td><input v-model.lazy="newProduct.price"
+                                                    class="form-control form-control-sm">
+                                            </td>
+                                            <td><input v-model.lazy="newProduct.brand"
+                                                    class="form-control form-control-sm">
+                                            </td>
+                                            <td><input v-model.lazy="newProduct.amount"
+                                                    class="form-control form-control-sm"></td>
+
+                                            <td><input v-model.lazy="newProduct.content"
+                                                    class="form-control form-control-sm">
+                                            </td>
+                                            <td><input type="date" v-bind:value="newProduct.launchTime"
+                                                    v-bind:min="minDate" v-model.lazy="newProduct.launchTime"
+                                                    class="form-control form-control-sm">
+                                            </td>
+
+                                            <td><button
+                                                    class="d-sm-flex justify-content-between align-items-center mb-4"
+                                                    @click="addProduct()">新增</button>
+                                            </td>
+
                                         </tr>
 
 
@@ -322,51 +395,46 @@
                                             <td><strong>產品名稱</strong></td>
                                             <td><strong>產品分類</strong></td>
                                             <td><strong>產品價格</strong></td>
-                                            <td><strong>產品庫存</strong></td>
-                                            <td><strong>產品購買數量</strong></td>
                                             <td><strong>產品品牌</strong></td>
-                                            <td><strong>產品總評價</strong></td>
-                                            <td><strong>產品評價人數</strong></td>
+                                            <td><strong>產品庫存</strong></td>
+                                            <td><strong>產品內容</strong></td>
                                             <td><strong>產品上架日期</strong></td>
-                                            <td><strong>產品下架</strong></td>
+                                            <td><strong>新增產品</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of 27</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav
-                                        class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" aria-label="Previous" href="#">
-                                                    <span aria-hidden="true">«</span>
-                                                </a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" aria-label="Next" href="#">
-                                                    <span aria-hidden="true">»</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
+
+                            <div>產品照片</div>
+                            <!-- <form action="" method="POST" enctype="multipart/form-data">
+                                <input type="file" name="file" />
+                                <input type="submit" value="Upload" />
+                            </form> -->
+                            <div>
+                                <input type="file" name="file" @change="onFileChange($event.target)" />
+                                <!-- <button id="imgSubmit" @click="imgSubmit">Upload</button> -->
+                                <!-- <input type="file" name="file" onchange="onFileChange(this)" /> -->
+                            </div>
+
+                            <div v-for="item in newProductImg">
+                                <img class="newProductImg" :src=item.image>
                             </div>
                         </div>
                     </div>
+                    <div v-else="currentMainguideContent==3">
+                        vv
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
 
@@ -383,15 +451,24 @@
             <i class="fas fa-angle-up"></i>
         </a>
     </div>
+
+
+
     <!-- JavaScript JS放置區 -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/theme.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
     <!-- JavaScript JS放置區 -->
 </body>
 
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="module" src="js/productManager.js"></script>
+<script type="module" src="../js/productManager.js"></script>
+<!-- <script src="../js/productManager2.js"></script> -->
+
+
+<script>
+
+</script>
 
 </html>
