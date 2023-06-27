@@ -659,6 +659,30 @@
 
 
 
+    fetch('selectAll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                str: $('#searchValue').val()
+            })
+        })
+
+            .then(resp => resp.json())
+            .then(obj => {
+                $('#searchValue').val("");
+                reqaa = obj;
+                if (obj.str) {
+                    Swal.fire({
+                        icon: 'question',
+                        title: obj.str
+                    }
+                    )
+                } else {
+                    sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                    itemDisplay();
+                }
+            })
+
 
 
 

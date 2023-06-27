@@ -45,8 +45,8 @@ public class AddEvent extends HttpServlet  {
 		
 		try {
 			SecondhandBuylist buylist = json2pojo(req, SecondhandBuylist.class);
-			/* 對資料驗證是否為空值，如果空值丟出例外直接跳到catch*/
 			
+			/* 對資料驗證是否為空值，如果空值丟出例外直接跳到catch*/
 			String[] checks = {	buylist.getProductName(),
 								buylist.getContent(),
 								buylist.getApplicantBankNumber()};

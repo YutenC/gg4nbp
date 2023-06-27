@@ -18,6 +18,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 
 @WebServlet("/secondhand/select")
@@ -33,22 +34,32 @@ public class Select extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		
-		String str = CommonUtil.json2pojo(req, OneString.class).getStr();
 		
-		try {
-			str = str.trim();
-			Integer id = Integer.parseInt(str);
-			CommonUtil.writepojo2Json(resp, service.searchById(id));
-		} catch (Exception e) {
-			e.printStackTrace();
-			// 代表搜尋的字串不是數字 或是 數字查無結果
+		
+		HttpSession session = req.getSession();
+		Boolean isManage = (Boolean)session.getAttribute("manager_loggedin");
+		if(Boolean.TRUE.equals(isManage)) {
+			String str = CommonUtil.json2pojo(req, OneString.class).getStr();
+			
 			try {
-				CommonUtil.writepojo2Json(resp, service.searchByName(str));
-			} catch (Exception ee) {
-				ee.printStackTrace();
-				CommonUtil.writepojo2Json(resp, new OneString("查無結果"));
+				str = str.trim();
+				Integer id = Integer.parseInt(str);
+				CommonUtil.writepojo2Json(resp, service.searchById(id));
+			} catch (Exception e) {
+//			e.printStackTrace();
+				// 代表搜尋的字串不是數字 或是 數字查無結果
+				try {
+					CommonUtil.writepojo2Json(resp, service.searchByName(str));
+				} catch (Exception ee) {
+//				ee.printStackTrace();
+					CommonUtil.writepojo2Json(resp, new OneString("查無結果"));
+				}
 			}
-		}
+			
+		}else
+			CommonUtil.writepojo2Json(resp, new OneString("非管理員"));
+		
+		
 	}
 	
 	
@@ -56,14 +67,14 @@ public class Select extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		
-		/* 主檔名 */
+			/* 主檔名 */
 		String imgName = req.getParameter("imgname");
 		
 		try {
 			/* 副檔名 */
 			resp.setContentType("image/gif");
 		} catch (Exception e) {
-			// 沒有副檔名
+			/* 沒有副檔名 */
 			resp.setCharacterEncoding("UTF-8");
 			CommonUtil.writepojo2Json(resp, new OneString("無效檔案"));
 		}
@@ -75,7 +86,7 @@ public class Select extends HttpServlet {
 		try (ServletOutputStream out = resp.getOutputStream();BufferedInputStream bis = new BufferedInputStream(new FileInputStream(src))){
 			out.write(bis.readAllBytes());
 		} catch (Exception e) {
-		e.printStackTrace();
+//		e.printStackTrace();
 		}
 		
 	}
