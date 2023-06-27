@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import gg.nbp.web.Member.dao.MemberDao;
+import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
@@ -94,6 +95,29 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		return listDTO;
 	}
 
+	/* 用會員搜尋全部 */
+	@Override
+	public List<BuyEvent> searchAll(Member member) throws SQLException {
+		/* 建立回傳用的List */
+		List<BuyEvent> listDTO = new ArrayList<>();
+		
+		/**************************************************************************************
+		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
+		 * 抓回來的結果，將其轉化為 DTO
+		 **************************************************************************************/
+		// 有辦法優化 ?
+		for (SecondhandBuylist sl : dao.selectByMemberId(member.getMember_id())) {
+			sl.setImage(selectimg(sl));
+			listDTO.add(new BuyEvent(sl,daoMember));
+		}
+
+		/* 如果抓到 0 筆資料，則拋出例外 */
+		if (listDTO.size() == 0)
+			throw new SQLException();
+
+		/* 回傳 */
+		return listDTO;
+	}
 	
 	/* ID 搜尋 */
 	@Override
@@ -105,8 +129,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		return list;
 	}
 	
-	
-	/* 名字搜尋 */
+	/* 商品名字搜尋 */
 	@Override
 	public List<BuyEvent> searchByName(String name) throws SQLException {
 		/* 建立回傳用的List */
@@ -135,6 +158,33 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		return listDTO;
 	}
 	
+	/* 商品名字搜尋(會員) */
+	@Override
+	public List<BuyEvent> searchByName(String name, Member member) throws SQLException {
+		
+		/* 建立回傳用的List */
+		List<BuyEvent> listDTO = new ArrayList<>();
+		
+		/* 如果傳入空字串，就去搜尋全部*/
+		if(name.isEmpty())
+			return searchAll(member);
+		
+		/**************************************************************************************
+		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
+		 * 抓回來的結果，將其轉化為 DTO
+		 **************************************************************************************/
+		for (SecondhandBuylist sl : dao.selectByName4Member(name,member.getMember_id())) {
+			sl.setImage(selectimg(sl));
+			listDTO.add(new BuyEvent(sl,daoMember));
+		}
+		
+		/* 如果抓到 0 筆資料，則拋出例外 */
+		if (listDTO.size() == 0)
+			throw new SQLException();
+		
+		/* 回傳 */
+		return listDTO;
+	}
 	
 	/* 交易控制 : 修改資料 */
 	@Transactional
@@ -143,6 +193,12 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		dao.update(BuyEvent.toSecondhandBuylist(be, dao));
 		return searchById(be.getEventId());
 	}
+	
+	
+
+	
+	
+	
 	
 	
 	public void insertimg(SecondhandBuyPicture img, Integer id) {
@@ -162,8 +218,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		return daoPic.selectBylistId(s.getBuylistId());
 	}
 
-	
-
 	public boolean delImg(SecondhandBuyPicture s) {
 		daoPic.deleteById(s.getImageId());
 		return true;
@@ -173,6 +227,8 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		dao.deleteById(sl.getBuylistId());
 		return true;
 	}
+
+	
 
 	
 	

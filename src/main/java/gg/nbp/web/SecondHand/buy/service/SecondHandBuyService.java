@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import gg.nbp.core.service.CoreService;
+import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 
@@ -18,7 +19,11 @@ public interface SecondHandBuyService extends CoreService {
 	
 	public List<BuyEvent> searchByName(String str) throws SQLException;
 	
+	public List<BuyEvent> searchByName(String str,Member member) throws SQLException;
+	
 	public List<BuyEvent> searchAll() throws SQLException ;
+	
+	public List<BuyEvent> searchAll(Member member) throws SQLException ;
 	
 	public List<BuyEvent> update(BuyEvent be);
 	

@@ -34,7 +34,7 @@ public class AddEvent extends HttpServlet  {
 		req.setCharacterEncoding("UTF-8"); 
 		resp.setCharacterEncoding("UTF-8");
 		
-		final HttpSession session = req.getSession();
+		HttpSession session = req.getSession();
 		Member member = (Member) session.getAttribute("member");
 		if(member == null) {
 			resp.sendRedirect(req.getContextPath()+"/member_login.html");

@@ -10,5 +10,9 @@ import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 
 public interface SecondHandBuylistDao extends CoreDao<SecondhandBuylist, Integer> {
 
-	List<SecondhandBuylist> selectByName(String Name);
+	public List<SecondhandBuylist> selectByName(String Name);
+	
+	public List<SecondhandBuylist> selectByMemberId(Integer id);
+	
+	public List<SecondhandBuylist> selectByName4Member(String Name , Integer id);
 }
