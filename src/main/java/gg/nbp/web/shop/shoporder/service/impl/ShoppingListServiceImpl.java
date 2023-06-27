@@ -6,19 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shop.product.dao.ProductDao;
-import com.shop.product.dao.ProductImageDao;
-import com.shop.product.dao.impl.ProductDaoImpl;
-import com.shop.product.dao.impl.ProductImageDaoImpl;
-import com.shop.product.entity.Product;
-import com.shop.product.entity.ProductImage;
-
 import gg.nbp.web.shop.shoporder.dao.JedisShoppingListDao;
-import gg.nbp.web.shop.shoporder.dao.impl.JedisShoppingListDaoImpl;
 import gg.nbp.web.shop.shoporder.entity.PKShoppingList;
 import gg.nbp.web.shop.shoporder.entity.ShoppingList;
 import gg.nbp.web.shop.shoporder.service.ShoppingListService;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
+import gg.nbp.web.shop.shopproduct.dao.ProductDao;
+import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
+import gg.nbp.web.shop.shopproduct.entity.Product;
+import gg.nbp.web.shop.shopproduct.entity.ProductImage;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -42,9 +38,9 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 				if (pd == null) {
 					continue;
 				}
-				List<ProductImage> pdimgs = pdimgdao.selectByProductId(pd.getProductId());
+				List<ProductImage> pdimgs = pdimgdao.selectByProductId(pd.getId());
 				TransOrderProduct trspd = new TransOrderProduct();
-				trspd.setProductId(pd.getProductId());
+				trspd.setProductId(pd.getId());
 				if (pdimgs.isEmpty()) {
 					trspd.setProductImgUrl(null);
 				} else {

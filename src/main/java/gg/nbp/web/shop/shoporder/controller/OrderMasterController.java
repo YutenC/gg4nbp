@@ -11,26 +11,16 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.shop.product.util.CouponServiceConstant;
-import com.shop.product.util.ProductServiceConstant;
-import com.shop.shoporder.util.OrderDetailServiceConstant;
-import com.shop.shoporder.util.OrderMasterServiceConstant;
-import com.shop.shopproduct.entity.Coupon;
 
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.entity.Notice;
 import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.Member.service.NoticeService;
-import gg.nbp.web.Member.util.MemberConstants;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
 import gg.nbp.web.shop.shoporder.service.OrderDetailService;
 import gg.nbp.web.shop.shoporder.service.OrderMasterService;
@@ -39,6 +29,8 @@ import gg.nbp.web.shop.shoporder.util.MemberViewOrder;
 import gg.nbp.web.shop.shoporder.util.OrderSelection;
 import gg.nbp.web.shop.shoporder.util.ResOrderMaster;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
+import gg.nbp.web.shop.shopproduct.entity.Coupon;
+import gg.nbp.web.shop.shopproduct.service.CouponService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -64,6 +56,9 @@ public class OrderMasterController extends HttpServlet {
 	
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private CouponService couponService;
  
 	public OrderMasterController() {
         super();
@@ -300,6 +295,21 @@ public class OrderMasterController extends HttpServlet {
     		pw.println(gson.toJson(member.getBonus()));
     		return;
     	}
+    	
+    	if (req.getParameter("getOneProduct") != null) {
+			Integer productId = Integer.valueOf(req.getParameter("getOneProduct"));
+			TransOrderProduct trpd = orderMasterService.getOneProduct(productId);
+			pw.println(gson.toJson(trpd));
+			return;
+		}
+		
+		String recomendFromAll = req.getParameter("recomendFromAll");
+		if (recomendFromAll != null) {
+			Integer recomAmount = Integer.valueOf(recomendFromAll);
+			List<TransOrderProduct> trpdList = orderMasterService.getRecomendFromAll(recomAmount);
+			pw.println(gson.toJson(trpdList));
+			return;
+		}
     }
     
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -403,7 +413,7 @@ public class OrderMasterController extends HttpServlet {
 			Integer productPrice = 0;
 			for (TransOrderProduct trObj : purchaseProducts) {
 				if (trObj.isChecked() == true) {
-					TransOrderProduct checkProduct = ProductServiceConstant.PDSERVICE.getOneProduct(trObj.getProductId());
+					TransOrderProduct checkProduct = orderMasterService.getOneProduct(trObj.getProductId());
 					productPrice += checkProduct.getPrice() * trObj.getBuyAmount();
 				}
 			}
@@ -428,7 +438,7 @@ public class OrderMasterController extends HttpServlet {
 				Coupon reqCoupon = null;
 				try {
 					reqCoupon = gson.fromJson(couponStr, Coupon.class);
-					checkCoupon = CouponServiceConstant.CPSERVICE.getCouponByDiscountCode(reqCoupon.getDiscountCode());
+					checkCoupon = couponService.getCouponByDiscountCode(reqCoupon.getDiscountCode());
 				} catch (Exception e) {
 					System.out.println("Cant convert to Coupon.class");
 				}
