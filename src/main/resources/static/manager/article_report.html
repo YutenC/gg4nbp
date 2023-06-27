@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>論壇檢舉列表</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../fonts/material-icons.min.css">
+    <link rel="stylesheet" href="../css/x-dropdown.css">
+    <link rel="stylesheet" href="../css/custom.css">
+</head>
+
+
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- 側邊導覽框 -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <!-- 上方導覽框 -->
+
+
+                <!-- card shadow 視窗整體
+            mb-4 視窗間間距
+            py-3 視窗內間距
+            card-header 標題框
+            card-body 視窗主體 -->
+
+                <div class="container">
+                    <button class="btn btn-primary" type="button" data-toggle="modal"
+                        data-target="#myModal">審核按鈕</button>
+
+                    <!-- 表單 Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">檢舉確認表</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupSelect01">檢舉人</label>
+                                        <select class="form-select" id="report_id">
+
+                                            <option selected disabled>-請選擇檢舉人-</option>
+                                            <option value="mem1">mem1</option>
+                                            <option value="mem2">mem2</option>
+                                            <option value="mem3">mem3</option>
+                                            <option value="mem4">mem4</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupSelect01">被檢舉人</label>
+                                        <select id="reported_id"></select>
+
+                                        </select>
+                                    </div>
+                                    <script>
+                                        const data = {
+                                            'mem1': ['mem2', 'mem3', 'mem4'],
+                                            'mem2': ['mem1', 'mem3'],
+                                            'mem3': ['mem1', 'mem3'],
+                                            'mem4': ['mem3'],
+
+                                        };
+                                        const reportIdSelect = document.querySelector('#report_id');
+                                        const reportedIdSelect = document.querySelector('#reported_id');
+
+                                        reportIdSelect.addEventListener('change', e => {
+                                            const selectedValue = e.target.value;
+                                            const options = data[selectedValue];
+
+                                            // 清空報告對象下拉選單
+                                            reportedIdSelect.innerHTML = '';
+
+                                            if (options) {
+                                                // 動態生成報告對象下拉選單選項
+                                                options.forEach(option => {
+                                                    const optionElement = document.createElement('option');
+                                                    optionElement.value = option;
+                                                    optionElement.textContent = option;
+                                                    reportedIdSelect.appendChild(optionElement);
+                                                });
+                                            }
+                                        });
+                                    </script>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                    <button type="button" class="btn btn-primary">送出</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+                <div class="card shadow"></div>
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 fw-bold">論壇檢舉表格</p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 text-nowrap">
+                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                <label class="form-label">Show&nbsp;
+                                    <select class="d-inline-block form-select form-select-sm">
+                                        <option value="10" selected="">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>&nbsp;
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                <label class="form-label">
+                                    <input type="search" class="form-control form-control-sm" aria-controls="dataTable"
+                                        placeholder="Search">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                        aria-describedby="dataTable_info">
+                        <table class="table my-0" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>檢舉人</th>
+                                    <th>檢舉事項</th>
+                                    <th>被檢舉人</th>
+                                    <th>被檢舉內容</th>
+                                    <th>違規日期</th>
+                                    <th>檢舉日期</th>
+                                    <th>審核結果</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar2.jpeg">mem1<br>
+                                    </td>
+                                    <td>騷擾言論</td>
+                                    <td>mem2</td>
+                                    <td>我ㄐㄐ超大</td>
+                                    <td>2023-05-20</td>
+                                    <td>2023-05-21</td>
+                                    <td>待審核</td>
+                                </tr>
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar3.jpeg">mem1
+                                    </td>
+                                    <td>破壞環境</td>
+                                    <td>mem3</td>
+                                    <td>我要把森林都燒光光</td>
+                                    <td>2023-05-20</td>
+                                    <td>2023-05-21</td>
+                                    <td>待審核</td>
+                                </tr>
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar4.jpeg">mem3
+                                    </td>
+                                    <td>言語攻擊</td>
+                                    <td>mem1</td>
+                                    <td>你屁股超大</td>
+                                    <td>2023-05-20</td>
+                                    <td>2023-05-21</td>
+                                    <td>待審核</td>
+                                </tr>
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar1.jpeg">mem2</td>
+                                    <td>騷擾言論</td>
+                                    <td>mem3</td>
+                                    <td>可以摸你ㄇ</td>
+                                    <td>2023-05-15</td>
+                                    <td>22023-05-18</td>
+                                    <td>待審核</td>
+                                </tr>
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar2.jpeg">mem1</td>
+                                    <td>言語攻擊</td>
+                                    <td>mem3</td>
+                                    <td>你長得跟垃圾桶一樣</td>
+                                    <td>2023-05-20</td>
+                                    <td>2023-05-21</td>
+                                    <td>已審核</td>
+                                </tr>
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar4.jpeg">mem3</td>
+                                    <td>不當行為</td>
+                                    <td>mem2</td>
+                                    <td>我要從101跳下去</td>
+                                    <td>2023-08-21</td>
+                                    <td>22023-08-24</td>
+                                    <td>待審核</td>
+                                </tr>
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar5.jpeg">mem1</td>
+                                    <td>詐騙行為</td>
+                                    <td>mem4</td>
+                                    <td>給我一萬塊我明天還你一百萬</td>
+                                    <td>2023-08-21</td>
+                                    <td>22023-08-24</td>
+                                    <td>待審核</td>
+                                </tr>
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar1.jpeg">mem4</td>
+                                    <td>不當行為</td>
+                                    <td>mem3</td>
+                                    <td>我要開車撞你</td>
+                                    <td>2023-08-21</td>
+                                    <td>22023-08-24</td>
+                                    <td>待審核</td>
+                                </tr>
+                                <tr>
+                                    <td><img class="rounded-circle me-2" width="30" height="30"
+                                            src="images/avatars/avatar5.jpeg">mem2</td>
+                                    <td>言語攻擊</td>
+                                    <td>mem1</td>
+                                    <td>你怎麼還沒死</td>
+                                    <td>2023-05-20</td>
+                                    <td>2023-05-21</td>
+                                    <td>已審核</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>檢舉人</th>
+                                    <th>檢舉事項</th>
+                                    <th>被檢舉人</th>
+                                    <th>被檢舉內容</th>
+                                    <th>違規日期</th>
+                                    <th>檢舉日期</th>
+                                    <th>審核結果</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 align-self-center">
+                            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                                Showing 1 to 10 of 27</p>
+                        </div>
+                        <div class="col-md-6">
+                            <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                <ul class="pagination">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" aria-label="Previous" href="#">
+                                            <span aria-hidden="true">«</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">1</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" aria-label="Next" href="#">
+                                            <span aria-hidden="true">»</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+            <div class="text-center my-auto copyright">
+                <span>Copyright © NBP.GG 2023</span>
+            </div>
+        </div>
+    </footer>
+    </div>
+    </footer>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    </div>
+
+    <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
+
+</body>
+
+</html>

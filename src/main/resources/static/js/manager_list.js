@@ -108,7 +108,7 @@ $("a.manager_search_button").on("click", () => {
     // alert(typeof searchType + searchType + "\n" + typeof searchContent + searchContent);
 
     filtered_array = manager_array.filter((manager) => {
-        if (typeof manager[searchType] === "number") {
+        if (typeof manager[searchType] === 'number') {
             let searchContent_num = /^[0-9]+$/.test(searchContent) ? parseInt(searchContent) : NaN;
             if (searchContent_num === NaN) {
                 alert("該欄只能搜尋數字");

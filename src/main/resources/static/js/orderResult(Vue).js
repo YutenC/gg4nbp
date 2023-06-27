@@ -18,6 +18,9 @@ $(window).resize(function () {
 
 const href = window.location.href;
 const host = href.substring(0, href.indexOf('/', 8));
+const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
+const projectFolder = '/Five_NBP.gg';
+
 // 購物明細
 const shoppingContent = Vue.createApp({
     data() {
@@ -36,12 +39,19 @@ const shoppingContent = Vue.createApp({
             // 信用卡資訊
         }
     },
+    methods: {
+        leave: function (location, otherDetail) {
+            // sessionStorage.clear();
+            // sessionStorage.setItem('productId', otherDetail);
+            window.location.replace(projectHref + '/' + location + '#' + otherDetail);
+        }
+    },
     computed: {
         productSubtotal: function () {
             let productSub = 0;
             let couponDiscount = 0;
             let bonus = 0;
-            for (pic of this.shoppingList) {
+            for (pic of this.odProducts) {
                 productSub += pic.buyAmount * pic.price;
             }
 
@@ -68,20 +78,29 @@ const shoppingContent = Vue.createApp({
 const promoProduct = Vue.createApp({
     data() {
         return {
-            promoProduct: [
-                {
-                    id: 1111, productName: 'abcdefg', link: 'dddddd', productImg: '../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg',
-                    price: 2000
-                },
-                {
-                    id: 1111, productName: 'abcdefg', link: 'dddddd', productImg: '../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg',
-                    price: 2000
-                },
-                {
-                    id: 1111, productName: 'abcdefg', link: 'dddddd', productImg: '../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg',
-                    price: 2000
-                }
-            ]
+            promoProduct: []
         }
+    },
+    created() {
+        axios.get(projectFolder + '/Product?recomendFromAll=5')
+            .then(res => this.promoProduct = res.data)
+            .catch(err => console.log(err))
     }
 }).mount('#promoProduct');
+
+// 按下上一頁後無法返回 -- > Chrome瀏覽器限制無法順利觸發事件，待解決
+window.addEventListener('popstate', () => {
+    Swal.fire({
+        title: '確定離開?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '是',
+        cancelButtonText: '否'
+    }).then(function (result) {
+        if (result.isConfirmed) {
+
+        }
+    });
+});

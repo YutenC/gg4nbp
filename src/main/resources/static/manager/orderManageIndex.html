@@ -13,10 +13,62 @@
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
     <link rel="stylesheet" href="../css/x-dropdown.css">
     <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
+        table#dataTable th {
+            font-size: 14px;
+        }
+
         table#dataTable td:nth-child(4) a {
             text-decoration: underline;
             color: #2828FF;
+        }
+
+        #dataTable_filter {
+            position: relative;
+        }
+
+        #dataTable_filter button {
+            border: 0;
+            border-radius: 5px;
+            margin: 5px;
+            width: 20px;
+        }
+
+        #dataTable_filter img {
+            width: 10px;
+            height: 10px;
+        }
+
+        #dataTable_filter button:hover::before {
+            position: absolute;
+            top: -30px;
+            color: #fff;
+            font-size: .8em;
+            background: #346e7a;
+            padding: 5px;
+            border-radius: 5px;
+            content: '更新資料';
+        }
+
+        table#dataTable button {
+            vertical-align: middle;
+            font-size: 0;
+            border: 0;
+            border-radius: 5px;
+            height: 20px;
+        }
+
+        table#dataTable button img {
+            width: 8px;
+            height: 8px;
+            margin: auto;
+        }
+
+        table#dataTable tfoot td {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -24,154 +76,10 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-            <div class="container-fluid d-flex flex-column p-0">
-                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon ">
-                        <img class="" src="/Five_NBP.gg/img/Logo-removebg.png">
-                    </div>
-                    <div class="sidebar-brand-text mx-3">
-                        <span>NBP.GG管理</span>
-                    </div>
-                </a>
-                <hr class="sidebar-divider my-0">
-                <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>管理員管理</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>會員管理</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>商城管理</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>二手商城管理</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>檢舉管理</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>客服中心</span><i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>系統設定</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <!-- 側邊導覽框 -->
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid">
-                        <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <h3 class="navbar-nav flex-nowrap text-dark mb-0 nav-bar-top">頁面標題</h3>
-                        <ul class="navbar-nav flex-nowrap ms-auto nav-bar-top">
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow">
-                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                        href="#">
-                                        <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                        <img class="border rounded-circle img-profile"
-                                            src="/Five_NBP.gg/img/avatars/avatar1.jpeg">
-                                    </a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                            &nbsp;Profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
-                                            &nbsp;Settings
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
-                                            &nbsp;Activity log
-                                        </a>
-                                        <div class="dropdown-divider">
-
-                                        </div>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                                            &nbsp;Logout
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                <!-- 上方導覽框 -->
                 <div class="container-fluid">
                     <h3>後台一般訂單管理</h3>
 
@@ -181,155 +89,163 @@
                     card-header 標題框
                     card-body 視窗主體 -->
 
-                    <div class="card shadow">
+                    <div class="card shadow" id="omManage">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                                         <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
+                                            <select class="d-inline-block form-select form-select-sm"
+                                                @change="renewList(nowPage)" v-model="nowPage">
+                                                <option v-for="pg in Math.ceil(totalListItem/10)" :value=pg>
+                                                    {{ pg * 10 }}
+                                                </option>
                                             </select>&nbsp;
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                        <label for="functionSelect">快速篩選：</label>
+                                        <select name="functionSelect" id="functionSelect" @change="selectionChange"
+                                            v-model="criteria">
+                                            <option value=1>全部</option>
+                                            <optgroup label="付款狀態">
+                                                <option value=2>待付款</option>
+                                                <option value=3>已付款</option>
+                                                <option value=4>貨到付款</option>
+                                            </optgroup>
+                                            <optgroup label="出貨狀態">
+                                                <option value=5>已出貨</option>
+                                                <option value=6>未出貨</option>
+                                            </optgroup>
+                                            <optgroup label="訂單狀態">
+                                                <option value=7>已成立</option>
+                                                <option value=8>已取消</option>
+                                                <option value=9>申請取消</option>
+                                                <!-- <option value="6">未出貨</option> -->
+                                            </optgroup>
+                                        </select>
+                                        <button @click="getLastest()">
+                                            <img src="../img/icon/arrows-rotate-solid.svg" alt="更新資料">
+                                        </button>
                                         <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm"
-                                                aria-controls="dataTable" placeholder="Search">
+                                            <input type="text" class="form-control form-control-sm"
+                                                aria-controls="dataTable" placeholder="搜尋會員名稱"
+                                                @keydown.enter="searchUser">
                                         </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid"
                                 aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
+                                <div v-show="omList === {}">
+                                    <h1>無符合資料</h1>
+                                </div>
+                                <table class="table my-0" id="dataTable" v-show="omList !== {}">
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th>訂單編號</th>
-                                            <th>購買者</th>
-                                            <th>購買內容</th>
-                                            <th>訂單成立日期</th>
-                                            <th>總金額</th>
-                                            <th>付款狀態</th>
-                                            <th>出貨狀態</th>
+                                            <th>
+                                                <span>訂單編號</span>
+                                                <button @click="changeSort(1, 1)"
+                                                    v-show="!(sortBy === 1 && sortWay === 1) && searchKeyword === ''"><img
+                                                        src="../img/icon/chevron-down-solid.svg" alt="近期"></button>
+                                                <button @click="changeSort(1, 0)"
+                                                    v-show="sortBy === 1 && sortWay === 1 && searchKeyword === ''"><img
+                                                        src="../img/icon/sort-up-solid.svg" alt="最舊"></button>
+                                            </th>
+                                            <th>
+                                                <span>購買者會員編號</span>
+                                                <button @click="changeSort(2, 1)"
+                                                    v-show="!(sortBy === 2 && sortWay === 1)"><img
+                                                        src="../img/icon/chevron-down-solid.svg" alt="最大"></button>
+                                                <button @click="changeSort(2, 0)"
+                                                    v-show="sortBy === 2 && sortWay === 1"><img
+                                                        src="../img/icon/sort-up-solid.svg" alt="最小"></button>
+                                            </th>
+                                            <th>
+                                                <span>購買者</span>
+                                                <button @click="changeSort(2, 1)"
+                                                    v-show="!(sortBy === 2 && sortWay === 1)"><img
+                                                        src="../img/icon/chevron-down-solid.svg" alt="依名稱順序"></button>
+                                                <button @click="changeSort(2, 0)"
+                                                    v-show="sortBy === 2 && sortWay === 1"><img
+                                                        src="../img/icon/sort-up-solid.svg" alt="反向排序"></button>
+                                            </th>
+                                            <th>
+                                                <span>購買內容</span>
+                                            </th>
+                                            <th>
+                                                <span>訂單成立日期</span>
+                                                <button @click="changeSort(3, 1)"
+                                                    v-show="!(sortBy === 3 && sortWay === 1) && searchKeyword === ''"><img
+                                                        src="../img/icon/chevron-down-solid.svg" alt="最新"></button>
+                                                <button @click="changeSort(3, 0)"
+                                                    v-show="sortBy === 3 && sortWay === 1 && searchKeyword === ''"><img
+                                                        src="../img/icon/sort-up-solid.svg" alt="最舊"></button>
+                                            </th>
+                                            <th>
+                                                <span>總金額</span>
+                                                <button @click="changeSort(4, 1)"
+                                                    v-show="!(sortBy === 4 && sortWay === 1) && searchKeyword === ''"><img
+                                                        src="../img/icon/chevron-down-solid.svg" alt="最大"></button>
+                                                <button @click="changeSort(4, 0)"
+                                                    v-show="sortBy === 4 && sortWay === 1 && searchKeyword === ''"><img
+                                                        src="../img/icon/sort-up-solid.svg" alt="最小"></button>
+                                            </th>
+                                            <th>
+                                                <span>訂單狀態</span>
+                                                <button @click="changeSort(5, 1)"
+                                                    v-show="!(sortBy === 5 && sortWay === 1) && searchKeyword === ''"><img
+                                                        src="../img/icon/chevron-down-solid.svg" alt=""></button>
+                                                <button @click="changeSort(5, 0)"
+                                                    v-show="sortBy === 5 && sortWay === 1 && searchKeyword === ''"><img
+                                                        src="../img/icon/sort-up-solid.svg" alt=""></button>
+                                            </th>
+                                            <th>
+                                                <span>付款狀態</span>
+                                                <button @click="changeSort(6, 1)"
+                                                    v-show="!(sortBy === 6 && sortWay === 1) && searchKeyword === ''"><img
+                                                        src="../img/icon/chevron-down-solid.svg" alt=""></button>
+                                                <button @click="changeSort(6, 0)"
+                                                    v-show="sortBy === 6 && sortWay === 1 && searchKeyword === ''"><img
+                                                        src="../img/icon/sort-up-solid.svg" alt=""></button>
+                                            </th>
+                                            <th>
+                                                <span>出貨狀態</span>
+                                                <button @click="changeSort(7, 1)"
+                                                    v-show="!(sortBy === 7 && sortWay === 1) && searchKeyword === ''"><img
+                                                        src="../img/icon/chevron-down-solid.svg" alt=""></button>
+                                                <button @click="changeSort(7, 0)"
+                                                    v-show="sortBy === 7 && sortWay === 1 && searchKeyword === ''"><img
+                                                        src="../img/icon/sort-up-solid.svg" alt=""></button>
+                                            </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>111111</td>
-                                            <td>Chief</td>
-                                            <td><a href="">檢視詳情</a></td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                            <td>已付款</td>
-                                            <td>已出貨</td>
-                                        </tr>
+                                    <tbody id="omList">
+                                        <template v-for="item in omList">
+                                            <tr>
+                                                <td>{{ item.orderId }}</td>
+                                                <td>{{ item.memberId }}</td>
+                                                <td>{{ item.buyer }}</td>
+                                                <td><a href="" @click.prevent="watchDetail(item.orderId)">檢視詳情</a></td>
+                                                <td>{{ item.buyDate }}</td>
+                                                <td>{{ item.total }}</td>
+                                                <td>{{ item.orderStatus }}</td>
+                                                <td>{{ item.payStatus }}</td>
+                                                <td>{{ item.deliStatus }}</td>
+                                            </tr>
+                                        </template>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td><input type="checkbox"></td>
                                             <td><strong>訂單編號</strong></td>
+                                            <td><strong>購買者會員編號</strong></td>
                                             <td><strong>購買者</strong></td>
                                             <td><strong>購買內容</strong></td>
                                             <td><strong>訂單成立日期</strong></td>
                                             <td><strong>總金額</strong></td>
+                                            <td><strong>訂單狀態</strong></td>
                                             <td><strong>付款狀態</strong></td>
                                             <td><strong>出貨狀態</strong></td>
                                         </tr>
@@ -339,28 +255,30 @@
                             <div class="row">
                                 <div class="col-md-6 align-self-center">
                                     <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of 27</p>
+                                        Showing {{ omList === {}? 0 : (nowPage - 1) *10 + 1}} to
+                                        {{ totalListItem < 10? totalListItem : nowPage * 10}} of {{ totalListItem }}
+                                            </p>
                                 </div>
                                 <div class="col-md-6">
                                     <nav
                                         class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                         <ul class="pagination">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" aria-label="Previous" href="#">
+                                            <li class="page-item" :class="nowPage === 1? 'disabled' : ''">
+                                                <a class="page-link" aria-label="Previous" href="#"
+                                                    @click.prevent="renewList(nowPage - 1 > 0? nowPage - 1 : 1 )">
                                                     <span aria-hidden="true">«</span>
                                                 </a>
                                             </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" aria-label="Next" href="#">
+                                            <template v-for="pg in Math.ceil(totalListItem/10)">
+                                                <li class="page-item" :class="nowPage === pg? 'active': ''">
+                                                    <a class="page-link" href="#" @click.prevent="renewList(pg)">{{ pg
+                                                        }}</a>
+                                                </li>
+                                            </template>
+                                            <li class="page-item"
+                                                :class="nowPage === Math.ceil(totalListItem/10)? 'disabled' : ''">
+                                                <a class="page-link" aria-label="Next" href="#"
+                                                    @click.prevent="renewList(nowPage + 1 > Math.ceil(totalListItem/10)? Math.ceil(totalListItem/10) : nowPage + 1 )">
                                                     <span aria-hidden="true">»</span>
                                                 </a>
                                             </li>
@@ -389,7 +307,10 @@
     <!-- <script src="/Five_NBP.gg/bootstrap/js/bootstrap.min.js"></script> -->
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <!-- <script src="/Five_NBP.gg/js/theme.js"></script> -->
+    <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
     <script src="../js/theme.js"></script>
+    <script src="../js/orderManageIndex(Vue).js"></script>
 </body>
 
 </html>

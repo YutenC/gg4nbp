@@ -7,7 +7,7 @@
     <title>NPB.GG管理系統-新增管理員</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
     <link rel="stylesheet" href="../css/x-dropdown.css">
@@ -16,178 +16,28 @@
 </head>
 
 <body id="page-top">
-<div id="wrapper">
-    <!-- 左方導覽欄 -->
-    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-        <div class="container-fluid d-flex flex-column p-0">
-            <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                <div class="sidebar-brand-icon ">
-                    <img class="" src="../img/Logo-removebg.png">
-                </div>
-                <div class="sidebar-brand-text mx-3">
-                    <span>NBP.GG管理</span>
-                </div>
-            </a>
-            <hr class="sidebar-divider my-0">
-            <ul class="navbar-nav text-light" id="accordionSidebar">
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>管理員管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">管理員清單</a>
-                            <a class="dropdown-item" role="presentation" href="#">權限清單</a>
-                            <a class="dropdown-item" role="presentation" href="#">管理員新增</a>
-                            <a class="dropdown-item" role="presentation" href="#">權限新增</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>會員管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">會員清單</a>
-                            <a class="dropdown-item" role="presentation" href="#">停權單清單</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>商城管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>二手商城管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>檢舉管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>客服中心</span><i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>系統設定</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- 左方導覽欄 -->
-    <div class="d-flex flex-column" id="content-wrapper">
-        <div id="content">
-            <!-- 上方導覽欄 -->
-            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+    <div id="wrapper">
+        <!-- 左方導覽欄 -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <!-- 上方導覽欄 -->
+                <!-- ===================管理二手訂單=================== -->
+
                 <div class="container-fluid">
-                    <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h3 class="navbar-nav flex-nowrap text-dark mb-0 nav-bar-top">NBP.GG管理系統</h3>
-                    <ul class="navbar-nav flex-nowrap ms-auto nav-bar-top">
-                        <li class="nav-item dropdown no-arrow">
-                            <div class="nav-item dropdown no-arrow">
-                                <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                   href="#">
-                                    <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                    <img class="border rounded-circle img-profile"
-                                         src="../img/avatars/avatar1.jpeg">
-                                </a>
-                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Profile
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Activity log
-                                    </a>
-                                    <div class="dropdown-divider">
-
-                                    </div>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Logout
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <!-- 上方導覽欄 -->
-
-
-            <!-- ===================管理二手訂單=================== -->
-
-            <div class="container-fluid">
-                <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <!-- <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#">
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                        <!-- <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#">
         無用按鈕
     </a> -->
-                </div>
+                    </div>
 
-                <!-- card shadow 視窗整體
+                    <!-- card shadow 視窗整體
 mb-4 視窗間間距
 py-3 視窗內間距
 card-header 標題框
 card-body 視窗主體 -->
 
 
-                <!-- <div class="card shadow mb-4">
+                    <!-- <div class="card shadow mb-4">
     <div class="card-header py-3">
         <p class="text-primary m-0 fw-bold">無用表格</p>
     </div>
@@ -196,104 +46,104 @@ card-body 視窗主體 -->
     </div>
 </div> -->
 
-                <div class="card shadow">
-                    <div class="card-header py-3">
-                        <p class="text-primary m-0 fw-bold">二手訂單管理</p>
-                    </div>
-                    <div class="card-body">
-                        <form action="#" method="post">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;
-                                        </label>
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">二手訂單管理</p>
+                        </div>
+                        <div class="card-body">
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-md-6 text-nowrap">
+                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                            <label class="form-label">Show&nbsp;
+                                                <select class="d-inline-block form-select form-select-sm">
+                                                    <option value="10" selected="">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>&nbsp;
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                            <label class="form-label">
+                                                <input type="search" class="form-control form-control-sm"
+                                                    aria-controls="dataTable" placeholder="Search">
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm"
-                                                   aria-controls="dataTable" placeholder="Search">
-                                        </label>
-                                    </div>
+                                <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                                    aria-describedby="dataTable_info">
+                                    <table class="table my-0" id="orderTable">
+                                        <thead>
+                                            <tr>
+                                                <th>訂單編號</th> <!--點擊進入原始頁面(含住址 出貨方式 如果有需要可以再從後台修改)-->
+                                                <th>購買者ID</th>
+                                                <!--                                        <th>商品編號</th>-->
+                                                <th>訂單金額</th>
+                                                <th>付款狀態</th>
+                                                <th>出貨狀態</th>
+                                                <th>審核者ID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <!-- ======================一筆訂單END====================== -->
+                                            <tr>
+                                                <td><span>
+                                                        <a id="orderId" class="SHorderNum" href="#"
+                                                            style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
+                                                    </span></td>
+                                                <td><span id="memberId">Member1990</span></td>
+                                                <!--                                        <td><span class="SHproductNum">SH0000001</span></td>-->
+                                                <td>$<span id="orderPrice">5000</span>元</td>
+                                                <td>
+                                                    <div>
+                                                        <select id="payState" style="width: 90px;">
+                                                            <option value="" selected disabled></option>
+                                                            <option value="0">未付款</option>
+                                                            <option value="1">已付款</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+
+                                                <td>
+                                                    <div>
+                                                        <select id="delieverState" style="width: 90px;">
+                                                            <option value="" selected disabled></option>
+                                                            <option value="0">未出貨</option>
+                                                            <option value="1">已出貨</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+                                                <td><span id="managerID">Manager1990</span></td>
+                                            </tr>
+                                            <!-- ======================一筆訂單END====================== -->
+
+
+
+                                            <!-- ===================管理二手訂單END=================== -->
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>訂單編號</th>
+                                                <th>購買者ID</th>
+                                                <!--                                        <th>商品編號</th>-->
+                                                <th>訂單金額</th>
+                                                <th>付款狀態</th>
+                                                <th>出貨狀態</th>
+                                                <th>審核者ID</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
-                            </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid"
-                                 aria-describedby="dataTable_info">
-                                <table class="table my-0" id="orderTable">
-                                    <thead>
-                                    <tr>
-                                        <th>訂單編號</th> <!--點擊進入原始頁面(含住址 出貨方式 如果有需要可以再從後台修改)-->
-                                        <th>購買者ID</th>
-<!--                                        <th>商品編號</th>-->
-                                        <th>訂單金額</th>
-                                        <th>付款狀態</th>
-                                        <th>出貨狀態</th>
-                                        <th>審核者ID</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    <!-- ======================一筆訂單END====================== -->
-                                    <tr>
-                                        <td><span>
-                                                    <a id ="orderId" class="SHorderNum" href="#"
-                                                       style="text-decoration:none; color: rgb(93, 87, 87);">SH20210303</a>
-                                                </span></td>
-                                        <td><span id="memberId">Member1990</span></td>
-<!--                                        <td><span class="SHproductNum">SH0000001</span></td>-->
-                                        <td>$<span id="orderPrice">5000</span>元</td>
-                                        <td>
-                                            <div>
-                                                <select id="payState" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未付款</option>
-                                                    <option value="1">已付款</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-
-                                        <td>
-                                            <div>
-                                                <select id="delieverState" style="width: 90px;">
-                                                    <option value="" selected disabled></option>
-                                                    <option value="0">未出貨</option>
-                                                    <option value="1">已出貨</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td><span id="managerID">Manager1990</span></td>
-                                    </tr>
-                                    <!-- ======================一筆訂單END====================== -->
-
-
-
-                                    <!-- ===================管理二手訂單END=================== -->
-
-
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>訂單編號</th>
-                                        <th>購買者ID</th>
-<!--                                        <th>商品編號</th>-->
-                                        <th>訂單金額</th>
-                                        <th>付款狀態</th>
-                                        <th>出貨狀態</th>
-                                        <th>審核者ID</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </form>
+                            </form>
 
                             <div class="row">
                                 <div class="col-md-6 align-self-center">
@@ -302,7 +152,7 @@ card-body 視窗主體 -->
                                 </div>
                                 <div class="col-md-6">
                                     <nav
-                                            class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                        class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                         <ul class="pagination">
                                             <li class="page-item disabled">
                                                 <a class="page-link" aria-label="Previous" href="#">
@@ -327,32 +177,35 @@ card-body 視窗主體 -->
                                     </nav>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
-        <!-- ======================== -->
+            <!-- ======================== -->
 
 
-        <footer class="bg-white sticky-footer">
-            <div class="container my-auto">
-                <div class="text-center my-auto copyright">
-                    <span>Copyright © NBP.GG 2023</span>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright">
+                        <span>Copyright © NBP.GG 2023</span>
+                    </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
     </div>
-    <a class="border rounded d-inline scroll-to-top" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-</div>
-<!-- JavaScript JS放置區 -->
-<script src="../bootstrap/js/bootstrap.min.js"></script>
-<script src="../js/theme.js"></script>
-<script src="../js/sh_ordermanage.js"></script>
-<!-- JavaScript JS放置區 -->
+
+    <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
+    <!-- JavaScript JS放置區 -->
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/sh_ordermanage.js"></script>
+    <!-- JavaScript JS放置區 -->
 </body>
 
 </html>

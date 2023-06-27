@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../css/shoppingCart(Vue).css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <title>orderResult</title>
+    <style>
+        form.discount span {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="cartHeader">
+        <div class="ctHeaderUp">
+            <a href="shopIndex3.html" class="logo">
+                <img src="../img/Logo-removebg.png" alt="">
+            </a>
+            <span>
+                感謝您的購買
+            </span>
+        </div>
+    </header>
+    <div class="shoppingContent">
+        <div class="cart">
+            <h3>購物明細</h3>
+            <table id="purchaseDetail">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th class="productname">商品名稱</th>
+                        <th>主機</th>
+                        <th>購買數量</th>
+                        <th>單價</th>
+                        <th>小計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template v-for="(item, index) in odProducts">
+                        <tr>
+                            <td class="productImg">
+                                <img :src="item.productImgUrl" :alt="item.productName">
+                            </td>
+                            <td>
+                                <a href='' @click.prevent="leave('/shopProductList.html', item.productId)">
+                                    <!--獲取-->
+                                    {{ item.productName }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ item.brand }}
+                            </td>
+                            <td>
+                                {{ item.buyAmount }}
+                            </td>
+                            <td>NTD$<span class="unitPrice">{{ item.price }}</span></td>
+                            <td>NTD$<span class="itemPrice">{{ item.buyAmount * item.price }}</span>
+                                <!--選擇數量*單價-->
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div>
+                <form action="" id="discount">
+                    <ul><span>使用優惠代碼或是紅利點數折抵消費：</span>
+                        <li v-if="checkCoupon !== null">
+                            <input type="radio" id="coupon" checked>
+                            <span>使用的折購代碼：{{ checkCoupon.discountCode }}</span>
+                            <span>折購額度：{{ checkCoupon.discount }}</span>
+                        </li>
+                        <li v-if="usedBonus !== ''">
+                            <input type="radio" id="bonus" checked>
+                            <span>使用的點數：{{ usedBonus }}</span>
+                            <span>目前您持有的點數為：{{ nowBonus }}</span>
+                        </li>
+                </form>
+            </div>
+            <div class=" productTotal">
+                <h4>商品總額：</h4>
+                <span class="productSubTotal">{{ productSubtotal }}</span>
+            </div>
+        </div>
+        <h3>配送</h3>
+        <div class="deliver">
+            <form>
+                <span>選擇的配送方式：</span>
+                <template v-if="deliver === 'takuhai'">
+                    <input type="radio" id="takuhai" checked>
+                    <span>宅配</span>
+                </template>
+                <template v-if="deliver === 'toCvs'">
+                    <input type="radio" id="toCvs" checked>
+                    <span>超商店取</span>
+                </template>
+            </form>
+            <div>
+                <div><span>配送地址：</span></div>
+                <span>{{ this.address.county + this.address.address }}</span>
+            </div>
+            <div class="deliFee">
+                <span>運費：$</span><span class="deliFee">{{ deliverCal }}</span>
+            </div>
+        </div>
+        <div class="brLine"></div>
+        <div class="billTotal">
+            結帳總金額<span>NTD$</span><span>{{ productSubtotal + deliverCal}}</span><a href=''
+                @click.prevent="leave('/shopIndex3.html', '')">回賣場選購</a>
+        </div>
+        <div class="brLine"></div>
+        <h3>您指定的付款方式</h3>
+        <div class="payment">
+            <div class="paymentRadio">
+                <form action="">
+                    <div v-if="payment === 'credit'">
+                        <input type="radio" id="credit" checked>
+                        <label for="credit">信用卡付款</label>
+                    </div>
+                    <div v-if="payment === 'transfer'">
+                        <input type="radio" id="transfer" checked>
+                        <label for="transfer">轉帳</label>
+                    </div>
+                    <div v-if="payment === 'onDeliver'">
+                        <input type="radio" id="onDeliver" checked>
+                        <label for="onDeliver">貨到付款</label>
+                    </div>
+                </form>
+            </div>
+            <div class="paymentContent">
+                <div class="credit" v-if="payment === 'credit'">
+                </div>
+                <div class="transfer" v-if="payment === 'transfer'">
+                    <span>商城轉帳資訊</span>
+                    <dl>
+                        <dt>商城帳戶名：</dt>
+                        <dd>NBP.gg</dd>
+                        <dt>商城帳戶分行名：</dt>
+                        <dd>NBP.gg Branch</dd>
+                        <dt>商城帳戶：</dt>
+                        <dd>123 4567 8910 1112</dd>
+                    </dl>
+                </div>
+                <div class="onDeliver" v-if="payment === 'onDeliver'">
+                    <h4>請於取貨時付款</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="promoProduct">
+        <span>為您推薦的商品：</span>
+        <ul>
+            <template v-for="item in promoProduct">
+                <li>
+                    <a href="" @click="leave('/shop/shopProductList.html', item.productId)">
+                        <img :src="item.productImgUrl" alt="">
+                    </a>
+                    <a href="" @click="leave('/shop/shopProductList.html', item.productId)">
+                        <span>{{ item.productName }}</span>
+                    </a>
+                    <span>${{ item.price }}</span>
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <script src="../jquery/jquery-1.9.1.min.js"></script>
+    <script src="../js/orderResult(Vue).js"></script>
+
+</body>
+
+</html>

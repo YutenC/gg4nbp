@@ -84,6 +84,37 @@ const vm = Vue.createApp({
                     console.log("getAllCouponActivity error " + e);
                 });
         },
+        updateCouponActivity: function (id) {
+            console.log("updateCouponActivity: id " + id);
+            // vm.newcouponActivity.coupon = vm.newCoupon;
+
+            let singlecouponActivity;
+            vm.couponActivity.forEach(element => {
+                if (element.coupon.id == id) {
+                    singlecouponActivity = element;
+                }
+            });
+
+            // let singlecouponActivity = vm.couponActivity[id]
+            let jsonnewcouponActivity = JSON.stringify(singlecouponActivity);
+            axios({
+                method: "POST",
+                // url: "http://localhost:8080/MyShop/demo/deleteCoupon",
+                url: host_context + "shopDispatcher/updateCouponActivity",
+                params: {
+                    couponId: id,
+                    newCouponActivity: jsonnewcouponActivity
+                }
+            })
+                .then(function (value) {
+                    console.log("updateCouponActivity then ");
+                    vm.getAllCouponActivity();
+                })
+                .catch(function (e) {
+                    console.log("updateCouponActivity error " + e);
+                });
+
+        },
         deleteCouponActivity: function (id) {
             console.log("deleteCouponActivity: id " + id);
             axios({
@@ -138,7 +169,7 @@ const vm = Vue.createApp({
 
         },
     },
-}).mount("#page-top");
+}).mount("#vue-body");
 
 // vm.$data.message = 'SSSSS';
 vm.getAllCouponActivity();
