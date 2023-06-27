@@ -232,7 +232,7 @@ const vm = Vue.createApp({
                 });
         }
     },
-}).mount("#wrapper");
+}).mount("#vue-body");
 
 vm.getallproduct();
 

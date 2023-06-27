@@ -20,7 +20,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter("/manager/manager_memList.html")
+
+@WebFilter(urlPatterns = {
+		"/manager/manager_memList.html",
+		"/manager/manager_banList.html",
+		"/manager/manager_banAdd.html"
+		})
 @Order(2)
 public class PowerMemFilter extends HttpFilter implements Filter{
 	private static final long serialVersionUID = 1L;
@@ -59,7 +64,12 @@ public class PowerMemFilter extends HttpFilter implements Filter{
 		        .anyMatch(pom -> pom.getPower_id() == powerMngId);
 		
 		if (!(hasPower)) {
-			resp.sendRedirect(req.getContextPath()+ "/manager/backend_homepage.html"); 
+			String redirectUrl = req.getRequestURI();
+			
+			// 将需要跳转的页面路径存储在会话变量中
+			req.getSession().setAttribute("redirectUrl", redirectUrl);
+			
+			resp.sendRedirect(req.getContextPath()+ "/manager_noPower.html"); 
 			return;
 		}else {
 			chain.doFilter(request, response);

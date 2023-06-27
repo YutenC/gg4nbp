@@ -6,25 +6,33 @@ import gg.nbp.web.shop.shopproduct.dao.impl.ProductDaoImpl;
 import gg.nbp.web.shop.shopproduct.dao.impl.ProductImageDaoImpl;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.entity.ProductImage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+//@Component
 public class CreateProductDB<T, P> {
 
+    @Autowired
     ProductDao productDao;
+
+    @Autowired
     ProductImageDao productImageDao;
     private Class entityClass;
     private Class entityClass_P;
+
+//    public CreateProductDB(){}
 
     public CreateProductDB(Class c, Class p) {
         entityClass = c;
         entityClass_P = p;
 
-        productDao = new ProductDaoImpl();
-        productImageDao = new ProductImageDaoImpl();
+//        productDao = new ProductDaoImpl();
+//        productImageDao = new ProductImageDaoImpl();
     }
 
     public List<T> readCSV() throws NoSuchFieldException, IllegalAccessException {

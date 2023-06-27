@@ -70,6 +70,11 @@ public class ProductController {
         return toJson(products);
     }
 
+    public String getProductByBuyTimes(Integer amount, Integer type) {
+        List<Product> products = productService.getProductByBuyTimes(amount,type);
+        return toJson(products);
+    }
+
     public String searchProducts(String search) {
         List<Product> products = productService.searchProducts(search);
         return toJson(products);

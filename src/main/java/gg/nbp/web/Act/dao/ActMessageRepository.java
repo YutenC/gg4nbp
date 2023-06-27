@@ -1,13 +1,13 @@
 package gg.nbp.web.Act.dao;
 
-import java.util.List;
 
+import gg.nbp.web.Act.model.ActMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import gg.nbp.web.Act.model.ActMessage;
+import java.util.List;
 
 public interface ActMessageRepository extends JpaRepository<ActMessage, Integer> {
     List<ActMessage> findById(Long messageId);
@@ -19,5 +19,5 @@ public interface ActMessageRepository extends JpaRepository<ActMessage, Integer>
 
     @Modifying
     @Query("UPDATE ActMessage SET messageState = :messageState WHERE id = :id")
-    void updateMessageStateById(@Param("id") int id, @Param("messageState") byte messageState);
+    void updateMessageStateById(@Param("id") Integer id, @Param("messageState") Byte messageState);
 }

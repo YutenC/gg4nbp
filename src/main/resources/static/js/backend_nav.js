@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <i class="material-icons">keyboard_arrow_down</i>
             </div>
             <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" role="presentation" href="#">商品管理</a>
-                <a class="dropdown-item" role="presentation" href="#">訂單一覽</a>
-                <a class="dropdown-item" role="presentation" href="#">優惠券設定</a>
+                <a class="dropdown-item" role="presentation" href="productManager.html">商品管理</a>
+                <a class="dropdown-item" role="presentation" href="orderManageIndex.html">訂單一覽</a>
+                <a class="dropdown-item" role="presentation" href="couponManager.html">優惠券設定</a>
             </div>
         </div>
     </li>
@@ -62,10 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <i class="material-icons">keyboard_arrow_down</i>
             </div>
             <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" role="presentation" href="#">商品管理</a>
-                <a class="dropdown-item" role="presentation" href="#">收購管理</a>
-                <a class="dropdown-item" role="presentation" href="#">上架設定</a>
-                <a class="dropdown-item" role="presentation" href="#">訂單一覽</a>
+                <a class="dropdown-item" role="presentation" href="sh_productmanage.html">商品管理</a>
+                <a class="dropdown-item" role="presentation" href="">收購管理</a>
+                <a class="dropdown-item" role="presentation" href="sh_ordermanage.html">訂單一覽</a>
             </div>
         </div>
     </li>
@@ -76,8 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <i class="material-icons">keyboard_arrow_down</i>
             </div>
             <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" role="presentation" href="#">文章檢舉一覽</a>
-                <a class="dropdown-item" role="presentation" href="#">活動檢舉一覽</a>
+                <a class="dropdown-item" role="presentation" href="article_report.html">文章檢舉一覽</a>
+                <a class="dropdown-item" role="presentation" href="act_report.html">活動檢舉一覽</a>
             </div>
         </div>
     </li>
