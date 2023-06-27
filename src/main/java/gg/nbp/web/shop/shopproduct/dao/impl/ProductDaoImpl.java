@@ -73,14 +73,28 @@ public class ProductDaoImpl extends CoreDaoImpl<Product,Integer> implements Prod
             hql = "from Product  where type = "+type +"order by buyTimes DESC";
         }
 
-        System.out.println("hql: "+hql);
+//        System.out.println("hql: "+hql);
         return session.createQuery(hql, Product.class).getResultList();
+    }
+
+    @Override
+    public List<Product> selectByBuyTimes(Integer limit, String type) {
+        String hql;
+        if("".equals(type)||"0".equals(type)){
+            hql = "from Product "+"order by buyTimes DESC";
+        }
+        else {
+            hql = "from Product where type = "+type +"order by buyTimes DESC";
+        }
+
+//        System.out.println("hql: "+hql);
+        return session.createQuery(hql, Product.class).setMaxResults(limit).getResultList();
     }
 
     @Override
     public List<Product> searchProducts(String search) {
         String hql = "from Product  where productName like '%"+search+"%'";
-        System.out.println("hql: "+hql);
+//        System.out.println("hql: "+hql);
         return session.createQuery(hql, Product.class).getResultList();
     }
 

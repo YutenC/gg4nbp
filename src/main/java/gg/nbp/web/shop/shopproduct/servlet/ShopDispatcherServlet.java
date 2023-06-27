@@ -40,7 +40,12 @@ public class ShopDispatcherServlet extends HttpServlet {
     ProductManagerController productManagerController;
 
     @Autowired
+    FollowController followController;
+
+    @Autowired
     testMemberController testMemberController;
+
+
 
     public ShopDispatcherServlet() {
     }
@@ -170,29 +175,7 @@ public class ShopDispatcherServlet extends HttpServlet {
 
                 break;
 
-            case "/addFollow":
-                String id_str_ = req.getParameter("id");
-                Integer productId__=Integer.valueOf(id_str_);
 
-                Object isLogin__=  session.getAttribute("isLogin");
-                if(isLogin__!=null){
-                    Boolean isLogin=(Boolean)isLogin__;
-                    if(isLogin){
-                        Member member= (Member)session.getAttribute("member");
-                        productController.addFollow(productId__,member.getMember_id());
-                    }
-                    else{
-//                        res.sendRedirect("/Five_NBP_gg/member_login.html");
-                    }
-
-                }
-                else
-                {
-//                    res.sendRedirect("/Five_NBP_gg/member_login.html");
-                }
-
-
-                break;
 
 
 
@@ -287,6 +270,50 @@ public class ShopDispatcherServlet extends HttpServlet {
             case "/getBackgroundMessage":
                 String taskName = req.getParameter("taskName");
                 strOut = backgroundMessageController.getBackgroundMessage(taskName);
+                break;
+
+            case "/getFollowByMemberId":
+                Object _isLogin__=  session.getAttribute("isLogin");
+                if(_isLogin__!=null){
+                    Boolean isLogin=(Boolean)_isLogin__;
+                    if(isLogin){
+                        Member _member_=  (Member)session.getAttribute("member");
+                        strOut = followController.getFollowByMemberId(_member_.getMember_id());
+                    }
+                    else{
+//                        res.sendRedirect("/Five_NBP_gg/member_login.html");
+                    }
+
+                }
+                else
+                {
+//                    res.sendRedirect("/Five_NBP_gg/member_login.html");
+                }
+
+
+                break;
+            case "/addFollow":
+                String id_str_ = req.getParameter("id");
+                Integer productId__=Integer.valueOf(id_str_);
+
+                Object isLogin__=  session.getAttribute("isLogin");
+                if(isLogin__!=null){
+                    Boolean isLogin=(Boolean)isLogin__;
+                    if(isLogin){
+                        Member member= (Member)session.getAttribute("member");
+                        followController.addFollow(productId__,member.getMember_id());
+                    }
+                    else{
+//                        res.sendRedirect("/Five_NBP_gg/member_login.html");
+                    }
+
+                }
+                else
+                {
+//                    res.sendRedirect("/Five_NBP_gg/member_login.html");
+                }
+
+
                 break;
 
             case "/login":

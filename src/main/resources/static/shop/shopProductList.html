@@ -507,6 +507,7 @@
             // crossDomain: true,
         },)
             .then(function (value) {
+                vm.followLists = value.data;
                 console.log("login then");
 
             })

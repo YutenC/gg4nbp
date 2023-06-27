@@ -93,9 +93,7 @@ public class ProductController {
         productService.addCart(id,memId);
     }
 
-    public Integer addFollow(Integer id,Integer memId){
-       return productService.addFollow(id,memId);
-    }
+
 
 
 

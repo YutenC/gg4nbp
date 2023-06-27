@@ -7,44 +7,18 @@ const vm = Vue.createApp({
             currentType: 0,
             nowDate: '',
             minDate: '',
-            products: []
+            products: [],
+            followLists: []
         };
     },
     created() {
     },
     mounted() {
-        axios({
-            method: "GET",
-            // url: "http://localhost:8080/MyShop/demo/getAllCouponActivity_json",
-            url: host_context + "shopDispatcher/getAllProduct",
-            withCredentials: true,
-        })
-            .then(function (value) {
-                vm.products = value.data;
-                console.log("getAllProduct then");
-
-            })
-            .catch(function (e) {
-                console.log("getAllProduct error " + e);
-            });
+        getAllProduct();
     },
     methods: {
         getAllProduct: function () {
-            console.log('getAllProduct');
-            axios({
-                method: "GET",
-                // url: "http://localhost:8080/MyShop/demo/getAllCouponActivity_json",
-                url: host_context + "shopDispatcher/getAllProduct",
-                withCredentials: true,
-            })
-                .then(function (value) {
-                    vm.products = value.data;
-                    console.log("getAllProduct then");
-
-                })
-                .catch(function (e) {
-                    console.log("getAllProduct error " + e);
-                });
+            getAllProduct();
         },
 
         addCart: function (id) {
@@ -173,4 +147,41 @@ const vm2 = Vue.createApp({
 
 vm.getAllProduct();
 
+function getAllProduct() {
 
+    axios({
+        method: "GET",
+        // url: "http://localhost:8080/MyShop/demo/getAllCouponActivity_json",
+        url: host_context + "shopDispatcher/getAllProduct",
+        withCredentials: true,
+    })
+        .then(function (value) {
+            vm.products = value.data;
+            console.log("getAllProduct then");
+
+        })
+        .catch(function (e) {
+            console.log("getAllProduct error " + e);
+        });
+
+}
+
+function getFollows() {
+    console.log(getFollows)
+    axios({
+        method: "Get",
+        url: host_context + "shopDispatcher/getFollowByMemberId",
+        withCredentials: true,
+        // crossDomain: true,
+        params: { memberId: vm2.searchText }
+    },)
+        .then(function (value) {
+            vm.followLists = value.data;
+
+            console.log("searchProducts then");
+
+        })
+        .catch(function (e) {
+            console.log("searchProducts error " + e);
+        });
+}
