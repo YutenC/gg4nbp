@@ -17,11 +17,14 @@
     <link rel="stylesheet" href="../css/Profile-Edit-Form.css">
     <link rel="stylesheet" href="../css/Profile-with-data-and-skills.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         div.row {
             width: 100%;
+            height: 100%;
         }
-
 
         div.colRight {
             padding: 0;
@@ -29,7 +32,7 @@
 
         #profile {
             padding: 10px;
-            margin-top: 5px;
+            margin: 20px 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0px 1px 10px 3px #FCFCFC;
@@ -68,7 +71,7 @@
         }
 
         .detailArea table td:first-child {
-            width: 150px;
+            width: 80px;
             text-align: left;
         }
 
@@ -88,7 +91,12 @@
             border-radius: 0 0 3px 0;
         }
 
-        button {
+        .cancelBtn {
+            border: 0;
+            border-radius: 5px;
+        }
+
+        .switchBtn {
             border-radius: 3px;
             border: 0;
             margin: 3px;
@@ -115,6 +123,15 @@
 
         div.detailContent.on {
             display: block;
+        }
+
+        div.detailContent div.deliver span {
+            margin: 5px;
+        }
+
+        img.productImg {
+            width: 100px;
+            height: 100px;
         }
     </style>
 </head>
@@ -165,6 +182,13 @@
                                     style="height: 50px;">會員中心
                             </a>
                         </li>
+                        <li class="nav-item" style="height: 80px;" id="help">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
+                                style="margin-top: 20px;color: var(--bs-dark);">
+                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
+                                    style="height: 40px;">客服中心
+                            </a>
+                        </li>
                         <li class="nav-item logout">
                             <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
                                 style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
@@ -180,13 +204,24 @@
         </nav>
     </header>
     <div class="main-content">
-        <div class="row" style="height: 800px;">
+        <div class="row">
             <div class="col-lg-4 col-xl-2 offset-xl-1" style="height: 600px;">
-                <div class="list-group" >
-                    <a data-bss-hover-animate="pulse" id="info"
-                    class="list-group-item list-group-item-action"
+                <div class="list-group">
+                    <a data-bss-hover-animate="pulse" id="info" class="list-group-item list-group-item-action"
                         href="./member_info.html" data-bs-toggle="list"
                         style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="setBank" class="list-group-item list-group-item-action"
+                        href="./member_common_account.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">常用帳戶設定
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="friend" class="list-group-item list-group-item-action"
+                        href="./member_friendlist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">好友名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="black" class="list-group-item list-group-item-action"
+                        href="./member_blacklist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">黑名單
                     </a>
                     <a data-bss-hover-animate="pulse" id="trade" class="list-group-item list-group-item-action"
                         href="./member_order_list.html" data-bs-toggle="list"
@@ -225,58 +260,98 @@
             </div>
 
             <div class="col colRight">
-                <div class="container profile profile-view" id="profile">
+                <div class="container profile profile-view memberOrder" id="profile">
                     <h1>一般交易紀錄查詢</h1>
                     <div class="functionSelect">
                         <form action="" class="functionSelect">
-                            <select name="functionSelect" id="functionSelect">
-                                <option value="all">全部</option>
-                                <option value="unpaid">未付款</option>
-                                <option value="paid">已付款</option>
-                                <option value="shipped">已出貨</option>
-                                <option value="unship">未出貨</option>
+                            <select name="functionSelect" id="functionSelect" @change="renewListWithSelect()"
+                                v-model="filterSelect">
+                                <option value="1">全部</option>
+                                <option value="2">未付款</option>
+                                <option value="3">已付款</option>
+                                <option value="4">已出貨</option>
+                                <option value="5">未出貨</option>
                             </select>
                         </form>
+                        <span>共{{ listLength }}筆資料</span>
                     </div>
                     <div class="detailArea">
-                        <div class="detailUnit">
+                        <div class="detailUnit" v-for="(item, index) in orders">
                             <table>
                                 <tbody>
                                     <tr>
                                         <td>訂單編號</td>
-                                        <td>日期</td>
+                                        <td>訂購日期</td>
                                         <td>訂單狀態</td>
                                         <td>總價</td>
                                         <td>付款狀態</td>
                                         <td>出貨狀態</td>
-                                        <td>說明</td>
-                                        <td>退貨</td>
+                                        <td>取消訂單</td>
                                     </tr>
                                     <tr>
-                                        <td>11111111</td>
-                                        <td>2023/5/25</td>
-                                        <td>訂單成立</td>
-                                        <td>$2,000</td>
-                                        <td>已付款
-                                            <span>(信用卡一次付清)</span>
+                                        <td>{{ item.orderMaster.orderId }}</td>
+                                        <td>{{ item.orderMaster.commitDate}}</td>
+                                        <td>{{ showOrderStatus[item.orderMaster.orderStatus] }}</td>
+                                        <td>${{ item.orderMaster.totalPrice }}</td>
+                                        <td>
+                                            <a href="" @click.prevent="checkPay(index)">
+                                                {{ showPayStatus[item.orderMaster.payStatus] }}</a>
                                         </td>
-                                        <td>已出貨</td>
-                                        <td>---</td>
-                                        <td></td>
+                                        <td>{{ showDeliverState[item.orderMaster.deliverState] }}</td>
+                                        <td><button class="cancelBtn" v-show="item.orderMaster.orderStatus === 1"
+                                                @click="cancleOrder(index, 'cancel')">取消訂單</button>
+                                            <button class="cancelBtn" v-show="item.orderMaster.orderStatus === 3"
+                                                @click="cancleOrder(index, 'giveup')">放棄申請</button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="purchaseDetail">
-                                <button class="openBtn">+</button>
-                                <button class="closeBtn">-</button>
+                                <button class="openBtn switchBtn">+</button>
+                                <button class="closeBtn switchBtn">-</button>
                                 <a href="" class="purchaseBtn">查看詳情</a>
                                 <div class="detailContent">
+                                    <div>
+                                        <div class="deliver">
+                                            <div>
+                                                <span>訂單配送地址: {{ item.orderMaster.deliverLocation }}</span>
+                                            </div>
+                                            <div>
+                                                <span>訂單物流編號： {{ item.orderMaster.deliverNumber }}</span>
+                                            </div>
+                                            <div>
+                                                <span>取貨方式： {{ showPickType[item.orderMaster.pickType] }}</span>
+                                            </div>
+                                            <div>
+                                                <span>運費： {{ item.orderMaster.deliverFee }}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span v-if="item.orderMaster.bonusUse !== undefined">使用紅利：{{
+                                                item.orderMaster.bonusUse }}</span>
+                                            <span v-if="item.coupon !== undefined">
+                                                使用優惠卷：{{ item.coupon.discountCode + ' : ' + item.coupon.discount + ' : '
+                                                +
+                                                item.coupon.conditionPrice}}
+                                            </span>
+                                        </div>
+                                    </div>
                                     <table>
-                                        <tr>
-                                            <td><a href="">商品名稱~fadsfsfs</a></td>
-                                            <td>1件</td>
-                                            <td>$2,000</td>
-                                        </tr>
+                                        <template v-for="od in item.trList">
+                                            <tr>
+                                                <td>
+                                                    <img :src="od.productImgUrl" :alt="od.productName"
+                                                        class="productImg">
+                                                </td>
+                                                <td>
+                                                    <a href="" @click="checkProduct(index)">
+                                                        {{ od.productName }}
+                                                    </a>
+                                                </td>
+                                                <td>{{ od.buyAmount }}</td>
+                                                <td>${{ od.price }}</td>
+                                            </tr>
+                                        </template>
                                     </table>
                                 </div>
                             </div>
@@ -328,8 +403,9 @@
     <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
     <script src="../js/bs-init.js"></script>
     <script src="../js/Profile-Edit-Form.js"></script>
+    <script src="../js/memberOrderList(Vue).js"></script>
     <script>
-        $('div.detailArea').on('click', 'button.purchaseBtn, a.purchaseBtn', function (e) {
+        $('div.detailArea').on('click', 'button.switchBtn, a.purchaseBtn', function (e) {
             e.preventDefault();
             $(this).closest('div.purchaseDetail').find('div.detailContent').toggleClass('on');
             $(this).closest('div.purchaseDetail').find('button').toggleClass('switch');
