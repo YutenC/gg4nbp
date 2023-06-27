@@ -20,7 +20,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-//@WebFilter("/manager/ ")
+@WebFilter(urlPatterns = {
+		"/manager/productManager.html",
+		"/manager/orderManageIndex.html",
+		"/manager/orderManageDetail.html",
+		"/manager/couponManager.html"
+		})
 @Order(2)
 public class PowerShopFilter extends HttpFilter implements Filter{
 	private static final long serialVersionUID = 1L;

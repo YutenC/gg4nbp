@@ -76,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <i class="material-icons">keyboard_arrow_down</i>
             </div>
             <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" role="presentation" href="#">文章檢舉一覽</a>
-                <a class="dropdown-item" role="presentation" href="#">活動檢舉一覽</a>
+                <a class="dropdown-item" role="presentation" href="article_report.html">文章檢舉一覽</a>
+                <a class="dropdown-item" role="presentation" href="act_report.html">活動檢舉一覽</a>
             </div>
         </div>
     </li>
