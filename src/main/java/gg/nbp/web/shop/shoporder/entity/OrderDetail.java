@@ -26,9 +26,10 @@ public class OrderDetail implements java.io.Serializable{
 	
 	private Integer quantity;
 	
+	@Column(insertable = false)
 	private Integer comment;
 	
-	@Column(name = "COMMENT_CONTENT")
+	@Column(name = "COMMENT_CONTENT", insertable = false)
 	private String commentContent;
 	
 	@Column(name = "IS_RETURN")

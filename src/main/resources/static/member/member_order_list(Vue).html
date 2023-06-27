@@ -352,6 +352,23 @@
                                                 <td>{{ od.buyAmount }}</td>
                                                 <td>${{ od.price }}</td>
                                             </tr>
+                                            <tr>
+                                                <td>商品評分：</td>
+                                                <td colspan="3" class="stars">
+                                                    <button v-for="star in 5" v-bind:data-star="star"
+                                                        @click="comment(od.productId, star)">
+                                                        <img src="../img/icon/star-solid.svg" alt=""
+                                                            v-show="od.comment >= star">
+                                                        <img src="../img/icon/star-regular.svg" alt=""
+                                                            v-show="od.comment < star">
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr class="commentContent">
+                                                <span>留下評語</span>
+                                                <textarea name="" id="" cols="30" rows="10" placeholder="在此留言"
+                                                    v-model="od.commentContent"></textarea>
+                                            </tr>
                                         </template>
                                     </table>
                                 </div>

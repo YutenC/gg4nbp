@@ -26,4 +26,10 @@ public class TransOrderProduct implements java.io.Serializable{
 	private Integer stockAmount;
 	
 	private boolean checked;
+	
+	private Integer isReturn;
+	
+	private Integer comment;
+	
+	private String commentContent;
 }
