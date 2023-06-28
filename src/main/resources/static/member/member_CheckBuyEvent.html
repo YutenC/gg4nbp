@@ -721,7 +721,6 @@
 </script>
 <script>
     let onePage = 10;
-    let reqaa = [];
     let del = [];
     let upfile = [];
     let upfiledel =[];
@@ -738,9 +737,9 @@
                         <div><span>收購編號 :</span><span>${obj.eventId}</span></div>
                         <div><span>請求人 :</span><span>${obj.memberName || ''}</span></div>
                         <div><span>申請時間 :</span><input  type="datetime-local" value="${obj.applyDate}" disabled></input></div>
-                        <div class="change"><span>商品名稱 :</span><input type="text" value="${obj.productName || ''}" maxlength="30" ></div>
-                        <div class="change"><span>商品種類 :</span><span>${obj.type}</span></div>
-                        <div class="change"><span>預估價 :</span><input type="number" value="${obj.estimate || ''}" max="1000000" ></div>
+                        <div class="change"><span>商品名稱 :</span><input type="text" id="productName" value="${obj.productName || ''}" maxlength="30" ></div>
+                        <div class="change"><span>商品種類 :</span><span id="type">${obj.type}</span></div>
+                        <div class="change"><span>預估價 :</span><input id="estimate" type="number" value="${obj.estimate ?? ''}" max="1000000" ></div>
                         <div class="change"><span>銀行帳號 :</span><input id="applicantBankNumber" type="text" value="${obj.applicantBankNumber || ''}" maxlength="14"></div>
                         <hr>
                         <div><span>收購價 :</span><input type="number" value="${obj.price || ''}" disabled></div>
@@ -756,7 +755,7 @@
                     </div>
                     <div class="Pic">
                         <div><span style="font-size:1.3em;font-weight: bold;">內容</span></div>
-                        <div class="showContent"><textarea >${obj.content || ''}</textarea ></div>
+                        <div class="showContent"><textarea id="content" >${obj.content || ''}</textarea ></div>
                         <div class="btnArea">
                             <input id="getshot" type="button" value="拍照上傳">
                             <input  type="file" accept="image/*" value="拍照" style="display: none;" capture>
@@ -796,6 +795,17 @@
 
         $('#getshot').next().on('change',function(e){
             let uploadImg = e.target.files || e.dataTransfer.files;
+            if (!uploadImg) {
+                return;
+            }
+            ff:
+            for (let i = 0; i < upfile.length; i++) {
+                if(uploadImg[0].name == upfile[i][0].name)
+               return;
+            }
+
+
+
             upfile.push(uploadImg);
             const div = document.createElement('div');
             const img = document.createElement('img');
@@ -846,39 +856,79 @@
         })
 
         $('#commit').on('click', e => {
-            let p = price.value || -1;
-            let t = confirmTime.value ? confirmTime.value + ":00.000Z" : new Date();
-            fetch('update', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    eventId: obj.eventId,
-                    price: p,
-                    confirmTime: t,
-                    payState: payState.value,
-                    approvalState: approvalState.value
-                })
-            })
-                .then(res => res.json())
-                .then(result => {
-                    sessionStorage.setItem('searcgResult', JSON.stringify(result));
-                    reqaa = result;
-                    Swal.fire(
-                        '完成!',
-                        `審核完成`,
-                        'success'
-                    )
-                })
-                .then(todo => itemDisplay());
-        })
 
-        $('#commit').on('click', e => {
             /* 送出更新 待後端完成再補上 */
-        })
+            let type = $('#type_1').val() + $('#type_2').val();
+            let s_estimate = estimate.value || -1;
+            let img_list = [];
+   
 
+
+    /* 上傳圖片到本機指定位置 */
+    filter:
+    for (let i = 0; i < upfile.length; i++) {
+
+        const formData = new FormData();
+
+        for (let j = 0; j < upfiledel.length; j++) {
+            if (upfile[i][0].name == upfiledel[j]) {
+                continue filter;
+            }
+        }
+        formData.append(upfile[i].name, upfile[i]);
+        img_list.push({ image: upfile[i][0].name });
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '../secondhand/upFile', true);
+        xhr.send(formData);
     }
 
+    fi:
+    for (let i = 0; i < obj.image.length; i++) {
+        for (let j = 0; j < del.length; j++) {
+            if (obj.image[i].image == del[j]) {
+                continue fi;
+            }
+        }
+        img_list.push({ image: obj.image[i].image });
+    }
+
+
+    fetch('update4Member', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            eventId: obj.eventId,
+            productName: productName.value,
+            content: content.value,
+            type: type.value,
+            estimate: s_estimate,
+            applicantBankNumber: applicantBankNumber.value,
+            image : img_list
+        })
+    })
+    .then(resp => resp.json())
+    .then(obj => {
+    $('#searchValue').val("");
+        if (obj.str) {
+            Swal.fire({
+            icon: 'question',
+            title: obj.str
+            })
+        } else {
+            sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+            $('.swal2-container').remove();
+            itemDisplay();
+        }
+
+        })
+
+    })
+}
+
     function itemDisplay(page = 1) {
+    del = [];
+    upfile = [];
+    upfiledel =[];
         let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
         if (obj.eventId) {
             obj = [obj];
@@ -913,6 +963,8 @@
 
         lastNum = page * onePage > obj.length ? obj.length : page * onePage;
 
+
+
         for (let i = (page - 1) * onePage; i < lastNum; i++) {
             const article = document.createElement('article');
             article.setAttribute('class', 'ItemList');
@@ -921,7 +973,7 @@
                     <span>${obj[i].eventId}</span>
                     <span>${obj[i].productName}</span>
                     <span>${obj[i].memberName}</span>
-                    <span>${obj[i].estimate}</span>
+                    <span>${obj[i].estimate ?? ''}</span>
                     <span>${obj[i].approvalState}</span>
                     <span>
                         <button class="Review_${i}" onclick="ReviewBox(${i})">審</button>
@@ -950,7 +1002,6 @@
             .then(resp => resp.json())
             .then(obj => {
                 $('#searchValue').val("");
-                reqaa = obj;
                 if (obj.str) {
                     Swal.fire({
                         icon: 'question',
@@ -973,7 +1024,7 @@
         }
     })
 
-    fetch('selectAll', {
+    fetch('select', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

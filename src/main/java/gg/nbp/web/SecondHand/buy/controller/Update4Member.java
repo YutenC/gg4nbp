@@ -41,14 +41,6 @@ public class Update4Member extends HttpServlet {
 				e.printStackTrace();
 				CommonUtil.writepojo2Json(resp, new OneString("更新失敗"));
 			}
-			
-			
-			
-			
-			
 		}
-		
-		
-		super.doPost(req, resp);
 	}
 }
