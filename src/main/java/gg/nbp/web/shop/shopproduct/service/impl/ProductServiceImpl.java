@@ -9,11 +9,15 @@ import gg.nbp.web.shop.shopproduct.entity.*;
 import gg.nbp.web.shop.shopproduct.redisdao.ProductRedisDao;
 import gg.nbp.web.shop.shopproduct.service.FollowService;
 import gg.nbp.web.shop.shopproduct.service.ProductService;
+import gg.nbp.web.shop.shopproduct.util.ConstUtil;
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,9 +35,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ShoppingListDao shoppingListDao;
-
-//    @Autowired
-//    FollowDao followDao;
 
     @Autowired
     FollowService followService;
@@ -57,8 +58,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductImage getProductIndexImg(Integer id) {
-        ProductImage productImage = productImageDao.getIndexImgByProductId(id);
+
+        ProductImage productImage;
+        try {
+            productImage=  productImageDao.getIndexImgByProductId(id);
+        } catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            productImage=new ProductImage();
+            productImage.setImage(ConstUtil.DEFAULTIMG);
+        }
+
         return productImage;
+    }
+
+    @Override
+    public List<ProductImage> getProductImgs(Integer id) {
+        List<ProductImage> productImages;
+        try {
+            productImages = productImageDao.selectByProductId(id);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            ProductImage productImage=new ProductImage();
+            productImage.setImage(ConstUtil.DEFAULTIMG);
+            productImages=new ArrayList<>();
+            productImages.add(productImage);
+        }
+        return productImages;
     }
 
     @Override
@@ -76,8 +101,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDetail getProductDetail(Integer id) {
-        Product product = productDao.selectById(id);
-        List<ProductImage> productImages = productImageDao.selectByProductId(id);
+        Product product = getProductById(id);
+        List<ProductImage> productImages = getProductImgs(id);
 
         ProductDetail productDetail = new ProductDetail(product, productImages);
 
@@ -91,8 +116,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void saveProductBrowseToRedis(Integer id) {
-        Product product = productDao.selectById(id);
-        ProductImage productImage = productImageDao.getIndexImgByProductId(id);
+        Product product = getProductById(id);
+        ProductImage productImage = getProductIndexImg(id);
         product.setProductIndexImage(productImage);
         productRedisDao.saveProductBrowseToRedis(product);
     }
@@ -127,7 +152,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductByBuyTimes(Integer amount, Integer type) {
         List<Product>  products= productDao.selectByBuyTimes(amount,type.toString());
         setProductIndexImg(products);
-        return null;
+        return products;
     }
 
     @Override
@@ -141,17 +166,6 @@ public class ProductServiceImpl implements ProductService {
         return productDao.updateProductAmountBuyTimes(product);
     }
 
-
-//    private ProductImage getProductIndexImg_(Product product) {
-//        List<ProductImage> productImages = productImageDao.selectByProductId(product.getId());
-//        for (ProductImage productImage : productImages) {
-//            if (productImage.getImage().endsWith("index.PNG")) {
-//                return productImage;
-//            }
-//        }
-//
-//        return null;
-//    }
 
 
     private void setProductIndexImg(List<Product>  products){

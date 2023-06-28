@@ -10,6 +10,7 @@ import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.entity.ProductImage;
 import gg.nbp.web.shop.shopproduct.pojo.ResFollowList;
 import gg.nbp.web.shop.shopproduct.service.FollowService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class FollowServiceImpl implements FollowService {
 
     @Autowired

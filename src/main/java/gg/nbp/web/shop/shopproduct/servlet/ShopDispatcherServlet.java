@@ -184,6 +184,11 @@ public class ShopDispatcherServlet extends HttpServlet {
                 strOut = productController.searchProducts(search);
                 break;
 
+            case "/getProductById":
+                strOut = productController.getProductById(Integer.valueOf(req.getParameter("id")));
+                break;
+
+
             case "/getSomeProduct":
 
                 break;

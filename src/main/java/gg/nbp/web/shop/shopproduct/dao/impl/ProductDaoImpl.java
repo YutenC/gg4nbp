@@ -106,6 +106,14 @@ public class ProductDaoImpl extends CoreDaoImpl<Product,Integer> implements Prod
     }
 
 
+//public List<Product> getProductWithFollow(){
+
+//
+//    String hql = "from Product  where productName like '%"+search+"%'";
+//
+//    return session.createQuery(hql, Product.class).getResultList();
+//}
+
 
     @Override
     public int updateProductScore(Product product) {
