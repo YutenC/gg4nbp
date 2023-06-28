@@ -22,7 +22,10 @@ public class ActController {
         List<Act> acts = actService.getAllActs();
         return acts;
     }
-
+    @GetMapping("/act/{id}")
+    public Act getActById(@PathVariable("id") int id) {
+        return actService.getActById(id);
+    }
 
 
     // 新增

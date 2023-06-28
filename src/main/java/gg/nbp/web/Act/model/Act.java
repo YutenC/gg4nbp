@@ -14,7 +14,7 @@ public class Act {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Act_id", nullable = false)
-    private Integer id;
+    private Integer Id;
 
     @Column(name = "Act_name", nullable = false, length = 30)
     private String actName;
