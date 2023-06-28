@@ -22,6 +22,7 @@ public class MemberSendVertifyServlet extends HttpServlet {
         private static final long serialVersionUID = 6278567220887318688L;
         @Autowired
         private MailService SENDMAIL;
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
