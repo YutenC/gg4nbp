@@ -346,8 +346,8 @@
 
         <form id="reportForm">
           <div class="mb-3">
-            <label for="validationServer01" class="form-label">你的名字</label>
-            <input type="text" class="form-control" id="validationServer01" value="">
+            <label for="reportPerson" class="form-label">你的名字</label>
+            <input type="text" class="form-control" id="reportPerson" value="">
           </div>
           <div class="mb-3">
             <label for="reportedName" class="form-label">被你檢舉的人</label>
@@ -364,7 +364,7 @@
           <div class="mb-3">
             <label for="validationServer03" class="form-label">哪一個活動</label>
             <input type="text" class="form-control" id="validationServer03" aria-describedby="validationServer03Feedback">
-            <div id="validationServer03Feedback" class="form-text">請提供有效的城市名稱。</div>
+            <div id="validationServer03Feedback" class="form-text">請提供有效的活動名稱。</div>
           </div>
           <div class="mb-3">
             <label for="reportTime" class="form-label">時間點</label>
@@ -426,7 +426,7 @@
             // 清空预览容器
             ReportImage.innerHTML = "";
 
-            // 读取选择的图片文件
+            // 讀取選的圖片
             var files = fileInput.files;
             for (var i = 0; i < files.length; i++) {
               var file = files[i];
@@ -461,24 +461,27 @@
 
             // let rr=document.getElementById("reportedName");
             // const reportedName=rr.value;
+            const reportPerson =document.getElementById("reportPerson").value;
             const reportedName = document.getElementById("reportedName").value;
             const reportTime = document.getElementById("reportTime").value;
             const reportContent = document.getElementById("reportContent").value;
             const reportImage = document.getElementById("reportImage").value;
 
             const report = {
+              reportPerson: reportPerson,
               reportedName: reportedName,
               reportTime: reportTime,
               reportContent: reportContent,
               reportImage: reportImage
             };
 
-            axios.post("http://localhost:8000/actReportList", report).then((response) => {
+            axios.post("http://localhost:8080/gg4nbp/actReportList", report).then((response) => {
               console.log(response.data);
               // 其他处理代码
             });
 
             // 清空表单输入
+            document.getElementById("reportPerson").value = "";
             document.getElementById("reportedName").value = "";
             document.getElementById("reportTime").value = "";
             document.getElementById("reportContent").value = "";

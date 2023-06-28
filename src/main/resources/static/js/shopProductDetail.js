@@ -86,6 +86,12 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (value) {
+                    let result = value.data;
+                    if (result.state.toLowerCase() === "ok") {
+                        vm.product.follow = result.content;
+                    }
+
+
                     console.log("addFollow then");
 
                 })

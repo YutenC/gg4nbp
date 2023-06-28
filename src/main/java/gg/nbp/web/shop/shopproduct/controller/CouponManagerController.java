@@ -5,6 +5,7 @@ import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
 import gg.nbp.web.shop.shopproduct.pojo.ErrorMsg;
 import gg.nbp.web.shop.shopproduct.pojo.RequestMsg;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
+import gg.nbp.web.shop.shopproduct.util.ConvertJson;
 import gg.nbp.web.shop.shopproduct.util.ObjectInstance;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class CouponManagerController {
         System.out.println("getAllCouponActivity");
         List<CouponActivity> couponActivities = null;
         String out = null;
-        Gson gson = new Gson();
         RequestMsg requestMsg = null;
         ErrorMsg errorMsg = null;
 
@@ -34,13 +34,13 @@ public class CouponManagerController {
             couponActivities = couponManagerService.getAllCouponActivity();
 
             requestMsg = new RequestMsg("success", couponActivities);
-            out = gson.toJson(requestMsg);
+            out = ConvertJson.toJson(requestMsg);
         } catch (RuntimeException e) {
             if ("Could not get a resource from the pool".equals(e.getMessage())) {
                 System.out.println("Could not get a resource from the pool.........");
             }
             requestMsg = new RequestMsg("error", e.getMessage());
-            out = gson.toJson(requestMsg);
+            out = ConvertJson.toJson(requestMsg);
 
         }
 

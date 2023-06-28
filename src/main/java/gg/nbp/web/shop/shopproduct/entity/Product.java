@@ -66,4 +66,8 @@ public class Product {
     @Transient
     List<ProductImage> productImages;
 
+    @Expose
+    @Transient
+    int follow;
+
 }
