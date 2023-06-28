@@ -16,6 +16,8 @@ public interface ProductService {
 
     ProductImage getProductIndexImg(Integer id);
 
+    List<ProductImage> getProductImgs(Integer id);
+
     List<Product> searchProducts(String search);
 
 
