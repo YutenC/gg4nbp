@@ -51,7 +51,7 @@ public class FollowServiceImpl implements FollowService {
             return 1;
         } else {
             deleteFollowById(followListId);
-            return -1;
+            return 0;
         }
 
     }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 //@Component
 @Component
@@ -23,8 +24,8 @@ public class ProductController {
     public ProductController() {
     }
 
-    public String getAllProduct() {
-        List<Product> products = productService.getAllProduct();
+    public String getAllProduct(Integer memId) {
+        List<Product> products = productService.getAllProduct(memId);
         return ConvertJson.toJsonExpose(products);
     }
 
@@ -33,13 +34,13 @@ public class ProductController {
         return ConvertJson.toJsonExpose(product);
     }
 
-    public String getProductByType(Integer type) {
-        List<Product> products = productService.getProductByType(type);
+    public String getProductByType(Integer memId,Integer type) {
+        List<Product> products = productService.getProductByType(memId,type);
         return ConvertJson.toJsonExpose(products);
     }
 
-    public String getProductByBuyTimes(Integer type) {
-        List<Product> products = productService.getProductByBuyTimes(type);
+    public String getProductByBuyTimes(Map<String,Object> map, Integer type) {
+        List<Product> products = productService.getProductByBuyTimes(map,type);
         return ConvertJson.toJsonExpose(products);
     }
 
@@ -48,13 +49,13 @@ public class ProductController {
         return ConvertJson.toJsonExpose(products);
     }
 
-    public String searchProducts(String search) {
-        List<Product> products = productService.searchProducts(search);
+    public String searchProducts(Integer memId,String search) {
+        List<Product> products = productService.searchProducts(memId,search);
         return ConvertJson.toJsonExpose(products);
     }
 
-    public String getProductDetail(Integer id) {
-        ProductDetail productDetail = productService.getProductDetail(id);
+    public String getProductDetail(Integer memId,Integer id) {
+        ProductDetail productDetail = productService.getProductDetail(memId,id);
         productService.saveProductBrowseToRedis(id);
         return ConvertJson.toJsonExpose(productDetail);
     }

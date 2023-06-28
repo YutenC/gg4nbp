@@ -106,13 +106,20 @@ public class ProductDaoImpl extends CoreDaoImpl<Product,Integer> implements Prod
     }
 
 
-//public List<Product> getProductWithFollow(){
+public List<Product> getProductWithFollow(){
 
-//
+//    String hql =   " Product., Product_name, 'type', Price ,1, "+
+//            "not isnull(( select 1  from follow_list f  where Product_id=p.Product_id and  f.Member_id=145))  as follow"+
+//    "from product p";
+
+    String hql="p.id, p.productName, p.type, p.price, " +
+            "CASE WHEN EXISTS (1 FROM FollowList f WHERE f.id.productId = p.id AND f.id.memberId = 145) THEN 1 ELSE 0 END AS follow " +
+            "FROM Product p";
+
 //    String hql = "from Product  where productName like '%"+search+"%'";
-//
-//    return session.createQuery(hql, Product.class).getResultList();
-//}
+
+    return session.createQuery(hql, Product.class).getResultList();
+}
 
 
     @Override

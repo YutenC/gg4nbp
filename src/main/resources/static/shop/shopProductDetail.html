@@ -322,7 +322,9 @@
                                 </div>
                                 <button @click="addCart(product.id)">直接購買</button>
                                 <button @click="addCart(product.id)">加入購物車</button>
-                                <button @click="addFollow(product.id)">加入追蹤</button>
+
+                                <button v-if="product.follow==0" @click="addFollow(product.id)">加入追蹤</button>
+                                <button v-else @click="addFollow(product.id)">移除追蹤</button>
                             </form>
                         </div>
                     </div>

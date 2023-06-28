@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class ACORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -16,8 +16,8 @@ public class ACORSFilter implements Filter {
         // 將ServletResponse轉換為HttpServletResponse
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        String ss =httpRequest.getSession().getId();
-        System.out.println(ss);
+//        String ss =httpRequest.getSession().getId();
+//        System.out.println(ss);
         // 設置"Access-Control-Allow-Origin"頭，允許任意來源訪問
 //        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
         String oo=  httpRequest.getHeader("Origin");
