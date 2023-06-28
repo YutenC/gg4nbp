@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import gg.nbp.web.Manager.entity.Manager;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.util.CommonUtil;
@@ -26,6 +28,7 @@ public class ManageshpServlet extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+
 
         List<SecondhandProduct> secondhandproductList = SERVICE.searchAll();
 

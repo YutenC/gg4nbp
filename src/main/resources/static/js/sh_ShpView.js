@@ -47,5 +47,5 @@ fetch('shp_view', {
 
 
 buyBtn.addEventListener("click", function (){
-    window.location.href = "../sh_shop/sh_buy.html";
+    window.location.href = "../member/sh_buy.html";
 })

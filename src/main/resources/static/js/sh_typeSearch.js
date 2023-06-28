@@ -1,10 +1,9 @@
-
 let Mainshp_array = [];
 
 let MainshpListContainer = document.querySelector('div.product');
 console.log(MainshpListContainer);
 
-// 側邊欄選項元素
+
 const nMain = document.querySelector('body > main > div.side > div:nth-child(1) > div > div:nth-child(1) > span');
 const nHandle = document.querySelector('body > main > div.side > div:nth-child(1) > div > div:nth-child(2) > span');
 const nGame = document.querySelector('body > main > div.side > div:nth-child(1) > div > div:nth-child(3) > span');
@@ -20,13 +19,11 @@ const pHandle = document.querySelector('body > main > div.side > div:nth-child(3
 const pGame = document.querySelector('body > main > div.side > div:nth-child(3) > div > div:nth-child(3) > span');
 const pOther = document.querySelector('body > main > div.side > div:nth-child(3) > div > div:nth-child(4) > span');
 
-// pOther.addEventListener("click", function (){console.log("nnn")});
-// console.log("click");
 
-
+pOther.addEventListener("click", function (){console.log("nnn")});
+console.log("click");
 
 var typeValue;
-
 
 
 // NS
@@ -109,72 +106,50 @@ pOther.addEventListener("click", function (){
 })
 
 
-// 全部上架商品
 
+// 種類商品
+fetch('shp_typeSearch', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body:JSON.stringify({
+        type: sessionStorage.getItem("type", typeValue)
+        // type: typeValue
+        }),
+})
+    .then(resp => resp.json()) // .then(function(resp){resp.json();})
+    .then(
+        jsondata => {
 
-    fetch('shp_main', {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(resp => resp.json()) // .then(function(resp){resp.json();})
-        .then(
-            jsondata => {
-                console.log("jsondata" + jsondata);
-                jsondata.forEach(
-                    secondhandproduct => {
-                        let Mainshp_array_item = {
-                            productId: secondhandproduct.productId,
-                            name: secondhandproduct.name,
-                            image: secondhandproduct.image.map(item => item.image),}
-                        Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
-                        console.log(Mainshp_array)
-                        showList();
-                    }
-                )
+            console.log("typeSelect" + jsondata);
+            jsondata.forEach(
+                secondhandproduct => {
+                    let Mainshp_array_item = {
+                        productId: secondhandproduct.productId,
+                        name: secondhandproduct.name,
+                        type: secondhandproduct.type,
+                        image: secondhandproduct.image.map(item => item.image),}
+                    Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
+                    console.log(Mainshp_array);
+                    showList();
+                }
 
-            }
-        )
+            )
 
-
-
-
-
-
-
-
-
+        }
+    )
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function btnSubmit() {
-    console.log("新增頁面，跳轉頁面");
-    window.location.href = "../manager/sh_productmanage.html";
-}
 
 function showList() {
 
-            let html = "";
-            Mainshp_array.forEach(
-                secondhandproduct => {
+    let html = "";
+    Mainshp_array.forEach(
+        secondhandproduct => {
 
-                    html += `
+            html += `
        
                      <div class="showItem">
                         <div class="showItem_img" onclick="clickShp(${secondhandproduct.productId})">
@@ -198,12 +173,12 @@ function showList() {
        
             `
 
-                }
+        }
 
 
-            );
+    );
 
-            MainshpListContainer.innerHTML = html;
+    MainshpListContainer.innerHTML = html;
 
 
 }
@@ -219,4 +194,3 @@ function buyBtn(productId) {
     sessionStorage.setItem('productId', productId);
     window.location.href = "../member/sh_buy.html";
 }
-
