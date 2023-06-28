@@ -8,6 +8,7 @@ let pomAll_array = [];
 let pom_array = [];
 let power_array = [];
 
+
 // 使用 AJAX 發送請求獲取 managerList 的資料
 
 fetch('../manager/manager_list', {
@@ -74,6 +75,20 @@ fetch('../manager/manager_list', {
 
                         showList();
 
+                        manager_array.forEach(manager => {
+                            manager.power_id = [0];
+                            pomAll_array.forEach(pom => {
+                                if (pom.manager_id === manager.manager_id) {
+                                    if (!manager.power_id) {
+                                        manager.power_id.push(pom.power_id);
+                                    } else {
+                                        manager.power_id.push(pom.power_id);
+                                    }
+                                }
+                            })
+                            console.log(manager.power_id);
+                        })
+
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -94,15 +109,77 @@ $("a.manager_search_button").on("click", () => {
     event.preventDefault();
     filtered = true;
 
+    // radios篩選
+    const radios = document.getElementsByName('status');
+    let stateValue;
+    radios.forEach(radio => {
+        if (radio.checked) {
+            stateValue = radio.value;
+        }
+    });
+
+    if (stateValue === "all") {
+        filtered_array = manager_array;
+    } else if (stateValue === "working") {
+        filtered_array = manager_array.filter((manager) => {
+            return manager.is_working === "在職";
+        });
+    } else {
+        filtered_array = manager_array.filter((manager) => {
+            return manager.is_working === "離職";
+        });
+    }
+
+    // checkedbox篩選
+    const selectAllCheckbox = document.querySelector('#selectAllCheckbox');
+    const permissionAdminCheckbox = document.querySelector('#permissionAdminCheckbox');
+    const memberAdminCheckbox = document.querySelector('#memberAdminCheckbox');
+    const storeAdminCheckbox = document.querySelector('#storeAdminCheckbox');
+    const secondhandStoreAdminCheckbox = document.querySelector('#secondhandStoreAdminCheckbox');
+    const reportAdminCheckbox = document.querySelector('#reportAdminCheckbox');
+
+    let selectedPowerIds = [];
+
+    if (!(selectAllCheckbox.checked)) {
+        if (permissionAdminCheckbox.checked) {
+            selectedPowerIds.push(1);
+        }
+
+        if (memberAdminCheckbox.checked) {
+            selectedPowerIds.push(2);
+        }
+
+        if (storeAdminCheckbox.checked) {
+            selectedPowerIds.push(3);
+        }
+
+        if (secondhandStoreAdminCheckbox.checked) {
+            selectedPowerIds.push(4);
+        }
+
+        if (reportAdminCheckbox.checked) {
+            selectedPowerIds.push(5);
+        }
+
+        console.log(selectedPowerIds);
+
+        filtered_array = filtered_array.filter(manager => {
+            return selectedPowerIds.every(powerId => manager.power_id.includes(powerId));
+        });
+    }
+
+
+    // 文字框篩選
     let searchType = $("select.manager_search_type").val();
     let searchContent = $("input.manager_search_content").val();
 
-    filtered_array = manager_array.filter((manager) => {
+
+
+    filtered_array = filtered_array.filter((manager) => {
         return manager[searchType].toString().includes(searchContent);
     });
 
     showList();
-
 })
 
 $("a.manager_default_list_button").on("click", () => {
@@ -397,6 +474,32 @@ function showList() {
 
 
 }
+
+function toggleAllPowerBoxes() {
+    const selectAllCheckbox = document.querySelector('#selectAllCheckbox');
+    const checkboxes = document.querySelectorAll('.power-check:not(#selectAllCheckbox)');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAllCheckbox.checked;
+    });
+}
+
+function handleCheckboxChange() {
+    const selectAllCheckbox = document.querySelector('#selectAllCheckbox');
+    const checkboxes = document.querySelectorAll('.power-check:not(#selectAllCheckbox)');
+
+    let allChecked = true;
+
+    checkboxes.forEach(checkbox => {
+        if (!checkbox.checked) {
+            allChecked = false;
+        }
+    });
+
+    selectAllCheckbox.checked = allChecked;
+}
+
+
 
 
 
