@@ -385,7 +385,7 @@
             margin: 10px; 
             font-size: 10px;
             color: red;
-            width: 100%;
+            width: calc(100% - 20px);
         }
 
 
@@ -795,16 +795,17 @@
 
         $('#getshot').next().on('change',function(e){
             let uploadImg = e.target.files || e.dataTransfer.files;
-            if (!uploadImg) {
+
+            if (!uploadImg) 
                 return;
-            }
-            ff:
-            for (let i = 0; i < upfile.length; i++) {
+            
+            for (let i = 0; i < upfile.length; i++) 
                 if(uploadImg[0].name == upfile[i][0].name)
-               return;
-            }
-
-
+                    return;
+            
+            for (let i = 0; i < obj.image.length; i++) 
+                if(uploadImg[0].name == obj.image[i].image)
+                    return;
 
             upfile.push(uploadImg);
             const div = document.createElement('div');
@@ -857,40 +858,37 @@
 
         $('#commit').on('click', e => {
 
-            /* 送出更新 待後端完成再補上 */
+
             let type = $('#type_1').val() + $('#type_2').val();
             let s_estimate = estimate.value || -1;
             let img_list = [];
    
 
 
-    /* 上傳圖片到本機指定位置 */
-    filter:
-    for (let i = 0; i < upfile.length; i++) {
+            /* 上傳圖片到本機指定位置 */
+            filter:
+            for (let i = 0; i < upfile.length; i++) {
 
-        const formData = new FormData();
+                const formData = new FormData();
 
-        for (let j = 0; j < upfiledel.length; j++) {
-            if (upfile[i][0].name == upfiledel[j]) {
-                continue filter;
+                for (let j = 0; j < upfiledel.length; j++) 
+                    if (upfile[i][0].name == upfiledel[j])
+                        continue filter;
+              
+                formData.append(upfile[i][0].name, upfile[i][0]);
+                img_list.push({ image: upfile[i][0].name });
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../secondhand/upFile', true);
+                xhr.send(formData);
             }
-        }
-        formData.append(upfile[i].name, upfile[i]);
-        img_list.push({ image: upfile[i][0].name });
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '../secondhand/upFile', true);
-        xhr.send(formData);
-    }
 
-    fi:
-    for (let i = 0; i < obj.image.length; i++) {
-        for (let j = 0; j < del.length; j++) {
-            if (obj.image[i].image == del[j]) {
-                continue fi;
+            fi:
+            for (let i = 0; i < obj.image.length; i++) {
+                for (let j = 0; j < del.length; j++) 
+                    if (obj.image[i].image == del[j]) 
+                        continue fi;
+             img_list.push({ image: obj.image[i].image });
             }
-        }
-        img_list.push({ image: obj.image[i].image });
-    }
 
 
     fetch('update4Member', {

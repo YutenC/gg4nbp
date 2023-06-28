@@ -185,7 +185,7 @@ public class BuyEvent extends Core {
 			for (int j = 0; j < types.length; j++) 
 				if(getTypeValue(types[i]+types[j]).equals(be.type)) 
 					sl.setType(types[i]+types[j]);
-		sl.setEstimate(be.estimate < 0 ?null : be.estimate);
+		sl.setEstimate(be.estimate < 0 ? null : be.estimate);
 		sl.setApplicantBankNumber(be.applicantBankNumber);
 		return sl ;
 	}

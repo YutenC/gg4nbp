@@ -40,7 +40,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		try {
 
 			for (SecondhandBuyPicture img : sl.getImage())
-				insertimg((SecondhandBuyPicture) img, sl.getBuylistId());
+				insertimg(img, sl.getBuylistId());
 			
 		} catch (Exception e) {
 			sl.setMessage("沒有圖片");
@@ -61,8 +61,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 			throw new SQLException();
 
 		/* 因為有外來鍵的限制，先刪除圖片 */
-		List<SecondhandBuyPicture> imgList = selectimg(sl);
-		for (SecondhandBuyPicture img : imgList)
+		for (SecondhandBuyPicture img : selectimg(sl))
 			delImg(img);
 
 		/* 再刪除事件 */
