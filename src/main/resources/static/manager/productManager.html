@@ -98,10 +98,11 @@
                                                 <td><strong>產品上架</strong></td>
                                                 <td><strong>產品下架日期</strong></td>
                                                 <td><strong>產品下架</strong></td>
+                                                <td><strong>更新</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="item in products">
+                                            <tr v-for="(item,index) in products">
                                                 <!-- <td><img class="rounded-circle me-2" width="30" height="30"
                                                         src="images/avatars/avatar1.jpeg">Airi Satou</td> -->
                                                 <td>{{item.productName}}</td>
@@ -120,6 +121,8 @@
                                                 </td>
                                                 <td><button style="width: 40px; height: 20px;"
                                                         @click="takeOffProduct(item.id)"></button></td>
+                                                <td><button style="width: 40px; height: 20px;"
+                                                        @click="updateProductInfo(index)"></button></td>
                                             </tr>
 
 
@@ -138,6 +141,7 @@
                                                 <td><strong>產品上架</strong></td>
                                                 <td><strong>產品下架日期</strong></td>
                                                 <td><strong>產品下架</strong></td>
+                                                <td><strong>更新</strong></td>
                                             </tr>
                                         </tfoot>
                                     </table>

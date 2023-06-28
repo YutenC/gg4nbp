@@ -230,7 +230,25 @@ const vm = Vue.createApp({
                 .catch(function (e) {
                     console.log("getSomeProduct error " + e);
                 });
-        }
+        },
+        updateProductInfo(index) {
+            let product = vm.products[index];
+            axios({
+                method: "GET",
+                url: host_context + "shopDispatcher/updateProductInfo",
+                params: {
+                    product: product
+                }
+            })
+                .then(function (value) {
+                    console.log("updateProductInfo then");
+                })
+                .catch(function (e) {
+                    console.log("updateProductInfo error " + e);
+                });
+        },
+
+
     },
 }).mount("#vue-body");
 

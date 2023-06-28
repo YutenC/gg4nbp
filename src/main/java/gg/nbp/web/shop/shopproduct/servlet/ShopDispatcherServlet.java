@@ -1,8 +1,10 @@
 package gg.nbp.web.shop.shopproduct.servlet;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.Primitives;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.shop.shopproduct.controller.*;
+import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.pojo.ProductPojo;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -157,12 +159,12 @@ public class ShopDispatcherServlet extends HttpServlet {
 
             case "/getProductByType":
                 String type = req.getParameter("type");
-                strOut = productController.getProductByType(member.getMember_id(),Integer.valueOf(type));
+                strOut = productController.getProductByType(member.getMember_id(), Integer.valueOf(type));
                 break;
             case "/getProductByBuyTimes":
                 String type_ = req.getParameter("type");
                 String amount_ = req.getParameter("amount");
-                if (type_==null||"".equals(type_)) {
+                if (type_ == null || "".equals(type_)) {
                     type_ = "0";
                 }
 
@@ -170,9 +172,9 @@ public class ShopDispatcherServlet extends HttpServlet {
                     amount_ = "-1";
                 }
 
-                Map<String,Object> map=new HashMap<>();
-                map.put("memId",member.getMember_id());
-                map.put("limit",Integer.valueOf(amount_));
+                Map<String, Object> map = new HashMap<>();
+                map.put("memId", member.getMember_id());
+                map.put("limit", Integer.valueOf(amount_));
 
                 strOut = productController.getProductByBuyTimes(map, Integer.valueOf(type_));
 
@@ -181,7 +183,7 @@ public class ShopDispatcherServlet extends HttpServlet {
 
             case "/searchProducts":
                 String search = req.getParameter("search");
-                strOut = productController.searchProducts(member.getMember_id(),search);
+                strOut = productController.searchProducts(member.getMember_id(), search);
                 break;
 
             case "/getProductById":
@@ -193,6 +195,11 @@ public class ShopDispatcherServlet extends HttpServlet {
 
                 break;
 
+            case "/updateProductInfo":
+//                getParameter(req,"product",Product.class);
+//                Product
+                strOut = productController.updateProductInfo(getObject(req,"product",Product.class));
+                break;
 
             case "/addCart":
                 String id_str = req.getParameter("id");
@@ -217,7 +224,9 @@ public class ShopDispatcherServlet extends HttpServlet {
                 String productId_json = req.getParameter("id");
                 Gson gson = new Gson();
                 Integer productId = gson.fromJson(productId_json, Integer.class);
-                strOut = productController.getProductDetail(member.getMember_id(),productId);
+                strOut = productController.getProductDetail(member.getMember_id(), productId);
+
+//                strOut = productController.getProductDetail(member.getMember_id(),(Integer)getParameter(req,"id"));
                 break;
 
             case "/getProductHistory":
@@ -307,8 +316,22 @@ public class ShopDispatcherServlet extends HttpServlet {
 
     }
 
+    private <T> T getObject(HttpServletRequest req, String parm, Class<T> classOfT) {
+        String result = req.getParameter(parm);
+        Gson gson = new Gson();
+        T obj = gson.fromJson(result, classOfT);
+        return Primitives.wrap(classOfT).cast(obj);
+    }
 
+    private Object getParameter(HttpServletRequest req, String parm) {
+        return req.getParameter(parm);
 
+    }
+
+    private <T> T getParameter(HttpServletRequest req, String parm, T c) {
+        String result = req.getParameter(parm);
+        return (T) result;
+    }
 
 
 }

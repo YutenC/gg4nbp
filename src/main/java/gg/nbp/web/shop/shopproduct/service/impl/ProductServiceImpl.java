@@ -43,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProduct(Integer memId) {
+
         List<Product> products = productDao.selectAll();
         setProductIndexImg(products);
         setFollows(memId,products);
@@ -111,6 +112,10 @@ public class ProductServiceImpl implements ProductService {
         return productDao.updateProductAmountBuyTimes(product);
     }
 
+    @Override
+    public int updateProductInfo(Product product) {
+        return productDao.update(product);
+    }
 
 
     @Override

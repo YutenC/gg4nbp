@@ -39,4 +39,6 @@ public interface ProductService {
 
     int updateProductScore(Product product);
     int updateProductAmountBuyTimes(Product product);
+
+    int updateProductInfo(Product product);
 }

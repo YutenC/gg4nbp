@@ -34,28 +34,28 @@ public class ProductController {
         return ConvertJson.toJsonExpose(product);
     }
 
-    public String getProductByType(Integer memId,Integer type) {
-        List<Product> products = productService.getProductByType(memId,type);
+    public String getProductByType(Integer memId, Integer type) {
+        List<Product> products = productService.getProductByType(memId, type);
         return ConvertJson.toJsonExpose(products);
     }
 
-    public String getProductByBuyTimes(Map<String,Object> map, Integer type) {
-        List<Product> products = productService.getProductByBuyTimes(map,type);
+    public String getProductByBuyTimes(Map<String, Object> map, Integer type) {
+        List<Product> products = productService.getProductByBuyTimes(map, type);
         return ConvertJson.toJsonExpose(products);
     }
 
     public String getProductByBuyTimes(Integer amount, Integer type) {
-        List<Product> products = productService.getProductByBuyTimes(amount,type);
+        List<Product> products = productService.getProductByBuyTimes(amount, type);
         return ConvertJson.toJsonExpose(products);
     }
 
-    public String searchProducts(Integer memId,String search) {
-        List<Product> products = productService.searchProducts(memId,search);
+    public String searchProducts(Integer memId, String search) {
+        List<Product> products = productService.searchProducts(memId, search);
         return ConvertJson.toJsonExpose(products);
     }
 
-    public String getProductDetail(Integer memId,Integer id) {
-        ProductDetail productDetail = productService.getProductDetail(memId,id);
+    public String getProductDetail(Integer memId, Integer id) {
+        ProductDetail productDetail = productService.getProductDetail(memId, id);
         productService.saveProductBrowseToRedis(id);
         return ConvertJson.toJsonExpose(productDetail);
     }
@@ -63,15 +63,18 @@ public class ProductController {
 
     public String getProductHistory() {
 
-        List<Product> products=  productService.getProductHistory();
+        List<Product> products = productService.getProductHistory();
 
         return ConvertJson.toJsonExpose(products);
     }
 
-    public void addCart(Integer id,Integer memId){
-        productService.addCart(id,memId);
+    public void addCart(Integer id, Integer memId) {
+        productService.addCart(id, memId);
     }
 
 
-
+    public String updateProductInfo(Product product) {
+        productService.updateProductInfo(product);
+        return "";
+    }
 }
