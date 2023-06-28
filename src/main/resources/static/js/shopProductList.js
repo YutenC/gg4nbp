@@ -41,7 +41,7 @@ const vm = Vue.createApp({
 
 
         },
-        addFollow: function (id) {
+        addFollow: function (index, id) {
             axios({
                 method: "Get",
                 url: host_context + "shopDispatcher/addFollow",
@@ -52,6 +52,12 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (value) {
+                    let result = value.data;
+                    if (result.state.toLowerCase() === "ok") {
+                        vm.products[index].follow = result.content;
+                    }
+
+
                     console.log("addFollow then");
 
                 })
@@ -157,6 +163,8 @@ function getAllProduct() {
     })
         .then(function (value) {
             vm.products = value.data;
+
+            getFollows();
             console.log("getAllProduct then");
 
         })

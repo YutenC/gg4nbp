@@ -16,7 +16,7 @@ public class testProductController {
 
     @GetMapping("/getMem")
     public String getMember(){
-        List<Product> list= productService.getAllProduct();
+//        List<Product> list= productService.getAllProduct();
         return "ccc";
 
     }
