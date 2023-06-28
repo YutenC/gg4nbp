@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 import gg.nbp.web.Member.entity.Member;
 
-public class MailService {
+public class MailService extends Thread{
 	public void sendMail(String to, String subject, String messageText) {
 
 		try {
@@ -49,12 +49,20 @@ public class MailService {
 			e.printStackTrace();
 		}
 	}
-	public void mailService(Member member,String title, String messageText){
+	public void mailService(Member member,String title, String messageText) {
 
 		String to = member.getEmail();
+		System.out.println("信件寄出");
 
-		MailService mailService = new MailService();
-		mailService.sendMail(to, title, messageText);
+//		MailService mailService = new MailService();
+//		mailService.sendMail(to, title, messageText);
 		// 呼叫此方法時 只要提供會員寄發會員的email、title、訊息內容即可
+
+		Thread sendMailThread = new Thread(() -> sendMail(to, title, messageText));
+		sendMailThread.start();
+		// 開啟多執行緒，讓另一條執行緒寄信，而原本的執行緒繼續回應請求。
 	}
+
+
+
 }

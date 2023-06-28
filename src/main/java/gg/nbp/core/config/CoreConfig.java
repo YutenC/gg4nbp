@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import gg.nbp.core.service.MailService;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
 public class CoreConfig {
@@ -14,5 +16,4 @@ public class CoreConfig {
 	public MailService mailService() throws IllegalArgumentException, NamingException {
 		return new MailService();
 	}
-
 }
