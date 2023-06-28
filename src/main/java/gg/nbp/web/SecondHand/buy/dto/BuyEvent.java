@@ -16,7 +16,7 @@ import lombok.Getter;
 public class BuyEvent extends Core {
 	private static final long serialVersionUID = -7518578406780806592L;
 	private Integer eventId;
-
+	private Integer memberId;
 	private String memberName;
 	private String productName;
 	private String type;
@@ -39,6 +39,7 @@ public class BuyEvent extends Core {
 
 		try {
 			eventId = bs.getBuylistId();
+			memberId = bs.getMemberId();
 			memberName = Toolbox.memberId2Name(bs.getMemberId(),dao);
 			productName = bs.getProductName();
 			type = getTypeValue(bs.getType());
@@ -153,9 +154,13 @@ public class BuyEvent extends Core {
 				+ "]";
 	}
 
-	public static SecondhandBuylist toSecondhandBuylist(BuyEvent be ,SecondHandBuylistDao dao ) {
+	public static SecondhandBuylist trans4Mana(BuyEvent be ,SecondHandBuylistDao dao ) {
 		SecondhandBuylist sl = dao.selectById(be.eventId);
+<<<<<<< HEAD
 		sl.setPrice(be.price == -1 ? null : be.price);
+=======
+		sl.setPrice(be.price < 0  ? null : be.price);
+>>>>>>> 17402937080e2eeb2e9c93f1770e395b361bc8d1
 		sl.setConfirmTime(be.confirmTime);
 		for(int i = 0 ; i < 3 ; i++) {
 			if(getPayState(i).equals(be.payState)) {
@@ -174,4 +179,19 @@ public class BuyEvent extends Core {
 		
 	}
 
+	
+	public static SecondhandBuylist trans4Mem(BuyEvent be ,SecondHandBuylistDao dao ) {
+		SecondhandBuylist sl = dao.selectById(be.eventId);
+		sl.setProductName(be.productName);
+		sl.setContent(be.content);
+		String[] types = {"0","1","2","3"};
+		for (int i = 0; i < types.length; i++) 
+			for (int j = 0; j < types.length; j++) 
+				if(getTypeValue(types[i]+types[j]).equals(be.type)) 
+					sl.setType(types[i]+types[j]);
+		sl.setEstimate(be.estimate < 0 ?null : be.estimate);
+		sl.setApplicantBankNumber(be.applicantBankNumber);
+		return sl ;
+	}
+	
 }

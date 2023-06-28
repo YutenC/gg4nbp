@@ -40,6 +40,23 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 		final String sql = "SELECT * FROM secondhand_buylist where buylist_id = :id  ";
 		return session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("id", id).getSingleResult();
 	}
+	
+	@Override
+	public List<SecondhandBuylist> selectByMemberId(Integer id) {
+		final String sql = "SELECT * FROM secondhand_buylist where Member_id = :id  ";
+		return session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("id", id).getResultList();
+	}
+	
+	
+	@Override
+	public List<SecondhandBuylist> selectByName4Member(String Name , Integer id){
+		final String sql = "SELECT * FROM ( SELECT * FROM secondhand_buylist where Member_id = :id ) ssid WHERE Product_name LIKE '%" +Name+ "%'";
+		return session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("id", id).getResultList();
+	}
+	
+	
+	
+	
 
 	@Override
 	public List<SecondhandBuylist> selectAll() {

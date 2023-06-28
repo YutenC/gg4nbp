@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import gg.nbp.core.service.MailService;
+import redis.clients.jedis.Jedis;
 
 @Configuration
 public class CoreConfig {
@@ -14,5 +15,6 @@ public class CoreConfig {
 	public MailService mailService() throws IllegalArgumentException, NamingException {
 		return new MailService();
 	}
-
+	
+	
 }

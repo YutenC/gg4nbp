@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.pojo.OneString;
 import gg.nbp.core.util.CommonUtil;
+import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
 import gg.nbp.web.SecondHand.buy.util.Constant;
 import jakarta.servlet.ServletException;
@@ -21,8 +22,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
-@WebServlet("/secondhand/select")
-public class Select extends HttpServlet {
+@WebServlet("/member/select")
+public class Select4Member extends HttpServlet {
 	private static final long serialVersionUID = -4362073464223691043L;
 	
 
@@ -34,30 +35,22 @@ public class Select extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		
-		
-		
 		HttpSession session = req.getSession();
-		Boolean isManage = (Boolean)session.getAttribute("manager_loggedin");
-		if(Boolean.TRUE.equals(isManage)) {
+		Boolean isLogin = (Boolean)session.getAttribute("isLogin");
+		Member member = (Member)session.getAttribute("member");
+		if(Boolean.TRUE.equals(isLogin)) {
 			String str = CommonUtil.json2pojo(req, OneString.class).getStr();
 			
 			try {
 				str = str.trim();
-				Integer id = Integer.parseInt(str);
-				CommonUtil.writepojo2Json(resp, service.searchById(id));
+				CommonUtil.writepojo2Json(resp, service.searchByName(str, member));
 			} catch (Exception e) {
-//			e.printStackTrace();
-				// 代表搜尋的字串不是數字 或是 數字查無結果
-				try {
-					CommonUtil.writepojo2Json(resp, service.searchByName(str));
-				} catch (Exception ee) {
-//				ee.printStackTrace();
+				// 代表搜尋的字串查無結果
+//				e.printStackTrace();
 					CommonUtil.writepojo2Json(resp, new OneString("查無結果"));
-				}
 			}
-			
 		}else
-			CommonUtil.writepojo2Json(resp, new OneString("非管理員"));
+			CommonUtil.writepojo2Json(resp, new OneString("請登入"));
 		
 		
 	}
