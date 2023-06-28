@@ -3,10 +3,9 @@ package gg.nbp.web.shop.shopproduct.controller;
 import com.google.gson.Gson;
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
 import gg.nbp.web.shop.shopproduct.pojo.ErrorMsg;
-import gg.nbp.web.shop.shopproduct.pojo.RequestMsg;
+import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
 import gg.nbp.web.shop.shopproduct.util.ConvertJson;
-import gg.nbp.web.shop.shopproduct.util.ObjectInstance;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,19 +26,19 @@ public class CouponManagerController {
         System.out.println("getAllCouponActivity");
         List<CouponActivity> couponActivities = null;
         String out = null;
-        RequestMsg requestMsg = null;
+        ResponseMsg requestMsg = null;
         ErrorMsg errorMsg = null;
 
         try {
             couponActivities = couponManagerService.getAllCouponActivity();
 
-            requestMsg = new RequestMsg("success", couponActivities);
+            requestMsg = new ResponseMsg("success", couponActivities);
             out = ConvertJson.toJson(requestMsg);
         } catch (RuntimeException e) {
             if ("Could not get a resource from the pool".equals(e.getMessage())) {
                 System.out.println("Could not get a resource from the pool.........");
             }
-            requestMsg = new RequestMsg("error", e.getMessage());
+            requestMsg = new ResponseMsg("error", e.getMessage());
             out = ConvertJson.toJson(requestMsg);
 
         }

@@ -31,20 +31,7 @@ const vm = Vue.createApp({
     // template: '#my-template',
     methods: {
         getallproduct: function () {
-            console.log('getAllProduct');
-            axios({
-                method: "GET",
-                // url: "http://localhost:8080/MyShop/demo/getallproduct_json",
-                url: host_context + "shopDispatcher/getAllProduct",
-            })
-                .then(function (value) {
-                    vm.products = value.data;
-
-                    console.log("getallproduct then");
-                })
-                .catch(function (e) {
-                    console.log("getallproduct error " + e);
-                });
+            getAllProduct();
         },
         createProductFromcsv: function () {
             console.log('createProductFromcsv');
@@ -276,3 +263,26 @@ vm.newProduct.launch_time = vm.nowDate;
 // timesCount();
 
 // Vue.component('shared-content', managerSideTemplate);
+
+
+
+function getAllProduct() {
+    console.log('getAllProduct');
+    axios({
+        method: "GET",
+        // url: "http://localhost:8080/MyShop/demo/getallproduct_json",
+        url: host_context + "shopDispatcher/getAllProduct",
+        params: {
+            product: "",
+            productImg: ""
+        }
+    })
+        .then(function (value) {
+            vm.products = value.data;
+
+            console.log("getallproduct then");
+        })
+        .catch(function (e) {
+            console.log("getallproduct error " + e);
+        });
+}
