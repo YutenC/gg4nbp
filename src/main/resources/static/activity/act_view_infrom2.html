@@ -518,7 +518,7 @@
 
     $.ajax({
       type: "PUT",
-      url: "http://localhost:8000/gg4nbp/act/"+actId, // 將data改為url以指定請求的網址
+      url: "http://localhost:8080/gg4nbp/act/"+actId, // 將data改為url以指定請求的網址
       success: function (act) {
 
 
@@ -529,7 +529,7 @@
 
   $.ajax({
     type: "GET",
-    url: "http://localhost:8000/gg4nbp/act", // 將data改為url以指定請求的網址
+    url: "http://localhost:8080/gg4nbp/act", // 將data改為url以指定請求的網址
     success: function (act) {
       for (let i = 0; i < act.length; i++) {
         $("#mainTable").prepend(`<tr>
