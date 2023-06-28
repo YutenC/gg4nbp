@@ -9,14 +9,10 @@
     let member_id;
     let manager_id;
 
-    let chekedIdList = [];
-
     fetch('../manager/getName')
         .then(response => response.json())
         .then(data => {
             // 在此處處理後端回傳的資料
-
-            console.log(data);
 
             member_id = sessionStorage.getItem('member_id');
             manager_id = data.loggedManager_id;
@@ -32,12 +28,16 @@
 
     ban_add_btn.addEventListener('click', () => {
 
-        let banDays = parseInt(ban_duration.value);
-        if (isNaN(banDays) || !Number.isInteger(banDays)) {
-            msg.textContent = '天數請輸入整數';
+
+        if (!/^-?\d+$/.test(ban_duration.value)) {
+            Swal.fire({
+                title: "天數錯誤！",
+                text: "停權天數只可輸入正負整數"
+            });
             return;
         }
 
+        let banDays = parseInt(ban_duration.value);
 
         msg.textContent = '';
         fetch('../manager/ban_readIn', {
@@ -55,19 +55,25 @@
             .then(resp => resp.json())
             .then(body => {
 
-                console.log(body);
                 const { successful, redirectUrl } = body;
 
                 if (successful) {
-                    alert("成功");
-
-                    if (redirectUrl) {
-                        window.location.href = redirectUrl; // 進行重導
-                    }
+                    Swal.fire({
+                        title: "停權成功",
+                        icon: "success",
+                        didClose: () => {
+                            if (redirectUrl) {
+                                window.location.href = redirectUrl; // 进行重定向
+                            }
+                        }
+                    });
 
                 } else {
-                    msg.className = 'error';
-                    msg.textContent = '修改失敗';
+                    Swal.fire({
+                        title: "停權失敗",
+                        icon: "error"
+                    });
+
                 }
 
             });
@@ -75,4 +81,8 @@
 
 
     });
+
+    manager_add_btn_cancel.addEventListener("click", () => {
+        window.location.href = "manager_memList.html";
+    })
 })();

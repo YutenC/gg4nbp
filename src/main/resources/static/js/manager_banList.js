@@ -3,7 +3,6 @@ let ban_array = [];
 let banListContainer = document.querySelector('table#ban_list tbody');
 
 // 使用 AJAX 發送請求獲取 powerList 的資料
-
 fetch('../manager/ban_list', {
     method: 'GET',
 })

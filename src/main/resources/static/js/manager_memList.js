@@ -45,10 +45,6 @@ fetch('../manager/member_list', {
             }
             member_array[member.member_id] = (member_array_item);
 
-            console.log(member_array_item);
-            console.log(member_array);
-
-
         })
 
 
@@ -145,50 +141,59 @@ function banClear(member_id) {
     fetch('../manager/getName')
         .then(response => response.json())
         .then(data => {
+
             // 在此處處理後端回傳的資料
-
-            console.log(data);
-
             manager_id = data.loggedManager_id;
 
             let banDays = -99999;
 
-            let confirmClear = confirm(`會員ID${member_id}，確認解除停權嗎?`);
+            Swal.fire({
+                title: "解除停權",
+                text: `會員ID${member_id}，確認解除停權嗎?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '是',
+                cancelButtonText: '否'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('../manager/ban_clear', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            member_id: member_id,
+                            manager_id: manager_id,
+                            ban_reason: "手動取消停權",
+                            ban_durationByDay: banDays,
+                        }),
+                    })
+                        .then(resp => resp.json())
+                        .then(body => {
 
-            if (confirmClear) {
-                fetch('../manager/ban_clear', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        member_id: member_id,
-                        manager_id: manager_id,
-                        ban_reason: "手動取消停權",
-                        ban_durationByDay: banDays,
-                    }),
-                })
-                    .then(resp => resp.json())
-                    .then(body => {
+                            const { successful, redirectUrl } = body;
 
-                        console.log(body);
-                        const { successful, redirectUrl } = body;
-
-                        if (successful) {
-                            alert("成功");
-
-                            if (redirectUrl) {
-                                window.location.href = redirectUrl; // 進行重導
+                            if (successful) {
+                                Swal.fire({
+                                    title: '已解除停權',
+                                    text: `會員ID"` + member_id + `"已經解除停權`,
+                                    icon: 'success',
+                                    didClose: () => {
+                                        if (redirectUrl) {
+                                            window.location.href = redirectUrl; // 进行重定向
+                                        }
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: '動作失敗',
+                                    text: `請洽相關人員`,
+                                    icon: 'error',
+                                });
                             }
-
-                        } else {
-                            alert = '修改失敗';
-                        }
-
-                    });
-            }
-
-
+                        });
+                }
+            });
         })
         .catch(error => {
             console.error('Error:', error);
@@ -200,105 +205,63 @@ function banForever(member_id) {
         .then(response => response.json())
         .then(data => {
             // 在此處處理後端回傳的資料
-
-            console.log(data);
-
             manager_id = data.loggedManager_id;
 
             let banDays = 99999;
 
-            let confirmBanForever = confirm(`會員ID${member_id}，確認永久停權嗎?`);
+            Swal.fire({
+                title: "永久停權",
+                text: `會員ID${member_id}，確認永久停權嗎?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '是',
+                cancelButtonText: '否'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('../manager/ban_forever', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            member_id: member_id,
+                            manager_id: manager_id,
+                            ban_reason: "手動取消停權",
+                            ban_durationByDay: banDays,
+                        }),
+                    })
+                        .then(resp => resp.json())
+                        .then(body => {
 
-            if (confirmBanForever) {
-                fetch('../manager/ban_forever', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        member_id: member_id,
-                        manager_id: manager_id,
-                        ban_reason: "手動取消停權",
-                        ban_durationByDay: banDays,
-                    }),
-                })
-                    .then(resp => resp.json())
-                    .then(body => {
+                            console.log(body);
+                            const { successful, redirectUrl } = body;
 
-                        console.log(body);
-                        const { successful, redirectUrl } = body;
-
-                        if (successful) {
-                            alert("成功");
-
-                            if (redirectUrl) {
-                                window.location.href = redirectUrl; // 進行重導
+                            if (successful) {
+                                Swal.fire({
+                                    title: '已永久停權',
+                                    text: `會員ID"` + member_id + `"已經永久停權`,
+                                    icon: 'success',
+                                    didClose: () => {
+                                        if (redirectUrl) {
+                                            window.location.href = redirectUrl; // 进行重定向
+                                        }
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: '動作失敗',
+                                    text: `請洽相關人員`,
+                                    icon: 'error',
+                                });
                             }
-
-                        } else {
-                            alert = '修改失敗';
-                        }
-
-                    });
-            }
-
-
+                        });
+                }
+            });
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
-
-// function removeClick(id) {
-//     event.preventDefault();
-
-//     let confirmRemove = confirm("確定刪除" + member_array[id].account + "嗎?");
-//     if (confirmRemove) {
-
-//         // 使用 AJAX 發送請求，將 ID 值傳送到後端
-//         fetch('../manager/manager_remove', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({
-//                 manager_id: member_array[id].manager_id,
-//                 manager_account: member_array[id].account,
-//                 manager_password: member_array[id].password,
-//                 manager_name: member_array[id].name,
-//                 manager_email: member_array[id].email,
-//                 manager_phone: member_array[id].phone,
-//                 manager_address: member_array[id].address,
-//                 manager_is_working: member_array[id].is_working
-//             })
-//         })
-//             .then(resp => resp.json())
-//             .then(body => {
-
-//                 // console.log(body);
-//                 const { successful, redirectUrl } = body;
-
-//                 if (successful) {
-
-//                     alert("成功");
-
-//                     if (redirectUrl) {
-//                         window.location.href = redirectUrl; // 進行重導
-//                     }
-
-//                 } else {
-//                     msg.className = 'error';
-//                     msg.textContent = '修改失敗';
-//                 }
-
-
-//             });
-
-//     } else {
-//         // console.log("R U joking?");
-//     }
-
-
-
-// }
 
 function showList() {
     let showArray = member_array;

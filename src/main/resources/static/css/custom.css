@@ -22,11 +22,16 @@
 .custom-manager-button,
 .custom-power-button,
 .custom-member-button,
-.custom-ban-button {
+.custom-ban-button,
+.btn-minor {
   background-color: gray;
   border: black;
   margin-top: 3px;
   margin-bottom: 3px;
+}
+
+.btn-minor {
+  color: #fff;
 }
 
 .custom-col-newmanager,
