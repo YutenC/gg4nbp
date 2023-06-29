@@ -34,7 +34,7 @@ public class AddEvent extends HttpServlet  {
 		req.setCharacterEncoding("UTF-8"); 
 		resp.setCharacterEncoding("UTF-8");
 		
-		final HttpSession session = req.getSession();
+		HttpSession session = req.getSession();
 		Member member = (Member) session.getAttribute("member");
 		if(member == null) {
 			resp.sendRedirect(req.getContextPath()+"/member_login.html");
@@ -45,8 +45,8 @@ public class AddEvent extends HttpServlet  {
 		
 		try {
 			SecondhandBuylist buylist = json2pojo(req, SecondhandBuylist.class);
-			/* 對資料驗證是否為空值，如果空值丟出例外直接跳到catch*/
 			
+			/* 對資料驗證是否為空值，如果空值丟出例外直接跳到catch*/
 			String[] checks = {	buylist.getProductName(),
 								buylist.getContent(),
 								buylist.getApplicantBankNumber()};

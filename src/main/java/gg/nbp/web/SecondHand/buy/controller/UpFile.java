@@ -34,20 +34,25 @@ public class UpFile extends HttpServlet {
 			}
 			for (Part part : parts) {
 				String url = Constant.SAVE_URL + part.getName();
+				File upfile = new File(url);
 				try (InputStream reader = part.getInputStream();
-					 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(url))) 
+					 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(upfile))) 
 				{
 					byte[] buffer = new byte[1024];
 					int s;
 					while ((s = reader.read(buffer)) != -1) {
 						bos.write(buffer, 0, s);
-
+						
 					}
+					System.out.println("上傳完成");
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 
 	}

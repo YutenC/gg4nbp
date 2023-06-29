@@ -336,8 +336,8 @@
                 </div>
 
                 <hr>
-                    <div class="in_a"><span class="inputNotice">＊</span><input id="productName" type="text"><label for="productName" class="inValue">物品名稱</label></div>
-                    <div class="in_a"><span class="inputNotice">＊</span><input id="content" type="text"><label for="content" class="inValue">詳細內容</label></div>
+                    <div class="in_a"><span class="inputNotice">＊</span><input id="productName" type="text"><label for="productName" class="inValue" maxlength="30">物品名稱</label></div>
+                    <div class="in_a"><span class="inputNotice">＊</span><input id="content" type="text"><label for="content" class="inValue" >詳細內容</label></div>
                     <div class="in_a"><span class="inputNotice"></span><input id="estimate" type="number" max="1000000" oninput="if(value>1000000)value=1000000"><label for="estimate" class="inValue">預估價格</label></div>
                     <div class="in_a"><span class="inputNotice">＊</span><input id="applicantBankNumber" type="text" maxlength="14"><label for="applicantBankNumber" class="inValue">銀行帳戶</label   ></div>
 
@@ -371,7 +371,6 @@
 
 <script>
 $('#applicantBankNumber').on('keydown', e => {
-    console.log(e.keyCode);
     if (e.keyCode<48 || e.keyCode>57) {
         e.preventDefault();
     }
