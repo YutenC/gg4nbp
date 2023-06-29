@@ -1,9 +1,10 @@
 let ban_array = [];
+let filtered_array = [];
+let filtered = false;
 
 let banListContainer = document.querySelector('table#ban_list tbody');
 
 // 使用 AJAX 發送請求獲取 powerList 的資料
-
 fetch('../manager/ban_list', {
     method: 'GET',
 })
@@ -64,9 +65,9 @@ fetch('../manager/ban_list', {
 
 function showList() {
     let showArray = ban_array;
-    // if (filtered) {
-    //     showArray = filtered_array;
-    // }
+    if (filtered) {
+        showArray = filtered_array;
+    }
 
     showArray.sort((a, b) => b.ban_id - a.ban_id);
 
@@ -93,3 +94,27 @@ function showList() {
     banListContainer.innerHTML = html;
 
 }
+
+$("a.ban_search_button").on("click", () => {
+    event.preventDefault();
+    filtered = true;
+
+    // 文字框篩選
+    let searchType = $("select.ban_search_type").val();
+    let searchContent = $("input.ban_search_content").val();
+
+    filtered_array = ban_array.filter((ban) => {
+        return ban[searchType].toString().includes(searchContent);
+    });
+
+    showList();
+})
+
+$("a.ban_default_list_button").on("click", () => {
+    event.preventDefault();
+    filtered = false;
+
+    $("input.ban_search_content").val("");
+
+    showList();
+})

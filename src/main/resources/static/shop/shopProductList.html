@@ -374,9 +374,9 @@
             <button @click="salseNumberBtn()">銷售量</button>
             <div class="productShowcase">
                 <ul>
-                    <template v-for="item in products">
+                    <template v-for="(item,index) in products">
                         <li>
-                            <a href="./shopProductDetail.html" @click="clickShopDetail(item.id)">
+                            <a href=" ./shopProductDetail.html" @click="clickShopDetail(item.id)">
                                 <img :src="item.productIndexImage.image" alt="商品圖片">
                             </a>
                             <a href="./shopProductDetail.html" @click="clickShopDetail(item.id)" class="productname">
@@ -386,8 +386,10 @@
                                 <button @click="addCart(item.id)">直接購買</button>
                                 <button @click="addCart(item.id)"><img src="../img/icon/cart-shopping-solid.svg"
                                         alt=""></button>
-                                <button @click="addFollow(item.id)"><img src="../img/icon/heart-regular.svg"
-                                        alt=""></button>
+                                <button @click="addFollow(index,item.id)">
+                                    <img v-if="item.follow==0" src="../img/icon/heart-regular.svg" alt="">
+                                    <img v-else src="../img/icon/heart-solid.svg" alt="">
+                                </button>
                             </div>
                         </li>
                     </template>
@@ -507,9 +509,7 @@
             // crossDomain: true,
         },)
             .then(function (value) {
-                vm.followLists = value.data;
                 console.log("login then");
-
             })
             .catch(function (e) {
                 console.log("login error " + e);

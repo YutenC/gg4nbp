@@ -10,15 +10,12 @@
 
     let pomSettingDiv = document.querySelector('div.pomSetting');
 
-
-
     let manager_id;
     let manager_is_working;
 
     let power_array = [];
     let pomAll_array = [];
     let pom_array = [];
-
     let chekedIdList = [];
 
     fetch('../manager/getManagerEditInfo', {
@@ -31,9 +28,6 @@
         })
         .then(data => {
             // 在此處處理後端回傳的資料
-
-            console.log(data);
-            console.log(data.manager);
 
             manager_account.innerHTML = data.manager.account;
             manager_password.value = data.manager.password;
@@ -77,14 +71,9 @@
                             })
 
                             pom_array = pomAll_array.filter(item => item.manager_id === manager_id);
-                            console.log(pom_array);
-
-
-
 
                             pomSettingDiv.innerHTML = `<p>管理員權限</p>`;
                             power_array.forEach(power => {
-                                console.log(power);
 
                                 if (pom_array !== undefined && pom_array.some(item => item.power_id === power.power_id)) {
                                     pomSettingDiv.innerHTML +=
@@ -114,8 +103,6 @@
                     console.error('Error:', error);
                 });
 
-
-
         })
         .catch(error => {
             console.error('Error:', error);
@@ -125,9 +112,15 @@
 
     edit_btn.addEventListener('click', () => {
 
+        let error = {
+            text: "",
+            title: "輸入錯誤"
+        };
         const pwdLength = manager_password.value.length;
         if (pwdLength < 6 || pwdLength > 32) {
-            msg.textContent = '密碼長度須介於6~32字元';
+            error.title = "密碼錯誤";
+            error.text = '密碼長度須介於6~32字元';
+            errorTypeAlert(error);
             return;
         }
 
@@ -155,25 +148,12 @@
                 console.log(body);
                 const { successful, redirectUrl } = body;
 
-                if (successful) {
-                    // alert("成功");
-
-                    // if (redirectUrl) {
-                    //     window.location.href = redirectUrl; // 進行重導
-                    // }
-
-                } else {
-                    msg.className = 'error';
-                    msg.textContent = '修改失敗';
-                }
-
                 let pomCheckbox = document.querySelectorAll('input.pomCheckbox');
                 pomCheckbox.forEach(checkbox => {
                     if (checkbox.checked) {
                         chekedIdList.push(checkbox.value);
                     }
                 });
-                console.log(chekedIdList);
 
                 fetch('../manager/pom_edit', {
                     method: 'POST',
@@ -193,24 +173,28 @@
                         const { successful, redirectUrl } = body;
 
                         if (successful) {
-                            alert("成功");
-
-                            if (redirectUrl) {
-                                window.location.href = redirectUrl; // 進行重導
-                            }
-
+                            Swal.fire({
+                                title: "修改成功",
+                                icon: "success",
+                                didClose: () => {
+                                    if (redirectUrl) {
+                                        window.location.href = redirectUrl; // 进行重定向
+                                    }
+                                }
+                            });
                         } else {
-                            msg.className = 'error';
-                            msg.textContent = '修改失敗';
+                            error.title = '修改失敗';
+                            errorTypeAlert(error);
                         }
-
-
                     });
-
-
             });
-
-
-
     });
 })();
+
+function errorTypeAlert(error) {
+    Swal.fire({
+        title: error.title,
+        text: error.text,
+        icon: "error"
+    });
+}

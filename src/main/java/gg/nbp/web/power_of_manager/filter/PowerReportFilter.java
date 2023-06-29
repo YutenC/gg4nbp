@@ -20,7 +20,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-//@WebFilter("/manager/ ")
+@WebFilter(urlPatterns = {
+		"/manager/article_report.html",
+		"/manager/act_report.html"
+		})
 @Order(2)
 public class PowerReportFilter extends HttpFilter implements Filter{
 	private static final long serialVersionUID = 1L;

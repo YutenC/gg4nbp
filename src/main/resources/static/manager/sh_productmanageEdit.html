@@ -7,7 +7,7 @@
     <title>NPB.GG管理系統-新增管理員</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
     <link rel="stylesheet" href="../css/x-dropdown.css">
@@ -31,7 +31,7 @@
             box-shadow: 0px 0px 3px rgb(255, 0, 0);
         }
 
-        div#imgView img:hover{
+        div#imgView img:hover {
             box-shadow: 0px 0px 2px black;
             cursor: pointer;
         }
@@ -42,330 +42,186 @@
 </head>
 
 <body id="page-top">
-<div id="wrapper">
-    <!-- 左方導覽欄 -->
-    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-        <div class="container-fluid d-flex flex-column p-0">
-            <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                <div class="sidebar-brand-icon ">
-                    <img class="" src="../img/Logo-removebg.png">
-                </div>
-                <div class="sidebar-brand-text mx-3">
-                    <span>NBP.GG管理</span>
-                </div>
-            </a>
-            <hr class="sidebar-divider my-0">
-            <ul class="navbar-nav text-light" id="accordionSidebar">
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>管理員管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">管理員清單</a>
-                            <a class="dropdown-item" role="presentation" href="#">權限清單</a>
-                            <a class="dropdown-item" role="presentation" href="#">管理員新增</a>
-                            <a class="dropdown-item" role="presentation" href="#">權限新增</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>會員管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">會員清單</a>
-                            <a class="dropdown-item" role="presentation" href="#">停權單清單</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>商城管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>二手商城管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>檢舉管理</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>客服中心</span><i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="x-dropdown dropdown">
-                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                            <span>系統設定</span>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- 左方導覽欄 -->
-    <div class="d-flex flex-column" id="content-wrapper">
-        <div id="content">
-            <!-- 上方導覽欄 -->
-            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                <div class="container-fluid">
-                    <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h3 class="navbar-nav flex-nowrap text-dark mb-0 nav-bar-top">NBP.GG管理系統</h3>
-                    <ul class="navbar-nav flex-nowrap ms-auto nav-bar-top">
-                        <li class="nav-item dropdown no-arrow">
-                            <div class="nav-item dropdown no-arrow">
-                                <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                   href="#">
-                                    <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                    <img class="border rounded-circle img-profile"
-                                         src="../img/avatars/avatar1.jpeg">
-                                </a>
-                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Profile
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Activity log
-                                    </a>
-                                    <div class="dropdown-divider">
+    <div id="wrapper">
+        <!-- 左方導覽欄 -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <!-- 上方導覽欄 -->
+
+                <!-- ==================================== -->
+
+
+                <div id="productManageEdit" style="min-width: 1000px;">
+                    <h3 style="margin-left: 50px;">二手商品管理</h3>
+
+                    <form action="#" method="post">
+                        <table align="center" cellpadding="10">
+
+                            <!--                        <tr>-->
+                            <!--                            <td><span class="managerID">審核者ID</span></td>-->
+                            <!--                            <td>-->
+                            <!--                                <div>-->
+                            <!--                                    <select style="width: 140px;">-->
+                            <!--                                        <option value="" selected disabled></option>-->
+                            <!--                                        <option value="a">a</option>-->
+                            <!--                                        <option value="a">a</option>-->
+                            <!--                                        <option value="a">a</option>-->
+                            <!--                                    </select>-->
+                            <!--                                </div>-->
+                            <!--                            </td>-->
+                            <!--                        </tr>-->
+
+                            <!----- 商品名稱 ---------------------------------------------------------->
+                            <tr>
+                                <td><span class="SHproName">商品名稱</span></td>
+                                <td><input type="text" id="SHproName" name="SHproName" maxlength="30" /><span
+                                        id="errorName"></span>
+                                </td>
+                            </tr>
+
+                            <!----- 商品類別 ---------------------------------------------------------->
+                            <tr>
+                                <td><span class="SHproType">商品類別</span></td>
+                                <td>
+                                    <div>
+                                        <select id="SelectSHproType" style="width: 140px;">
+                                            <option selected disabled></option>
+
+                                            <optgroup label="NS" id="typeNS">
+                                                <option value="00">00: NS主機</option>
+                                                <option value="01">01: NS手把</option>
+                                                <option value="02">02: NS卡帶</option>
+                                                <option value="03">03: NS周邊</option>
+                                            </optgroup>
+
+                                            <optgroup label="XBOX" id="typeX">
+                                                <option value="10">10: XBOX主機</option>
+                                                <option value="11">11: XBOX手把</option>
+                                                <option value="12">12: XBOX遊戲片</option>
+                                                <option value="13">13: XBOX周邊</option>
+                                            </optgroup>
+
+                                            <optgroup label="PlayStation" id="typePS">
+                                                <option value="20">20: PS主機</option>
+                                                <option value="21">21: PS手把</option>
+                                                <option value="22">22: PS遊戲片</option>
+                                                <option value="23">23: PS周邊</option>
+                                            </optgroup>
+
+                                        </select>
+                                        <span id="errorType"></span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!----- 價格 -------------------------------------------------------->
+                            <tr>
+                                <td>商品價格</td>
+
+
+                                <td>$ <input type="number" id="SHproPrice" min="0" name="SHproPrice"
+                                        style="width: 85px;"> 元
+                                    <span id="errorPrice"></span>
+                                </td>
+
+                            </tr>
+
+                            <!----- 二手商品內容 ---------------------------------------------------------->
+                            <tr>
+                                <td>商品內容</td>
+                                <td>
+                                    <div>
+                                        <textarea id="SHproContent" name="SHproContent" rows="30" cols="80"
+                                            required></textarea>
+                                    </div>
+                                    <span id="errorContent"></span>
+                                </td>
+                            </tr>
+
+                            <!----- 二手商品照片 ---------------------------------------------------------->
+                            <tr>
+                                <td>商品照片</td>
+                                <td>
+                                    <!--                                <div class="SHproPho" id="SHproPho1" style="display: inline-block; height: 120px;-->
+                                    <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
+                                    <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
+                                    <!--                                <div class="SHproPho" id="SHproPho2" style="display: inline-block; height: 120px;-->
+                                    <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
+                                    <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
+                                    <!--                                <div class="SHproPho" id="SHproPho3" style="display: inline-block; height: 120px;-->
+                                    <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
+                                    <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
+                                    <!--                                <div class="SHproPho" id="SHproPho4" style="display: inline-block; height: 120px;-->
+                                    <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
+                                    <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
+
+
+                                    <!--                                <div class="SHproPhoEdit" style="margin-top: 10px;">-->
+                                    <!--                                    <button type="button" id="photoUploadBtn" class="btn btn-light btn-sm">選取照片</button>-->
+                                    <!--                                    <button type="button" id="photoDeleteBtn" class="btn btn-dark btn-sm">全部刪除</button>-->
+                                    <!--                                </div>-->
+
+
+                                    <!--   =======================  圖片-->
+                                    <div style="margin: 0px; font-size: 10px;color: red;">
+                                        <input id="photoUploadBtn" type="button" value="選取照片"
+                                            class="btn btn-dark btn-sm">
+                                        <input id="photoUploadBtn2" type="file" accept="image/*" value="選取照片"
+                                            style="display: none;" multiple capture>
+                                        上限 5 MB
+                                    </div>
+                                    <div id="imgView">
 
                                     </div>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Logout
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                                    <!--   =======================  圖片-->
+
+
+                                    <span id="errorPhoto"></span>
+                                </td>
+                            </tr>
+
+
+                            <!----- Submit and Reset ------------------------------------------------->
+                            <tr>
+                                <td colspan="2" align="center">
+
+                                    <button type="button" class="btn btn-danger" id="saveBtn">存檔</button>
+                                    <!--                                <button type="button" class="btn btn-success" id="addBtn">新增商品</button>-->
+                                    <!-- <input type="submit" value="Submit"> -->
+                                    <!-- <input type="reset" value="Reset"> -->
+                                </td>
+
+
+                            </tr>
+                        </table>
+
+                    </form>
+
                 </div>
-            </nav>
-            <!-- 上方導覽欄 -->
+                <!-- ================================================================ -->
 
 
-            <!-- ==================================== -->
-
-
-            <div id="productManageEdit" style="min-width: 1000px;">
-                <h3 style="margin-left: 50px;">二手商品管理</h3>
-
-                <form action="#" method="post">
-                    <table align="center" cellpadding="10">
-
-                        <!--                        <tr>-->
-                        <!--                            <td><span class="managerID">審核者ID</span></td>-->
-                        <!--                            <td>-->
-                        <!--                                <div>-->
-                        <!--                                    <select style="width: 140px;">-->
-                        <!--                                        <option value="" selected disabled></option>-->
-                        <!--                                        <option value="a">a</option>-->
-                        <!--                                        <option value="a">a</option>-->
-                        <!--                                        <option value="a">a</option>-->
-                        <!--                                    </select>-->
-                        <!--                                </div>-->
-                        <!--                            </td>-->
-                        <!--                        </tr>-->
-
-                        <!----- 商品名稱 ---------------------------------------------------------->
-                        <tr>
-                            <td><span class="SHproName">商品名稱</span></td>
-                            <td><input type="text" id="SHproName" name="SHproName" maxlength="30"/><span
-                                    id="errorName"></span>
-                            </td>
-                        </tr>
-
-                        <!----- 商品類別 ---------------------------------------------------------->
-                        <tr>
-                            <td><span class="SHproType">商品類別</span></td>
-                            <td>
-                                <div>
-                                    <select id="SelectSHproType" style="width: 140px;">
-                                        <option selected disabled></option>
-
-                                        <optgroup label="NS" id="typeNS">
-                                            <option value="00">00: NS主機</option>
-                                            <option value="01">01: NS手把</option>
-                                            <option value="02">02: NS卡帶</option>
-                                            <option value="03">03: NS周邊</option>
-                                        </optgroup>
-
-                                        <optgroup label="XBOX" id="typeX">
-                                            <option value="10">10: XBOX主機</option>
-                                            <option value="11">11: XBOX手把</option>
-                                            <option value="12">12: XBOX遊戲片</option>
-                                            <option value="13">13: XBOX周邊</option>
-                                        </optgroup>
-
-                                        <optgroup label="PlayStation" id="typePS">
-                                            <option value="20">20: PS主機</option>
-                                            <option value="21">21: PS手把</option>
-                                            <option value="22">22: PS遊戲片</option>
-                                            <option value="23">23: PS周邊</option>
-                                        </optgroup>
-
-                                    </select>
-                                    <span id="errorType"></span>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!----- 價格 -------------------------------------------------------->
-                        <tr>
-                            <td>商品價格</td>
-
-
-                            <td>$ <input type="number" id="SHproPrice" min="0" name="SHproPrice" style="width: 85px;"> 元
-                                <span id="errorPrice"></span></td>
-
-                        </tr>
-
-                        <!----- 二手商品內容 ---------------------------------------------------------->
-                        <tr>
-                            <td>商品內容</td>
-                            <td>
-                                <div>
-                                    <textarea id="SHproContent" name="SHproContent" rows="30" cols="80"
-                                              required></textarea>
-                                </div>
-                                <span id="errorContent"></span>
-                            </td>
-                        </tr>
-
-                        <!----- 二手商品照片 ---------------------------------------------------------->
-                        <tr>
-                            <td>商品照片</td>
-                            <td>
-                                <!--                                <div class="SHproPho" id="SHproPho1" style="display: inline-block; height: 120px;-->
-                                <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
-                                <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
-                                <!--                                <div class="SHproPho" id="SHproPho2" style="display: inline-block; height: 120px;-->
-                                <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
-                                <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
-                                <!--                                <div class="SHproPho" id="SHproPho3" style="display: inline-block; height: 120px;-->
-                                <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
-                                <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
-                                <!--                                <div class="SHproPho" id="SHproPho4" style="display: inline-block; height: 120px;-->
-                                <!--                                width: 120px; border: 1px solid grey;"><img style="max-width: 100%; max-height: 100%;"-->
-                                <!--                                                                            src="../img/dogs/image2.jpeg"></div>-->
-
-
-                                <!--                                <div class="SHproPhoEdit" style="margin-top: 10px;">-->
-                                <!--                                    <button type="button" id="photoUploadBtn" class="btn btn-light btn-sm">選取照片</button>-->
-                                <!--                                    <button type="button" id="photoDeleteBtn" class="btn btn-dark btn-sm">全部刪除</button>-->
-                                <!--                                </div>-->
-
-
-                                <!--   =======================  圖片-->
-                                <div style="margin: 0px; font-size: 10px;color: red;">
-                                    <input id="photoUploadBtn" type="button" value="選取照片" class="btn btn-dark btn-sm">
-                                    <input id="photoUploadBtn2" type="file" accept="image/*" value="選取照片"
-                                           style="display: none;" multiple
-                                           capture>
-                                    上限 5 MB
-                                </div>
-                                <div id="imgView">
-
-                                </div>
-                                <!--   =======================  圖片-->
-
-
-                                <span id="errorPhoto"></span>
-                            </td>
-                        </tr>
-
-
-                        <!----- Submit and Reset ------------------------------------------------->
-                        <tr>
-                            <td colspan="2" align="center">
-
-                                <button type="button" class="btn btn-danger" id="saveBtn">存檔</button>
-                                <!--                                <button type="button" class="btn btn-success" id="addBtn">新增商品</button>-->
-                                <!-- <input type="submit" value="Submit"> -->
-                                <!-- <input type="reset" value="Reset"> -->
-                            </td>
-
-
-                        </tr>
-                    </table>
-
-                </form>
-
-            </div>
-            <!-- ================================================================ -->
-
-
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright">
-                        <span>Copyright © NBP.GG 2023</span>
+                <footer class="bg-white sticky-footer">
+                    <div class="container my-auto">
+                        <div class="text-center my-auto copyright">
+                            <span>Copyright © NBP.GG 2023</span>
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            </div>
+            <a class="border rounded d-inline scroll-to-top" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
         </div>
-        <a class="border rounded d-inline scroll-to-top" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-    </div>
-    <!-- JavaScript JS放置區 -->
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <script src="../js/theme.js"></script>
-    <script src="../js/sh_productmanageEdit.js"></script>
-    <!--    <script src="../jquery/jquery-3.7.0.js"></script>-->
-    <!-- JavaScript JS放置區 -->
+
+        <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+        <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
+        <!-- JavaScript JS放置區 -->
+        <script src="../bootstrap/js/bootstrap.min.js"></script>
+        <script src="../js/theme.js"></script>
+        <script src="../js/sh_productmanageEdit.js"></script>
+        <!--    <script src="../jquery/jquery-3.7.0.js"></script>-->
+        <!-- JavaScript JS放置區 -->
 </body>
 
 </html>

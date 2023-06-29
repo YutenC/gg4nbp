@@ -1,13 +1,12 @@
 package gg.nbp.web.Act.service;
 
 
-import java.util.List;
-
+import gg.nbp.web.Act.dao.ActReportListRepository;
+import gg.nbp.web.Act.model.ActReportList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import gg.nbp.web.Act.dao.ActReportListRepository;
-import gg.nbp.web.Act.model.ActReportList;
+import java.util.List;
 
 @Service
 public class ActReportListService {

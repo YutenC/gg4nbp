@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=yes">
-    <title>NPB.GG管理系統-會員清單</title>
+    <title>NPB.GG管理系統-會員列表</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
@@ -37,27 +37,82 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;
-                                        </label>
+                                <div class="col-md-6">
+                                    <div class="row state-check">
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content: flex-end ">
+                                            狀態：
+                                        </div>
+                                        <div class=" col" style="display: flex; align-items: center;">
+                                            <div class="form-check" style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox" checked
+                                                    id="selectAllCheckbox" onchange="toggleAllStateCheckboxes()">
+                                                <label class="form-check-label" for="selectAllCheckbox">全部</label>
+                                            </div>
+                                        </div>
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content:center;">
+                                            <div class="form-check" style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox" checked
+                                                    id="unverifiedCheckbox"
+                                                    onchange="handleStateCheckboxChange('unverified')">
+                                                <label class="form-check-label" for="unverifiedCheckbox">未驗證</label>
+                                            </div>
+                                        </div>
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content:center;">
+                                            <div class="form-check" style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox" checked
+                                                    id="activeCheckbox" onchange="handleStateCheckboxChange('active')">
+                                                <label class="form-check-label" for="activeCheckbox">使用中</label>
+                                            </div>
+                                        </div>
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content:center;">
+                                            <div class="form-check" style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox" checked
+                                                    id="temporaryBanCheckbox"
+                                                    onchange="handleStateCheckboxChange('temporary_ban')">
+                                                <label class="form-check-label"
+                                                    for="temporaryBanCheckbox">期間<br>停權</label>
+                                            </div>
+                                        </div>
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content:center;">
+                                            <div class="form-check " style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox" checked
+                                                    id="permanentBanCheckbox"
+                                                    onchange="handleStateCheckboxChange('permanent_ban')">
+                                                <label class="form-check-label"
+                                                    for="permanentBanCheckbox">永久<br>停權</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm"
-                                                aria-controls="dataTable" placeholder="Search">
+                                    <div class="text-md-end dataTables_filter" id="member_dataTable_filter">
+                                        <select name="member_search_type" class="member_search_type" required>
+                                            <option value="member_id">ID</option>
+                                            <option value="account">帳號</option>
+                                            <option value="nick">暱稱</option>
+                                        </select>
+                                        <label class="member_form-label">
+                                            <input type="search"
+                                                class="form-control form-control-sm member_search_content"
+                                                aria-controls="dataTable" placeholder="搜尋...">
                                         </label>
+                                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block member_search_button"
+                                            role="button">
+                                            搜尋
+                                        </a>
+                                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block member_default_list_button btn-danger"
+                                            role="button">
+                                            清除搜尋條件
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="table-responsive table mt-2" id="member_list_div" role="grid"
                                 aria-describedby="dataTable_info">
                                 <table class="table my-0" id="member_list">
@@ -75,57 +130,6 @@
                                     </thead>
                                     <tbody>
                                         <!-- JS建立 -->
-                                        <!-- 隱藏內容：密碼、信箱、電話、生日、身分證字號、地址、大頭照 -->
-                                        <tr>
-                                            <td>member.member_id</td>
-                                            <td>member.account</td>
-                                            <td>member.nick</td>
-                                            <td>member.bonus</td>
-                                            <td>member.member_ver_state</td>
-                                            <td>member.suspend_deadline</td>
-                                            <td>member.violation</td>
-                                            <td>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
-                                                    role="button" href="#">
-                                                    詳細資料
-                                                </a>
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button btn-danger"
-                                                    role="button" href="#">
-                                                    刪除會員
-                                                </a>
-
-                                                <br style="padding-top: 3px; padding-bottom: 3px;">
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
-                                                    role="button" href="#">
-                                                    停權會員
-                                                </a>
-                                                <!-- 二選一，根據現在有沒有停權決定展示哪個 -->
-                                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
-                                                    role="button" href="#">
-                                                    變更停權狀態
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr class="dropdown_row" style="display:none;"
-                                            id="toggle_button_${member.member_id}">
-                                            <td colspan="6">
-                                                <div style="display: flex; flex-wrap: wrap;">
-                                                    <div style="width: 50%;">
-                                                        <span class="pwd-span">密碼：****</span>
-                                                        <button
-                                                            class="btn btn-primary btn-sm d-none d-sm-inline-block show-password"
-                                                            data-password="${manager.password}">顯示</button>
-                                                    </div>
-                                                    <div style="width: 50%;">電話：${manager.phone}</div>
-                                                    <div style="width: 50%;">信箱：${manager.email}</div>
-                                                    <div style="width: 50%;">生日：${manager.birth}</div>
-                                                    <div style="width: 50%;">身分證字號：${manager.id_number}</div>
-                                                    <div style="width: 100%;">地址：${manager.address}</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -141,7 +145,7 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-6 align-self-center">
                                     <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
                                         Showing 1 to 10 of %%%總筆數/篩選筆數</p>
@@ -172,8 +176,7 @@
                                         </ul>
                                     </nav>
                                 </div>
-
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -194,6 +197,7 @@
     </div>
 
     <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/cdn.jsdelivr.net_npm_sweetalert2@11.js"></script> <!-- sweetalert -->
     <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
     <!-- JavaScript JS放置區 -->
     <script src="../bootstrap/js/bootstrap.min.js"></script>

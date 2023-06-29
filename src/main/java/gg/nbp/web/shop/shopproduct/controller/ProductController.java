@@ -5,12 +5,14 @@ import com.google.gson.GsonBuilder;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.entity.ProductDetail;
 import gg.nbp.web.shop.shopproduct.service.ProductService;
+import gg.nbp.web.shop.shopproduct.util.ConvertJson;
 import gg.nbp.web.shop.shopproduct.util.ObjectInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 //@Component
 @Component
@@ -22,68 +24,40 @@ public class ProductController {
     public ProductController() {
     }
 
-    public String getAllProduct() {
-        List<Product> products = productService.getAllProduct();
-
-
-//        ExclusionStrategy strategy = new ExclusionStrategy() {
-//            @Override
-//            public boolean shouldSkipField(FieldAttributes field) {
-//                if (field.getDeclaringClass() == MyClass.class && field.getName().equals("other")) {
-//                    return true;
-//                }
-//                if (field.getDeclaringClass() == MySubClass.class && field.getName().equals("otherVerboseInfo")) {
-//                    return true;
-//                }
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean shouldSkipClass(Class<?> clazz) {
-//                return false;
-//            }
-//        };
-
-
-//        Gson gson = new GsonBuilder()
-//                .excludeFieldsWithoutExposeAnnotation()
-//                .create();
-//        String jsonString = gson.toJson(products);
-
-
-        return toJson(products);
-
+    public String getAllProduct(Integer memId) {
+        List<Product> products = productService.getAllProduct(memId);
+        return ConvertJson.toJsonExpose(products);
     }
 
     public String getProductById(Integer id) {
         Product product = productService.getProductById(id);
-        return toJson(product);
+        return ConvertJson.toJsonExpose(product);
     }
 
-    public String getProductByType(Integer type) {
-        List<Product> products = productService.getProductByType(type);
-        return toJson(products);
+    public String getProductByType(Integer memId,Integer type) {
+        List<Product> products = productService.getProductByType(memId,type);
+        return ConvertJson.toJsonExpose(products);
     }
 
-    public String getProductByBuyTimes(Integer type) {
-        List<Product> products = productService.getProductByBuyTimes(type);
-        return toJson(products);
+    public String getProductByBuyTimes(Map<String,Object> map, Integer type) {
+        List<Product> products = productService.getProductByBuyTimes(map,type);
+        return ConvertJson.toJsonExpose(products);
     }
 
     public String getProductByBuyTimes(Integer amount, Integer type) {
         List<Product> products = productService.getProductByBuyTimes(amount,type);
-        return toJson(products);
+        return ConvertJson.toJsonExpose(products);
     }
 
-    public String searchProducts(String search) {
-        List<Product> products = productService.searchProducts(search);
-        return toJson(products);
+    public String searchProducts(Integer memId,String search) {
+        List<Product> products = productService.searchProducts(memId,search);
+        return ConvertJson.toJsonExpose(products);
     }
 
-    public String getProductDetail(Integer id) {
-        ProductDetail productDetail = productService.getProductDetail(id);
+    public String getProductDetail(Integer memId,Integer id) {
+        ProductDetail productDetail = productService.getProductDetail(memId,id);
         productService.saveProductBrowseToRedis(id);
-        return toJson(productDetail);
+        return ConvertJson.toJsonExpose(productDetail);
     }
 
 
@@ -91,7 +65,7 @@ public class ProductController {
 
         List<Product> products=  productService.getProductHistory();
 
-        return toJson(products);
+        return ConvertJson.toJsonExpose(products);
     }
 
     public void addCart(Integer id,Integer memId){
@@ -99,14 +73,5 @@ public class ProductController {
     }
 
 
-
-
-
-    private String toJson(Object obj) {
-        Gson gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
-        return gson.toJson(obj);
-    }
 
 }

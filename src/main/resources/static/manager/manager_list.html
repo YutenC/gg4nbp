@@ -52,16 +52,28 @@
                                 </a>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;
-                                        </label>
+                                <div class="col-md-1">
+                                    狀態：
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="allRadio"
+                                            value="all" checked>
+                                        <label class="form-check-label" for="allRadio">所有管理員</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="workingRadio"
+                                            value="working">
+                                        <label class="form-check-label" for="workingRadio">在職</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="resignedRadio"
+                                            value="resigned">
+                                        <label class="form-check-label" for="resignedRadio">離職</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -71,10 +83,6 @@
                                             <option value="account">帳號</option>
                                             <option value="password">密碼</option>
                                             <option value="name">姓名</option>
-                                            <option value="email">信箱</option>
-                                            <option value="phone">電話</option>
-                                            <option value="address">地址</option>
-                                            <option value="is_working">在職狀況</option>
                                         </select>
                                         <label class="manager_form-label">
                                             <input type="search"
@@ -89,6 +97,47 @@
                                             role="button" href="#">
                                             清除搜尋條件
                                         </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row power-check">
+                                <div class="col-md-1">
+                                    權限：
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input power-check" type="checkbox" checked
+                                            id="selectAllCheckbox" onchange="toggleAllPowerBoxes()">
+                                        <label class="form-check-label" for="selectAllCheckbox">全部</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input power-check" type="checkbox" checked
+                                            id="permissionAdminCheckbox" onchange="handleCheckboxChange()">
+                                        <label class="form-check-label" for="permissionAdminCheckbox">權限管理員</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input power-check" type="checkbox" checked
+                                            id="memberAdminCheckbox" onchange="handleCheckboxChange()">
+                                        <label class="form-check-label" for="memberAdminCheckbox">會員管理員</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input power-check" type="checkbox" checked
+                                            id="storeAdminCheckbox" onchange="handleCheckboxChange()">
+                                        <label class="form-check-label" for="storeAdminCheckbox">商城管理員</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input power-check" type="checkbox" checked
+                                            id="secondhandStoreAdminCheckbox" onchange="handleCheckboxChange()">
+                                        <label class="form-check-label"
+                                            for="secondhandStoreAdminCheckbox">二手商城管理員</label>
                                     </div>
                                 </div>
                             </div>
@@ -120,44 +169,6 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of %%%總筆數/篩選筆數</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav
-                                        class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" aria-label="Previous" href="#">
-                                                    <span aria-hidden="true">«</span>
-                                                </a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" aria-label="Next" href="#">
-                                                    <span aria-hidden="true">»</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <div class="col-md-6 custom-col-newmanager">
-                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-col-newmanager-btn"
-                                    role="button" href="manager_add.html">
-                                    新增管理員
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,6 +190,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script> <!-- List.js v1.5.0 -->
+    <script src="../js/cdn.jsdelivr.net_npm_sweetalert2@11.js"></script> <!-- sweetalert -->
     <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
     <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
     <!-- JavaScript JS放置區 -->

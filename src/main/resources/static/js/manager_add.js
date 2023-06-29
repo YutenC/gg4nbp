@@ -13,9 +13,6 @@
     let pomSettingDiv = document.querySelector('div.pomSetting');
 
     let power_array = [];
-
-    const inputs = document.querySelectorAll('input');
-
     let chekedIdList = [];
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -57,25 +54,38 @@
 
     add_btn.addEventListener('click', () => {
         const accLength = manager_account.value.length;
+        let error = {
+            text: "",
+            title: "輸入錯誤"
+        };
+
         if (accLength < 5 || accLength > 32) {
-            msg.textContent = '帳號長度須介於5-32字元';
+            error.title = '帳號錯誤';
+            error.text = '帳號長度須介於5-32字元';
+            errorTypeAlert(error);
             return;
         }
 
         const pwdLength = manager_password.value.length;
         if (pwdLength < 6 || pwdLength > 32) {
-            msg.textContent = '密碼長度須介於6~32字元';
+            error.title = '密碼錯誤';
+            error.text = '密碼長度須介於6~32字元';
+            errorTypeAlert(error);
             return;
         }
 
         if (manager_confirm_password.value !== manager_password.value) {
-            msg.textContent = '密碼與確認密碼不相符';
+            error.title = '密碼錯誤';
+            error.text = '密碼與確認密碼不相符';
+            errorTypeAlert(error);
             return;
         }
 
         const nameLength = manager_name.value.length;
         if (nameLength < 1 || nameLength > 20) {
-            msg.textContent = '暱稱長度須介於1~20字元';
+            error.title = '姓名錯誤';
+            error.text = '暱稱長度須介於1~20字元';
+            errorTypeAlert(error);
             return;
         }
 
@@ -99,65 +109,64 @@
 
                 console.log(body);
                 const { successful, redirectUrl, message, manager_id } = body;
-
-                // if (successful) {
-                //     alert(message);
-
-                //     if (redirectUrl) {
-                //         window.location.href = redirectUrl; // 進行重導
-                //     }
-
-                // } else {
-                //     alert(message);
-                // }
-
-                let pomCheckbox = document.querySelectorAll('input.pomCheckbox');
-                pomCheckbox.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        chekedIdList.push(checkbox.value);
-                    }
-                });
-                console.log(chekedIdList);
-
-                fetch('../manager/pom_add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        manager_id: manager_id,
-                        chekedIdList: chekedIdList,
-
-                    }),
-                })
-                    .then(resp => resp.json())
-                    .then(body => {
-
-                        console.log(body);
-                        const { successful, redirectUrl } = body;
-
-                        if (successful) {
-                            alert("成功");
-
-                            if (redirectUrl) {
-                                window.location.href = redirectUrl; // 進行重導
-                            }
-
-                        } else {
-                            msg.className = 'error';
-                            msg.textContent = '修改失敗';
+                if (successful) {
+                    let pomCheckbox = document.querySelectorAll('input.pomCheckbox');
+                    pomCheckbox.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            chekedIdList.push(checkbox.value);
                         }
-
-
                     });
+                    console.log(chekedIdList);
 
+                    fetch('../manager/pom_add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            manager_id: manager_id,
+                            chekedIdList: chekedIdList,
 
+                        }),
+                    })
+                        .then(resp => resp.json())
+                        .then(body => {
+
+                            console.log(body);
+                            const { successful, redirectUrl } = body;
+
+                            if (successful) {
+                                Swal.fire({
+                                    title: "新增成功",
+                                    icon: "success",
+                                    didClose: () => {
+                                        if (redirectUrl) {
+                                            window.location.href = redirectUrl; // 进行重定向
+                                        }
+                                    }
+                                });
+                            } else {
+                                error.title = '新增失敗';
+                                errorTypeAlert(error);
+                            }
+                        });
+                } else {
+                    error.title = message;
+                    errorTypeAlert(error);
+                }
             });
     });
 
     cancel_btn.addEventListener('click', () => {
-        alert("HI2");
-        window.location.href = "../test";
+        window.location.href = "manager_list.html";
     })
 
 })();
+
+function errorTypeAlert(error) {
+    Swal.fire({
+        title: error.title,
+        text: error.text,
+        icon: "error"
+    });
+}

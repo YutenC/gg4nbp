@@ -65,7 +65,7 @@
                                                 <div class="form-group mb-3">
                                                     <label class="form-label" for="ban_duration">停權天數</label>
                                                     <input class="form-control" type="text" id="ban_duration" required
-                                                        name="ban_duration"><span>單位為天數</span>
+                                                        name="ban_duration"><span>單位為天數，請輸入正(增加)負(減少)天數</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,8 +74,8 @@
                                             <div class="col-md-12 content-right">
                                                 <button class="btn btn-primary form-btn" id="ban_add_btn"
                                                     type="button">確認</button>
-                                                <button class="btn btn-danger form-btn" id="manager_add_btn_cancel"
-                                                    type="button">取消</button>
+                                                <button class="btn btn-minor form-btn" id="manager_add_btn_cancel"
+                                                    type="button">返回</button>
                                             </div>
                                             <div id="msg" class="error"></div>
                                         </div>
@@ -103,6 +103,7 @@
     </div>
 
     <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/cdn.jsdelivr.net_npm_sweetalert2@11.js"></script> <!-- sweetalert -->
     <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
     <!-- JavaScript JS放置區 -->
     <script src="../bootstrap/js/bootstrap.min.js"></script>

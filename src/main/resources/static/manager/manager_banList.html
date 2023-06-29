@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>NPB.GG管理系統-停權</title>
+    <title>NPB.GG管理系統-停權紀錄一覽</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min_backend.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
@@ -36,23 +36,27 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;
-                                        </label>
-                                    </div>
+
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm"
-                                                aria-controls="dataTable" placeholder="Search">
+                                    <div class="text-md-end dataTables_filter" id="ban_dataTable_filter">
+                                        <select name="ban_search_type" class="ban_search_type" required>
+                                            <option value="ban_id">停權單ID</option>
+                                            <option value="member_id">停權會員ID</option>
+                                            <option value="manager_id">停權管理者ID</option>
+                                        </select>
+                                        <label class="ban_form-label">
+                                            <input type="search" class="form-control form-control-sm ban_search_content"
+                                                aria-controls="dataTable" placeholder="搜尋...">
                                         </label>
+                                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block ban_search_button"
+                                            role="button">
+                                            搜尋
+                                        </a>
+                                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block ban_default_list_button btn-danger"
+                                            role="button">
+                                            清除搜尋條件
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -84,38 +88,6 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of %%%總筆數/篩選筆數</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav
-                                        class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" aria-label="Previous" href="#">
-                                                    <span aria-hidden="true">«</span>
-                                                </a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" aria-label="Next" href="#">
-                                                    <span aria-hidden="true">»</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -136,6 +108,7 @@
     </div>
 
     <script src="../jquery/jquery-3.4.1.min.js"></script> <!-- jQuery -->
+    <script src="../js/cdn.jsdelivr.net_npm_sweetalert2@11.js"></script> <!-- sweetalert -->
     <script src="../js/backend_nav.js"></script> <!-- 導覽框 -->
     <!-- JavaScript JS放置區 -->
     <script src="../bootstrap/js/bootstrap.min.js"></script>

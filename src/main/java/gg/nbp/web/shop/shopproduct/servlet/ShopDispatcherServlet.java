@@ -20,6 +20,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @WebServlet("/shopDispatcher/*")
@@ -65,7 +67,6 @@ public class ShopDispatcherServlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
 
         process(req, res);
-
     }
 
     private void process(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -73,6 +74,7 @@ public class ShopDispatcherServlet extends HttpServlet {
         System.out.println(path);
         HttpSession session = req.getSession();
         String strOut = "";
+        Member member = (Member) session.getAttribute("member");
         switch (path) {
 //            case  "/exPay":
 //                StringBuilder requestData_ = new StringBuilder();
@@ -131,11 +133,6 @@ public class ShopDispatcherServlet extends HttpServlet {
                 ProductPojo productPojo = gson_.fromJson(payloadData, ProductPojo.class);
 
                 productManagerController.addProduct(productPojo);
-//                List<ProductImage> productImages= productPojo.getNewProduct().getProductImages();
-//                for (int i=0;i<productImages.size();i++) {
-//                    ProductImage productImage= productImages.get(i);
-//                    productImage.setImage(productImage.getImage().split(",")[1]);
-//                }
 
 
                 break;
@@ -160,12 +157,11 @@ public class ShopDispatcherServlet extends HttpServlet {
 
             case "/getProductByType":
                 String type = req.getParameter("type");
-                strOut = productController.getProductByType(Integer.valueOf(type));
+                strOut = productController.getProductByType(member.getMember_id(),Integer.valueOf(type));
                 break;
             case "/getProductByBuyTimes":
                 String type_ = req.getParameter("type");
                 String amount_ = req.getParameter("amount");
-//                strOut = productController.getProductByBuyTimes(Integer.valueOf(type_));
                 if (type_==null||"".equals(type_)) {
                     type_ = "0";
                 }
@@ -174,15 +170,24 @@ public class ShopDispatcherServlet extends HttpServlet {
                     amount_ = "-1";
                 }
 
-                strOut = productController.getProductByBuyTimes(Integer.valueOf(amount_), Integer.valueOf(type_));
+                Map<String,Object> map=new HashMap<>();
+                map.put("memId",member.getMember_id());
+                map.put("limit",Integer.valueOf(amount_));
+
+                strOut = productController.getProductByBuyTimes(map, Integer.valueOf(type_));
 
                 break;
 
 
             case "/searchProducts":
                 String search = req.getParameter("search");
-                strOut = productController.searchProducts(search);
+                strOut = productController.searchProducts(member.getMember_id(),search);
                 break;
+
+            case "/getProductById":
+                strOut = productController.getProductById(Integer.valueOf(req.getParameter("id")));
+                break;
+
 
             case "/getSomeProduct":
 
@@ -192,20 +197,8 @@ public class ShopDispatcherServlet extends HttpServlet {
             case "/addCart":
                 String id_str = req.getParameter("id");
                 Integer productId_ = Integer.valueOf(id_str);
+                productController.addCart(productId_, member.getMember_id());
 
-                Object isLogin_ = session.getAttribute("isLogin");
-                if (isLogin_ != null) {
-                    Boolean isLogin = (Boolean) isLogin_;
-                    if (isLogin) {
-                        Member member = (Member) session.getAttribute("member");
-                        productController.addCart(productId_, member.getMember_id());
-                    } else {
-//                        res.sendRedirect("/Five_NBP_gg/member_login.html");
-                    }
-
-                } else {
-//                    res.sendRedirect("/Five_NBP_gg/member_login.html");
-                }
 
                 break;
             case "/getCartNum":
@@ -216,13 +209,15 @@ public class ShopDispatcherServlet extends HttpServlet {
                 productManagerController.createProductFromcsv();
                 break;
             case "/getAllProduct":
-                strOut = productController.getAllProduct();
+
+
+                strOut = productController.getAllProduct(member.getMember_id());
                 break;
             case "/getProductDetail":
                 String productId_json = req.getParameter("id");
                 Gson gson = new Gson();
                 Integer productId = gson.fromJson(productId_json, Integer.class);
-                strOut = productController.getProductDetail(productId);
+                strOut = productController.getProductDetail(member.getMember_id(),productId);
                 break;
 
             case "/getProductHistory":
@@ -284,65 +279,24 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
             case "/getFollowByMember":
-                Object __isLogin__ = session.getAttribute("isLogin");
-                if (__isLogin__ != null) {
-                    Boolean isLogin = (Boolean) __isLogin__;
-                    if (isLogin) {
-                        Member _member_ = (Member) session.getAttribute("member");
-                        strOut = followController.getFollowByMember(_member_);
-                    } else {
-//                        res.sendRedirect("/Five_NBP_gg/member_login.html");
-                    }
-
-                } else {
-//                    res.sendRedirect("/Five_NBP_gg/member_login.html");
-                }
-
+                strOut = followController.getFollowByMember(member);
 
                 break;
             case "/getFollowByMemberId":
-                Object _isLogin__ = session.getAttribute("isLogin");
-                if (_isLogin__ != null) {
-                    Boolean isLogin = (Boolean) _isLogin__;
-                    if (isLogin) {
-                        Member _member_ = (Member) session.getAttribute("member");
-                        strOut = followController.getFollowByMemberId(_member_.getMember_id());
-                    } else {
-//                        res.sendRedirect("/Five_NBP_gg/member_login.html");
-                    }
-
-                } else {
-//                    res.sendRedirect("/Five_NBP_gg/member_login.html");
-                }
-
+                strOut = followController.getFollowByMemberId(member.getMember_id());
 
                 break;
             case "/addFollow":
                 String id_str_ = req.getParameter("id");
                 Integer productId__ = Integer.valueOf(id_str_);
-
-                Object isLogin__ = session.getAttribute("isLogin");
-                if (isLogin__ != null) {
-                    Boolean isLogin = (Boolean) isLogin__;
-                    if (isLogin) {
-                        Member member = (Member) session.getAttribute("member");
-                        followController.addFollow(productId__, member.getMember_id());
-                    } else {
-//                        res.sendRedirect("/Five_NBP_gg/member_login.html");
-                    }
-
-                } else {
-//                    res.sendRedirect("/Five_NBP_gg/member_login.html");
-                }
-
+                strOut = followController.addFollow(productId__, member.getMember_id()).toString();
 
                 break;
 
             case "/login":
-                Member member = testMemberController.getDefaultMember();
+                member = testMemberController.getDefaultMember();
                 session.setAttribute("isLogin", true);
                 session.setAttribute("member", member);
-
 
                 break;
         }
@@ -352,4 +306,9 @@ public class ShopDispatcherServlet extends HttpServlet {
         out.println(strOut);
 
     }
+
+
+
+
+
 }

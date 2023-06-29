@@ -15,7 +15,7 @@ public class FollowDaoImpl extends CoreDaoImpl<FollowList, FollowListId> impleme
 
     @Override
     public List<FollowList> selectByMemberId(Integer memberId) {
-        String hql = "from FollowList  where id.memberId ="+memberId;
+        String hql = "from FollowList  where id.memberId ="+memberId +"order by id.productId asc";
         System.out.println("hql: "+hql);
         return session.createQuery(hql, FollowList.class).getResultList();
     }

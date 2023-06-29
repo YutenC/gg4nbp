@@ -2,6 +2,7 @@ package gg.nbp.web.shop.shopproduct.filter;
 
 
 
+import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.shop.shopproduct.util.RedisFactory;
 
 import jakarta.servlet.FilterChain;
@@ -9,6 +10,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebFilter("/shopDispatcher/*")
 public class HibernateFilterShopProduct extends HttpFilter {
@@ -28,6 +30,7 @@ public class HibernateFilterShopProduct extends HttpFilter {
 
         try {
 //            HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+            testSetMember(req.getSession());
             chain.doFilter(req, res);
 //            transaction.commit();
 //            HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
@@ -43,4 +46,16 @@ public class HibernateFilterShopProduct extends HttpFilter {
 //
         }
     }
+
+
+    private void testSetMember(HttpSession session){
+        Object isLogin__ = session.getAttribute("isLogin");
+        if (isLogin__ != null) {
+        } else {
+            Member member=new Member();
+            member.setMember_id(-1);
+            session.setAttribute("member",member);
+        }
+    }
+
 }

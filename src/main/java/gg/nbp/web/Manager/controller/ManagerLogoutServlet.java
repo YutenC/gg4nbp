@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.JsonObject;
 
+import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.Manager.service.ManagerService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,13 +23,20 @@ public class ManagerLogoutServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		request.getSession().invalidate();
+		Manager manager = (Manager)request.getSession().getAttribute("manager");
+		
+		request.getSession().removeAttribute("manager_loggedin");
+		request.getSession().removeAttribute("manager");
+		request.getSession().removeAttribute("loggedPomList");
+		request.getSession().removeAttribute("powerList");
+		
+		Object managerLoggedIn = request.getSession().getAttribute("manager_loggedin");
 		
 		// 創建回應JSON數據
 	    JsonObject responseJson = new JsonObject();
 	    responseJson.addProperty("successful", false);
 	    
-		if (request.getSession(false)== null) {
+		if (managerLoggedIn == null) {
 			responseJson.addProperty("successful", true); // 設置成功標誌，根據實際情況設置
 		}
 		

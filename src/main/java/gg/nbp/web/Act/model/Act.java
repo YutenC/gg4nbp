@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
 import java.util.Date;
 
 @Getter
@@ -15,7 +14,7 @@ public class Act {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Act_id", nullable = false)
-    private Integer id;
+    private Integer Id;
 
     @Column(name = "Act_name", nullable = false, length = 30)
     private String actName;
@@ -59,4 +58,6 @@ public class Act {
 
     @Column(name = "Organizer_id")
     private  Integer OrganizerId;
+
+
 }

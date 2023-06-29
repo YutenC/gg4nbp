@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>member_info</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap_member_infor.min.css">
+    <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- <link rel="stylesheet" href="../css/Profile-Edit-Form-1.css"> -->
+    <link rel="stylesheet" href="../css/Profile-Edit-Form.css">
+    <!-- <link rel="stylesheet" href="../css/Profile-with-data-and-skills.css"> -->
+
+    <style>
+        div.row {
+            width: 100%;
+        }
+
+        div.button {
+            margin-top: 90px;
+        }
+
+        button {
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
+        }
+
+        label.form-label {
+            margin-top: 10px;
+        }
+
+        div#member_info_pic {
+            margin-bottom: 10px;
+        }
+
+        div.list-group {
+            width: 100%;
+            margin: 0px;
+        }
+
+        div.MainShow {
+            margin: 0px;
+            padding: 0px;
+            display: inline-block;
+            height: 100%;
+            width: 65%;
+            background-color: #8036364e;
+        }
+
+        @font-face {
+            font-family: 'yonaka';
+            src: url(font/ZTMY_MOJI-R.otf);
+        }
+
+
+        div.card {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+        hr {
+            width: 90%;
+            margin: 10px;
+        }
+
+
+        div.toSearch {
+            margin-top: 10px;
+            display: flex;
+            width: 100%;
+            justify-content: start;
+            overflow: hidden;
+        }
+
+        div.toSearch div.searchBar {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+
+
+        div.toSearch div.searchBar>span>input#searchValue {
+            display: inline-block;
+            min-width: 200px;
+            width: 40%;
+            height: 30px;
+            border-radius: 3px;
+            margin: 5px;
+            padding-left: 5px;
+            font-size: 0.8em;
+            outline: none;
+            border: 1px solid rgb(92, 34, 34);
+        }
+
+
+        div.toSearch div.searchBar>span>input#searchValue:focus {
+            box-shadow: 0px 0px 3px rgb(87, 25, 25);
+
+        }
+
+        div.toSearch div.searchBar>span {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding-right: 15px;
+        }
+
+        div.toSearch div.searchBar>span>button {
+            min-width: 60px;
+            ;
+            height: 25 px;
+            border-radius: 10px;
+            padding: 3px 8px 0px 8px;
+            text-align: center;
+            background-color: rgba(108, 40, 40, 0.397);
+            border: 1px solid rgb(97, 35, 35);
+            font-size: 0.6em;
+        }
+
+        div.toSearch div.searchBar>span>button:hover {
+            background-color: rgba(40, 108, 93, 0.397);
+            border: 1px solid rgb(35, 97, 97);
+        }
+
+        div.toShow {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%;
+            justify-content: start;
+            align-items: start;
+            padding-bottom: 20px;
+            overflow-x: scroll;
+        }
+
+
+        div.toItem {
+            width: 100%;
+        }
+
+        div.toShow article.ItemList {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            min-width: 715px;
+            height: 40px;
+        }
+
+
+        div.toShow article.ItemList>div {
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+
+        @media(min-width:1050px) {
+            div.toShow::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        div.toItem article.ItemList>div>span {
+            padding-left: 10px;
+            font-size: 0.9em;
+        }
+
+        div.toShow article.ItemList>div>span {
+            display: inline-block;
+            width: 120px;
+            white-space: pre;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+
+
+        div.toShow article.ItemList>div>span:last-child {
+            display: flex;
+            align-items: start;
+
+        }
+
+        div.toShow article.ItemList>div>span>button {
+            margin-right: 15px;
+            padding: 0px;
+            text-align: center;
+            border-radius: 25px;
+            width: 30px;
+            height: 30px;
+            font-size: .6em;
+            font-weight: bold;
+            background-color: rgb(78, 119, 74);
+            border: none;
+            color: aliceblue;
+            box-shadow: 0px 0px 3px gray;
+        }
+
+
+        div.toShow div.hrLine {
+            height: 1px;
+            display: inline-block;
+            width: 100%;
+            border: 1px solid rgba(128, 128, 128, 0.27);
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+
+        div.toShow div.pageBar {
+            min-width: 715px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        div.toShow div.pageBar>button {
+            margin: 10px;
+            width: 42px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0);
+            box-shadow: none;
+        }
+
+
+        div.toShow div.pageBar>button.-isNow {
+            font-weight: bold;
+            color: rgb(19, 104, 117);
+        }
+
+
+        div.swal2-html-container {
+            margin: 0px;
+        }
+
+        div.swal2-html-container>div {
+            margin: 10px;
+            height: 570px;
+            border-radius: 3px;
+
+        }
+
+        div.reviewMain {
+            flex-wrap: wrap;
+        }
+
+
+        div.reviewMain>div button {
+            padding: 0.5rem 0.75rem;
+            line-height: 1.25;
+            border-radius: 0.25rem;
+            margin: 0 0.5rem;
+            border: 1px solid transparent;
+            color: white;
+
+        }
+
+        div.reviewMain>div button#cancel {
+            background-color: #dc3545;
+        }
+
+
+        div.reviewMain>div button#commit {
+            background-color: #28a745;
+        }
+
+        div.reviewMain>div {
+            display: inline-block;
+            width: 100%;
+        }
+
+        div.reviewMain div.editMain {
+            display: flex;
+            flex-wrap: wrap;
+            height: 80%;
+            justify-content: center;
+        }
+
+        div.reviewMain div.editMain div.Pic {
+            display: inline-block;
+            margin: 10px;
+            border: 2px solid black;
+            background-color: #ffeaeac6;
+            border-radius: 2px;
+            height: 410px;
+            width: calc(100% - 40% - 40px);
+            padding: 10px;
+            overflow: overlay;
+        }
+
+        div.reviewMain div.editMain div.Pic div.imgArea {
+            display: flex;
+            justify-content: start;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+
+        div.reviewMain div.editMain div.Pic div.imgArea>div>img {
+            margin: 5px;
+            height: 135px;
+            width: 135px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 3px black;
+            object-fit: cover;
+        }
+
+        div.reviewMain div.editMain div.Pic div.showContent {
+            display: flex;
+            justify-content: start;
+        }
+
+
+        div.reviewMain div.editMain div.Pic div.showContent>textarea {
+            margin-top : 10px;
+            background-color: #ffffffc0;
+            border: none;
+            width: 100%;
+            height: 110px;
+            resize: none;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        div.reviewMain div.editMain div.Pic div.showContent>textarea:focus{
+            outline: none;
+
+        }
+
+        div.reviewMain div.editMain div.Pic div.showContent>span {
+            text-align: left;
+        }
+
+
+        div.reviewMain div.editMain div.notChange {
+            display: inline-block;
+            margin: 10px;
+            border: 2px solid black;
+            background-color: #f1ffeac6;
+            border-radius: 2px;
+            height: 410px;
+            width: 40%;
+            padding: 10px;
+        }
+
+        div.reviewMain div.editMain div.notChange>div {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            height: 33px;
+        }
+
+        div.reviewMain div.editMain div.notChange>div>span:first-child {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+
+        div.reviewMain div.editMain div.notChange>div>select,
+        div.reviewMain div.editMain div.notChange>div>input,
+        div.reviewMain div.editMain div.notChange>div>span:last-child {
+            display: inline-block;
+            text-align: left;
+            padding-left: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: calc(100% - 120px);
+            border: none;
+            background-color: #ffffff50;
+            font-size: .9em;
+            border-radius: 5px;
+            width: 220px;
+            height: 25px;
+        }
+
+        div.reviewMain div.editMain div.notChange>div.change>select,
+        div.reviewMain div.editMain div.notChange>div.change>input,
+        div.reviewMain div.editMain div.notChange>div.change>span:last-child {
+            background-color: #ffffffc0;
+        }
+
+
+        div.btnArea{
+            margin: 10px; 
+            font-size: 10px;
+            color: red;
+            width: calc(100% - 20px);
+        }
+
+
+        div.btnArea input#getshot {
+            min-width: 80px;
+            display: inline-block;
+            margin-left: 30px;
+            width: 80px;
+            height: 30px;
+            background-color: #ffffff;
+            border: 2px solid rgb(53, 53, 92);
+            border-radius: 5px;
+            text-align: center;
+            padding: 0px;
+        }
+
+        div.imgArea>div{
+            display: inline-block;
+            position: relative;
+            height: auto;
+        }
+
+
+        div.imgArea>div>button{
+            position: absolute;
+            right: 6px;
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            font-size: 14px;
+            color: rgb(219, 219, 219) !important;
+            box-shadow: none;
+            height: 25px;
+            width: 25px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center"></a>
+                <a href="../index.html" style="width: 180px;height: 103.19px;">
+                    <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item" id="shop">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;">
+                                <img src="../img/gamepad-solid.svg">商城中心
+                            </a>
+                        </li>
+                        <li class="nav-item" id="shshop">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/dice-solid.svg">二手商城
+                            </a>
+                        </li>
+                        <li class="nav-item" id="actitcle">
+                            <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
+                                style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="#">
+                                <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
+                                    style="height: 50px;">論壇社群
+                            </a>
+                        </li>
+                        <li class="nav-item" id="activty">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/champagne-glasses-solid.svg">活動專區
+                            </a>
+                        </li>
+                        <li class="nav-item" id="member_home">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="member_home.html"
+                                style="margin-top: 10px;">
+                                <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
+                                    style="height: 50px;">會員中心
+                            </a>
+                        </li>
+                        <li class="nav-item" style="height: 80px;" id="help">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
+                                style="margin-top: 20px;color: var(--bs-dark);">
+                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
+                                    style="height: 40px;">客服中心
+                            </a>
+                        </li>
+                        <li class="nav-item logout">
+                            <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
+                                style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
+                                <div id="member_pic-1" class="avatar-bg center"
+                                    style="width: 60px;height: 60px;margin-left: 0px;"></div>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                    <footer id="footerpad-1"></footer>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="main-content">
+        <div class="row" style="height: 800px;">
+            <div class="col-lg-4 col-xl-2 offset-xl-1" style="height: 600px;">
+                <div class="list-group">
+                    <a data-bss-hover-animate="pulse" id="info" class="list-group-item list-group-item-action"
+                        href="./member_info.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="setBank" class="list-group-item list-group-item-action"
+                        href="./member_common_account.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">常用帳戶設定
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="friend" class="list-group-item list-group-item-action"
+                        href="./member_friendlist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">好友名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="black" class="list-group-item list-group-item-action"
+                        href="./member_blacklist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">黑名單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="trade" class="list-group-item list-group-item-action"
+                        href="./member_order_list.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢一般交易
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_trade" class="list-group-item list-group-item-action"
+                        href="./member_shordersearch.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手交易
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_buy" class="list-group-item list-group-item-action"
+                        href="./SecondHand_buylist_search.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手收購進度
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="pro_follow" class="list-group-item list-group-item-action"
+                        href="./member_product_follow.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">一般商品追蹤清單
+                        <br>
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="sh_follow" class="list-group-item list-group-item-action"
+                        href="./member_shloveList.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">二手商品追蹤清單
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="act_follow" class="list-group-item list-group-item-action"
+                        href="#" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢參加活動
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="notice" class="list-group-item list-group-item-action"
+                        href="member_noticelist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看通知
+                    </a>
+                    <a data-bss-hover-animate="pulse" id="login_his" class="list-group-item list-group-item-action"
+                        href="member_loginhistory.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看登入紀錄
+                    </a>
+                </div>
+            </div>
+            <div class="MainShow card">
+                <div class="toSearch">
+                    <div class="searchBar">
+                        <span><input type="text" name="search" id="searchValue" placeholder="輸入商品名稱查詢"><button>搜尋
+                            </button></span>
+                    </div>
+                </div>
+                <hr>
+                <div class="toShow">
+                    <article class="ItemList">
+                        <div>
+                            <span>收購編號</span>
+                            <span>商品名稱</span>
+                            <span>請求人</span>
+                            <span>預估價</span>
+                            <span>審核狀態</span>
+                            <span></span>
+                        </div>
+                    </article>
+
+                </div>
+                
+
+
+            </div>
+        </div>
+    </div>
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item"><a href="#"><span class="fa-stack fa-lg"><i
+                                        class="fa fa-circle fa-stack-2x"></i><i
+                                        class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
+                        <li class="list-inline-item"><a href="#"><span class="fa-stack fa-lg"><i
+                                        class="fa fa-circle fa-stack-2x"></i><i
+                                        class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a></li>
+                        <li class="list-inline-item"><a href="#"><span class="fa-stack fa-lg"><i
+                                        class="fa fa-circle fa-stack-2x"></i><i
+                                        class="fa fa-instagram fa-stack-1x fa-inverse"></i></span></a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"></a></li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by Designer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+</body>
+<script src="../js/member_logout.js"></script>
+<script>
+
+
+    $(window).on("load", function () {
+        $.ajax({
+            url: "memberGetInforServlet",
+            method: "POST",
+            dataType: "json",
+            success: function (response) {
+                let member = response;
+                sessionStorage.setItem("id", member.member_id);
+                let isPass = member.successful;
+                if (isPass) {
+                    $("input#member_account").val(member.account);
+                    $("input#nickname").val(member.nick);
+                    $("input#member_bonus").val(member.bonus);
+                    $("input#id_number").val(member.id_number);
+                    $("input#birth").val(member.birth);
+                    $("input#address").val(member.address);
+                    $("input#phone").val(member.phone);
+                    $("input#email").val(member.email);
+                    if (member.headshot) {
+                        $("div#member_info_pic").css("background-image", `url(${member.headshot})`);
+                    } else {
+                        $("div#member_info_pic").css("background-image", `url(https://www.gravatar.com/avatar/1234566?size=200&d=mm)`);
+                    }
+
+                    if (member.member_ver_state == 1) {
+                        $("button#vertify").css("display", "none")
+                    } else {
+                        $("button#edit_infor").css("display", "none");
+                        $("button#change_password").css("display", "none");
+                    }
+                } else {
+                    window.location.href = "../index.html";
+                }
+            }
+        })
+    })
+
+    $("button#edit_infor").on("click", function () {
+        $.ajax({
+            url: "member/member_edit.html",
+            success: function () {
+                window.location.href = "member_edit.html";
+            }
+        })
+    })
+    $("button#vertify").on("click", function () {
+        $.ajax({
+            url: "member_vertify.html",
+            success: function () {
+                window.location.href = "member_vertify.html";
+            }
+        })
+    })
+    $("button#change_password").on("click", function () {
+        $.ajax({
+            url: "member/member_set_password.html",
+            success: function () {
+                window.location.href = "member_set_password.html";
+            }
+        })
+    })
+
+
+    $(document).ready(function () {
+        $("#imgFile").on("change", function (e) {
+            var picture_list = $("#member_info_pic");
+            picture_list.empty(); // 清空
+
+            if (this.files && this.files) {  // 只處理第一個選擇的檔案
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var imgData = new FormData();   // 建立一個圖片的data  
+                    imgData.append("image", this.files);
+                    var backgroundImage = `url(${e.target.result})`;
+                    picture_list.css("background-image", backgroundImage);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    })
+
+    $("button#pic_submit").on("click", function () {
+        if ($("#imgFile").val() === "") {
+            Swal.fire({
+                icon: 'error',
+                title: '上傳欄位為空白',
+                text: "請選擇上傳的圖片",
+            })
+            return;
+        } else {
+            var imgData = new FormData();   // 建立一個FormData物件
+            imgData.append("image", $("#imgFile")[0].files[0]); // 將圖片加入 FormData
+            $.ajax({
+                url: "memberGetPictureServlet", // 替換成你的後端接收圖片的 URL
+                method: "POST",
+                data: imgData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '上傳成功',
+                    }).then((result) => {
+                        window.location.href = "member_info.html";
+                    })
+                }
+            })
+        }
+    })
+
+
+
+</script>
+<script>
+    let onePage = 10;
+    let del = [];
+    let upfile = [];
+    let upfiledel =[];
+
+    function ReviewBox(i) {
+        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        obj = obj[i];
+        Swal.fire({
+            html: `
+                <div class="reviewMain">
+                    <div style="font-size: 2em;color: white;text-shadow: 0px 0px 2px burlywood;">收購審核</div>
+                <div class="editMain">
+                    <div class="notChange">
+                        <div><span>收購編號 :</span><span>${obj.eventId}</span></div>
+                        <div><span>請求人 :</span><span>${obj.memberName || ''}</span></div>
+                        <div><span>申請時間 :</span><input  type="datetime-local" value="${obj.applyDate}" disabled></input></div>
+                        <div class="change"><span>商品名稱 :</span><input type="text" id="productName" value="${obj.productName || ''}" maxlength="30" ></div>
+                        <div class="change"><span>商品種類 :</span><span id="type">${obj.type}</span></div>
+                        <div class="change"><span>預估價 :</span><input id="estimate" type="number" value="${obj.estimate ?? ''}" max="1000000" ></div>
+                        <div class="change"><span>銀行帳號 :</span><input id="applicantBankNumber" type="text" value="${obj.applicantBankNumber || ''}" maxlength="14"></div>
+                        <hr>
+                        <div><span>收購價 :</span><input type="number" value="${obj.price || ''}" disabled></div>
+                        <div><span>審核時間 :</span><input type="datetime-local" value="${obj.confirmDate || ''}" disabled></div>
+                        <div>
+                            <span>付款狀態 :</span>
+                            <span>${obj.payState}</span>
+                        </div>
+                        <div>
+                            <span>審核狀態 :</span>
+                            <span>${obj.approvalState}</span>
+                        </div>
+                    </div>
+                    <div class="Pic">
+                        <div><span style="font-size:1.3em;font-weight: bold;">內容</span></div>
+                        <div class="showContent"><textarea id="content" >${obj.content || ''}</textarea ></div>
+                        <div class="btnArea">
+                            <input id="getshot" type="button" value="拍照上傳">
+                            <input  type="file" accept="image/*" value="拍照" style="display: none;" capture>
+                            上限 5 MB
+                        </div>
+                        <div class="imgArea">
+                        </div>
+                    </div>
+                <div>
+                    <button id="cancel">取消</button>
+                    <button id="commit">確定</button>
+                </div>
+                </div>
+                `,
+            background: 'rgba(255, 255, 255, 0)',
+            padding: 0,
+            width: 900,
+            showConfirmButton: false,
+        })
+
+
+
+        $('textarea').on('keyup keypress', function () {
+            $(this).height(0);
+            $(this).height(this.scrollHeight > 100 ? this.scrollHeight : 100);
+        });
+
+        $('#getshot').on('click', function(e){
+            $(this).next().click();
+        })
+
+        $('#applicantBankNumber').on('keydown', e => {
+            if (e.keyCode < 48 || e.keyCode > 57) {
+                e.preventDefault();
+            }
+        })
+
+        $('#getshot').next().on('change',function(e){
+            let uploadImg = e.target.files || e.dataTransfer.files;
+
+            if (!uploadImg) 
+                return;
+            
+            for (let i = 0; i < upfile.length; i++) 
+                if(uploadImg[0].name == upfile[i][0].name)
+                    return;
+            
+            for (let i = 0; i < obj.image.length; i++) 
+                if(uploadImg[0].name == obj.image[i].image)
+                    return;
+
+            upfile.push(uploadImg); // 可修改處
+            const div = document.createElement('div');
+            const img = document.createElement('img');
+            const btn = document.createElement('button');
+            $(btn).attr('class', 'del_btn').text('✖');
+            const reader = new FileReader();
+            if (uploadImg.size >= 5242880) {
+                $(img).addClass('-warning');
+            }
+            $('.imgArea').append(div);
+            div.append(img);
+            div.append(btn);
+
+            reader.readAsDataURL(uploadImg[0]);
+            reader.addEventListener('load', e => {
+                img.src = e.target.result;
+            });
+
+
+            btn.addEventListener('click', e => {
+                upfiledel.push(uploadImg[0].name);
+                div.remove();
+            })
+        })
+
+        for (let i = 0; i < obj.image.length; i++) {
+            fetch('select?imgname=' + obj.image[i].image)
+                .then(body => {
+                    const div = document.createElement('div');
+                    const img = document.createElement('img');
+                    const btn = document.createElement('button');
+                    $(btn).attr('class', 'del_btn').text('✖');
+                    img.src = body.url;
+                    div.append(img);
+                    div.append(btn);
+                    $('.imgArea').append(div);
+
+                    $(btn).on('click',()=>{
+                        del.push(obj.image[i].image);
+                        div.remove();
+                    })
+
+                })
+        }
+
+        $('#cancel').on('click', e => {
+            $('.swal2-container').remove();
+        })
+
+        $('#commit').on('click', e => {
+
+
+            let type = $('#type_1').val() + $('#type_2').val();
+            let s_estimate = estimate.value || -1;
+            let img_list = [];
+   
+
+
+            /* 上傳圖片到本機指定位置 */
+            filter:
+            for (let i = 0; i < upfile.length; i++) {
+
+                const formData = new FormData();
+
+                for (let j = 0; j < upfiledel.length; j++) 
+                    if (upfile[i][0].name == upfiledel[j])
+                        continue filter;
+              
+                formData.append(upfile[i][0].name, upfile[i][0]);
+                img_list.push({ image: upfile[i][0].name });
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../secondhand/upFile', true);
+                xhr.send(formData);
+            }
+
+            fi:
+            for (let i = 0; i < obj.image.length; i++) {
+                for (let j = 0; j < del.length; j++) 
+                    if (obj.image[i].image == del[j]) 
+                        continue fi;
+             img_list.push({ image: obj.image[i].image });
+            }
+
+
+    fetch('update4Member', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            eventId: obj.eventId,
+            productName: productName.value,
+            content: content.value,
+            type: type.value,
+            estimate: s_estimate,
+            applicantBankNumber: applicantBankNumber.value,
+            image : img_list
+        })
+    })
+    .then(resp => resp.json())
+    .then(obj => {
+    $('#searchValue').val("");
+        if (obj.str) {
+            Swal.fire({
+            icon: 'question',
+            title: obj.str
+            })
+        } else {
+            sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+            $('.swal2-container').remove();
+            itemDisplay();
+        }
+
+        })
+
+    })
+}
+
+    function itemDisplay(page = 1) {
+    del = [];
+    upfile = [];
+    upfiledel =[];
+        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        if (obj.eventId) {
+            obj = [obj];
+        }
+        const pageBar = document.createElement('div');
+        pageBar.setAttribute('class', 'pageBar');
+        const total = Math.floor(obj.length / onePage) + 1;
+        let start = 1;
+        let end = 7 > total ? total : 7;
+        if (obj.length > onePage) {
+            if (total > 7 && page > 3) {
+                end = total > page + 3 ? page + 3 : total;
+                start = end == total ? total - 6 : page - 3;
+            }
+
+            for (let i = start; i <= end; i++) {
+                const btn = document.createElement('button');
+                btn.setAttribute('id', `page_${i}`);
+                btn.innerText = i;
+                if (i == page) {
+                    $(btn).addClass('-isNow');
+                }
+
+                btn.addEventListener('click', () => {
+                    itemDisplay(i);
+                })
+                pageBar.append(btn);
+            }
+        }
+        const div = document.createElement('div');
+        div.setAttribute('class', 'toItem');
+
+        lastNum = page * onePage > obj.length ? obj.length : page * onePage;
+
+
+
+        for (let i = (page - 1) * onePage; i < lastNum; i++) {
+            const article = document.createElement('article');
+            article.setAttribute('class', 'ItemList');
+            article.innerHTML = `
+                <div>
+                    <span>${obj[i].eventId}</span>
+                    <span>${obj[i].productName}</span>
+                    <span>${obj[i].memberName}</span>
+                    <span>${obj[i].estimate ?? ''}</span>
+                    <span>${obj[i].approvalState}</span>
+                    <span>
+                        <button class="Review_${i}" onclick="ReviewBox(${i})">審</button>
+                    </span>
+                </div>
+                <div class="hrLine"></div>
+
+                `;
+            div.append(article);
+        }
+        $('.toItem').remove();
+        $('.pageBar').remove();
+        $('.toShow')[0].append(div);
+        $('.toShow')[0].append(pageBar);
+    }
+
+    $('.searchBar>span>button').on('click', () => {
+        fetch('select', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                str: $('#searchValue').val()
+            })
+        })
+
+            .then(resp => resp.json())
+            .then(obj => {
+                $('#searchValue').val("");
+                if (obj.str) {
+                    Swal.fire({
+                        icon: 'question',
+                        title: obj.str
+                    }
+                    )
+                } else {
+                    sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                    itemDisplay();
+                }
+            })
+
+
+    })
+
+    $('#searchValue').on('keydown', function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            $('.searchBar>span>button').click();
+        }
+    })
+
+    fetch('select', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            str: $('#searchValue').val()
+        })
+    })
+    .then(resp => resp.json())
+    .then(obj => {
+            $('#searchValue').val("");
+            if (obj.str) {
+                Swal.fire({
+                    icon: 'question',
+                    title: obj.str
+                })
+            } else {
+                sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                itemDisplay();
+            }
+    })
+
+</script>
+
+
+
+</html>

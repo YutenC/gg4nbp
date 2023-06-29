@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>NPB.GG管理系統</title>
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="../css/act_set.css">
     <link rel="stylesheet" href="../fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
@@ -22,32 +22,175 @@
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-            <div class="container-fluid d-flex flex-column p-0">
-                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon ">
-                        <img class="" src="/img/Logo-removebg.png">
+<div id="wrapper">
+    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+        <div class="container-fluid d-flex flex-column p-0">
+            <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                <div class="sidebar-brand-icon ">
+                    <img class="" src="/img/Logo-removebg.png">
+                </div>
+                <div class="sidebar-brand-text mx-3">
+                    <span>NBP.GG管理</span>
+                </div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <ul class="navbar-nav text-light" id="accordionSidebar">
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                           href="#">
+                            <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
+                            <img class="border rounded-circle img-profile" src="/img/images/avatars/avatar1.jpeg">
+                        </a>
+                        <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
+                                &nbsp;Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
+                                &nbsp;Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
+                                &nbsp;Activity log
+                            </a>
+                            <div class="dropdown-divider">
+
+                            </div>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
+                                &nbsp;Logout
+                            </a>
+                        </div>
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>會員</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
+                        </div>
                     </div>
-                    <div class="sidebar-brand-text mx-3">
-                        <span>NBP.GG管理</span>
+                </li>
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>活動</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <!--跟活動有關的連結不需要超連結至誰-->
+                            <a class="dropdown-item" role="presentation" href="#">活動名字</a>
+                            <a class="dropdown-item" role="presentation" href="轉跳到主辦人頁面">主辦人名字</a>
+                            <a class="dropdown-item" role="presentation" href="#">活動名額</a>
+                        </div>
                     </div>
-                </a>
-                <hr class="sidebar-divider my-0">
-                <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                </li>
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>商城連到商城主頁面</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="#"
+                               onclick="confirmAndRedirect('活動名字')">活動名字</a>
+                            <a class="dropdown-item" role="presentation" href="#"
+                               onclick="confirmAndRedirect('轉跳到主辦人頁面')">主辦人名字</a>
+                            <a class="dropdown-item" role="presentation" href="#"
+                               onclick="confirmAndRedirect('活動名額')">活動名額</a>
+                        </div>
+                    </div>
+                </li>
+
+                <script>
+                    function confirmAndRedirect(page) {
+                        if (confirm('是否使用無量空處進行轉跳進入活動瀏覽？')) {
+                            // 根据页面参数进行相应的跳转
+                            if (page === '活動名字') {
+                                window.location.href = '活動名字的URL';
+                            } else if (page === '轉跳到主辦人頁面') {
+                                window.location.href = '主辦人頁面的URL';
+                            } else if (page === '活動名額') {
+                                window.location.href = '活動名額的URL';
+                            }
+                        }
+                    }
+                </script>
+
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>二手商城相關</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="https://www.facebook.com"
+                               onclick="return confirmAndRedirect2('xxxxx1')">xxxxx1</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
+                        </div>
+                    </div>
+                </li>
+
+                <script>
+                    function confirmAndRedirect2(page) {
+                        if (confirm('是否使用時間回娑進行轉跳進入檢舉瀏覽？')) {
+                            // 根据页面参数进行相应的跳转
+                            if (page === 'xxxxx1') {
+                                window.location.href = 'xxxx1的URL';
+                            } else if (page === 'xxxx2') {
+                                window.location.href = 'xxxx2的URL';
+                            } else if (page === 'xxxxxx3') {
+                                window.location.href = 'xxxxxx3的URL';
+                            }
+                        }
+                        return false; // 取消跳转
+                    }
+                </script>
+
+
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>系統設定</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                <div class="container-fluid">
+                    <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h3 class="navbar-nav flex-nowrap text-dark mb-0 nav-bar-top">活動創建</h3>
+                    <ul class="navbar-nav flex-nowrap ms-auto nav-bar-top">
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow">
+                                <!-- <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
                                 href="#">
                                 <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                <img class="border rounded-circle img-profile" src="/img/images/avatars/avatar1.jpeg">
-                            </a>
-                            <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                    &nbsp;Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
+                                <img class="border rounded-circle img-profile"
+                                    src="images/avatars/avatar1.jpeg">
+                            </a> -->
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                    <!-- <a class="dropdown-item" href="#"> -->
+                                    <!-- <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
+                                    &nbsp;Profile -->
+                                    <!-- </a> -->
+                                    <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
                                     &nbsp;Settings
                                 </a>
@@ -55,459 +198,404 @@
                                     <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
                                     &nbsp;Activity log
                                 </a>
-                                <div class="dropdown-divider">
+                                <div class="dropdown-divider"> -->
 
-                                </div>
+                                    <!-- </div>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
                                     &nbsp;Logout
-                                </a>
-                            </div>
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>會員</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>活動</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <!--跟活動有關的連結不需要超連結至誰-->
-                                <a class="dropdown-item" role="presentation" href="#">活動名字</a>
-                                <a class="dropdown-item" role="presentation" href="轉跳到主辦人頁面">主辦人名字</a>
-                                <a class="dropdown-item" role="presentation" href="#">活動名額</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>商城連到商城主頁面</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#"
-                                    onclick="confirmAndRedirect('活動名字')">活動名字</a>
-                                <a class="dropdown-item" role="presentation" href="#"
-                                    onclick="confirmAndRedirect('轉跳到主辦人頁面')">主辦人名字</a>
-                                <a class="dropdown-item" role="presentation" href="#"
-                                    onclick="confirmAndRedirect('活動名額')">活動名額</a>
-                            </div>
-                        </div>
-                    </li>
-
-                    <script>
-                        function confirmAndRedirect(page) {
-                            if (confirm('是否使用無量空處進行轉跳進入活動瀏覽？')) {
-                                // 根据页面参数进行相应的跳转
-                                if (page === '活動名字') {
-                                    window.location.href = '活動名字的URL';
-                                } else if (page === '轉跳到主辦人頁面') {
-                                    window.location.href = '主辦人頁面的URL';
-                                } else if (page === '活動名額') {
-                                    window.location.href = '活動名額的URL';
-                                }
-                            }
-                        }
-                    </script>
-
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>二手商城相關</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="https://www.facebook.com"
-                                    onclick="return confirmAndRedirect2('xxxxx1')">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-
-                    <script>
-                        function confirmAndRedirect2(page) {
-                            if (confirm('是否使用時間回娑進行轉跳進入檢舉瀏覽？')) {
-                                // 根据页面参数进行相应的跳转
-                                if (page === 'xxxxx1') {
-                                    window.location.href = 'xxxx1的URL';
-                                } else if (page === 'xxxx2') {
-                                    window.location.href = 'xxxx2的URL';
-                                } else if (page === 'xxxxxx3') {
-                                    window.location.href = 'xxxxxx3的URL';
-                                }
-                            }
-                            return false; // 取消跳转
-                        }
-                    </script>
-
-
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>系統設定</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid">
-                        <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <h3 class="navbar-nav flex-nowrap text-dark mb-0 nav-bar-top">活動創建</h3>
-                        <ul class="navbar-nav flex-nowrap ms-auto nav-bar-top">
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow">
-                                    <!-- <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                    href="#">
-                                    <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                    <img class="border rounded-circle img-profile"
-                                        src="images/avatars/avatar1.jpeg">
                                 </a> -->
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                        <!-- <a class="dropdown-item" href="#"> -->
-                                        <!-- <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Profile -->
-                                        <!-- </a> -->
-                                        <!-- <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Activity log
-                                    </a>
-                                    <div class="dropdown-divider"> -->
-
-                                        <!-- </div>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Logout
-                                    </a> -->
-                                    </div>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-                </nav>
+            </nav>
 
-            </div>
-            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                <table class="table my-0" id="dataTable">
-                    <thead>
-
-                        <tr>
-                            <td><img class="rounded-circle me-2" width="30" class="bg-white sticky-footer">
-                                <div class="container my-auto">
-                                    <div class="text-center my-auto copyright">
-                                        <span>Copyright © NBP.GG 2023</span>
-                                    </div>
-                                </div>
-                                </footer>
-            </div>
-            <a class="border rounded d-inline scroll-to-top" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
         </div>
-        <script src="../bootstrap/js/bootstrap.min.js"></script>
-        <script src="../js/theme.js"></script>
+        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+            <table class="table my-0" id="dataTable">
+                <thead>
 
-        <div id="phone">
-            <div class="screen">
-                <h1>活動發起</h1>
-                <div class="empty">
-                    <svg viewBox="0 0 48 48">
-                        <path
+                <tr>
+                    <td><img class="rounded-circle me-2" width="30" class="bg-white sticky-footer">
+                        <div class="container my-auto">
+                            <div class="text-center my-auto copyright">
+                                <span>Copyright © NBP.GG 2023</span>
+                            </div>
+                        </div>
+                        </footer>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
+
+    <div id="phone">
+        <div class="screen">
+            <h1>活動發起</h1>
+            <div class="empty">
+                <svg viewBox="0 0 48 48">
+                    <path
                             d="M47.3296 9.02336C46.9238 8.85514 46.4566 8.94821 46.1461 9.25869L26.2748 29.13C26.1703 29.2345 26.0916 29.3551 26.0386 29.4836C25.9866 29.6094 25.9576 29.7471 25.9567 29.8914C25.9567 29.892 25.9567 29.8925 25.9567 29.8929C25.9567 29.8932 25.9567 29.8933 25.9567 29.8934C25.9567 29.8938 25.9567 29.8941 25.9567 29.8946C25.9567 29.8949 25.9567 29.8951 25.9567 29.8954C25.9567 29.8958 25.9567 29.8959 25.9567 29.8962C25.9567 29.8967 25.9567 29.8973 25.9567 29.8979C25.9567 37.2506 19.975 43.2324 12.6223 43.2324C6.85987 43.2324 2.17195 38.5443 2.17195 32.7821C2.17195 28.2919 5.82494 24.639 10.315 24.639C13.7874 24.639 16.6122 27.4639 16.6122 30.9362C16.6122 33.5944 14.4497 35.7569 11.7916 35.7569C9.78483 35.7569 8.15229 34.1242 8.15229 32.1175C8.15229 30.6319 9.36098 29.4232 10.8466 29.4232C11.4463 29.4232 11.9326 28.9371 11.9326 28.3373C11.9326 27.7375 11.4463 27.2513 10.8466 27.2513C8.16337 27.2513 5.98034 29.4343 5.98034 32.1175C5.98034 35.3219 8.58722 37.9288 11.7916 37.9288C13.6865 37.9288 15.4077 37.1712 16.6683 35.943C16.6915 35.9233 16.7141 35.9026 16.736 35.8808L36.6075 16.0094C37.9281 14.6887 38.6555 12.9328 38.6555 11.065C38.6555 6.39509 34.8563 2.5957 30.1864 2.5957C27.4311 2.5957 24.8408 3.66864 22.8925 5.61688L3.02118 25.4882C2.99522 25.5142 2.97079 25.5412 2.94798 25.569C1.12539 27.4303 0 29.9774 0 32.7821C0 39.7421 5.66237 45.4043 12.6223 45.4043C16.8781 45.4043 20.7386 43.6813 23.5432 40.8958C23.5763 40.8697 23.6081 40.8415 23.6385 40.811L43.4582 20.9913C46.387 18.0626 48 14.1685 48 10.0267C48 9.58741 47.7353 9.19147 47.3296 9.02336ZM24.4283 7.15266C25.9663 5.61471 28.0111 4.76765 30.1862 4.76765C33.6586 4.76765 36.4835 7.59259 36.4835 11.065C36.4835 12.3526 35.9821 13.5632 35.0715 14.4737L18.7826 30.7627C18.6899 26.1724 14.9271 22.4669 10.315 22.4669C9.88181 22.4669 9.45426 22.4939 9.03497 22.546L24.4283 7.15266ZM41.9225 19.4555L27.6501 33.7279C27.9264 32.6444 28.0883 31.5148 28.1221 30.3545L45.5033 12.9732C44.9566 15.4096 43.7313 17.6467 41.9225 19.4555Z"
                             fill="currentColor" />
-                    </svg>
-                    <span>No more letters</span>
-                </div>
-                <div class="content">
-                    <div class="entries" style="height: 4000px;">
-                        <article>
-                            <!-- multistep form -->
-                            <form id="msform">
-                                <!-- progressbar -->
+                </svg>
+                <span>No more letters</span>
+            </div>
+            <div class="content">
+                <div class="entries" style="height: 4000px;">
+                    <article>
+                        <!-- multistep form -->
+                        <form id="msform">
+                            <!-- progressbar -->
 
-                                <!-- fieldsets -->
+                            <!-- fieldsets -->
 
-                                </fieldset>
-                            </form>
-                        </article>
-                        <div class="content">
-                            <div class="entries" style="height: 40px;">
-                                <article>
-                                    <div class="inner">
-                                        <div class="info">
-                                            <div class="compact"></div>
-                                            <!-- 這邊是黑現貨虛線地方text -->
-                                            <div class="text">
-                                                <!-- <div class="inner">
+                            </fieldset>
+                        </form>
+                    </article>
+                    <div class="content">
+                        <div class="entries" style="height: 40px;">
+                            <article>
+                                <div class="inner">
+                                    <div class="info">
+                                        <div class="compact"></div>
+                                        <!-- 這邊是黑現貨虛線地方text -->
+                                        <div class="text">
+                                            <!-- <div class="inner">
+                                <div class="info">
+                                    <strong>December 23nd, 2020</strong>
+                                    <small>活動契約說明</small>
+
+                                </div> -->
+                                            <!-- <div class="text">
+                                    <img src="/img/img_act/6.jpg" alt="" style="width: 200px; height: 150px;"> -->
+
+                                            <fieldset>
+                                                <!--這些的name裡面要填資料庫東西ec：act_id-->
+                                                <!--                                                    <h2 class="fs-title">主辦者會員</h2>-->
+                                                <!--                                                    <h3 class="fs-subtitle">step 1</h3>-->
+                                                <!--                                                    <label for="formFile" class="form-label">會員資料</label>-->
+                                                <!--                                                    <p></p>-->
+                                                <!--                                                    <input type="text" name="email" placeholder="Email" />-->
+                                                <!--                                                    <input type="password" name="pass" placeholder="Password" />-->
+                                                <!--                                                    <input type="password" name="cpass" placeholder="Confirm Password" />-->
+                                                <!--                                                    <h3 class="fs-subtitle">step2</h3>-->
+                                                <label for="formFile" class="form-label">活動名稱</label>
+                                                <p></p>
+                                                <input type="text" name="Act_name" placeholder="例如：閃電五連鞭" />
+                                                <!--                                                    <input type="text" name="lname" placeholder="線上or線下" />-->
+                                                <!--                                                    <h3 class="fs-subtitle">step3</h3>-->
+                                                <label for="formFile" class="actTime">活動日期時間</label>
+                                                <p></p>
+                                                <textarea class="form-control" id="actTime"
+                                                          rows="1"placeholder="2000-1-1 9:00"></textarea>
+                                                <!--                                                    <h3 class="fs-subtitle">step4</h3>-->
+                                                <label for="formFile" class="form-label">活動地點</label>
+                                                <p></p>
+                                                <textarea class="form-control" id="actLocation"
+                                                          rows="2"placeholder="ex:高雄市"></textarea>
+                                                <div class="mb-3">
+                                                    <h3 class="fs-subtitle">step5</h3>
+                                                    <input class="form-control" type="file" id="formFile" onchange="handleFileSelect(event)">
+                                                    <div id="actImage"></div>
+                                                </div>
+
+                                                <h3 class="fs-subtitle">step6</h3>
+                                                <p> <label for="actValue" class="form-label">
+                                                    活動內容</label>
+                                                    <textarea class="form-control" id="actValue"
+                                                              rows="4"></textarea>
+                                                <h3 class="fs-subtitle">step7</h3>
+                                                <label for="formFile" class="form-label">活動費用</label>
+                                                <p></p>
+                                                <input type="text" name="actPrice" id="actPrice" placeholder="填阿拉伯數字" />
+
+                                                <h3 class="fs-subtitle">step8</h3>
+                                                <label for="actQuota"
+                                                       class="form-label">活動人數Act-people-range</label>
+                                                <input type="range" class="form-range" min="0" max="300"
+                                                       id="actQuota">
+                                                <span id="rangeValue"></span>
+                                                <h3 class="fs-subtitle">step9</h3>
+                                                <label for="formFile" class="form-label">活動限制</label>
+                                                <p></p>
+                                                <input type="text" name="inviteTarget" id="inviteTarget" placeholder="0 : 不限制 ; 1 : 限定參加者好友 請填0跟1" />
+                                                <h3 class="fs-subtitle">step11</h3>
+                                                <label for="formFile" class="form-label">你的銀行賬戶</label>
+                                                <input type="text" name="organizerBankNum" id="organizerBankNum"  placeholder="填帳戶" />
+                                                <h3 class="fs-subtitle">step12</h3>
+                                                <label for="formFile" class="form-label">活動報名開始時間</label>
+                                                <p></p>
+                                                <input type="text" name="startTime" id="startTime" placeholder="2000-1-1 9:00" />
+                                                <h3 class="fs-subtitle">step13</h3>
+                                                <label for="formFile" class="form-label">活動報名結束時間</label>
+                                                <p></p>
+                                                <input type="text" name="endTime"id="endTime" placeholder="2000-1-1 9:00" />
+                                                <p>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝</p>
+
+                                                <p>確認完內容後</p>
+                                                <input type="button" name="next" class="next action-button"
+                                                       value="Summit" />
+
+
+                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                                                <script>
+                                                    document.querySelector("input[name='next']").addEventListener("click", function() {
+                                                        const actName = document.querySelector("input[name='Act_name']").value;
+                                                        const actTime = document.getElementById("actTime").value;
+                                                        const actLocation = document.getElementById("actLocation").value;
+                                                        const actQuota = document.getElementById("actQuota").value;
+                                                        const actPrice = document.getElementById("actPrice").value;
+                                                        const actValue = document.getElementById("actValue").value;
+                                                        const inviteTarget = document.getElementById("inviteTarget").value;
+                                                        const organizerBankNum = document.getElementById("organizerBankNum").value;
+                                                        const startTime = document.getElementById("startTime").value;
+                                                        const endTime = document.getElementById("endTime").value;
+
+                                                        const fileInput = document.getElementById("formFile");
+                                                        const file = fileInput.files[0];
+
+                                                        if (!file) {
+                                                            alert("Please select an image file.");
+                                                            return;
+                                                        }
+
+                                                        const reader = new FileReader();
+                                                        reader.onload = function(e) {
+                                                            const imageUrl = e.target.result;
+
+                                                            const act = {
+                                                                actName: actName,
+                                                                actTime: actTime,
+                                                                actLocation: actLocation,
+                                                                actQuota: actQuota,
+                                                                actPrice: actPrice,
+                                                                actValue: actValue,
+                                                                inviteTarget: inviteTarget,
+                                                                organizerBankNum: organizerBankNum,
+                                                                delFrom: 2,
+                                                                startTime: startTime,
+                                                                endTime: endTime,
+                                                                actImage: imageUrl // Include the image URL in the act object
+                                                            };
+
+                                                            axios.post("http://localhost:8080/gg4nbp/act", act)
+                                                                .then((response) => {
+                                                                    console.log(response.data);
+                                                                    // fetchActData(); // Refresh act data after submission
+                                                                })
+                                                                .catch((error) => {
+                                                                    console.log(error);
+                                                                });
+
+                                                            // Clear form inputs
+                                                            document.querySelector("input[name='Act_name']").value = "";
+                                                            document.getElementById("actTime").value = "";
+                                                            document.getElementById("actLocation").value = "";
+                                                            document.getElementById("actQuota").value = "";
+                                                            document.getElementById("actPrice").value = "";
+                                                            document.getElementById("actValue").value = "";
+                                                            document.getElementById("inviteTarget").value = "";
+                                                            document.getElementById("organizerBankNum").value = "";
+                                                            document.getElementById("startTime").value = "";
+                                                            document.getElementById("endTime").value = "";
+                                                            fileInput.value = null; // Clear the file input
+                                                        };
+
+                                                        reader.readAsDataURL(file);
+
+                                                    });
+                                                    function handleFileSelect(event) {
+                                                        const file = event.target.files[0];
+                                                        const reader = new FileReader();
+
+                                                        reader.onload = function(e) {
+                                                            const imageUrl = e.target.result;
+                                                            displayImage(imageUrl);
+                                                        };
+
+                                                        reader.readAsDataURL(file);
+                                                    }
+
+                                                    function displayImage(imageUrl) {
+                                                        const imageContainer = document.getElementById("actImage");
+                                                        const imgElement = document.createElement("img");
+                                                        imgElement.src = imageUrl;
+                                                        imageContainer.appendChild(imgElement);
+                                                    }
+                                                </script>
+
+                                            </fieldset>
+                            </article>
+                            <article>
+                                <!--                                    <div class="inner">-->
+                                <!--                                        <div class="info">-->
+                                <!--                                            <div class="compact"></div>-->
+                                <!--                                            &lt;!&ndash; 這邊是黑現貨虛線地方text &ndash;&gt;-->
+                                <!--                                            <div class="text">-->
+                                <!-- <div class="inner">
+                    <div class="info">
+                        <strong>December 23nd, 2020</strong>
+                        <small>活動契約說明</small>
+
+                    </div> -->
+                                <!-- <div class="text">
+                        <img src="/img/img_act/6.jpg" alt="" style="width: 200px; height: 150px;"> -->
+
+                            </article>
+                            <article>
+                                <div class="compact"></div>
+                                <div class="inner">
                                     <div class="info">
                                         <strong>December 23nd, 2020</strong>
                                         <small>活動契約說明</small>
-
-                                    </div> -->
-                                                <!-- <div class="text">
-                                        <img src="/img/img_act/6.jpg" alt="" style="width: 200px; height: 150px;"> -->
-
-                                                <fieldset>
-                                                    <!--這些的name裡面要填資料庫東西ec：act_id-->
-                                                    <h2 class="fs-title">主辦者會員</h2>
-                                                    <h3 class="fs-subtitle">step 1</h3>
-                                                    <label for="formFile" class="form-label">會員資料</label>
-                                                    <p></p>
-                                                    <input type="text" name="email" placeholder="Email" />
-                                                    <input type="password" name="pass" placeholder="Password" />
-                                                    <input type="password" name="cpass" placeholder="Confirm Password" />
-                                                    <h3 class="fs-subtitle">step2</h3>
-                                                    <label for="formFile" class="form-label">活動名稱</label>
-                                                    <p></p>
-                                                    <input type="text" name="Act_name" placeholder="例如：閃電五連鞭" />
-                                                    <input type="text" name="lname" placeholder="線上or線下" />
-                                                    <h3 class="fs-subtitle">step3</h3>
-                                                    <label for="formFile" class="form-label">活動日期時間</label>
-                                                    <p></p>
-                                                    <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                              rows="1"placeholder="2000-1-1 9:00"></textarea>
-                                                    <h3 class="fs-subtitle">step4</h3>
-                                                    <label for="formFile" class="form-label">活動地點</label>
-                                                    <p></p>
-                                                    <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                              rows="2"placeholder="ex:高雄市"></textarea>
-                                                    <div class="mb-3">
-                                                        <h3 class="fs-subtitle">step5</h3>
-                                                        <label for="formFile" class="form-label">傳送活動圖片</label>
-                                                        <input class="form-control" type="file" id="formFile">
-                                                        <div id="previewContainer"></div>
-                                                    </div>
-                                                    <h3 class="fs-subtitle">step6</h3>
-                                                    <p> <label for="exampleFormControlTextarea1" class="form-label">
-                                                            活動內容</label>
-                                                        <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                            rows="4"></textarea>
-                                                    <h3 class="fs-subtitle">step7</h3>
-                                                    <label for="formFile" class="form-label">活動費用</label>
-                                                    <p></p>
-                                                    <input type="text" name="Act_name" placeholder="填阿拉伯數字" />
-                                                    </p>
-                                                    <h3 class="fs-subtitle">step8</h3>
-                                                    <label for="customRange2"
-                                                        class="form-label">活動人數Act-people-range</label>
-                                                    <input type="range" class="form-range" min="0" max="300"
-                                                        id="customRange2">
-                                                    <span id="rangeValue"></span>
-                                                    <h3 class="fs-subtitle">step9</h3>
-                                                    <label for="formFile" class="form-label">活動限制</label>
-                                                    <p></p>
-                                                    <input type="text" name="Act_name" placeholder="0 : 不限制 ; 1 : 限定參加者好友 請填0跟1" />
-                                                    <h3 class="fs-subtitle">step11</h3>
-                                                    <label for="formFile" class="form-label">你的銀行賬戶</label>
-                                                    <input type="text" name="Act_name" placeholder="填帳戶" />
-                                                    <h3 class="fs-subtitle">step12</h3>
-                                                    <label for="formFile" class="form-label">活動報名開始時間</label>
-                                                    <p></p>
-                                                    <input type="text" name="Act_name" placeholder="2000-1-1 9:00" />
-                                                    <h3 class="fs-subtitle">step13</h3>
-                                                    <label for="formFile" class="form-label">活動報名結束時間</label>
-                                                    <p></p>
-                                                    <input type="text" name="Act_name" placeholder="2000-1-1 9:00" />
-                                                    <p>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝</p>
-
-                                                    <p>確認完內容後</p>
-                                                    <input type="button" name="next" class="next action-button"
-                                                        value="Summit" />
-
-                                                </fieldset>
-                                </article>
-                                <article>
-<!--                                    <div class="inner">-->
-<!--                                        <div class="info">-->
-<!--                                            <div class="compact"></div>-->
-<!--                                            &lt;!&ndash; 這邊是黑現貨虛線地方text &ndash;&gt;-->
-<!--                                            <div class="text">-->
-                                                <!-- <div class="inner">
-                                    <div class="info">
-                                        <strong>December 23nd, 2020</strong>
-                                        <small>活動契約說明</small>
-
-                                    </div> -->
-                                                <!-- <div class="text">
-                                        <img src="/img/img_act/6.jpg" alt="" style="width: 200px; height: 150px;"> -->
-
-                                </article>
-                                <article>
-                                    <div class="compact"></div>
-                                    <div class="inner">
-                                        <div class="info">
-                                            <strong>December 23nd, 2020</strong>
-                                            <small>活動契約說明</small>
-                                            <p>甲方和乙方在此同意以下條款和條件：</p>
-                                            <p>1.參與者責任：
-                                                a. 參與者應確保提供的個人資訊準確無誤。
-                                                b. 參與者應遵守主辦方提供的活動規則和指示。
-                                                c. 參與者需自行負責保管個人財物，主辦方不對損失或損壞負責。</p>
-                                            <p>2.主辦方責任：
-                                                a. 主辦方將盡合理努力確保活動的順利進行。
-                                                b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                                c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                            <p>3.主辦方責任：
-                                                a. 主辦方將盡合理努力確保活動的順利進行。
-                                                b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                                c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                            <p>3.主辦方責任：
-                                                a. 主辦方將盡合理努力確保活動的順利進行。
-                                                b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                                c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                            <p>3.主辦方責任：
-                                                a. 主辦方將盡合理努力確保活動的順利進行。
-                                                b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                                c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                            <p>3.主辦方責任：
-                                                a. 主辦方將盡合理努力確保活動的順利進行。
-                                                b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                                c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                        <p>甲方和乙方在此同意以下條款和條件：</p>
+                                        <p>1.參與者責任：
+                                            a. 參與者應確保提供的個人資訊準確無誤。
+                                            b. 參與者應遵守主辦方提供的活動規則和指示。
+                                            c. 參與者需自行負責保管個人財物，主辦方不對損失或損壞負責。</p>
+                                        <p>2.主辦方責任：
+                                            a. 主辦方將盡合理努力確保活動的順利進行。
+                                            b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                            c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                        <p>3.主辦方責任：
+                                            a. 主辦方將盡合理努力確保活動的順利進行。
+                                            b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                            c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                        <p>3.主辦方責任：
+                                            a. 主辦方將盡合理努力確保活動的順利進行。
+                                            b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                            c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                        <p>3.主辦方責任：
+                                            a. 主辦方將盡合理努力確保活動的順利進行。
+                                            b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                            c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                        <p>3.主辦方責任：
+                                            a. 主辦方將盡合理努力確保活動的順利進行。
+                                            b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                            c. 主辦方將提供適當的急救措施和安全措施。</p>
 
 
-                                            <!-- <article>
+                                        <!-- <article>
 
-                                <fieldset>
-                                    <h2 class="fs-title">主辦者姓名</h2>
-                                    <h3 class="fs-subtitle">step2</h3>
-                                    <input type="text" name="姓氏" placeholder="姓氏" />
-                                    <input type="text" name="名字" placeholder="名字" />
-                                    <input type="text" name="電話" placeholder="電話" />
+                            <fieldset>
+                                <h2 class="fs-title">主辦者姓名</h2>
+                                <h3 class="fs-subtitle">step2</h3>
+                                <input type="text" name="姓氏" placeholder="姓氏" />
+                                <input type="text" name="名字" placeholder="名字" />
+                                <input type="text" name="電話" placeholder="電話" />
 
-                                    <input type="button" name="next" class="next action-button" value="Next" />
-                                </fieldset> -->
+                                <input type="button" name="next" class="next action-button" value="Next" />
+                            </fieldset> -->
 
-                                            <!-- <article>
-                                <fieldset>
-                                    <h2 class="fs-title">活動名稱</h2>
-                                    <h3 class="fs-subtitle">step3</h3>
-                                    <input type="text" name="Act_name" placeholder="例如：閃電五連鞭" />
-                                    <input type="text" name="lname" placeholder="線上or線下" />
+                                        <!-- <article>
+                            <fieldset>
+                                <h2 class="fs-title">活動名稱</h2>
+                                <h3 class="fs-subtitle">step3</h3>
+                                <input type="text" name="Act_name" placeholder="例如：閃電五連鞭" />
+                                <input type="text" name="lname" placeholder="線上or線下" />
 
-                                    <p> <label for="exampleFormControlTextarea1" class="form-label">
-                                            活動簡介</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1"
-                                            rows="3"></textarea>
-                                    </p>
-                                    <label for="customRange2" class="form-label">活動人數Act-people-range</label>
-                                    <input type="range" class="form-range" min="0" max="50" id="customRange2">
-                                    <span id="rangeValue"></span>
-                                    <input type="submit" name="submit" class="submit action-button"
-                                        value="Submit" />
-                                </fieldset>
-                            </article> -->
-                                            </form>
+                                <p> <label for="exampleFormControlTextarea1" class="form-label">
+                                        活動簡介</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1"
+                                        rows="3"></textarea>
+                                </p>
+                                <label for="customRange2" class="form-label">活動人數Act-people-range</label>
+                                <input type="range" class="form-range" min="0" max="50" id="customRange2">
+                                <span id="rangeValue"></span>
+                                <input type="submit" name="submit" class="submit action-button"
+                                    value="Submit" />
+                            </fieldset>
+                        </article> -->
+                                        </form>
 
-                                            <!-- <script src="act_set.js"></script> -->
-                                            <script src="../jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
-                                            <script src="../jquery/jquery.easing.min.js"
+                                        <!-- <script src="act_set.js"></script> -->
+                                        <script src="../jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+                                        <script src="../jquery/jquery.easing.min.js"
                                                 type="text/javascript"></script>
-                                            <script src="../jquery/jQuery.time.js" type="text/javascript"></script>
+                                        <script src="../jquery/jQuery.time.js" type="text/javascript"></script>
 
-
-                                        </div>
 
                                     </div>
-                            </div>
 
-
-                            <div class="time">11:30</div>
-                            <svg class="battery" viewBox="0 0 25 12">
-                                <rect opacity="0.35" x="0.5" y="0.833374" width="21" height="10.3333" rx="2.16667"
-                                    fill="none" stroke="currentColor" />
-                                <path opacity="0.4"
-                                    d="M23 4V8C23.8047 7.66122 24.328 6.87313 24.328 6C24.328 5.12687 23.8047 4.33878 23 4"
-                                    fill="currentColor" />
-                                <rect x="2" y="2.33337" width="18" height="7.33333" rx="1.33333" fill="currentColor" />
-                            </svg>
-                            <svg class="wifi" viewBox="0 0 16 12">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M8.33045 2.60802C10.5463 2.60811 12.6775 3.45955 14.2835 4.98635C14.4044 5.10422 14.5977 5.10274 14.7168 4.98302L15.8728 3.81635C15.9331 3.75563 15.9667 3.67338 15.9662 3.58779C15.9657 3.50221 15.9311 3.42036 15.8701 3.36035C11.655 -0.679198 5.00522 -0.679198 0.79012 3.36035C0.729062 3.42032 0.694418 3.50215 0.693855 3.58773C0.693292 3.67331 0.726856 3.75558 0.78712 3.81635L1.94345 4.98302C2.06248 5.10292 2.25593 5.10441 2.37679 4.98635C3.98294 3.45945 6.11434 2.60801 8.33045 2.60802ZM8.33045 6.40368C9.54794 6.40361 10.722 6.85614 11.6245 7.67335C11.7465 7.78933 11.9388 7.78682 12.0578 7.66768L13.2125 6.50102C13.2733 6.43982 13.307 6.3568 13.3061 6.27054C13.3052 6.18427 13.2698 6.10196 13.2078 6.04202C10.4596 3.48563 6.20365 3.48563 3.45545 6.04202C3.39338 6.10196 3.35796 6.18432 3.35714 6.27061C3.35633 6.3569 3.39019 6.43991 3.45112 6.50102L4.60545 7.66768C4.72444 7.78682 4.91672 7.78933 5.03879 7.67335C5.94066 6.85668 7.11377 6.40419 8.33045 6.40368ZM10.6434 8.9575C10.6452 9.04401 10.6112 9.12741 10.5495 9.18802L8.55212 11.2037C8.49357 11.2629 8.41374 11.2963 8.33045 11.2963C8.24716 11.2963 8.16734 11.2629 8.10879 11.2037L6.11112 9.18802C6.04941 9.12736 6.01546 9.04394 6.01729 8.95743C6.01912 8.87092 6.05657 8.789 6.12079 8.73102C7.39636 7.65213 9.26455 7.65213 10.5401 8.73102C10.6043 8.78905 10.6417 8.87099 10.6434 8.9575Z"
-                                    fill="currentColor" />
-                            </svg>
-                            <svg class="cellular" viewBox="0 0 18 12">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M16.6665 0.666626H15.6665C15.1142 0.666626 14.6665 1.11434 14.6665 1.66663V10.3333C14.6665 10.8856 15.1142 11.3333 15.6665 11.3333H16.6665C17.2188 11.3333 17.6665 10.8856 17.6665 10.3333V1.66663C17.6665 1.11434 17.2188 0.666626 16.6665 0.666626ZM10.9998 2.99996H11.9998C12.5521 2.99996 12.9998 3.44767 12.9998 3.99996V10.3333C12.9998 10.8856 12.5521 11.3333 11.9998 11.3333H10.9998C10.4476 11.3333 9.99984 10.8856 9.99984 10.3333V3.99996C9.99984 3.44767 10.4476 2.99996 10.9998 2.99996ZM7.33317 5.33329H6.33317C5.78089 5.33329 5.33317 5.78101 5.33317 6.33329V10.3333C5.33317 10.8856 5.78089 11.3333 6.33317 11.3333H7.33317C7.88546 11.3333 8.33317 10.8856 8.33317 10.3333V6.33329C8.33317 5.78101 7.88546 5.33329 7.33317 5.33329ZM2.6665 7.33329H1.6665C1.11422 7.33329 0.666504 7.78101 0.666504 8.33329V10.3333C0.666504 10.8856 1.11422 11.3333 1.6665 11.3333H2.6665C3.21879 11.3333 3.6665 10.8856 3.6665 10.3333V8.33329C3.6665 7.78101 3.21879 7.33329 2.6665 7.33329Z"
-                                    fill="currentColor" />
-                            </svg>
+                                </div>
                         </div>
 
-                        <!-- dribbble - twitter -->
-                        <a class="dribbble" href="https://dribbble.com/ai" target="_blank"><img
-                                src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg"
-                                alt=""></a>
-                        <!-- <a class="twitter" target="_top" href="https://twitter.com/aaroniker_me"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
-                                <path
-                                    d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z">
-                                </path>
-                            </svg></a> -->
-                        <script src="./js/act_set.js"></script>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                var range = document.getElementById("customRange2");
-                                var rangeValue = document.getElementById("rangeValue");
 
-                                // 在滑动条值改变时更新显示的数值
-                                range.addEventListener("input", function () {
-                                    rangeValue.textContent = range.value;
-                                });
+                        <div class="time">11:30</div>
+                        <svg class="battery" viewBox="0 0 25 12">
+                            <rect opacity="0.35" x="0.5" y="0.833374" width="21" height="10.3333" rx="2.16667"
+                                  fill="none" stroke="currentColor" />
+                            <path opacity="0.4"
+                                  d="M23 4V8C23.8047 7.66122 24.328 6.87313 24.328 6C24.328 5.12687 23.8047 4.33878 23 4"
+                                  fill="currentColor" />
+                            <rect x="2" y="2.33337" width="18" height="7.33333" rx="1.33333" fill="currentColor" />
+                        </svg>
+                        <svg class="wifi" viewBox="0 0 16 12">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M8.33045 2.60802C10.5463 2.60811 12.6775 3.45955 14.2835 4.98635C14.4044 5.10422 14.5977 5.10274 14.7168 4.98302L15.8728 3.81635C15.9331 3.75563 15.9667 3.67338 15.9662 3.58779C15.9657 3.50221 15.9311 3.42036 15.8701 3.36035C11.655 -0.679198 5.00522 -0.679198 0.79012 3.36035C0.729062 3.42032 0.694418 3.50215 0.693855 3.58773C0.693292 3.67331 0.726856 3.75558 0.78712 3.81635L1.94345 4.98302C2.06248 5.10292 2.25593 5.10441 2.37679 4.98635C3.98294 3.45945 6.11434 2.60801 8.33045 2.60802ZM8.33045 6.40368C9.54794 6.40361 10.722 6.85614 11.6245 7.67335C11.7465 7.78933 11.9388 7.78682 12.0578 7.66768L13.2125 6.50102C13.2733 6.43982 13.307 6.3568 13.3061 6.27054C13.3052 6.18427 13.2698 6.10196 13.2078 6.04202C10.4596 3.48563 6.20365 3.48563 3.45545 6.04202C3.39338 6.10196 3.35796 6.18432 3.35714 6.27061C3.35633 6.3569 3.39019 6.43991 3.45112 6.50102L4.60545 7.66768C4.72444 7.78682 4.91672 7.78933 5.03879 7.67335C5.94066 6.85668 7.11377 6.40419 8.33045 6.40368ZM10.6434 8.9575C10.6452 9.04401 10.6112 9.12741 10.5495 9.18802L8.55212 11.2037C8.49357 11.2629 8.41374 11.2963 8.33045 11.2963C8.24716 11.2963 8.16734 11.2629 8.10879 11.2037L6.11112 9.18802C6.04941 9.12736 6.01546 9.04394 6.01729 8.95743C6.01912 8.87092 6.05657 8.789 6.12079 8.73102C7.39636 7.65213 9.26455 7.65213 10.5401 8.73102C10.6043 8.78905 10.6417 8.87099 10.6434 8.9575Z"
+                                  fill="currentColor" />
+                        </svg>
+                        <svg class="cellular" viewBox="0 0 18 12">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M16.6665 0.666626H15.6665C15.1142 0.666626 14.6665 1.11434 14.6665 1.66663V10.3333C14.6665 10.8856 15.1142 11.3333 15.6665 11.3333H16.6665C17.2188 11.3333 17.6665 10.8856 17.6665 10.3333V1.66663C17.6665 1.11434 17.2188 0.666626 16.6665 0.666626ZM10.9998 2.99996H11.9998C12.5521 2.99996 12.9998 3.44767 12.9998 3.99996V10.3333C12.9998 10.8856 12.5521 11.3333 11.9998 11.3333H10.9998C10.4476 11.3333 9.99984 10.8856 9.99984 10.3333V3.99996C9.99984 3.44767 10.4476 2.99996 10.9998 2.99996ZM7.33317 5.33329H6.33317C5.78089 5.33329 5.33317 5.78101 5.33317 6.33329V10.3333C5.33317 10.8856 5.78089 11.3333 6.33317 11.3333H7.33317C7.88546 11.3333 8.33317 10.8856 8.33317 10.3333V6.33329C8.33317 5.78101 7.88546 5.33329 7.33317 5.33329ZM2.6665 7.33329H1.6665C1.11422 7.33329 0.666504 7.78101 0.666504 8.33329V10.3333C0.666504 10.8856 1.11422 11.3333 1.6665 11.3333H2.6665C3.21879 11.3333 3.6665 10.8856 3.6665 10.3333V8.33329C3.6665 7.78101 3.21879 7.33329 2.6665 7.33329Z"
+                                  fill="currentColor" />
+                        </svg>
+                    </div>
+
+                    <!-- dribbble - twitter -->
+                    <a class="dribbble" href="https://dribbble.com/ai" target="_blank"><img
+                            src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg"
+                            alt=""></a>
+                    <!-- <a class="twitter" target="_top" href="https://twitter.com/aaroniker_me"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
+                            <path
+                                d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z">
+                            </path>
+                        </svg></a> -->
+                    <script src="./js/act_set.js"></script>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var range = document.getElementById("actQuota");
+                            var rangeValue = document.getElementById("rangeValue");
+
+                            // 在滑动条值改变时更新显示的数值
+                            range.addEventListener("input", function () {
+                                rangeValue.textContent = range.value;
                             });
-                        </script>
-                        <!--照片的css-->
-                        <style>
-                            .preview-image {
-                                width: 400px;
-                                height: auto;
-                            }
-                        </style>
-                        <!--控制預覽照片的圖片-->
-                        <script>
-                            const fileInput = document.getElementById("formFile");
-                            const previewContainer = document.getElementById("previewContainer");
+                        });
+                    </script>
+                    <!--照片的css-->
+                    <style>
+                        .preview-image {
+                            width: 400px;
+                            height: auto;
+                        }
+                    </style>
+                    <!--控制預覽照片的圖片-->
+                    <script>
+                        const fileInput = document.getElementById("formFile");
+                        const actImage = document.getElementById("actImage");
 
-                            fileInput.addEventListener("change", function (event) {
-                                const file = event.target.files[0];
-                                const reader = new FileReader();
+                        fileInput.addEventListener("change", function (event) {
+                            const file = event.target.files[0];
+                            const reader = new FileReader();
 
-                                reader.onload = function (e) {
-                                    const img = document.createElement("img");
-                                    img.src = e.target.result;
-                                    img.classList.add("preview-image");
-                                    previewContainer.innerHTML = "";
-                                    previewContainer.appendChild(img);
-                                };
+                            reader.onload = function (e) {
+                                const img = document.createElement("img");
+                                img.src = e.target.result;
+                                img.classList.add("preview-image");
+                                actImage.innerHTML = "";
+                                actImage.appendChild(img);
+                            };
 
-                                reader.readAsDataURL(file);
-                            });
-                        </script>
+                            reader.readAsDataURL(file);
+                        });
+                    </script>
 
 </body>
 
