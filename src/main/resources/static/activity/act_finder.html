@@ -367,7 +367,7 @@
 <div class="picture-item__inner" onclick="redirectToLink('${act.actLink}')">
 <div class="aspect aspect--25x9">
     <div class="aspect__inner">
-        <img src="${act.actImage}" alt="${act.actTime}" />
+        <img src="${URLDecoder.decode(act.actImage)}" alt="${act.actTime}" />
     </div>
 </div>
 <div class="picture-item__details">

@@ -97,8 +97,41 @@
 			<artifactId>protobuf-java</artifactId>
 			<version>3.23.3</version>
 		</dependency>
+		<!-- 移除嵌入式tomcat插件 -->
 
-	</dependencies>
+
+	<!--        添加tomcat支持-->
+
+
+	<!--    WebSocket   -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-websocket</artifactId>
+	</dependency>
+
+	<!--    FastJson    -->
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>fastjson</artifactId>
+		<version>1.2.28</version>
+	</dependency>
+
+	<!--    FastJson依赖    -->
+	<dependency>
+		<groupId>commons-beanutils</groupId>
+		<artifactId>commons-beanutils</artifactId>
+		<version>1.9.3</version>
+	</dependency>
+
+	<!-- Redis Jedis 客戶端 -->
+	<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+		<version>3.7.0</version>
+	</dependency>
+
+
+</dependencies>
 
 	<build>
 		<plugins>

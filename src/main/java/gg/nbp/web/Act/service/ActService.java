@@ -4,6 +4,7 @@ import gg.nbp.web.Act.dao.ActMessageRepository;
 import gg.nbp.web.Act.dao.ActRepository;
 import gg.nbp.web.Act.model.Act;
 import gg.nbp.web.Act.model.ActMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,8 @@ public class ActService {
     private ActRepository actRepository;
     @Autowired
     private ActMessageRepository actMessageRepository;
+    @Autowired
+    private HttpServletRequest request;
     // 查詢全部
     public List<Act> getAllActs() {
 
@@ -68,15 +71,9 @@ public class ActService {
         System.out.println(imgBase64);
 
         byte[] imageBytes = Base64.getDecoder().decode(imgBase64);
-        String fileName = null;  // 這裡我們替換掉所有非字母和數字的字符
-        try {
-            fileName = URLEncoder.encode(act.getActName(), "UTF-8")+ ".jpg";
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        String fileName = act.getActName() + ".jpg"; // 文件名直接使用中文，无需URL编码
         String pathName = "/Users/wujoe/Documents/five-project/src/main/resources/static/img/imgact";
-        String pathName2= "../imgact/" + fileName;
-        // 確保路徑存在
+        // 确保路径存在
         File directory = new File(pathName);
         if (! directory.exists()){
             directory.mkdir();
@@ -88,10 +85,21 @@ public class ActService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        // URL编码用于在Web服务器上访问这个图片
+        String encodedFileName;
+        try {
+            encodedFileName = URLEncoder.encode(fileName, "UTF-8").replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        String pathName2 = request.getContextPath() +"/img/imgact/" + encodedFileName;
+
         act.setActImage(pathName2);
 
         return actRepository.save(act);
     }
+
 
     public byte[] findActImage(int id) {
         Act act = actRepository.findById(id).orElse(null);
