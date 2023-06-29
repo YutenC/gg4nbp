@@ -251,6 +251,7 @@
         const deviceType = checkDeviceType();
         const operatingSystem = checkOperatingSystem();
         const login_device = deviceType + "(" + operatingSystem + ")";
+        let login_city;
 
 
         // console.log(login_city);                // 定位位置
@@ -260,10 +261,15 @@
         // console.log(navigator.platform);        // 作業系統
 
         $("button#submit").on("click", function () {
-            let data = sessionStorage.getItem("data");
-            const jsonData = JSON.parse(data);
-            const cityData = jsonData.townVillageItem;
-            login_city = cityData.ctyName + cityData.townName;
+            let cityData = sessionStorage.getItem("cityData");
+            if(cityData !== null){
+                const jsonData = JSON.parse(cityData);
+                const cityPosition = jsonData.townVillageItem;
+                login_city = cityPosition.ctyName + cityPosition.townName;
+                if(!login_city){
+                    login_city = "未提供定位位置";
+                }
+            }
 
             $.ajax({
                 url: "memberLoginServlet",

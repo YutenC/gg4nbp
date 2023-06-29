@@ -39,6 +39,7 @@ public class MemberLoginServlet extends HttpServlet {
         String loginDevice = request.getParameter("login_device");
         String loginCity = request.getParameter("login_city");
         String ip = request.getParameter("host_name");
+        System.out.println(loginCity);
 
         if ((member.getAccount().equals("")) || (password.equals(""))) {
             member = new Member();
@@ -57,7 +58,7 @@ public class MemberLoginServlet extends HttpServlet {
         
         boolean isSuspending= false;
         
-        if (member.getMember_ver_state()== 2) {
+        if (member.getMember_ver_state() == 2) {
         	LocalDate currentDate = LocalDate.now();
             LocalDate ban_deadline = member.getSuspend_deadline().toLocalDate();
         	if (currentDate.isAfter(ban_deadline)) {
@@ -67,7 +68,7 @@ public class MemberLoginServlet extends HttpServlet {
             }else {
             	isSuspending= true;
             }
-        }else if (member.getMember_ver_state()== 3) {
+        }else if (member.getMember_ver_state() == 3) {
         	isSuspending= true;
         }
         
@@ -81,7 +82,9 @@ public class MemberLoginServlet extends HttpServlet {
         
         
         if (member.isSuccessful()) {
-
+            if(loginCity == null){
+                loginCity = "使用者未開啟定位";
+            }
             loginRecord.setMember_id(member.getMember_id());
             loginRecord.setLogin_device(loginDevice);
             loginRecord.setLogin_city(loginCity);
