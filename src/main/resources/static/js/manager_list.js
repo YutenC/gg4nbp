@@ -182,6 +182,24 @@ $("a.manager_search_button").on("click", () => {
 $("a.manager_default_list_button").on("click", () => {
     event.preventDefault();
     filtered = false;
+
+    const radios = document.getElementsByName('status');
+    radios.forEach(radio => {
+        if (radio.value === "all") {
+            radio.checked = true;
+        } else {
+            radio.checked = false;
+        }
+    });
+
+    const checkboxes = document.querySelectorAll('.power-check .form-check-input');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = true;
+    });
+
+    $("input.manager_search_content").val("");
+
     showList();
 })
 

@@ -90,6 +90,8 @@ $("a.member_search_button").on("click", () => {
             const member_ver_state = member.member_ver_state;
             return selectedVerStates.includes(member_ver_state);
         });
+    } else {
+        filtered_array = member_array;
     }
 
     // 文字框篩選
@@ -100,11 +102,6 @@ $("a.member_search_button").on("click", () => {
         return member[searchType].toString().includes(searchContent);
     });
 
-    console.log(searchType);
-    console.log(searchContent);
-    console.log(member_array);
-    console.log(filtered_array);
-
     showList();
 
 })
@@ -112,6 +109,16 @@ $("a.member_search_button").on("click", () => {
 $("a.member_default_list_button").on("click", () => {
     event.preventDefault();
     filtered = false;
+
+    const checkboxes = document.querySelectorAll('.state-check .form-check-input');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = true;
+    });
+
+    $("input.member_search_content").val("");
+
+
     showList();
 })
 
