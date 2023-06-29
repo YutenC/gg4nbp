@@ -30,6 +30,15 @@ public class ActService {
 
     // 查詢全部
     public List<Act> getAllActs() {
+
+        List<Act> acts = actRepository.findAll();
+
+
+
+        return acts;
+    }
+
+    public List<Act> getAllActs(Integer memId) {
         List<ActMessage> actMessages = actMessageRepository.findByMemId(0L);
         List<Act> acts = actRepository.findAll();
 
@@ -67,7 +76,7 @@ public class ActService {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        String pathName = "/Users/wujoe/Documents/act_spring/src/main/resources/static/imgact";
+        String pathName = "/Users/wujoe/Documents/five-project/src/main/resources/static/img/imgact";
         String pathName2= "../imgact/" + fileName;
         // 確保路徑存在
         File directory = new File(pathName);

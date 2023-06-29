@@ -383,7 +383,7 @@
                                                                 actImage: imageUrl // Include the image URL in the act object
                                                             };
 
-                                                            axios.post("http://localhost:8000/gg4nbp/act", act)
+                                                            axios.post("http://localhost:8080/gg4nbp/act", act)
                                                                 .then((response) => {
                                                                     console.log(response.data);
                                                                     // fetchActData(); // Refresh act data after submission
