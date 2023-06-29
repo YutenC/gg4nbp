@@ -156,10 +156,6 @@ $("a.manager_search_button").on("click", () => {
             selectedPowerIds.push(4);
         }
 
-        if (reportAdminCheckbox.checked) {
-            selectedPowerIds.push(5);
-        }
-
         filtered_array = filtered_array.filter(manager => {
             return selectedPowerIds.every(powerId => manager.power_id.includes(powerId));
         });
@@ -333,7 +329,7 @@ function showList() {
             }
             pfeCount += 1
 
-            if (pfeCount === 3) {
+            if (pfeCount === 2) {
                 powerStateHtml += `<br style="padding-top: 3px; padding-buttom: 3px;">`
             }
         });
