@@ -2,7 +2,7 @@
 const href = window.location.href;
 const host = href.substring(0, href.indexOf('/', 8));
 const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
-const projectFolder = '/Five_NBP.gg';
+const projectFolder = '/gg4nbp';
 
 const orderContent = Vue.createApp({
     data() {
@@ -65,17 +65,17 @@ const orderContent = Vue.createApp({
     },
     created() {
         let orderId = sessionStorage.getItem('orderId');
-        // let orderId = location.hash.substring(1, location.hash.length);
-        axios.get('/Five_NBP.gg/OrderMaster?getOne=' + orderId)
+        axios.get(projectFolder + '/OrderMaster?getOne=' + orderId)
             .then(res => {
                 this.order = res.data;
                 this.updateOrder.orderStatus = this.order.orderStatus;
                 this.updateOrder.deliverNumber = this.order.deliverNumber;
                 this.updateOrder.deliverState = this.order.deliverState;
+                this.updateOrder.payStatus = this.order.payStatus;
             })
             .catch(err => console.log(err));
 
-        axios.get('/Five_NBP.gg/OrderDetail?getByOrderId=' + orderId)
+        axios.get(projectFolder + '/OrderDetail?getByOrderId=' + orderId)
             .then(res => this.orderDetails = res.data)
             .catch(err => console.log(err));
     }

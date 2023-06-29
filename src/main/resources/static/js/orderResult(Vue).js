@@ -1,25 +1,7 @@
-// 視窗變化時調整增添視窗內的文字
-$(window).resize(function () {
-    let windowSize = $(this).width();
-    if (windowSize <= 830) {
-        $('.addDetail table.byMyPick th:nth-child(3)').text('追蹤日期');
-        $('.addDetail table.byMyPick th:last-child').text('加入購物');
-        $('.addDetail table.byPurchaseLog th:nth-child(3)').text('購買日期');
-        $('.addDetail table.byPurchaseLog th:last-child').text('加入購物');
-        $('.addDetail table button').text('加入');
-    } else {
-        $('.addDetail table.byMyPick th:nth-child(3)').text('加入追蹤日期');
-        $('.addDetail table.byMyPick th:last-child').text('加入本次購物');
-        $('.addDetail table.byPurchaseLog th:nth-child(3)').text('近期購買日期');
-        $('.addDetail table.byPurchaseLog th:last-child').text('加入購物');
-        $('.addDetail table button').text('加入購物');
-    }
-});
-
 const href = window.location.href;
 const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
-const projectFolder = '/Five_NBP.gg';
+const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 11);
+const projectFolder = '/gg4nbp';
 
 // 購物明細
 const shoppingContent = Vue.createApp({
@@ -36,7 +18,7 @@ const shoppingContent = Vue.createApp({
             address: {},
             // 付款方式
             payment: '',
-            // 信用卡資訊
+            getBonus: 0,
         }
     },
     methods: {
@@ -64,6 +46,7 @@ const shoppingContent = Vue.createApp({
         },
     },
     created() {
+        // 取得
         this.odProducts = JSON.parse(sessionStorage.getItem('odProducts'));
         this.checkCoupon = JSON.parse(sessionStorage.getItem('checkCoupon'));
         this.usedBonus = Number.parseInt(sessionStorage.getItem('usedBonus'));
@@ -71,6 +54,17 @@ const shoppingContent = Vue.createApp({
         this.payment = sessionStorage.getItem('payment');
         this.deliver = sessionStorage.getItem('deliver');
         this.address = JSON.parse(sessionStorage.getItem('address'));
+        this.getBonus = sessionStorage.getItem("getBonus");
+
+        // 清空
+        sessionStorage.removeItem('odProducts');
+        sessionStorage.removeItem('checkCoupon');
+        sessionStorage.removeItem('usedBonus');
+        sessionStorage.removeItem('nowBonus');
+        sessionStorage.removeItem('payment');
+        sessionStorage.removeItem('deliver');
+        sessionStorage.removeItem('address');
+        sessionStorage.removeItem("getBonus");
     }
 }).mount('.shoppingContent');
 
@@ -78,11 +72,12 @@ const shoppingContent = Vue.createApp({
 const promoProduct = Vue.createApp({
     data() {
         return {
-            promoProduct: []
+            promoProduct: [],
+            amount: 5
         }
     },
     created() {
-        axios.get(projectFolder + '/Product?recomendFromAll=5')
+        axios.get(projectFolder + '/shopDispatcher/getProdcutsBuyTimes?amount=' + this.amount + '&type=""')
             .then(res => this.promoProduct = res.data)
             .catch(err => console.log(err))
     }

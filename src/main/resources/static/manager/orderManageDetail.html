@@ -24,7 +24,7 @@
         }
 
         div.underInfo {
-            text-align: right;
+            /* text-align: right; */
             border-bottom: 1px solid #ccc;
         }
 
@@ -33,7 +33,7 @@
         }
 
         div.underInfo span {
-            margin: 3px;
+            margin: 10px;
             margin-right: 0;
         }
 
@@ -45,8 +45,14 @@
             margin: 10px;
         }
 
+        .card-header button {
+            border: 0;
+            border-radius: 5px;
+        }
+
         .deliver input[type="text"] {
             width: 150px;
+            margin-right: 10px;
         }
 
         .deliver span {
@@ -152,11 +158,13 @@
                             </div>
                             <div class="underInfo">
                                 <div class="deliver">
-                                    <span>配送方式：<span>{{ showPickType[order.pickType] }}</span></span>
-                                    <span>運費：$<span>{{ order.deliverFee }}</span></span>
-                                    <label for="deliverNumber">填入物流編號：</label>
-                                    <input type="text" id="deliverNumber" v-model="updateOrder.deliverNumber">
-                                    <span>出貨狀態：{{ showDeliverState[updateOrder.deliverState] }}</span>
+                                    <td>配送方式：<span>{{ showPickType[order.pickType] }}</span></td>
+                                    <td>運費：$<span>{{ order.deliverFee }}</span></td>
+                                    <td><label for="deliverNumber">填入物流編號：</label></td>
+                                    <td>
+                                        <input type="text" id="deliverNumber" v-model="updateOrder.deliverNumber">
+                                    </td>
+                                    <span>出貨狀態：</span>
                                     <select name="deliverState" id="" v-model="updateOrder.deliverState">
                                         <option value="0">未出貨</option>
                                         <option value="1">已出貨</option>
@@ -165,9 +173,15 @@
                                 </div>
                                 <div class="payment">
                                     <span>付款方式：<span>{{ showCommitType[order.commitType] }}</span></span>
+                                    <span>付款狀態：</span>
+                                    <select name="payStatus" id="" v-model="updateOrder.payStatus">
+                                        <option value="1">待付款</option>
+                                        <option value="2">已付款</option>
+                                        <option value="3">貨到付款</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    訂單總價：$<strong>{{ order.totalPrice }}</strong>
+                                    <span>訂單總價：$<strong>{{ order.totalPrice }}</strong></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -179,7 +193,7 @@
                                 </div>
                                 <div>
                                     <button @click="confirm()">確認修改訂單</button>
-                                    <button @click="cancel()">取消修改</button>
+                                    <button @click="cancel()">重置輸入項目</button>
                                 </div>
                             </div>
                         </div>

@@ -12,4 +12,6 @@ public interface OrderDetailService extends CoreService{
 	List<TransOrderProduct> getOrderDetailByOrderId(Integer orderId);
 	
 	Collection<ResOrderDetail> getMemberAllOrderDetail(Integer memberId);
+	
+	boolean commentProduct(Integer orderId, Integer productId, Integer starNum, String commentContent);
 }

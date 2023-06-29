@@ -13,6 +13,7 @@ import gg.nbp.web.shop.shoporder.dao.OrderDetailDao;
 import gg.nbp.web.shop.shoporder.dao.OrderMasterDao;
 import gg.nbp.web.shop.shoporder.entity.OrderDetail;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
+import gg.nbp.web.shop.shoporder.entity.PKOrderDeatail;
 import gg.nbp.web.shop.shoporder.service.OrderDetailService;
 import gg.nbp.web.shop.shoporder.util.ResOrderDetail;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
@@ -49,7 +50,15 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 				trPd.setPrice(pd.getPrice());
 				trPd.setProductId(od.getPkOrderDeatail().getProductID());
 				trPd.setProductName(pd.getProductName());
-				if (pd.getProductImages().isEmpty()) {
+				Integer comment = od.getComment();
+				if (comment != null) {
+					trPd.setComment(comment);
+				}
+				String commentContnet = od.getCommentContent();
+				if (commentContnet != null) {
+					trPd.setCommentContent(od.getCommentContent());
+				}
+				if (pService.getProductIndexImg(pd.getId()) == null) {
 					trPd.setProductImgUrl(null);
 				} else {
 					trPd.setProductImgUrl(pService.getProductIndexImg(pd.getId()).getImage());
@@ -61,6 +70,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			
 			return odProdcuts;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -95,7 +105,27 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			return null;
 		}
 	}
-	
-	
 
+	@Transactional
+	@Override
+	public boolean commentProduct(Integer orderId, Integer productId, Integer starNum, String commentContent) {
+		try {
+			PKOrderDeatail pkod = new PKOrderDeatail(productId, orderId);
+			OrderDetail od = odDao.selectByPKOrderDetail(pkod);
+			od.setComment(starNum);
+			od.setCommentContent(commentContent);
+			odDao.update(od);
+			
+			Product pd = pdDao.selectById(productId);
+			pd.setRate(pd.getRate() + starNum);
+			pd.setRevieweCount(pd.getRevieweCount()+1); // 每次收到評價就增加一次評分人數
+			pdDao.update(pd);
+			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }

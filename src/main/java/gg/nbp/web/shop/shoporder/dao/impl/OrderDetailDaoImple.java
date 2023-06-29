@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.shop.shoporder.dao.OrderDetailDao;
 import gg.nbp.web.shop.shoporder.entity.OrderDetail;
+import gg.nbp.web.shop.shoporder.entity.PKOrderDeatail;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -36,6 +37,11 @@ public class OrderDetailDaoImple implements OrderDetailDao {
 		session.update(orderDetail);
 		return 1;
 	}
+	
+	@Override
+	public OrderDetail selectByPKOrderDetail(PKOrderDeatail pkod) {
+		return session.get(OrderDetail.class, pkod);
+	}
 
 	@Override
 	public OrderDetail selectById(Integer id) {
@@ -47,16 +53,6 @@ public class OrderDetailDaoImple implements OrderDetailDao {
 		return session
 				.createQuery("FROM OrderDetail ORDER BY orderId", OrderDetail.class)
 				.getResultList();
-	}
-
-	@Override
-	public OrderDetail selectByCompositePK(Integer productId, Integer orderId) {
-		String hql = "FROM OrderDetail WHERE productId = :productId AND orderId = :orderId";
-		return session
-				.createQuery(hql, OrderDetail.class)
-				.setParameter("productId", productId)
-				.setParameter("orderId", orderId)
-				.uniqueResult();
 	}
 
 	@Override

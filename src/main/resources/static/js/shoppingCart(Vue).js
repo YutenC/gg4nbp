@@ -1,8 +1,8 @@
 // 常數參數
 const href = window.location.href;
 const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
-const projectFolder = '/Five_NBP.gg';
+const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 11);
+const projectFolder = '/gg4nbp';
 
 // 增添商品到購物車內按鈕變化
 
@@ -70,7 +70,7 @@ const byMyPick = Vue.createApp({
     methods: {
         addToCart: function (productId) {
             // 提取商品資訊
-            axios.get(projectFolder + '/Product?getOneProduct=' + productId)
+            axios.get(projectFolder + '/OrderMaster?getOneProduct=' + productId)
                 .then(res => {
                     let newProduct = res.data;
                     axios({
@@ -102,7 +102,7 @@ const byMyPick = Vue.createApp({
         }
     },
     created() {
-        axios.get(projectFolder + '/FollowList?getAll=true')
+        axios.get(projectFolder + '/shopDispatcher/getFollowByMember')
             .then(res => this.mypick = res.data)
             .catch(error => console.log(error))
     }
@@ -122,7 +122,7 @@ const byPurchaseLog = Vue.createApp({
     methods: {
         addToCart: function (productId) {
             // 提取商品資訊
-            axios.get(projectFolder + '/Product?getOneProduct=' + productId)
+            axios.get(projectFolder + '/OrderMaster?getOneProduct=' + productId)
                 .then(res => {
                     let newProduct = res.data;
                     axios({
@@ -241,7 +241,7 @@ const shoppingContent = Vue.createApp({
         checkCoupon: function () {
             // 向後端確認是否為有效折購代碼
             // 查詢到資料後更新this.resCoupon
-            axios.get(projectFolder + '/Coupon?couponCode=' + this.couponCode)
+            ------axios.get(projectFolder + '/shopDispatcher/Coupon?couponCode=' + this.couponCode)
                 .then(res => {
                     if (res.data != '') {
                         this.resCoupon = res.data;
@@ -324,7 +324,7 @@ const shoppingContent = Vue.createApp({
                     demand: 'checkOut',
                     toEcpay: ecpay,
                     discountRadio: this.discountRadio,
-                    coupon: JSON.stringify(this.resCoupon),
+                    couponCode: this.couponCode,
                     bonus: this.bonus,
                     deliver: this.deliver,
                     payment: this.payment,
@@ -340,6 +340,7 @@ const shoppingContent = Vue.createApp({
                 let checkCoupon = resJson.checkCoupon;
                 let usedBonus = resJson.usedBonus;
                 let nowBonus = resJson.nowBonus;
+                let getBonus = resJson.getBonus;
                 this.orderId = resJson.orderId;
 
                 sessionStorage.setItem("odProducts", JSON.stringify(odProducts));
@@ -351,6 +352,7 @@ const shoppingContent = Vue.createApp({
                 sessionStorage.setItem("payment", this.payment);
                 sessionStorage.setItem("deliver", this.deliver);
                 sessionStorage.setItem("address", JSON.stringify(this.address));
+                sessionStorage.setItem("getBonus", getBonus);
                 if (ecpay === true) {
                     // $('input#orderId').val(this.orderId); // 透過jQuery即刻更新DOM
                     shoppingContent.$nextTick(() => {   // 透過Vue自身的nextTick方法，等Vue更新完DOM後再執行方法內的程序
@@ -421,13 +423,13 @@ const promoProduct = Vue.createApp({
     },
     methods: {
         leave: function (location, otherDetail) {
-            sessionStorage.clear();
-            sessionStorage.setItem('productId', otherDetail);
-            window.location.replace(projectHref + '/' + location);
+            // sessionStorage.clear();
+            // sessionStorage.setItem('productId', otherDetail);
+            window.location.replace(projectHref + '/' + location + '#' + otherDetail);
         }
     },
     created() {
-        axios.get(projectFolder + '/Product?recomendFromAll=' + this.recomendAmount)
+        axios.get(projectFolder + '/shopDispatcher/getProdcutsBuyTimes?amount=' + this.recomendAmount + '&type=""')
             .then(res => this.promoProduct = res.data)
             .catch(err => console.log(err));
     }

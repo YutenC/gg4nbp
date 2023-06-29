@@ -96,7 +96,7 @@
             <table id="purchaseDetail">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="checkAll"></th>
+                        <th><input type="checkbox" id="checkAll" @click="allProductCheckedSwitch"></th>
                         <th> </th>
                         <th class="productname">商品名稱</th>
                         <th>主機</th>
@@ -110,7 +110,7 @@
                 <tbody>
                     <template v-for="(item, index) in shoppingList">
                         <tr>
-                            <td><input type="checkbox" :checked="item.checked" v-model="item.checked"></td>
+                            <td><input type="checkbox" v-model="item.checked"></td>
                             <td class="productImg">
                                 <img :src="item.productImgUrl" :alt="item.productName">
                             </td>
@@ -149,7 +149,7 @@
                             <label for="coupon">折購代碼：</label>
                             <input type="text" placeholder="請輸入欲使用的折扣代碼" maxlength="8" v-model.trim="couponCode"
                                 :disabled="discountRadio === 'bonus'" v-show="discountRadio === 'coupon'"
-                                @changed="checkCoupon">
+                                @change="checkCoupon">
                             <button @click.prevent="checkCoupon" v-show="discountRadio === 'coupon'">
                                 {{ resCoupon === ''? '確認優惠碼' : '可使用'}}
                             </button>
@@ -233,7 +233,10 @@
                     </form>
                     <div>
                         <span>或第三方支付</span>
-                        <button type="submit" @click.prevent="checkOut(true)">綠界金流支付</button>
+                        <form action="/Five_NBP.gg/Ecpay" method="post" @submit.prevent="checkOut(true, $event)">
+                            <input type="hidden" :value="orderId" name="orderId" id="orderId">
+                            <button type="submit">綠界金流支付</button>
+                        </form>
                     </div>
                 </div>
                 <div class="transfer" v-show="payment === 'transfer'">
@@ -261,10 +264,10 @@
         <ul>
             <template v-for="item in promoProduct">
                 <li>
-                    <a :href="item.link" @click="getLink(item.id)">
-                        <img :src="item.productImg" alt="">
+                    <a href="" @click="leave('/shop/shopProductList.html', item.productId)">
+                        <img :src="item.productImgUrl" :alt="item.productName">
                     </a>
-                    <a :href="item.link" @click="getLink(item.id)">
+                    <a href="" @click="leave('/shop/shopProductList.html', item.productId)">
                         <span>{{ item.productName }}</span>
                     </a>
                     <span>${{ item.price }}</span>

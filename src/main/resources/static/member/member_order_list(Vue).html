@@ -21,6 +21,8 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        @import url(http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
         div.row {
             width: 100%;
             height: 100%;
@@ -96,43 +98,108 @@
             border-radius: 5px;
         }
 
-        .switchBtn {
-            border-radius: 3px;
-            border: 0;
-            margin: 3px;
-            width: 20px;
-            text-align: center;
-            padding: 0;
-        }
-
-        button.openBtn.switch {
-            display: none;
-        }
-
-        button.closeBtn {
-            display: none;
-        }
-
-        button.closeBtn.switch {
-            display: inline;
-        }
-
         div.detailContent {
             display: none;
         }
 
         div.detailContent.on {
+            margin: 3px;
+            padding: 3px;
             display: block;
+            border-radius: 5px;
+            background-color: #FCFCFC;
+            box-shadow: 1px 1px 1px #FCFCFC;
         }
 
         div.detailContent div.deliver span {
             margin: 5px;
         }
 
-        img.productImg {
-            width: 100px;
-            height: 100px;
+        div.detailContent .buylist tr td:first-child {
+            width: 30px;
         }
+
+        div.shoplist>table {
+            border: 1px dotted #82d6bd;
+        }
+
+        div.shoplist>table tr td:first-child {
+            width: 30px;
+        }
+
+        div.shoplist div.commentContent {
+            display: none;
+        }
+
+        div.shoplist div.commentContent.on {
+            display: flex;
+        }
+
+
+        div.commentContent>div:first-child {
+            width: 40%;
+        }
+
+        div.commentContent>div.rankDetail {
+            display: block;
+            width: 60%;
+        }
+
+        /****** Style Star Rating Widget *****/
+
+        .rating {
+            border: none;
+        }
+
+        .rating>input {
+            display: none;
+        }
+
+        .rating>label:before {
+            margin: 5px;
+            font-size: 1.25em;
+            font-family: FontAwesome;
+            display: inline-block;
+            content: "\f005";
+        }
+
+        .rating>label {
+            color: #ddd;
+            float: right;
+        }
+
+        /***** CSS Magic to Highlight Stars on Hover *****/
+
+        .rating>input:checked~label,
+        /* show gold star when clicked */
+        .rating:not(:checked)>label:hover,
+        /* hover current star */
+        .rating:not(:checked)>label:hover~label {
+            color: #FFD700;
+        }
+
+        /* hover previous stars in list */
+
+        .rating>input:checked+label:hover,
+        /* hover current star when changing rating */
+        .rating>input:checked~label:hover,
+        .rating>label:hover~input:checked~label,
+        /* lighten current selection */
+        .rating>input:checked~label:hover~label {
+            color: #FFED85;
+        }
+
+        .rankDetail div {
+            text-align: right;
+        }
+
+        .rankDetail div button {
+            border: 1px solid blue;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        /* --------------------------------------------------------------------------------------------- */
     </style>
 </head>
 
@@ -289,7 +356,10 @@
                                         <td>取消訂單</td>
                                     </tr>
                                     <tr>
-                                        <td>{{ item.orderMaster.orderId }}</td>
+                                        <td>
+                                            <div>{{ item.orderMaster.orderId }}</div>
+                                            <a href="" class="checkDetail">查看詳情</a>
+                                        </td>
                                         <td>{{ item.orderMaster.commitDate}}</td>
                                         <td>{{ showOrderStatus[item.orderMaster.orderStatus] }}</td>
                                         <td>${{ item.orderMaster.totalPrice }}</td>
@@ -307,9 +377,6 @@
                                 </tbody>
                             </table>
                             <div class="purchaseDetail">
-                                <button class="openBtn switchBtn">+</button>
-                                <button class="closeBtn switchBtn">-</button>
-                                <a href="" class="purchaseBtn">查看詳情</a>
                                 <div class="detailContent">
                                     <div>
                                         <div class="deliver">
@@ -325,34 +392,110 @@
                                             <div>
                                                 <span>運費： {{ item.orderMaster.deliverFee }}</span>
                                             </div>
-                                        </div>
-                                        <div>
-                                            <span v-if="item.orderMaster.bonusUse !== undefined">使用紅利：{{
-                                                item.orderMaster.bonusUse }}</span>
-                                            <span v-if="item.coupon !== undefined">
-                                                使用優惠卷：{{ item.coupon.discountCode + ' : ' + item.coupon.discount + ' : '
-                                                +
-                                                item.coupon.conditionPrice}}
-                                            </span>
+                                            <div>
+                                                <span v-if="item.orderMaster.bonusUse !== undefined">
+                                                    使用紅利：{{ item.orderMaster.bonusUse }}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span v-if="item.coupon !== undefined">
+                                                    使用優惠卷：
+                                                    {{ item.coupon.discountCode + ' : ' + item.coupon.discount +
+                                                    ':' + item.coupon.conditionPrice}}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span>本訂單獲得紅利：{{ item.getBonus }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <table>
-                                        <template v-for="od in item.trList">
-                                            <tr>
-                                                <td>
-                                                    <img :src="od.productImgUrl" :alt="od.productName"
-                                                        class="productImg">
-                                                </td>
-                                                <td>
-                                                    <a href="" @click="checkProduct(index)">
-                                                        {{ od.productName }}
-                                                    </a>
-                                                </td>
-                                                <td>{{ od.buyAmount }}</td>
-                                                <td>${{ od.price }}</td>
-                                            </tr>
-                                        </template>
-                                    </table>
+                                    <template v-for="(od, index) in item.trList">
+                                        <div class="shoplist">
+                                            <table>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>商品名稱</td>
+                                                    <td>購買數量</td>
+                                                    <td>商品單價</td>
+                                                    <td>小計</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{ index+1 }}</td>
+                                                    <td>
+                                                        <a href="" @click="checkProduct(index)">
+                                                            {{ od.productName }}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{ od.buyAmount }}</td>
+                                                    <td>${{ od.price }}</td>
+                                                    <td>${{ od.buyAmount * od.price }}</td>
+                                                    <td><a href="" class="comment">評價商品</a></td>
+                                                </tr>
+                                            </table>
+
+                                            <div class="commentContent">
+                                                <div class="shopPhoto">
+                                                    <img :src="od.productImgUrl" :alt="od.productName">
+                                                </div>
+                                                <div class="rankDetail">
+                                                    <form>
+                                                        <div>
+                                                            <fieldset class="rating">
+                                                                <input type="radio"
+                                                                    :id="item.orderMaster.orderId+'star5'+od.productId"
+                                                                    name="rating" value="5" :checked="od.comment===5"
+                                                                    :disabled="od.comment>0">
+                                                                <label class="full"
+                                                                    :for="item.orderMaster.orderId+'star5'+od.productId"
+                                                                    title="Awesome - 5 stars"></label>
+                                                                <input type="radio"
+                                                                    :id="item.orderMaster.orderId+'star4'+od.productId"
+                                                                    name="rating" value="4" :disabled="od.comment>0"
+                                                                    :checked="od.comment===4"><label class="full"
+                                                                    :for="item.orderMaster.orderId+'star4'+od.productId"
+                                                                    title="Pretty good - 4 stars"></label>
+                                                                <input type="radio"
+                                                                    :id="item.orderMaster.orderId+'star3'+od.productId"
+                                                                    name="rating" value="3" :disabled="od.comment>0"
+                                                                    :checked="od.comment===3"><label class="full"
+                                                                    :for="item.orderMaster.orderId+'star3'+od.productId"
+                                                                    title="Meh - 3 stars"></label>
+                                                                <input type="radio"
+                                                                    :id="item.orderMaster.orderId+'star2'+od.productId"
+                                                                    name="rating" value="2" :disabled="od.comment>0"
+                                                                    :checked="od.comment===2"><label class="full"
+                                                                    :for="item.orderMaster.orderId+'star2'+od.productId"
+                                                                    title="Kinda bad - 2 stars"></label>
+                                                                <input type="radio"
+                                                                    :id="item.orderMaster.orderId+'star1'+od.productId"
+                                                                    name="rating" value="1" :disabled="od.comment>0"
+                                                                    :checked="od.comment===1"><label class="full"
+                                                                    :for="item.orderMaster.orderId+'star1'+od.productId"
+                                                                    title="Sucks big time - 1 star"></label>
+                                                            </fieldset>
+                                                        </div>
+                                                        <div>
+                                                            <textarea name="" id="" cols="30" rows="4"
+                                                                placeholder="留下評論" class="commentContent"
+                                                                :value="od.commentContent"
+                                                                :disabled="od.comment>0"></textarea>
+                                                        </div>
+                                                        <div>
+                                                            <button
+                                                                @click="sendComment(item.orderMaster.orderId, od.productId, $event)"
+                                                                :disabled="od.comment > 0" v-if="!od.comment">
+                                                                送出評價
+                                                            </button>
+                                                            <span v-if="od.comment > 0">
+                                                                感謝您的寶貴意見
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -360,6 +503,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <footer id="footerpad">
         <div class="container">
@@ -404,13 +548,6 @@
     <script src="../js/bs-init.js"></script>
     <script src="../js/Profile-Edit-Form.js"></script>
     <script src="../js/memberOrderList(Vue).js"></script>
-    <script>
-        $('div.detailArea').on('click', 'button.switchBtn, a.purchaseBtn', function (e) {
-            e.preventDefault();
-            $(this).closest('div.purchaseDetail').find('div.detailContent').toggleClass('on');
-            $(this).closest('div.purchaseDetail').find('button').toggleClass('switch');
-        });
-    </script>
 </body>
 
 </html>

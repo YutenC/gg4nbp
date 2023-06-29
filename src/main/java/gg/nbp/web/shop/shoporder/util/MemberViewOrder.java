@@ -14,4 +14,6 @@ public class MemberViewOrder {
 	private Coupon coupon;
 	
 	private List<TransOrderProduct> trList;
+	
+	private Integer getBonus;
 }

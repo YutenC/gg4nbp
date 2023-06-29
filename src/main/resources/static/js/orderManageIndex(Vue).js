@@ -1,8 +1,8 @@
 // 路徑常數
 const href = window.location.href;
 const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
-const projectFolder = '/Five_NBP.gg';
+const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 6);
+const projectFolder = '/gg4nbp';
 
 const omManage = Vue.createApp({
     data() {
@@ -12,7 +12,7 @@ const omManage = Vue.createApp({
             totalListItem: 0,
             sortBy: 0,
             sortWay: 0,
-            criteria: 1,
+            criteria: '1',
             searchKeyword: ''
         }
     },
@@ -42,7 +42,7 @@ const omManage = Vue.createApp({
             sessionStorage.setItem('offset', offset);
             if (this.searchKeyword !== '') {
                 this.renewSearchResults();
-            } else if (this.criteria === 1) {
+            } else if (this.criteria === '1') {
                 axios({
                     method: 'get',
                     url: projectFolder + '/OrderMaster',
@@ -76,7 +76,7 @@ const omManage = Vue.createApp({
         },
         renewListWithSelect: function () {
             this.searchKeyword = '';
-            if (this.criteria === 1) {
+            if (this.criteria === '1') {
                 this.renewList(this.nowPage);
             } else {
                 axios({
@@ -161,3 +161,10 @@ const omManage = Vue.createApp({
         sessionStorage.removeItem('offset');
     }
 }).mount('#omManage');
+
+// 測試能否解決快取造成的頁面資訊顯示錯誤
+window.onpageshow = function (event) {
+    if (event.persisted) {
+        window.location.reload()
+    }
+};

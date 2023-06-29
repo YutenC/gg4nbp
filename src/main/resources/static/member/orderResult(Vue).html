@@ -20,7 +20,7 @@
 <body>
     <header class="cartHeader">
         <div class="ctHeaderUp">
-            <a href="shopIndex3.html" class="logo">
+            <a href="shopIndex.html" class="logo">
                 <img src="../img/Logo-removebg.png" alt="">
             </a>
             <span>
@@ -49,7 +49,7 @@
                                 <img :src="item.productImgUrl" :alt="item.productName">
                             </td>
                             <td>
-                                <a :href="'/Five_NBP.gg/' + item.productId"> <!--獲取-->
+                                <a :href="'/gg4nbp/' + item.productId"> <!--獲取-->
                                     {{ item.productName }}
                                 </a>
                             </td>
@@ -77,6 +77,7 @@
                         <li v-if="usedBonus !== ''">
                             <input type="radio" id="bonus" checked>
                             <sapn>使用的點數：{{ usedBonus }}</sapn>
+                            <span>本次購物獲得紅利點數：{{ getBouns }}</span>
                             <span>目前您持有的點數為：{{ nowBonus }}</span>
                         </li>
                 </form>
@@ -110,7 +111,7 @@
         <div class="brLine"></div>
         <div class="billTotal">
             結帳總金額<span>NTD$</span><span>{{ productSubtotal + deliverCal}}</span><a
-                href="/Five_NBP.gg/shopIndex3.html">回賣場選購</a>
+                href="/gg4nbp/shopIndex.html">回賣場選購</a>
         </div>
         <div class="brLine"></div>
         <h3>付款方式</h3>

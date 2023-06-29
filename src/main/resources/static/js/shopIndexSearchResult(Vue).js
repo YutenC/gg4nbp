@@ -1,4 +1,4 @@
-const projectFolder = '/Five_NBP.gg';
+const projectFolder = '/gg4nbp';
 
 const productResults = Vue.createApp({
     data() {
@@ -14,7 +14,8 @@ const productResults = Vue.createApp({
         }
     },
     created() {
-        axios.get(projectFolder + '')
+        let searchKeyword = sessionStorage.getItem('searchKeyword');
+        axios.get(projectFolder + '/shopDispatcher/searchProducts?search=' + searchKeyword)
             .then(res => this.productResults = res.data)
             .catch(err => console.log(err))
     }

@@ -1,8 +1,8 @@
 // 路徑常數
 const href = window.location.href;
 const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
-const projectFolder = '/Five_NBP.gg';
+const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 11);
+const projectFolder = '/gg4nbp';
 
 const memberOrder = Vue.createApp({
     data() {
@@ -69,6 +69,31 @@ const memberOrder = Vue.createApp({
                 .then(res => this.orders = res.data)
                 .catch(err => console.log(err))
         },
+        sendComment: function (orderId, productId, event) {
+            let star = $(event.target).closest('.rankDetail').find('input:checked').val();
+            let comment = $(event.target).closest('.rankDetail').find('textarea.commentContent').val();
+            let commentDetail = {
+                orderId: orderId,
+                productId: productId,
+                star: star,
+                comment: comment
+            };
+            axios({
+                method: 'post',
+                url: projectFolder + '/OrderDetail',
+                params: {
+                    comment: 'y',
+                },
+                data: {
+                    commentDetail: commentDetail
+                }
+            }).then(res => console.log(res))
+                .catch(err => console.log(err));
+
+            $(event.target).closest('.rankDetail').find('input').prop('disabled', true);
+            $(event.target).closest('.rankDetail').find('textarea.commentContent').prop('disabled', true);
+            $(event.target).prop('disabled', true);
+        },
     },
     created() {
         axios.get(projectFolder + '/OrderMaster?memberAll=0')
@@ -112,9 +137,14 @@ window.addEventListener('scroll', function () {
     }
 });
 
-// 測試能否解決快取造成的頁面資訊顯示錯誤
-window.onpageshow = function (event) {
-    if (event.persisted) {
-        window.location.reload()
-    }
-};
+// 開關檢視訂單詳情
+$('div.detailArea').on('click', 'a.checkDetail', function (e) {
+    e.preventDefault();
+    $(this).closest('div.detailUnit').find('div.detailContent').toggleClass('on');
+});
+
+// 開關檢視商品評價
+$('div.detailArea').on('click', 'a.comment', function (e) {
+    e.preventDefault();
+    $(this).closest('div.shoplist').find('div.commentContent').toggleClass('on');
+});

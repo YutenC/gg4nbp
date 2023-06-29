@@ -28,4 +28,6 @@ public class ResOrderMaster {
 	private Double nowBonus;
 	
 	private String address;
+	
+	private Integer getBonus;
 }

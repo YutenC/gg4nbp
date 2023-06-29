@@ -1,7 +1,9 @@
 package gg.nbp.web.shop.shoporder.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,11 +38,15 @@ public class OrderDetailController extends HttpServlet {
 	@Autowired
 	private OrderDetailService oDetailService;
 	
+	private Gson gson;
+	
+	public OrderDetailController() {
+		this.gson = new Gson();
+	}
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     	req.setCharacterEncoding("UTF-8");
     	
-    	Gson gson = new Gson();
     	res.setCharacterEncoding("UTF-8");
     	res.setContentType("application/json");
     	PrintWriter pw = res.getWriter();
@@ -56,7 +62,7 @@ public class OrderDetailController extends HttpServlet {
     	Integer memberId;
     	
     	if (getMember == null) {
-    		res.sendRedirect("/Five_NBP.gg");
+    		res.sendRedirect("/gg4nbp");
     		return;
     	} else {
     		memberId = getMember.getMember_id();
@@ -77,8 +83,45 @@ public class OrderDetailController extends HttpServlet {
     	}
     	
 	}
-}
 
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("application/json");
+		PrintWriter pw = res.getWriter();
+		
+    	String comment = req.getParameter("comment");
+    	if (comment != null) {
+    		Reader rd =  req.getReader();
+			BufferedReader brd = new BufferedReader(rd);
+			String reqStr = brd.readLine();
+			reqStr = reqStr.substring(reqStr.indexOf(":") + 1, reqStr.length());
+			
+			System.out.println(reqStr);
+			String[] elms = reqStr.split(",");
+			for (String elm : elms) {
+				System.out.println(elm);
+			}
+			
+			Integer orderId = Integer.valueOf(elms[0].split(":")[1]);
+			Integer productId = Integer.valueOf(elms[1].split(":")[1]);
+			String starStr = elms[2].split(":")[1];
+			Integer starNum = Integer.valueOf(starStr.substring(1, starStr.length() - 1));
+			String commentStr = elms[3].split(":")[1];
+			String commentContent = commentStr.substring(1, commentStr.length() - 3);
+			
+			System.out.println(orderId);
+			System.out.println(productId);
+			System.out.println(starNum);
+			System.out.println(commentContent);
+			
+			pw.println(oDetailService.commentProduct(orderId, productId, starNum, commentContent));
+			
+    	}
+	}
+	
+}
 
 //@RestController
 //@RequestMapping("/OrderDetail")
