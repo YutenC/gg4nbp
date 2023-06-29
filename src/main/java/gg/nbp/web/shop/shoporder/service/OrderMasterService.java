@@ -40,7 +40,7 @@ public interface OrderMasterService extends CoreService{
 	
 	List<ManageOrder> ambiguMemberNameSearch(String partMemberName, Integer sortWay, Map<String, Integer> limitOffset);
 	
-	Integer ambiguMemberNameSearchLength(String partMemberName);
+	long ambiguMemberNameSearchLength(String partMemberName);
 	
 	/**
 	 * 
@@ -51,8 +51,8 @@ public interface OrderMasterService extends CoreService{
 	
 	OrderMaster getOne(Integer orderId);
 
-	OrderMaster createNewOrderMaster(List<TransOrderProduct> trObjList, JsonObject cardDetail, JsonObject addressDetail, Integer memberId,
-			String commitType, String pickType, String discountRadio, String couponCode, Integer usedBonus);
+	OrderMaster createNewOrderMaster(List<TransOrderProduct> trObjList, JsonObject cardDetail, JsonObject addressDetail, Member member,
+			String commitType, String pickType, String discountRadio, String couponCode, String usedBonus);
 	
 	boolean updateFromManager(OrderMaster fromManager);
 	

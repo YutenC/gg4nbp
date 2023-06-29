@@ -80,36 +80,32 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 	public boolean establishNewOrder(OrderMaster om, List<TransOrderProduct> trObjList, Member member) {
 		try {
 			omdao.insert(om);
-			Integer ordeId = om.getOrderId();
+			Integer orderId = om.getOrderId();
+			List<ShoppingList> spLists = new ArrayList<>();  // 預先準備刪除時使用的購物清單列表
 			
 			// 新增OrderDetail
 			Integer prodcutTotalPrice = 0;
 			for (TransOrderProduct trObj : trObjList) {
 				PKOrderDeatail pkod = new PKOrderDeatail();
-				pkod.setOrderId(ordeId);
+				pkod.setOrderId(orderId);
 				pkod.setProductID(trObj.getProductId());
 				
 				OrderDetail od = new OrderDetail();
 				od.setPkOrderDeatail(pkod);
 				od.setQuantity(trObj.getBuyAmount());
-				Product checkProduct = pdDao.selectById(trObj.getProductId());
+				Product checkProduct = pService.getProductById(trObj.getProductId());
 				od.setTotalPrice(trObj.getBuyAmount() * checkProduct.getPrice());
+				odDao.insert(od);
 				
 				prodcutTotalPrice += trObj.getBuyAmount() * checkProduct.getPrice();
 
 				// 調整商品庫存
-				Product pd = pdDao.selectById(trObj.getProductId());
+				Product pd = pService.getProductById(trObj.getProductId());
 				Integer oldStock = pd.getAmount();
 				pd.setAmount(oldStock - trObj.getBuyAmount());
 				pdDao.update(pd);
 				
-				odDao.insert(od);
-			}
-			
-			// 刪除購物清單
-			List<ShoppingList> spLists = new ArrayList<>();
-			
-			for (TransOrderProduct trObj : trObjList) {
+				// 刪除購物清單
 				PKShoppingList pksplist = new PKShoppingList();
 				pksplist.setMemmberId(member.getMember_id());
 				pksplist.setProductId(trObj.getProductId());
@@ -119,6 +115,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				
 				spLists.add(splist);
 			}
+
 			shlistService.removeItem(spLists);
 			
 			// 調整會員持有紅利
@@ -128,6 +125,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -135,12 +133,12 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 	
 	@Override
 	public OrderMaster createNewOrderMaster(List<TransOrderProduct> trObjList, JsonObject cardDetail,
-			JsonObject addressDetail, Integer memberId, String commitType, String pickType, String discountRadio,
-			String couponCode, Integer usedBonus) {
+			JsonObject addressDetail, Member member, String commitType, String pickType, String discountRadio,
+			String couponCode, String bonus) {
 		try {
 			OrderMaster om = new OrderMaster();
 			
-			om.setMemberId(memberId);
+			om.setMemberId(member.getMember_id());
 			
 			java.util.Date date = new java.util.Date();
 			om.setCommitDate(new java.sql.Timestamp(date.getTime()));
@@ -182,20 +180,31 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				}
 			}
 			
-			Coupon checkCoupon = cService.getCouponByDiscountCode(couponCode);  // 根據優惠卷代碼取得優惠卷物件
+			Coupon checkCoupon = null;
+			if (couponCode != null && couponCode.trim().length() > 0) {
+				checkCoupon = cService.getCouponByDiscountCode(couponCode);  // 根據優惠卷代碼取得優惠卷物件
+			} 
 			
 			Integer couponDiscount = 0;	// 有取得符合條件的優惠券物件，且消費額度大於門檻
 			if (checkCoupon != null && checkCoupon.getConditionPrice() < productPrice) {
 				couponDiscount = checkCoupon.getDiscount();
 			}
 			
+			Integer usedbonus = 0;	// 確保所輸入的紅利點數未超過會員所持有量
+			if (bonus != null && bonus.trim().length() != 0) {
+				usedbonus = Integer.valueOf(bonus.trim());
+				if (usedbonus < (member.getBonus() == null? 0: member.getBonus())) {
+					usedbonus = 0;
+				}
+			}
+			
 			Integer totalPrice = 0;
-			if ("coupon".equals(discountRadio)) {	// 會員選擇使用優惠卷折抵
+			if (checkCoupon != null && "coupon".equals(discountRadio)) {	// 會員選擇使用優惠卷折抵
 				totalPrice = productPrice - couponDiscount;
 				om.setCouponId(checkCoupon.getId());
 			} else {							// 會員選擇使用紅利折抵
-				totalPrice = productPrice - usedBonus;
-				om.setBonusUse(usedBonus);
+				totalPrice = productPrice - usedbonus;
+				om.setBonusUse(usedbonus);
 			}
 			
 			om.setTotalPrice(totalPrice);
@@ -330,7 +339,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 
 	@Transactional
 	@Override
-	public Integer ambiguMemberNameSearchLength(String partMemberName) {
+	public long ambiguMemberNameSearchLength(String partMemberName) {
 		try {
 			List<Member> candidate = omdao.selectLikeMemberName(partMemberName);
 			List<OrderMaster> results = new ArrayList<>();
@@ -338,11 +347,11 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				results.addAll(omdao.selectByMemberId(member.getMember_id()));
 			}
 			
-			Integer resultsLength = results.size();
+			long resultsLength = results.size();
 			return resultsLength;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return 0;
 		}
 	}
 
@@ -427,7 +436,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 	@Override
 	public TransOrderProduct getOneProduct(Integer productId) {
 		try {
-			Product pd = pdDao.selectById(productId);
+			Product pd = pService.getProductById(productId);
 			if (pd == null) {
 				return null;
 			}
@@ -446,6 +455,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			trpd.setStockAmount(pd.getAmount());
 			return trpd;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -645,10 +655,11 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			List<TransOrderProduct> odProducts = odService.getOrderDetailByOrderId(om.getOrderId());
 			rsom.setOdProducts(odProducts);
 			
-			Coupon coupon = cService.getCouponById(om.getCouponId());
-			if (coupon != null) {
+			Coupon coupon = null;
+			if (om.getCouponId() != null) {
+				coupon = cService.getCouponById(om.getCouponId());
 				rsom.setCheckCoupon(coupon);
-			} 			
+			}
 
 			rsom.setUsedBonus(om.getBonusUse());
 			rsom.setNowBonus(mService.selectMember(om.getMemberId()).getBonus());

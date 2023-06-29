@@ -20,12 +20,12 @@
 <body>
     <header class="cartHeader">
         <div class="ctHeaderUp">
-            <a href="shopIndex3.html" class="logo">
+            <a href="/gg4nbp/shop/shopIndex.html" class="logo">
                 <img src="../img/Logo-removebg.png" alt="">
             </a>
-            <span>
-                購買商品注意宣導
-            </span>
+            <h2>
+                NBP.gg商城購物系統
+            </h2>
         </div>
         <div class="addAdditional">
             <div class="addButtons">
@@ -51,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template v-if="mypick !== ''" v-for="item in mypick">
+                        <template v-if="mypick.length > 0" v-for="item in mypick">
                             <tr>
                                 <td>{{ item.productId }}</td>
                                 <td>{{ item.productName }}</td>
@@ -59,7 +59,7 @@
                                 <td><button @click="addToCart(item.productId)">加入購物車</button></td>
                             </tr>
                         </template>
-                        <tr v-if="mypick === ''">
+                        <tr v-if="mypick.length < 1">
                             <td></td>
                             <td colspan="3" style="text-align:center"><span>無追蹤商品</span></td>
                         </tr>
@@ -76,7 +76,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template v-for="item in byPurchaseLog">
+                        <template v-for="item in byPurchaseLog" v-if="byPurchaseLog.length > 0">
                             <tr>
                                 <td>{{ item.productId }}</td>
                                 <td>{{ item.productName }}</td>
@@ -85,6 +85,10 @@
                                 <td><button @click="addToCart(item.productId)">加入購物車</button></td>
                             </tr>
                         </template>
+                        <tr v-if="byPurchaseLog.length < 1">
+                            <td></td>
+                            <td colspan="4" style="text-align:center"><span>無購買紀錄</span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -115,7 +119,7 @@
                                 <img :src="item.productImgUrl" :alt="item.productName">
                             </td>
                             <td>
-                                <a :href="'/Five_NBP.gg/' + item.productId"> <!--獲取-->
+                                <a :href="'/gg4nbp/shopProductDetail.html' + item.productId"> <!--獲取-->
                                     {{ item.productName }}
                                 </a>
                             </td>
@@ -189,7 +193,8 @@
         </div>
         <div class="brLine"></div>
         <div class="billTotal">
-            結帳總金額<span>NTD$</span><span>{{ productSubtotal + deliverCal}}</span><a href="shopIndex3.html">回賣場選購</a>
+            結帳總金額<span>NTD$</span><span>{{ productSubtotal + deliverCal}}</span><a
+                href="/gg4nbp/shopIndex.html">回賣場選購</a>
         </div>
         <div class="brLine"></div>
         <h3>付款方式</h3>
@@ -233,7 +238,7 @@
                     </form>
                     <div>
                         <span>或第三方支付</span>
-                        <form action="/Five_NBP.gg/Ecpay" method="post" @submit.prevent="checkOut(true, $event)">
+                        <form action="/gg4nbp/Ecpay" method="post" @submit.prevent="checkOut(true, $event)">
                             <input type="hidden" :value="orderId" name="orderId" id="orderId">
                             <button type="submit">綠界金流支付</button>
                         </form>
@@ -264,10 +269,10 @@
         <ul>
             <template v-for="item in promoProduct">
                 <li>
-                    <a href="" @click="leave('/shop/shopProductList.html', item.productId)">
+                    <a href="" @click="leave('/shop/shopProductDetail.html', item.productId)">
                         <img :src="item.productImgUrl" :alt="item.productName">
                     </a>
-                    <a href="" @click="leave('/shop/shopProductList.html', item.productId)">
+                    <a href="" @click="leave('/shop/shopProductDetail.html', item.productId)">
                         <span>{{ item.productName }}</span>
                     </a>
                     <span>${{ item.price }}</span>

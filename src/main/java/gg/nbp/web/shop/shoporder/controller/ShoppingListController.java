@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.gson.Gson;
 
 import gg.nbp.web.Member.entity.Member;
+import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.shop.shoporder.entity.PKShoppingList;
 import gg.nbp.web.shop.shoporder.entity.ShoppingList;
 import gg.nbp.web.shop.shoporder.service.ShoppingListService;
@@ -27,24 +28,28 @@ public class ShoppingListController extends HttpServlet {
 
 	@Autowired
 	private ShoppingListService shoppingListService;
+	@Autowired
+	private MemberService memberService;
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession httpSession = req.getSession();
-		Member odmember = new Member();
-		odmember.setMember_id(1);
-
+		Member login = new Member();
+		login.setAccount("Black");
+		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
+		Member member = memberService.login(login);	
+		
 		Gson gson = new Gson();
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json");
 		PrintWriter pw = res.getWriter();
 		
-		httpSession.setAttribute("member", odmember);
-		Member member = (Member)httpSession.getAttribute("member");
+		httpSession.setAttribute("member", member);
+		Member getmember = (Member)httpSession.getAttribute("member");
 		Integer memberId = null;
 		
-		if (member != null) {
-			memberId = member.getMember_id();
+		if (getmember != null) {
+			memberId = getmember.getMember_id();
 		} else {
 			res.sendRedirect("/Five_NBP.gg");
 			return;
@@ -79,9 +84,11 @@ public class ShoppingListController extends HttpServlet {
 		
 		HttpSession httpSession = req.getSession();
 		
-		Member mber = new Member();
-		mber.setMember_id(1);
-		httpSession.setAttribute("meber", mber);
+		Member login = new Member();
+		login.setAccount("Black");
+		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
+		Member mber = memberService.login(login);
+		httpSession.setAttribute("member", mber);
 		
 		if (httpSession.getAttribute("member") == null) {
 			res.sendRedirect("/Five_NBP.gg");
@@ -90,6 +97,7 @@ public class ShoppingListController extends HttpServlet {
 		
 		Member member = (Member)httpSession.getAttribute("member");
 		Integer memberId = member.getMember_id();
+		System.out.println(memberId);
 		
 		String demand = req.getParameter("demand");
 		

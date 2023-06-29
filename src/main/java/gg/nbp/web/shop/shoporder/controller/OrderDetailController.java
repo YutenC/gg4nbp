@@ -53,8 +53,8 @@ public class OrderDetailController extends HttpServlet {
     	
     	HttpSession httpSession = req.getSession();
     	Member login = new Member();
-    	login.setAccount("ReimuHakurei");
-    	login.setPassword("HakureiShrine");
+    	login.setAccount("Black");
+    	login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
     	Member member = memberService.login(login);
     	httpSession.setAttribute("member", member);
     	

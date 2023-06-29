@@ -15,6 +15,7 @@ import gg.nbp.web.shop.shopproduct.dao.ProductDao;
 import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.entity.ProductImage;
+import gg.nbp.web.shop.shopproduct.service.ProductService;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -25,7 +26,7 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 	@Autowired
 	private ProductDao pdao;
 	@Autowired
-	private ProductImageDao pdimgdao;
+	private ProductService pService;
 	
 	@Transactional
 	@Override
@@ -38,13 +39,12 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 				if (pd == null) {
 					continue;
 				}
-				List<ProductImage> pdimgs = pdimgdao.selectByProductId(pd.getId());
 				TransOrderProduct trspd = new TransOrderProduct();
 				trspd.setProductId(pd.getId());
-				if (pdimgs.isEmpty()) {
+				if (pService.getProductIndexImg(pd.getId()) == null) {
 					trspd.setProductImgUrl(null);
 				} else {
-					trspd.setProductImgUrl(pdimgs.get(0).getImage());
+					trspd.setProductImgUrl(pService.getProductIndexImg(pd.getId()).getImage());
 				}
 				trspd.setProductName(pd.getProductName());
 				trspd.setBrand(pd.getBrand());
@@ -56,6 +56,7 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 			}
 			return result;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 		
@@ -71,7 +72,9 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 			pkslist.setProductId(trpd.getProductId());
 			slist.setPkShoppingList(pkslist);
 			slist.setQuantity(trpd.getBuyAmount());
+			System.out.println(slist);
 			jediShdao.update(slist);
+			jediShdao.renewExpireDate(memberId);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -87,6 +90,7 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 			}
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

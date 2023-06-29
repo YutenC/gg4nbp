@@ -16,6 +16,8 @@ public interface JedisShoppingListDao {
 	
 	List<ShoppingList> selectByMemberId(Integer memberId);
 	
+	boolean renewExpireDate(Integer memberId);
+	
 	default Jedis getJedis() {
 		return JedisUtil.getJedisPool().getResource();
 	}

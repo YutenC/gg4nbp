@@ -290,7 +290,7 @@ public class OrderMasterController extends HttpServlet {
     		return;
     	}
     	
-    	String nowBonus = req.getParameter("nowBuns");
+    	String nowBonus = req.getParameter("nowBonus");
     	if (nowBonus != null) {
     		pw.println(gson.toJson(member.getBonus()));
     		return;
@@ -322,8 +322,8 @@ public class OrderMasterController extends HttpServlet {
 		HttpSession httpSession = req.getSession();
 		
 		Member login = new Member();
-		login.setAccount("ReimuHakurei");
-		login.setPassword("HakureiShrine");
+		login.setAccount("Black");
+		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
 		Member mber = memberService.login(login);
 		httpSession.setAttribute("member", mber);
 		
@@ -378,24 +378,11 @@ public class OrderMasterController extends HttpServlet {
 			String pickType = req.getParameter("deliver");  // 取得取貨方式
 			
 			String discountRadio = req.getParameter("discountRadio");  // 取得所選擇的折購方式
-			String couponStr = req.getParameter("couponCode");	// 取得輸入的優惠卷折購代碼
-			String bonusStr = req.getParameter("bonus");	// 取得所使用的紅利
+			String couponCode = req.getParameter("couponCode");	// 取得輸入的優惠卷折購代碼
+			String bonus = req.getParameter("bonus");	// 取得所使用的紅利
 			
-			String couponCode = null;	// 確保轉交給Service的為正確資料
-			if (couponStr != null && couponStr.trim().length() > 0) {
-				couponCode = couponStr.trim();
-			}
-			
-			Integer usedbonus = null;	// 確保所輸入的紅利點數未超過會員所持有量
-			if (bonusStr != null) {
-				usedbonus = Integer.valueOf(bonusStr);
-				if (usedbonus < member.getBonus()) {
-					usedbonus = 0;
-				}
-			}
-			
-			OrderMaster om = orderMasterService.createNewOrderMaster(trObjList, cardDetail, addressDetail, memberId, commitType,
-																				pickType, discountRadio, couponCode, usedbonus);
+			OrderMaster om = orderMasterService.createNewOrderMaster(trObjList, cardDetail, addressDetail, member, commitType,
+																				pickType, discountRadio, couponCode, bonus);
 			
 			orderMasterService.establishNewOrder(om, purchaseProducts, member);
 			
@@ -408,7 +395,7 @@ public class OrderMasterController extends HttpServlet {
 			// 寄送成功下單通知
 			Notice notice = new Notice();
 			notice.setMember_id(memberId);
-			notice.setNotice_value("會員 " +member.getNick() + " 您已於" + om.getCommitDate() + "完成下單，訂單編號" + om.getOrderId());
+			notice.setNotice_value("會員 " + member.getNick() + " 您已於" + om.getCommitDate() + "完成下單，訂單編號" + om.getOrderId());
 			
 			noticeService.addNotice(notice);
 			return;

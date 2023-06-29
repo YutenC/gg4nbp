@@ -116,7 +116,7 @@ $('div.addDetail').on('click', 'button', function (e) {
 const byPurchaseLog = Vue.createApp({
     data() {
         return {
-            byPurchaseLog: []
+            byPurchaseLog: ''
         }
     },
     methods: {
@@ -240,8 +240,8 @@ const shoppingContent = Vue.createApp({
         // 消費折抵選擇
         checkCoupon: function () {
             // 向後端確認是否為有效折購代碼
-            // 查詢到資料後更新this.resCoupon
-            ------axios.get(projectFolder + '/shopDispatcher/Coupon?couponCode=' + this.couponCode)
+            // 查詢到資料後更新this.resCoupon -- 待接上coupon controller
+            axios.get(projectFolder + '/shopDispatcher/getCouponByDiscountCode?discountCode=' + this.couponCode)
                 .then(res => {
                     if (res.data != '') {
                         this.resCoupon = res.data;
@@ -265,8 +265,10 @@ const shoppingContent = Vue.createApp({
                 return;
             }
             if (this.shopTotal < this.resCoupon.conditionPrice) {
+                let conditionPrice = this.resCoupon.conditionPrice;
                 this.resCoupon = '';
-                Swal.fire('購買金額未達門檻，不可使用');
+                this.couponCode = '';
+                Swal.fire('購買金額未達門檻，不可使用' + '\n此張優惠卷需消費達：\n' + conditionPrice + '元後 方可使用');
             }
         },
         fixToNum: function (event) {
@@ -281,8 +283,9 @@ const shoppingContent = Vue.createApp({
             str = str.replace(/\D/g, "");
             if (Number.parseInt(str) > this.bonusStock) {
                 str = this.bonusStock;
+                this.bonus = this.bonusStock;
             }
-            event.target.value = str;
+            // event.target.value = str;
         },
         allProductCheckedSwitch: function (event) {
             let allChecked = event.target.checked;
@@ -366,8 +369,8 @@ const shoppingContent = Vue.createApp({
         },
         // 與會員功能詢問由哪個功能提供現有紅利點數資訊
         getBonusStock: function () {
-            axios.get(projectFolder + 'OrderMaster?nowBonus=y')
-                .then(res => this.bonusStock = res.data)
+            axios.get(projectFolder + '/OrderMaster?nowBonus=y')
+                .then(res => this.bonusStock = Math.floor(res.data))
                 .catch(err => console.log(err))
         }
     },
@@ -395,7 +398,7 @@ const shoppingContent = Vue.createApp({
                 productSub - couponDiscount : productSub - couponDiscount - bonus;
 
             if (finalPrice < 0) {
-                if (this.discountRadio === 'bonus' && productSub < bonus && productSub < this.bonusStock) {
+                if (this.discountRadio === 'bonus' && productSub < bonus) {
                     this.bonus = productSub;
                 }
                 finalPrice = 0;

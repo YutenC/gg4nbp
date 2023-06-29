@@ -5,14 +5,21 @@
 }
 
 body {
+    position: relative;
     text-align: center;
     margin: auto;
+    background-image: url(../img/background_img_shop1.png);
+    background-size: 1%;
+    background-repeat: repeat;
+    backdrop-filter: contrast(110%);
 }
 
 .cartHeader {
     width: 60%;
     margin: auto;
     text-align: left;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 .cartHeader .ctHeaderUp {
@@ -36,10 +43,11 @@ body {
     margin: auto;
 }
 
-.cartHeader span {
+.cartHeader h2 {
     vertical-align: middle;
     width: 50%;
     display: inline-block;
+    color: rgb(12, 29, 227);
 }
 
 @media (max-width: 600px) {
@@ -126,6 +134,7 @@ div.cartHeader .addItem a.minus {
     border-radius: 10px 10% 0 0;
     padding: 0;
     margin-bottom: 20px;
+    background-color: #fff;
 }
 
 .shoppingContent div {
@@ -423,6 +432,7 @@ div#submit {
     border-radius: 5px;
     margin: auto;
     margin-bottom: 20px;
+    background-color: #fff;
 }
 
 #promoProduct span {
