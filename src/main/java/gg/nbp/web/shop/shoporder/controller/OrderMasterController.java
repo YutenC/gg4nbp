@@ -359,7 +359,6 @@ public class OrderMasterController extends HttpServlet {
 					purchaseProducts.add(trOdPd);
 				}
 			}
-			req.setAttribute("purchaseProducts", purchaseProducts);
 //			System.out.println(trObjList);
 						
 			// 取得結帳信用卡資訊Json物件
@@ -367,7 +366,6 @@ public class OrderMasterController extends HttpServlet {
 			cardStr = cardStr.substring(cardStr.indexOf(":") + 1, cardStr.length());
 //			System.out.println(cardStr);
 			JsonObject cardDetail = JsonParser.parseString(cardStr).getAsJsonObject();
-			req.setAttribute("card", cardDetail);
 			
 			// 取得配送地址資訊Json物件
 			String addressStr = reqStr.substring(addressIndex, reqStr.length());
@@ -375,123 +373,36 @@ public class OrderMasterController extends HttpServlet {
 //			System.out.println(addressStr);
 			JsonObject addressDetail = JsonParser.parseString(addressStr).getAsJsonObject();
 			
-			// 創建OrderMaster類物件並存入資料庫
-			OrderMaster om = new OrderMaster();
-			om.setMemberId(memberId);
+			String commitType = req.getParameter("payment"); // 取得付款類別
 			
-			java.util.Date date = new java.util.Date();
-			om.setCommitDate(new java.sql.Timestamp(date.getTime()));
+			String pickType = req.getParameter("deliver");  // 取得取貨方式
 			
-			Integer commitType = 0;
-			String payment = req.getParameter("payment");
-			switch (payment) {
-			case "credit":
-				commitType = 1;
-				om.setPayStatus(2);
-				break;
-			case "transfer":
-				commitType = 2;
-				om.setPayStatus(1);
-				break;
-			case "onDeliver":
-				commitType = 3;
-				om.setPayStatus(3);
-				break;
+			String discountRadio = req.getParameter("discountRadio");  // 取得所選擇的折購方式
+			String couponStr = req.getParameter("couponCode");	// 取得輸入的優惠卷折購代碼
+			String bonusStr = req.getParameter("bonus");	// 取得所使用的紅利
+			
+			String couponCode = null;	// 確保轉交給Service的為正確資料
+			if (couponStr != null && couponStr.trim().length() > 0) {
+				couponCode = couponStr.trim();
 			}
-			om.setCommitType(commitType);
 			
-			om.setDeliverState(0);
-			
-			Integer takuhai = 100;
-			Integer toCvs = 200;
-			String pickType = req.getParameter("deliver");
-			om.setDeliverFee(pickType.equals("takuhai")? takuhai : toCvs);
-			om.setPickType(pickType.equals("takuhai")? takuhai/100 : toCvs/100);
-			
-			om.setDeliverLocation(addressDetail.get("county").toString().replace("\"", "") + addressDetail.get("address").toString().replace("\"", ""));
-			
-			Integer productPrice = 0;
-			for (TransOrderProduct trObj : purchaseProducts) {
-				if (trObj.isChecked() == true) {
-					TransOrderProduct checkProduct = orderMasterService.getOneProduct(trObj.getProductId());
-					productPrice += checkProduct.getPrice() * trObj.getBuyAmount();
+			Integer usedbonus = null;	// 確保所輸入的紅利點數未超過會員所持有量
+			if (bonusStr != null) {
+				usedbonus = Integer.valueOf(bonusStr);
+				if (usedbonus < member.getBonus()) {
+					usedbonus = 0;
 				}
 			}
 			
-			String discountRadio = req.getParameter("discountRadio");
-			String couponStr = null;
-			String reqBonus = null;
-			switch (discountRadio) {
-			case "coupon":
-				couponStr = req.getParameter("coupon");
-				break;
-			case "bonus":
-				reqBonus = req.getParameter("bonus");
-				break;
-			}
+			OrderMaster om = orderMasterService.createNewOrderMaster(trObjList, cardDetail, addressDetail, memberId, commitType,
+																				pickType, discountRadio, couponCode, usedbonus);
 			
-			Coupon checkCoupon = null;
-			Integer couponDiscount = 0;
-			Integer useBonus = 0;
-
-			if (couponStr != null && couponStr.trim().length() != 0) {
-				Coupon reqCoupon = null;
-				try {
-					reqCoupon = gson.fromJson(couponStr, Coupon.class);
-					checkCoupon = couponService.getCouponByDiscountCode(reqCoupon.getDiscountCode());
-				} catch (Exception e) {
-					System.out.println("Cant convert to Coupon.class");
-				}
-				if (checkCoupon != null) {
-					om.setCouponId(checkCoupon.getId());
-					Integer conditionPrice = checkCoupon.getConditionPrice();
-					couponDiscount = checkCoupon.getDiscount();
-					if (productPrice < conditionPrice) {
-						couponDiscount = 0;
-					}
-				}
-			}
+			orderMasterService.establishNewOrder(om, purchaseProducts, member);
 			
-			if (checkCoupon == null && reqBonus != null && reqBonus.trim().length() != 0){
-				useBonus = Integer.valueOf(reqBonus.trim());
-				if (useBonus > member.getBonus()) {
-					useBonus = Integer.valueOf(member.getBonus().toString());
-				}
-			}
+			OrderMaster insertOk = orderMasterService.getOne(om.getOrderId());
 			
-			om.setBonusUse(useBonus);
-
-			om.setTotalPrice(productPrice - couponDiscount - useBonus);
+			ResOrderMaster resOM = orderMasterService.getOrderResult(insertOk);
 			
-			om.setOrderStatus(1);
-			
-			boolean addNewOM = orderMasterService.newOrder(om, purchaseProducts, member);
-
-			req.setAttribute("thisOrder", om);
-			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/ShoppingList");
-			dispatcher.include(req, res);
-			
-			ResOrderMaster resOM = new ResOrderMaster();
-			
-			resOM.setOrderId(om.getOrderId());
-			
-			resOM.setGetBonus((int) (om.getTotalPrice() * 0.05));
-			
-			List<TransOrderProduct> odProducts = orderDetailService.getOrderDetailByOrderId(om.getOrderId());
-			resOM.setOdProducts(odProducts);
-			
-			if (checkCoupon != null) {
-				resOM.setCheckCoupon(checkCoupon);
-			} 			
-
-			resOM.setUsedBonus(useBonus);
-			resOM.setNowBonus(member.getBonus());
-			
-			resOM.setAddress(addressDetail.get("county").toString().replace("\"", "") + addressDetail.get("address").toString().replace("\"", ""));
-//			System.out.println(resOM);
-			
-			String ecpay = gson.fromJson(req.getParameter("toEcpay"), String.class);
 			pw.println(gson.toJson(resOM)); // 一律送出資料後由前端submit到ecpay
 				
 			// 寄送成功下單通知

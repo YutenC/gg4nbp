@@ -201,7 +201,7 @@ public class OrderMasterDaoImpl implements OrderMasterDao {
 		}
 		
 		sb.delete(sb.lastIndexOf("AND"), sb.length());
-		sb.append("ORDER BY commitDate DESC");
+		sb.append("ORDER BY commitDate DESC");  // 以日期降冪
 		Query<OrderMaster> query = session.createQuery(sb.toString());
 		for (String condition : whereCondition.keySet()) {
 			query.setParameter(condition, whereCondition.get(condition));

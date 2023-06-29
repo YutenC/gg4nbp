@@ -65,7 +65,6 @@ const orderContent = Vue.createApp({
     },
     created() {
         let orderId = sessionStorage.getItem('orderId');
-        // let orderId = location.hash.substring(1, location.hash.length);
         axios.get(projectFolder + '/OrderMaster?getOne=' + orderId)
             .then(res => {
                 this.order = res.data;

@@ -3,17 +3,22 @@ package gg.nbp.web.shop.shoporder.service;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
+
 import gg.nbp.core.service.CoreService;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
 import gg.nbp.web.shop.shoporder.util.ManageOrder;
 import gg.nbp.web.shop.shoporder.util.MemberViewOrder;
 import gg.nbp.web.shop.shoporder.util.OrderSelection;
+import gg.nbp.web.shop.shoporder.util.ResOrderMaster;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
 
 public interface OrderMasterService extends CoreService{
 	
-	boolean newOrder(OrderMaster om, List<TransOrderProduct> trObjList, Member member);
+	public static final double BONUS_RATE = 0.02;
+	
+	boolean establishNewOrder(OrderMaster om, List<TransOrderProduct> trObjList, Member member);
 	
 	List<ManageOrder> showAllMgOrderList(Integer limit, Integer offset);
 	
@@ -45,6 +50,9 @@ public interface OrderMasterService extends CoreService{
 	long countDataNum(Map<String, Integer> condition);
 	
 	OrderMaster getOne(Integer orderId);
+
+	OrderMaster createNewOrderMaster(List<TransOrderProduct> trObjList, JsonObject cardDetail, JsonObject addressDetail, Integer memberId,
+			String commitType, String pickType, String discountRadio, String couponCode, Integer usedBonus);
 	
 	boolean updateFromManager(OrderMaster fromManager);
 	
@@ -62,5 +70,7 @@ public interface OrderMasterService extends CoreService{
 	TransOrderProduct getOneProduct(Integer productId);
 	
 	List<TransOrderProduct> getRecomendFromAll(Integer recomendAmount);
+	
+	ResOrderMaster getOrderResult(OrderMaster om);
 
 }

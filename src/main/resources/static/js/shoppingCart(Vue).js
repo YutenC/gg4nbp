@@ -324,7 +324,7 @@ const shoppingContent = Vue.createApp({
                     demand: 'checkOut',
                     toEcpay: ecpay,
                     discountRadio: this.discountRadio,
-                    coupon: JSON.stringify(this.resCoupon),
+                    couponCode: this.couponCode,
                     bonus: this.bonus,
                     deliver: this.deliver,
                     payment: this.payment,
