@@ -193,9 +193,9 @@
             margin: auto;
         }
 
-        span.block {
-            visibility: hidden;
-        }
+        /*span.block {*/
+        /*    visibility: hidden;*/
+        /*}*/
 
         button {
             box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
@@ -224,57 +224,57 @@
                         <div class="username block">
                             <input id="account" type="username" name="account" placeholder="帳號" required>
                             <div>
-                                <span class="block">0<div class="check -on" id="username check"></div></span>
+                                <span class="block"><div class="check -on" id="username check"></div></span>
                             </div>
                         </div>
                         <div class="nickname block">
                             <input id="nickname" type="text" name="nick" placeholder="會員暱稱" required>
                             <div>
-                                <span class="block">0<div class="check -on" id="nickname check"></div></span>
+                                <span class="block"><div class="check -on" id="nickname check"></div></span>
                             </div>
 
                         </div>
                         <div class="password block">
                             <input id="password" type="password" name="password" placeholder="密碼" required>
                             <div>
-                                <span class="block">0<div class="check -on" id="password check"></div></span>
+                                <span class="block"><div class="check -on" id="password check"></div></span>
                             </div>
                         </div>
                         <div class="confirm_password block">
                             <input id="confirm_password" type="password" name="confirm_password" placeholder="確認密碼"
                                 required>
                             <div>
-                                <span class="block">0<div class="check -on" id="confirm_password check"></div></span>
+                                <span class="block"><div class="check -on" id="confirm_password check"></div></span>
                             </div>
                         </div>
                         <div class="id_number block">
                             <input id="id_number" name="id_number" type="password" placeholder="身分證字號"></input>
                             <div>
-                                <span class="block">0<div class="check -on" id="id_number check"></div></span>
+                                <span class="block"><div class="check -on" id="id_number check"></div></span>
                             </div>
                         </div>
                         <div class="birthday block">
                             生日：<input id="birthday" name="birth" type="date" placeholder="生日" required></input>
                             <div>
-                                <span class="block">0<div class="check -on" id="birthday check"></div></span>
+                                <span class="block"><div class="check -on" id="birthday check"></div></span>
                             </div>
                         </div>
                         <div class="address block">
                             <input id="address" name="address" type="text" placeholder="聯絡地址" required></input>
                             <div>
-                                <span class="block">0<div class="check -on" id="address check"></div></span>
+                                <span class="block"><div class="check -on" id="address check"></div></span>
                             </div>
                         </div>
                         <div class="phone_number block">
-                            <input id="phone_number" name="phone" type="text" placeholder="連絡電話" required></input>
+                            <input id="phone_number" name="phone" type="text" placeholder="手機號碼" required></input>
                             <div>
-                                <span class="block">0<div class="check -on" id="phone_number check"></div></span>
+                                <span class="block"><div class="check -on" id="phone_number check"></div></span>
                             </div>
                         </div>
                         <div class="email block">
                             <input id="email" name="email" type="email" placeholder="E-mail" required=""></input>
                             <div>
-                                <span class="block">0<div class="check -on" id="email check"></div></span>
+                                <span class="block"><div class="check -on" id="email check"></div></span>
                             </div>
 
 
@@ -298,7 +298,71 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
 </body>
 <script>
+    const account = $("input#account").val();
+    const nickname = $("input#nickname").val();
+    const password = $("input#password").val();
+    const confirmPassword = $("input#confirm_password").val();
+    const idNumber = $("input#id_number").val();
+    const phoneNumber = $("input#phone_number").val();
+    const email = $("input#email").val();
+
     $("button#submit").on("click", function () {
+        if(!checkAccount(account)){
+            Swal.fire({
+                icon: 'error',
+                title: '格式錯誤',
+                text: '格式限定英文或數字',
+            })
+            return;
+        }
+        if(!checkNickname(nickname)){
+            Swal.fire({
+                icon: 'error',
+                title: '格式錯誤',
+                text: '格式限定中英文或數字',
+            })
+            return;
+        }
+        if(!checkPassword(password)){
+            Swal.fire({
+                icon: 'error',
+                title: '格式錯誤',
+                text: '格式限定英文或數字',
+            })
+            return;
+        }
+        if(!checkConfirmPassword(confirmPassword)){
+            Swal.fire({
+                icon: 'error',
+                title: '格式錯誤',
+                text: '格式限定英文或數字',
+            })
+            return;
+        }
+        if(!checkIdNumber(idNumber)){
+            Swal.fire({
+                icon: 'error',
+                title: '格式錯誤',
+                text: '身分證格式錯誤',
+            })
+            return;
+        }
+        if(!checkPhoneNumber(phoneNumber)){
+            Swal.fire({
+                icon: 'error',
+                title: '格式錯誤',
+                text: '手機號碼格式錯誤',
+            })
+            return;
+        }
+        if(!checkEmail(email)){
+            Swal.fire({
+                icon: 'error',
+                title: '格式錯誤',
+                text: 'Email格式錯誤',
+            })
+            return;
+        }
         $.ajax({
             url: "memberRegisterServlet",
             method: "POST",
@@ -320,7 +384,7 @@
                 console.log(isPass)
                 if (isPass) {
                     // 將物件傳成json字串存取到sessionStorge
-                    var regData = JSON.stringify(register);
+                    let regData = JSON.stringify(register);
                     sessionStorage.setItem("register", regData);
                     window.location.href = "member_vertify.html";
                 } else {
@@ -339,6 +403,39 @@
         })
     })
 
+    function checkAccount(account){
+        let pattern = /^[a-zA-Z0-9]+$/;
+        return pattern.test(account);
+    }
+    function checkNickname(nickname){
+        let pattern = /^[a-zA-Z0-9\u4E00-\u9FA5]+$/;
+        return pattern.test(nickname);
+    }
+
+    function checkPassword(password){
+        let pattern = /^[a-zA-Z0-9]+$/;
+        return pattern.test(password);
+    }
+
+    function checkConfirmPassword(confirmPassword){
+        let pattern = /^[a-zA-Z0-9]+$/;
+        return pattern.test(confirmPassword);
+    }
+
+    function checkIdNumber(idNumber){
+     let pattern =/^[A-Za-z][12][0-9]{8}$/;
+     return pattern.test(idNumber);
+    }
+
+    function checkPhoneNumber(phoneNumber){
+        let pattern = /^[0][9][0-9]{8}/;
+        return pattern.test(phoneNumber);
+    }
+
+    function checkEmail(email){
+        let pattern =/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+        return pattern.test(email);
+    }
 
 
 </script>

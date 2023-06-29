@@ -301,6 +301,10 @@
         })
     }
 
+    function checkEmail(email){
+        let pattern =/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+        return pattern.test(email);
+    }
 
     function countdown(countDownSeconds) {
         const button = $("input.send_letter");
