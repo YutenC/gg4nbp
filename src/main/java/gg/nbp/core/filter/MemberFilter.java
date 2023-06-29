@@ -25,7 +25,7 @@ public class MemberFilter extends HttpFilter implements Filter {
         if(isLogin != null ){
             chain.doFilter(request,response);
         } else {
-            session.setAttribute("location", request.getRequestURI());
+            session.setAttribute("memberLocation", request.getRequestURI());
             response.sendRedirect(request.getContextPath()+"/member_login.html");
         }
     }
