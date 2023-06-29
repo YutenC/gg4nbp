@@ -314,7 +314,7 @@ submitBtn.addEventListener("click", function(e) {
     let bankNumValue = $('#bankNum').val();
 
 
-    fetch('shp_buy', {
+    fetch('/gg4nbp/sh_shop/shp_buy', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
