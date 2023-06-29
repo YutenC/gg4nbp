@@ -28,7 +28,6 @@ public class ActController {
         return actService.getActById(id);
     }
 
-
     // 新增
     @PostMapping("/act")
     public Act processAct(@RequestBody Act act) {

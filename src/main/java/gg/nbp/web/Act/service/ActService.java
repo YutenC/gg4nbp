@@ -26,8 +26,6 @@ public class ActService {
     private ActRepository actRepository;
     @Autowired
     private ActMessageRepository actMessageRepository;
-
-
     // 查詢全部
     public List<Act> getAllActs() {
 
