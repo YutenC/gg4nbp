@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistPictureDao;
+import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import jakarta.persistence.PersistenceContext;
 
 
@@ -33,6 +34,23 @@ public class SecondHandBuylistPictureDaoimpl implements SecondHandBuylistPicture
 	@Override
 	public int update(SecondhandBuyPicture pojo) {
 		session.merge("SecondHandBuyPicture", pojo);
+		return 1;
+	}
+	
+	public int deleteByListId(Integer id) {
+		final String sql = "DELETE FROM secondhand_buy_picture WHERE  BuyList_id = :id";
+		session.createNativeQuery(sql, SecondhandBuyPicture.class).setParameter("id", id).executeUpdate();
+		return 1;
+	}
+	
+	
+	@Override
+	public int update(BuyEvent be) {
+		deleteByListId(be.getEventId());
+		for (SecondhandBuyPicture sp : be.getImage()) {
+			sp.setBuylistId(be.getEventId());
+			session.persist(sp);
+		}
 		return 1;
 	}
 

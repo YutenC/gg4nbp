@@ -77,10 +77,6 @@ side.innerHTML = `
                 <span class="buy_btn gobuylist">
                     二手回收
                 </span>
-                <div class="brandlist">
-                <span class="buy_btn gochecklist">
-                    回收查詢
-                </span>
             </div>`;
 
 $('body').prepend(header).append(footer);
@@ -155,10 +151,6 @@ document.addEventListener('DOMContentLoaded', e => {
     })
 
 
-    $('.gochecklist').on('click', e => {
-        e.preventDefault;
-    window.location.href = 'SecondHand_CheckBuylist.html';
-    })
 
 
 
