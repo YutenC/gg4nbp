@@ -37,27 +37,82 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <!-- <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;
-                                        </label>
-                                    </div> -->
+                                <div class="col-md-6">
+                                    <div class="row state-check">
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content: flex-end ">
+                                            狀態：
+                                        </div>
+                                        <div class=" col" style="display: flex; align-items: center;">
+                                            <div class="form-check" style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox"
+                                                    id="selectAllCheckbox" onchange="toggleAllStateCheckboxes()">
+                                                <label class="form-check-label" for="selectAllCheckbox">全部</label>
+                                            </div>
+                                        </div>
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content:center;">
+                                            <div class="form-check" style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox"
+                                                    id="unverifiedCheckbox"
+                                                    onchange="handleStateCheckboxChange('unverified')">
+                                                <label class="form-check-label" for="unverifiedCheckbox">未驗證</label>
+                                            </div>
+                                        </div>
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content:center;">
+                                            <div class="form-check" style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox"
+                                                    id="activeCheckbox" onchange="handleStateCheckboxChange('active')">
+                                                <label class="form-check-label" for="activeCheckbox">使用中</label>
+                                            </div>
+                                        </div>
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content:center;">
+                                            <div class="form-check" style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox"
+                                                    id="temporaryBanCheckbox"
+                                                    onchange="handleStateCheckboxChange('temporary_ban')">
+                                                <label class="form-check-label"
+                                                    for="temporaryBanCheckbox">期間<br>停權</label>
+                                            </div>
+                                        </div>
+                                        <div class="col"
+                                            style="display: flex; align-items: center; justify-content:center;">
+                                            <div class="form-check " style="padding-left:1rem">
+                                                <input class="form-check-input state-check" type="checkbox"
+                                                    id="permanentBanCheckbox"
+                                                    onchange="handleStateCheckboxChange('permanent_ban')">
+                                                <label class="form-check-label"
+                                                    for="permanentBanCheckbox">永久<br>停權</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm"
-                                                aria-controls="dataTable" placeholder="Search">
+                                    <div class="text-md-end dataTables_filter" id="member_dataTable_filter">
+                                        <select name="member_search_type" class="member_search_type" required>
+                                            <option value="member_id">ID</option>
+                                            <option value="account">帳號</option>
+                                            <option value="nick">暱稱</option>
+                                        </select>
+                                        <label class="member_form-label">
+                                            <input type="search"
+                                                class="form-control form-control-sm member_search_content"
+                                                aria-controls="dataTable" placeholder="搜尋...">
                                         </label>
+                                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block member_search_button"
+                                            role="button">
+                                            搜尋
+                                        </a>
+                                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block member_default_list_button btn-danger"
+                                            role="button">
+                                            清除搜尋條件
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="table-responsive table mt-2" id="member_list_div" role="grid"
                                 aria-describedby="dataTable_info">
                                 <table class="table my-0" id="member_list">

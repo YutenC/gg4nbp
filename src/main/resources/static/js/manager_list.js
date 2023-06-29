@@ -86,7 +86,6 @@ fetch('../manager/manager_list', {
                                     }
                                 }
                             })
-                            console.log(manager.power_id);
                         })
 
                     })
@@ -160,8 +159,6 @@ $("a.manager_search_button").on("click", () => {
         if (reportAdminCheckbox.checked) {
             selectedPowerIds.push(5);
         }
-
-        console.log(selectedPowerIds);
 
         filtered_array = filtered_array.filter(manager => {
             return selectedPowerIds.every(powerId => manager.power_id.includes(powerId));

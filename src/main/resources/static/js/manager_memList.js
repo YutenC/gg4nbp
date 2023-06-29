@@ -16,13 +16,13 @@ fetch('../manager/member_list', {
 
             let member_state = "";
             if (member.member_ver_state === 0) {
-                member_state = "待驗證";
+                member_state = "未驗證";
             } else if (member.member_ver_state === 2) {
-                member_state = "停權中";
+                member_state = "期間停權";
             } else if (member.member_ver_state === 3) {
                 member_state = "永久停權";
             } else {
-                member_state = "已驗證";
+                member_state = "使用中";
             }
 
 
@@ -55,82 +55,66 @@ fetch('../manager/member_list', {
         console.error('Error:', error);
     });
 
-// WIP
 
+$("a.member_search_button").on("click", () => {
+    event.preventDefault();
+    filtered = true;
 
+    // 勾選框篩選
+    const selectAllCheckbox = document.querySelector('#selectAllCheckbox');
+    const unverifiedCheckbox = document.querySelector('#unverifiedCheckbox');
+    const activeCheckbox = document.querySelector('#activeCheckbox');
+    const temporaryBanCheckbox = document.querySelector('#temporaryBanCheckbox');
+    const permanentBanCheckbox = document.querySelector('#permanentBanCheckbox');
 
+    let selectedVerStates = [];
 
-// $("a.manager_search_button").on("click", () => {
-//     event.preventDefault();
-//     filtered = true;
+    if (!(selectAllCheckbox.checked)) {
+        if (unverifiedCheckbox.checked) {
+            selectedVerStates.push('未驗證');
+        }
 
-//     let searchType = $("select.manager_search_type").val();
-//     let searchContent = $("input.manager_search_content").val();
+        if (activeCheckbox.checked) {
+            selectedVerStates.push('使用中');
+        }
 
-//     // alert(typeof searchType + searchType + "\n" + typeof searchContent + searchContent);
+        if (temporaryBanCheckbox.checked) {
+            selectedVerStates.push('期間停權');
+        }
 
-//     filtered_array = member_array.filter((manager) => {
-//         if (typeof manager[searchType] === "number") {
-//             let searchContent_num = /^[0-9]+$/.test(searchContent) ? parseInt(searchContent) : NaN;
-//             if (searchContent_num === NaN) {
-//                 alert("該欄只能搜尋數字");
-//             } else {
-//                 // console.log(typeof manager[searchType]);
-//                 // console.log(typeof searchContent);
+        if (permanentBanCheckbox.checked) {
+            selectedVerStates.push('永久停權');
+        }
 
-//                 return manager[searchType].toString().includes(searchContent);
-//             }
-//         }
-//         return manager[searchType].includes(searchContent);
-//     });
+        filtered_array = member_array.filter(member => {
+            const member_ver_state = member.member_ver_state;
+            return selectedVerStates.includes(member_ver_state);
+        });
+    }
 
-//     // console.log(filtered_array);
-//     showList();
+    // 文字框篩選
+    let searchType = $("select.member_search_type").val();
+    let searchContent = $("input.member_search_content").val();
 
-// })
+    filtered_array = filtered_array.filter((member) => {
+        return member[searchType].toString().includes(searchContent);
+    });
 
-// $("a.manager_default_list_button").on("click", () => {
-//     event.preventDefault();
-//     filtered = false;
-//     showList();
-// })
+    console.log(searchType);
+    console.log(searchContent);
+    console.log(member_array);
+    console.log(filtered_array);
 
+    showList();
 
+})
 
-// function changeStateClick(id) {
-//     event.preventDefault();
+$("a.member_default_list_button").on("click", () => {
+    event.preventDefault();
+    filtered = false;
+    showList();
+})
 
-//     let confirmChangeWorkingState = confirm("確定更改" + member_array[id].account + "的在職狀況嗎?")
-
-//     // 使用 AJAX 發送請求，將 ID 值傳送到後端
-//     if (confirmChangeWorkingState) {
-//         fetch('../manager/manager_state_edit', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({
-//                 manager_id: member_array[id].manager_id,
-//                 manager_account: member_array[id].account,
-//                 manager_password: member_array[id].password,
-//                 manager_name: member_array[id].name,
-//                 manager_email: member_array[id].email,
-//                 manager_phone: member_array[id].phone,
-//                 manager_address: member_array[id].address,
-//                 manager_is_working: member_array[id].is_working
-//             })
-//         })
-//             .then(response => {
-//                 if (response.redirected) {
-//                     window.location.href = response.url; // 重導至指定的 URL
-//                 } else {
-//                     return response.json(); // 解析 JSON 回應
-//                 }
-//             })
-//             .catch(error => {
-//                 console.error('Error:', error);
-//             });
-//     }
-
-// }
 
 function banReadIn(member_id) {
     // 將 ID 儲存到 sessionStorage 中
@@ -410,5 +394,27 @@ function showList() {
 
 }
 
+function toggleAllStateCheckboxes() {
+    const selectAllCheckbox = document.querySelector('#selectAllCheckbox');
+    const checkboxes = document.querySelectorAll('.state-check:not(#selectAllCheckbox)');
 
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAllCheckbox.checked;
+    });
+}
+
+function handleStateCheckboxChange() {
+    const selectAllCheckbox = document.querySelector('#selectAllCheckbox');
+    const checkboxes = document.querySelectorAll('.state-check:not(#selectAllCheckbox)');
+
+    let allChecked = true;
+
+    checkboxes.forEach(checkbox => {
+        if (!checkbox.checked) {
+            allChecked = false;
+        }
+    });
+
+    selectAllCheckbox.checked = allChecked;
+}
 
