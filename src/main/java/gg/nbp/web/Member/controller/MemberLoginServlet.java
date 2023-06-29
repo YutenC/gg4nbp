@@ -2,6 +2,8 @@ package gg.nbp.web.Member.controller;
 
 import java.io.IOException;
 import java.io.Serial;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.google.gson.JsonObject;
 import gg.nbp.web.Member.entity.Login_record;
@@ -49,7 +51,35 @@ public class MemberLoginServlet extends HttpServlet {
         String hashedPassword = DigestUtils.md5DigestAsHex(password.getBytes());
         member.setPassword(hashedPassword);
         member = SERVICE.login(member);
-
+        
+        
+        //停權檢查
+        
+        boolean isSuspending= false;
+        
+        if (member.getMember_ver_state()== 2) {
+        	LocalDate currentDate = LocalDate.now();
+            LocalDate ban_deadline = member.getSuspend_deadline().toLocalDate();
+        	if (currentDate.isAfter(ban_deadline)) {
+        		member.setSuspend_deadline(null);
+        		member.setMember_ver_state(1);
+        		SERVICE.edit(member);
+            }else {
+            	isSuspending= true;
+            }
+        }else if (member.getMember_ver_state()== 3) {
+        	isSuspending= true;
+        }
+        
+        if (isSuspending) {
+        	member.setSuccessful(false);
+        	member.setMessage("此帳號已停權，請洽客服人員");
+        	MemberCommonUitl.gsonToJson(response,member);
+            return;
+        }
+        
+        
+        
         if (member.isSuccessful()) {
 
             loginRecord.setMember_id(member.getMember_id());

@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="dropdown-menu" role="menu">
                 <a class="dropdown-item" role="presentation" href="sh_productmanage.html">商品管理</a>
-                <a class="dropdown-item" role="presentation" href="">收購管理</a>
+                <a class="dropdown-item" role="presentation" href="manager_BuyEvent.html">收購管理</a>
                 <a class="dropdown-item" role="presentation" href="sh_ordermanage.html">訂單一覽</a>
             </div>
         </div>

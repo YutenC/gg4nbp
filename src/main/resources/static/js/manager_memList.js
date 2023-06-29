@@ -294,7 +294,7 @@ function showList() {
         }
 
         let cancelBanHtml = ''
-        if (member.member_ver_state === "停權中" || member.member_ver_state === "永久停權") {
+        if (member.member_ver_state === "期間停權" || member.member_ver_state === "永久停權") {
             cancelBanHtml = `
         <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button"
         role="button" onclick="banClear(${member.member_id})">
