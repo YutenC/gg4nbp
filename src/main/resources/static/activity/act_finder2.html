@@ -86,11 +86,6 @@
 
     <div class="main-content" style="height: 800px;">
         <!-- main的區塊 -->
-
-
-
-
-
             <div class="container">
                 <div class="row">
                     <div class="col-12@sm">
@@ -361,7 +356,7 @@
             success: function (response) {
 
                  acts=response;
-                for(let i=0;i<11;i++){
+                for(let i=12;i<24;i++){
                     let act=acts[i];
                     let childContent = `
 <figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
