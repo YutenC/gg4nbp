@@ -39,11 +39,24 @@
 
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm"
-                                                aria-controls="dataTable" placeholder="Search">
+                                    <div class="text-md-end dataTables_filter" id="ban_dataTable_filter">
+                                        <select name="ban_search_type" class="ban_search_type" required>
+                                            <option value="ban_id">停權單ID</option>
+                                            <option value="member_id">停權會員ID</option>
+                                            <option value="manager_id">停權管理者ID</option>
+                                        </select>
+                                        <label class="ban_form-label">
+                                            <input type="search" class="form-control form-control-sm ban_search_content"
+                                                aria-controls="dataTable" placeholder="搜尋...">
                                         </label>
+                                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block ban_search_button"
+                                            role="button">
+                                            搜尋
+                                        </a>
+                                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block ban_default_list_button btn-danger"
+                                            role="button">
+                                            清除搜尋條件
+                                        </a>
                                     </div>
                                 </div>
                             </div>
