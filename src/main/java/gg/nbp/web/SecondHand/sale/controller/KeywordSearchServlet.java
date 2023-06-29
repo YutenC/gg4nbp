@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/sh_shop/shp_typeSearch")
-public class TypeSearchServlet extends HttpServlet {
+@WebServlet("/sh_shop/shp_keywordSearch")
+public class KeywordSearchServlet extends HttpServlet {
 
     @Autowired
     private SecondhandProductServiceImpl SERVICE;
@@ -26,9 +26,9 @@ public class TypeSearchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         SecondhandProduct shp = CommonUtil.json2pojo(req, SecondhandProduct.class);
-        String typeValue = shp.getType();
+        String keyword = shp.getName();
 
-        List<SecondhandProduct> shpType = SERVICE.searchByType(typeValue);
+        List<SecondhandProduct> shpType = SERVICE.searchByName(keyword);
         List<SecondhandProduct> shpList = new ArrayList<>();
 
         // 把type商品的圖片找出來

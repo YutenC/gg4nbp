@@ -49,26 +49,26 @@ nMain.addEventListener("click", function (){
     typeValue = "00";
     console.log(typeValue);
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 
 })
 nHandle.addEventListener("click", function (){
     typeValue = "01";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 nGame.addEventListener("click", function (){
     typeValue = "02";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 nOther.addEventListener("click", function (){
     typeValue = "03";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 
 // xbox
@@ -76,25 +76,25 @@ bMain.addEventListener("click", function (){
     typeValue = "10";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 bHandle.addEventListener("click", function (){
     typeValue = "11";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 bGame.addEventListener("click", function (){
     typeValue = "12";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 bOther.addEventListener("click", function (){
     typeValue = "13";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 
 // PS
@@ -102,25 +102,25 @@ pMain.addEventListener("click", function (){
     typeValue = "20";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 pHandle.addEventListener("click", function (){
     typeValue = "21";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 pGame.addEventListener("click", function (){
     typeValue = "22";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 pOther.addEventListener("click", function (){
     typeValue = "23";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 // ===================================================================
 

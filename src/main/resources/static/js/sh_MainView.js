@@ -23,91 +23,115 @@ const pOther = document.querySelector('body > main > div.side > div:nth-child(3)
 // pOther.addEventListener("click", function (){console.log("nnn")});
 // console.log("click");
 
-
-
 var typeValue;
 
+const keywordInput = document.querySelector('#input_search > input[type=text]');
+let keywordValue = keywordInput.value;
 
 
 // NS
 nMain.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "00";
     console.log(typeValue);
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 
 })
 nHandle.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "01";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 nGame.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "02";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 nOther.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "03";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 
 // xbox
 bMain.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "10";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 bHandle.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "11";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 bGame.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "12";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 bOther.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "13";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 
 // PS
 pMain.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "20";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 pHandle.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "21";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 pGame.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "22";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 pOther.addEventListener("click", function (){
+    sessionStorage.removeItem("keyword", keywordValue);
     typeValue = "23";
     console.log(typeValue)
     sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_TypeMainView.html";
+    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 })
 
+
+// 搜尋keyword
+
+keywordInput.addEventListener('keydown', function(e) {
+    if( e.keyCode === 13 ){
+        sessionStorage.removeItem("type", typeValue);
+        keywordValue = keywordInput.value;
+        console.log(keywordValue);
+        sessionStorage.setItem("keyword", keywordValue);
+        window.location.href="../sh_shop/sh_keyTypeMainView.html";
+    }
+});
 
 // 全部上架商品
 

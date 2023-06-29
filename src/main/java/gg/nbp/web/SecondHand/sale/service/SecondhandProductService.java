@@ -18,6 +18,8 @@ public interface SecondhandProductService {
 
     List<SecondhandProduct> searchAll();
 
+    List<SecondhandProduct> searchTime();
+
     List<SecondhandProduct> searchLaunch();
 
     List<SecondhandProduct> searchByType(String type);

@@ -1,5 +1,6 @@
 package gg.nbp.web.SecondHand.sale.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import gg.nbp.web.SecondHand.sale.dao.SecondhandProductImageDao;
@@ -112,6 +113,16 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
     public List<SecondhandProduct> searchAll() {
 
         return shpdao.selectAll();
+    }
+
+    @Override
+    public List<SecondhandProduct> searchTime() {
+        List<SecondhandProduct> shp = shpdao.selectByTime();
+        List<SecondhandProduct> newshp = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            newshp.add(shp.get(i));
+        }
+        return newshp;
     }
 
     @Override
