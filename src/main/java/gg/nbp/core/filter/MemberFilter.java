@@ -2,6 +2,8 @@ package gg.nbp.core.filter;
 
 import java.io.IOException;
 
+import org.springframework.core.annotation.Order;
+
 import gg.nbp.web.Member.entity.Member;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -10,6 +12,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.*;
 
 @WebFilter("/member/*")
+@Order(1)
 public class MemberFilter extends HttpFilter implements Filter {
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
