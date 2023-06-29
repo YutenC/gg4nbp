@@ -17,7 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 
-@WebServlet("/sh_shop/priceChange")
+@WebServlet("/member/priceChange")
 public class PriceServlet extends HttpServlet {
 
 //product price

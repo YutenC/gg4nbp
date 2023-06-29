@@ -4,6 +4,7 @@ package gg.nbp.web.SecondHand.sale.controller;
 import java.io.IOException;
 import java.util.List;
 
+import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class AddshpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
