@@ -28,97 +28,117 @@ var typeValue;
 const keywordInput = document.querySelector('#input_search > input[type=text]');
 let keywordValue = keywordInput.value;
 
+const type_btn = document.querySelectorAll('.listtype>span');
+for (let i = 0; i < type_btn.length; i++) {
+    let type1 = Math.floor(i / 4) +""+ i % 4 ; 
+    type_btn[i].addEventListener('click',function(){
+        goSearch(type1);
+    })
+}
+    
 
-// NS
-nMain.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "00";
-    console.log(typeValue);
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
 
-})
-nHandle.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "01";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-nGame.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "02";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-nOther.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "03";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
 
-// xbox
-bMain.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "10";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-bHandle.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "11";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-bGame.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "12";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-bOther.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "13";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
 
-// PS
-pMain.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "20";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-pHandle.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "21";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-pGame.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "22";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-pOther.addEventListener("click", function (){
-    sessionStorage.removeItem("keyword", keywordValue);
-    typeValue = "23";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
+
+// // NS
+// nMain.addEventListener("click", function (){
+//     typeValue = "00";
+//     goSearch(typeValue);
+
+// })
+// nHandle.addEventListener("click", function (){
+//     typeValue = "01";
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+// nGame.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "02";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+// nOther.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "03";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+
+// // xbox
+// bMain.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "10";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+// bHandle.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "11";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+// bGame.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "12";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+// bOther.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "13";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+
+// // PS
+// pMain.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "20";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+// pHandle.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "21";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+// pGame.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "22";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
+// pOther.addEventListener("click", function (){
+//     sessionStorage.removeItem("keyword", keywordValue);
+//     sessionStorage.removeItem("type");
+//     typeValue = "23";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     history.go(0);
+// })
 
 
 // 搜尋keyword
@@ -129,12 +149,12 @@ keywordInput.addEventListener('keydown', function(e) {
         keywordValue = keywordInput.value;
         console.log(keywordValue);
         sessionStorage.setItem("keyword", keywordValue);
-        window.location.href="../sh_shop/sh_keyTypeMainView.html";
+        history.go(0);
     }
 });
 
 // 全部上架商品
-
+if(!sessionStorage.getItem("type")){
 
     fetch('shp_main', {
         method: 'get',
@@ -157,19 +177,82 @@ keywordInput.addEventListener('keydown', function(e) {
                         showList();
                     }
                 )
-
+    
             }
         )
+}
+
+
+
+
+// 從資料庫取種類商品
+fetch('shp_typeSearch', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        type: sessionStorage.getItem("type", typeValue)
+        // type: typeValue
+    }),
+})
+    .then(resp => resp.json()) // .then(function(resp){resp.json();})
+    .then(
+        jsondata => {
+
+            console.log("typeSelect" + jsondata);
+            jsondata.forEach(
+                secondhandproduct => {
+                    let Mainshp_array_item = {
+                        productId: secondhandproduct.productId,
+                        name: secondhandproduct.name,
+                        type: secondhandproduct.type,
+                        image: secondhandproduct.image.map(item => item.image),
+                    }
+                    Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
+                    console.log(Mainshp_array);
+                    showList();
+                }
+            )
+
+        }
+    )
 
 
 
 
 
+// 從資料庫取關鍵字商品
+fetch('shp_keywordSearch', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        name: sessionStorage.getItem("keyword", keywordValue)
+    }),
+})
+    .then(resp => resp.json()) // .then(function(resp){resp.json();})
+    .then(
+        jsondata => {
 
+            console.log("keywordSelect" + jsondata);
+            jsondata.forEach(
+                secondhandproduct => {
+                    let Mainshp_array_item = {
+                        productId: secondhandproduct.productId,
+                        name: secondhandproduct.name,
+                        type: secondhandproduct.type,
+                        image: secondhandproduct.image.map(item => item.image),
+                    }
+                    Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
+                    console.log(Mainshp_array);
+                    showList();
+                }
+            )
 
-
-
-
+        }
+    )
 
 
 
@@ -244,3 +327,11 @@ function buyBtn(productId) {
     window.location.href = "../member/sh_buy.html";
 }
 
+
+
+function goSearch(str){
+    sessionStorage.removeItem("keyword", keywordValue);
+    sessionStorage.removeItem("type");
+    sessionStorage.setItem("type", str);
+    location.href ="SecondHand_MainView.html";
+}

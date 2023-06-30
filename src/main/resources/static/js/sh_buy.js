@@ -45,83 +45,83 @@ var typeValue;
 
 
 // NS
-nMain.addEventListener("click", function (){
-    typeValue = "00";
-    console.log(typeValue);
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// nMain.addEventListener("click", function (){
+//     typeValue = "00";
+//     console.log(typeValue);
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
 
-})
-nHandle.addEventListener("click", function (){
-    typeValue = "01";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-nGame.addEventListener("click", function (){
-    typeValue = "02";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-nOther.addEventListener("click", function (){
-    typeValue = "03";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
+// })
+// nHandle.addEventListener("click", function (){
+//     typeValue = "01";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
+// nGame.addEventListener("click", function (){
+//     typeValue = "02";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
+// nOther.addEventListener("click", function (){
+//     typeValue = "03";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
 
-// xbox
-bMain.addEventListener("click", function (){
-    typeValue = "10";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-bHandle.addEventListener("click", function (){
-    typeValue = "11";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-bGame.addEventListener("click", function (){
-    typeValue = "12";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-bOther.addEventListener("click", function (){
-    typeValue = "13";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
+// // xbox
+// bMain.addEventListener("click", function (){
+//     typeValue = "10";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
+// bHandle.addEventListener("click", function (){
+//     typeValue = "11";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
+// bGame.addEventListener("click", function (){
+//     typeValue = "12";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
+// bOther.addEventListener("click", function (){
+//     typeValue = "13";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
 
-// PS
-pMain.addEventListener("click", function (){
-    typeValue = "20";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-pHandle.addEventListener("click", function (){
-    typeValue = "21";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-pGame.addEventListener("click", function (){
-    typeValue = "22";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
-pOther.addEventListener("click", function (){
-    typeValue = "23";
-    console.log(typeValue)
-    sessionStorage.setItem("type", typeValue);
-    window.location.href="../sh_shop/sh_keyTypeMainView.html";
-})
+// // PS
+// pMain.addEventListener("click", function (){
+//     typeValue = "20";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
+// pHandle.addEventListener("click", function (){
+//     typeValue = "21";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
+// pGame.addEventListener("click", function (){
+//     typeValue = "22";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
+// pOther.addEventListener("click", function (){
+//     typeValue = "23";
+//     console.log(typeValue)
+//     sessionStorage.setItem("type", typeValue);
+//     window.location.href="../sh_shop/sh_keyTypeMainView.html";
+// })
 // ===================================================================
 
 
@@ -314,7 +314,7 @@ submitBtn.addEventListener("click", function(e) {
     let bankNumValue = $('#bankNum').val();
 
 
-    fetch('/gg4nbp/sh_shop/shp_buy', {
+    fetch('/gg4nbp/secondhand/shp_buy', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -332,7 +332,7 @@ submitBtn.addEventListener("click", function(e) {
         })
     })
 
-     window.location.href="../sh_shop/sh_MainView.html"
+     window.location.href="../secondhand/SecondHand_MainView.html"
 
     })
 

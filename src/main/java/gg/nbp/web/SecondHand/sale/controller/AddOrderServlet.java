@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-@WebServlet("/sh_shop/shp_buy")
+@WebServlet("/secondhand/shp_buy")
 public class AddOrderServlet extends HttpServlet {
 
     @Autowired

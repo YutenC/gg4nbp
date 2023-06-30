@@ -148,16 +148,10 @@ public class BuyEvent extends Core {
 	public static SecondhandBuylist trans4Mana(BuyEvent be ,SecondHandBuylistDao dao ) {
 		SecondhandBuylist sl = dao.selectById(be.eventId);
 		sl.setPrice(be.price < 0  ? null : be.price);
-<<<<<<< HEAD
 
-		sl.setConfirmTime(be.confirmTime);
-		for(int i = 0 ; i < 3 ; i++) {
-			if(getPayState(i).equals(be.payState)) {
-=======
 		sl.setConfirmTime(Toolbox.getNow());
 		for(int i = 0 ; i < 3 ; i++) 
 			if(getPayState(i).equals(be.payState)) 
->>>>>>> SecondBuy
 				sl.setPayState(i);
 		for(int i = 0 ; i < 7 ; i++)
 			if(getApprovalState(i).equals(be.approvalState))

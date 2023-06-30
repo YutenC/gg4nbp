@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/sh_shop/shp_view")
+@WebServlet("/secondhand/shp_view")
 public class ShpViewServlet extends HttpServlet {
 
     @Autowired
