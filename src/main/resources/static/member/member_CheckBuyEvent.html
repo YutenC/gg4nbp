@@ -693,7 +693,7 @@
                             <span>收購編號</span>
                             <span>商品名稱</span>
                             <span>請求人</span>
-                            <span>預估價</span>
+                            <span>收購價</span>
                             <span>審核狀態</span>
                             <span></span>
                         </div>
@@ -916,6 +916,56 @@
             showConfirmButton: false,
         })
 
+        if (obj.progress >= 3){
+            $('#content').attr("disabled","disabled");
+            $('#productName').attr("disabled","disabled");
+            $('#estimate').attr("disabled","disabled");
+            $('#applicantBankNumber').attr("disabled","disabled");
+        }else{
+            $('#getshot').on('click', function(e){
+                $(this).next().click();
+            })
+
+            $('#getshot').next().on('change',function(e){
+                let uploadImg = e.target.files || e.dataTransfer.files;
+
+                if (!uploadImg) 
+                    return;
+            
+                for (let i = 0; i < upfile.length; i++) 
+                    if(uploadImg[0].name == upfile[i][0].name)
+                        return;
+            
+                for (let i = 0; i < obj.image.length; i++) 
+                    if(uploadImg[0].name == obj.image[i].image)
+                        return;
+
+                upfile.push(uploadImg); // 可修改處
+                const div = document.createElement('div');
+                const img = document.createElement('img');
+                const btn = document.createElement('button');
+                $(btn).attr('class', 'del_btn').text('✖');
+                const reader = new FileReader();
+                if (uploadImg.size >= 5242880) {
+                    $(img).addClass('-warning');
+                }
+                $('.imgArea').append(div);
+                div.append(img);
+                div.append(btn);
+
+                reader.readAsDataURL(uploadImg[0]);
+                reader.addEventListener('load', e => {
+                    img.src = e.target.result;
+                });
+
+
+                btn.addEventListener('click', e => {
+                    upfiledel.push(uploadImg[0].name);
+                    div.remove();
+                })
+            })
+
+        }
 
         if (obj.progress == 2) {
             const div = document.createElement('div');
@@ -937,9 +987,7 @@
             $(this).height(this.scrollHeight > 100 ? this.scrollHeight : 100);
         });
 
-        $('#getshot').on('click', function(e){
-            $(this).next().click();
-        })
+     
 
         $('#applicantBankNumber').on('keydown', e => {
             if (e.keyCode < 48 || e.keyCode > 57) {
@@ -947,63 +995,22 @@
             }
         })
 
-        $('#getshot').next().on('change',function(e){
-            let uploadImg = e.target.files || e.dataTransfer.files;
+        
 
-            if (!uploadImg) 
-                return;
-            
-            for (let i = 0; i < upfile.length; i++) 
-                if(uploadImg[0].name == upfile[i][0].name)
-                    return;
-            
-            for (let i = 0; i < obj.image.length; i++) 
-                if(uploadImg[0].name == obj.image[i].image)
-                    return;
-
-            upfile.push(uploadImg); // 可修改處
+        for (let i = 0; i < obj.image.length; i++) {
             const div = document.createElement('div');
             const img = document.createElement('img');
             const btn = document.createElement('button');
             $(btn).attr('class', 'del_btn').text('✖');
-            const reader = new FileReader();
-            if (uploadImg.size >= 5242880) {
-                $(img).addClass('-warning');
-            }
-            $('.imgArea').append(div);
+            img.src = 'select?imgname='  + obj.image[i].image;
             div.append(img);
             div.append(btn);
+            $('.imgArea').append(div);
 
-            reader.readAsDataURL(uploadImg[0]);
-            reader.addEventListener('load', e => {
-                img.src = e.target.result;
-            });
-
-
-            btn.addEventListener('click', e => {
-                upfiledel.push(uploadImg[0].name);
-                div.remove();
-            })
-        })
-
-        for (let i = 0; i < obj.image.length; i++) {
-            fetch('select?imgname=' + obj.image[i].image)
-                .then(body => {
-                    const div = document.createElement('div');
-                    const img = document.createElement('img');
-                    const btn = document.createElement('button');
-                    $(btn).attr('class', 'del_btn').text('✖');
-                    img.src = body.url;
-                    div.append(img);
-                    div.append(btn);
-                    $('.imgArea').append(div);
-
-                    $(btn).on('click',()=>{
+            $(btn).on('click',()=>{
                         del.push(obj.image[i].image);
                         div.remove();
-                    })
-
-                })
+            })
         }
 
         $('#cancel').on('click', e => {
@@ -1055,7 +1062,8 @@
             type: type.value,
             estimate: s_estimate,
             applicantBankNumber: applicantBankNumber.value,
-            image : img_list
+            image : img_list,
+            agree : $('input[name = agree]:checked').val() ?? false,
         })
     })
     .then(resp => resp.json())
@@ -1126,8 +1134,8 @@
                     <span>${obj[i].eventId}</span>
                     <span>${obj[i].productName}</span>
                     <span>${obj[i].memberName}</span>
-                    <span>${obj[i].estimate ?? ''}</span>
-                    <span>${obj[i].approvalState}</span>
+                    <span>${obj[i].price ?? ''}</span>
+                    <span>${getProgress(obj[i].progress)}</span>
                     <span>
                         <button class="Review_${i}" onclick="ReviewBox(${i})">審</button>
                     </span>
@@ -1214,7 +1222,7 @@
             case 4:
                 return "已結案";
             default:
-                break;
+                return "未通過";
         }
     }
 

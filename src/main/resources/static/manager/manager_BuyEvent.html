@@ -404,7 +404,7 @@
                                     <span>收購編號</span>
                                     <span>商品名稱</span>
                                     <span>請求人</span>
-                                    <span>預估價</span>
+                                    <span>收購價</span>
                                     <span>審核狀態</span>
                                     <span></span>
                                 </div>
@@ -469,7 +469,7 @@
                         <div class="imgArea"></div>
                     </div>
                     <div class="Change">
-                        <div><span>收購價 :</span><input id="price" type="number" value="${obj.price || ''}"></div>
+                        <div><span>收購價 :</span><input id="price" type="number" max="1000000"  value="${obj.price || ''}"></div>
                         <div><span>審核時間 :</span><input id="confirmTime" type="datetime-local" value="${obj.confirmDate || ''}" disabled></div>
                         <div>
                             <span>付款狀態 :</span>
@@ -505,20 +505,22 @@
             showConfirmButton: false,
         })
 
-        for (let i = 0; i < obj.image.length; i++) {
-            fetch('select?imgname=' + obj.image[i].image)
-                .then(body => {
-                    const img = document.createElement('img');
-                    img.src = body.url;
-                    $('.imgArea').append(img);
-                })
-        }
 
+
+        $('#price').on('change',function(){
+            if ($(this).val()>1000000) 
+                $(this).val(1000000);     
+        })
+
+        for (let i = 0; i < obj.image.length; i++) {
+            const img = document.createElement('img');
+            img.src = 'select?imgname=' + obj.image[i].image;
+            $('.imgArea').append(img);
+        }
 
         $('#cancel').on('click',e =>{
             $('.swal2-container').remove();
         })
-
 
         $('#commit').on('click',e =>{
             let p = price.value || -1 ;
@@ -529,7 +531,7 @@
                 eventId : obj.eventId,
                 price : p,
                 payState : payState.value,
-                approvalState : approvalState.value
+                approvalState : approvalState.value,
             })
             })
             .then(res => res.json())
@@ -545,8 +547,9 @@
             })
             .then(todo => itemDisplay());
         })
-
+        
         $('#payState').val(obj.payState);
+        
         $('#approvalState').val(obj.approvalState);
 
     }
@@ -598,8 +601,8 @@
                     <span>${obj[i].eventId}</span>
                     <span>${obj[i].productName}</span>
                     <span>${obj[i].memberName}</span>
-                    <span>${obj[i].estimate ?? ''} </span>
-                    <span>${obj[i].approvalState}</span>
+                    <span>${obj[i].price ?? ''} </span>
+                    <span>${getProgress(obj[i].progress)}</span>
                     <span>
                         <button class="Review_${i}" onclick="ReviewBox(${i})">審</button>
                     </span>
@@ -681,6 +684,23 @@
                 }
             })
 
+
+            function getProgress(i){
+        switch (i) {
+            case 0:
+                return "完成申請";
+            case 1:
+                return "貨品查驗中";
+            case 2:
+                return "議價中";
+            case 3:
+                return "等待付款";
+            case 4:
+                return "已結案";
+            default:
+                return "未通過";
+        }
+    }
 
 
 

@@ -1,5 +1,6 @@
 package gg.nbp.web.SecondHand.buy.dto;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import gg.nbp.core.pojo.Core;
@@ -160,8 +161,16 @@ public class BuyEvent extends Core {
 	}
 
 	
-	public static SecondhandBuylist trans4Mem(BuyEvent be ,SecondHandBuylistDao dao ) {
+	public static SecondhandBuylist trans4Mem(BuyEvent be ,SecondHandBuylistDao dao ) throws  SQLException {
+		
+
 		SecondhandBuylist sl = dao.selectById(be.eventId);
+		
+		/* 如果訂單已經完成，不接受再執行更新 */
+		if(sl.getPayState() > 0)
+			throw new SQLException();
+		
+		
 		sl.setProductName(be.productName);
 		sl.setContent(be.content);
 		String[] types = {"0","1","2","3"};
@@ -171,6 +180,15 @@ public class BuyEvent extends Core {
 					sl.setType(types[i]+types[j]);
 		sl.setEstimate(be.estimate < 0 ? null : be.estimate);
 		sl.setApplicantBankNumber(be.applicantBankNumber);
+		
+		
+		/* 如果賣家同意收購價，則將付款狀態改為待付款*/
+		if(be.agree) 
+			sl.setPayState(1);
+		else 
+			sl.setPrice(null);
+		
+	
 		return sl ;
 	}
 
@@ -221,6 +239,7 @@ public class BuyEvent extends Core {
 			break;
 		case "已付款": 
 			setProgress(4);
+			setApprovalState("已完成");
 			break;
 		default:
 			break;
@@ -239,8 +258,11 @@ public class BuyEvent extends Core {
 		case "議價中": 
 			setProgress(2);
 			break;
-		case "已完成": 
-			setProgress(4);
+		case "非收購品項": 
+			setProgress(500);
+			break;
+		case "不合格": 
+			setProgress(404);
 			break;
 		default:
 			break;
