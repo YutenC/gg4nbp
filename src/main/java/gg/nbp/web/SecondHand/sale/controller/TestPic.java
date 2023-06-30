@@ -1,5 +1,6 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
+import gg.nbp.web.SecondHand.buy.util.Constant;
 import gg.nbp.web.SecondHand.sale.service.SecondhandProductService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -11,10 +12,7 @@ import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Collection;
 
 @WebServlet("/manager/testpic")
@@ -30,14 +28,18 @@ public class TestPic extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
 
 		Collection<Part> parts = req.getParts();
 		try {
+			File file = new File(Constant.SAVE_URL);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
 			for (Part part : parts) {
-				String url = "C:\\CHA101G5_workspace\\gg4nbp\\src\\main\\resources\\static\\img\\secondHand\\" + part.getName();
+				String url = Constant.SAVE_URL + part.getName();
+				File upfile = new File(url);
 				try (InputStream reader = part.getInputStream();
-					 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(url))) 
+					 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(upfile)))
 				{
 					byte[] buffer = new byte[1024];
 					int s;
@@ -45,12 +47,15 @@ public class TestPic extends HttpServlet {
 						bos.write(buffer, 0, s);
 
 					}
+					System.out.println("上傳完成");
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
-			
-		} catch (Exception e) {}
-		
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

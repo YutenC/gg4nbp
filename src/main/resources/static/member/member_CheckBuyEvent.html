@@ -187,11 +187,11 @@
             padding: 0px;
             text-align: center;
             border-radius: 25px;
-            width: 30px;
+            width: 90px;
             height: 30px;
             font-size: .6em;
             font-weight: bold;
-            background-color: rgb(78, 119, 74);
+            background-color: rgb(79 67 154);
             border: none;
             color: aliceblue;
             box-shadow: 0px 0px 3px gray;
@@ -236,13 +236,97 @@
 
         div.swal2-html-container>div {
             margin: 10px;
-            height: 570px;
+            height: 630px;
             border-radius: 3px;
 
         }
 
         div.reviewMain {
             flex-wrap: wrap;
+        }
+
+
+
+        div.reviewMain div.barArea{
+            display: flex;
+            justify-content: center;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div{
+            display: flex;
+            width: 100px;
+            height:50px;
+            user-select: none;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 100;
+            align-items: center;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div>span{
+            display: inline-block;
+            color: #ffffff;
+            font-weight: bold;
+            user-select: none;
+            margin-top: 5px;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div div.circle{
+            display: inline-block;
+            border: 3px solid #2531d0;
+            height: 10px;
+            width: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div div.-now{
+            border: 3px solid #ff0034;
+            height: 12px;
+            width: 12px;
+            border-radius: 6px;
+        }
+
+
+
+        div.reviewMain div.barArea div.progressBar{
+            margin: 10px;
+            background-color: #4ea4b7;
+            border: 2px solid #308395;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            height: 60px;
+            padding: 30px;
+            width: 90%;
+            align-items: center;
+        }
+
+        
+
+        div.reviewMain div.barArea div.progressBar div.backBar{
+            display: inline-block;
+            width: calc(100% - 115px);
+            height: 1px;
+            border: 3px solid rgb(185, 185, 185);
+            position: absolute;
+            top: 14px;
+            border-radius: 2px;
+            margin : 0px  10px;
+            z-index: 0;
+        }
+
+
+        div.reviewMain div.barArea div.progressBar div.backBar div.barLine{
+            height: 1px;
+            border: 3px solid rgb(229, 165, 76);
+            position: absolute;
+            border-radius: 2px;
+            z-index: 5;
+            width: 6%;
+            top: -3px;
+            left: -3px;
         }
 
 
@@ -280,14 +364,38 @@
         div.reviewMain div.editMain div.Pic {
             display: inline-block;
             margin: 10px;
-            border: 2px solid black;
+            border: 2px solid rgb(119, 33, 33);
             background-color: #ffeaeac6;
             border-radius: 2px;
             height: 410px;
             width: calc(100% - 40% - 40px);
             padding: 10px;
             overflow: overlay;
+
         }
+        div.reviewMain div.editMain div.Pic::-webkit-scrollbar{
+            width: 8px;
+            height: 8px;
+        }
+
+        div.reviewMain div.editMain div.Pic::-webkit-scrollbar-track{
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            background: #c87373;
+        }
+
+
+
+        div.reviewMain div.editMain div.Pic::-webkit-scrollbar-thumb {
+            background: #702626;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
+            border-radius: 8px;
+        }
+
+        div.reviewMain div.editMain div.Pic::-webkit-scrollbar-thumb:window-inactive {
+            background: #702626;
+        }
+
 
         div.reviewMain div.editMain div.Pic div.imgArea {
             display: flex;
@@ -336,7 +444,7 @@
         div.reviewMain div.editMain div.notChange {
             display: inline-block;
             margin: 10px;
-            border: 2px solid black;
+            border: 2px solid #2d6e2a;
             background-color: #f1ffeac6;
             border-radius: 2px;
             height: 410px;
@@ -421,6 +529,30 @@
             width: 25px;
         }
 
+        div.reviewMain div.editMain div.notChange div.agreeArea{
+            justify-content: start;
+
+        }
+
+
+        div.reviewMain div.editMain div.notChange div.agreeArea>span{
+            width: 100px;
+            font-size: .7em;
+            color: red;
+        }
+
+        div.reviewMain div.editMain div.notChange div.agreeArea>label{
+            font-size: .9em;
+            width: 50px;
+            text-align: left;
+        }
+
+
+        div.reviewMain div.editMain div.notChange div.agreeArea>input{
+            width: 15px;
+            height: 15px;
+            margin:  0px 10px ;
+        }
 
     </style>
 </head>
@@ -543,10 +675,13 @@
                             <span>收購編號</span>
                             <span>商品名稱</span>
                             <span>請求人</span>
-                            <span>預估價</span>
+                            <span>收購價</span>
                             <span>審核狀態</span>
                             <span></span>
                         </div>
+                        
+
+                        </select>
                     </article>
 
                 </div>
@@ -577,6 +712,8 @@
                 </div>
             </div>
         </div>
+
+  
     </footer>
 
 
@@ -706,33 +843,63 @@
     let del = [];
     let upfile = [];
     let upfiledel =[];
-
+    let reqaa = [];
     function ReviewBox(i) {
-        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        let obj = JSON.parse(sessionStorage.getItem('ButEventResult'));
         obj = obj[i];
         Swal.fire({
             html: `
                 <div class="reviewMain">
                     <div style="font-size: 2em;color: white;text-shadow: 0px 0px 2px burlywood;">收購審核</div>
+                    <div class="barArea">
+                        <div class="progressBar">
+                            <div><div class="circle" ></div><span>案件成立</span></div>
+                            <div><div class="circle"></div><span>管理員審核</span></div> 
+                            <div><div class="circle"></div><span>議價中</span></div>
+                            <div><div class="circle"></div><span>待付款</span></div>
+                            <div><div class="circle"></div><span>已完成</span></div>
+                            <div class="backBar"><div class="barLine"></div></div>
+                        </div>
+                    </div>
                 <div class="editMain">
                     <div class="notChange">
                         <div><span>收購編號 :</span><span>${obj.eventId}</span></div>
                         <div><span>請求人 :</span><span>${obj.memberName || ''}</span></div>
                         <div><span>申請時間 :</span><input  type="datetime-local" value="${obj.applyDate}" disabled></input></div>
                         <div class="change"><span>商品名稱 :</span><input type="text" id="productName" value="${obj.productName || ''}" maxlength="30" ></div>
-                        <div class="change"><span>商品種類 :</span><span id="type">${obj.type}</span></div>
+                        <div class="change">
+                            <span>商品種類 :</span>
+                            <select name="type" id="type">
+                            <option disabled>任天堂</option>
+                            <option value="任天堂 / 主機">N-主機</option>
+                            <option value="任天堂 / 手把">N-手把</option>
+                            <option value="任天堂 / 光碟、卡帶">N-卡帶</option>
+                            <option value="任天堂 / 周邊">N-周邊</option>
+                            <option disabled>Sony</option>
+                            <option value="Sony / 主機">S-主機</option>
+                            <option value="Sony / 手把">S-手把</option>
+                            <option value="Sony / 光碟、卡帶">S-光碟</option>
+                            <option value="Sony / 周邊">S-周邊</option>
+                            <option disabled>XBOX</option>
+                            <option value="XBOX / 主機">X-主機</option>
+                            <option value="XBOX / 手把">X-手把</option>
+                            <option value="XBOX / 光碟、卡帶">X-光碟</option>
+                            <option value="XBOX / 周邊">X-周邊</option>
+                            <option disabled>其他</option>
+                            <option value="其他 / 主機">主機</option>
+                            <option value="其他 / 手把">手把</option>
+                            <option value="其他 / 光碟、卡帶">光碟、卡帶</option>
+                            <option value="其他 / 周邊">其他 / 周邊</option>
+                            </select>
+                        </div>
                         <div class="change"><span>預估價 :</span><input id="estimate" type="number" value="${obj.estimate ?? ''}" max="1000000" ></div>
                         <div class="change"><span>銀行帳號 :</span><input id="applicantBankNumber" type="text" value="${obj.applicantBankNumber || ''}" maxlength="14"></div>
                         <hr>
                         <div><span>收購價 :</span><input type="number" value="${obj.price || ''}" disabled></div>
                         <div><span>審核時間 :</span><input type="datetime-local" value="${obj.confirmDate || ''}" disabled></div>
                         <div>
-                            <span>付款狀態 :</span>
-                            <span>${obj.payState}</span>
-                        </div>
-                        <div>
-                            <span>審核狀態 :</span>
-                            <span>${obj.approvalState}</span>
+                            <span>案件進度 :</span>
+                            <span>${getProgress(obj.progress)}</span>
                         </div>
                     </div>
                     <div class="Pic">
@@ -759,15 +926,78 @@
         })
 
 
+        if (obj.progress >= 3){
+            $('#content').attr("disabled","disabled");
+            $('#productName').attr("disabled","disabled");
+            $('#estimate').attr("disabled","disabled");
+            $('#applicantBankNumber').attr("disabled","disabled");
+        }else{
+            $('#getshot').on('click', function(e){
+                $(this).next().click();
+            })
+
+            $('#getshot').next().on('change',function(e){
+                let uploadImg = e.target.files || e.dataTransfer.files;
+
+                if (!uploadImg) 
+                    return;
+            
+                for (let i = 0; i < upfile.length; i++) 
+                    if(uploadImg[0].name == upfile[i][0].name)
+                        return;
+            
+                for (let i = 0; i < obj.image.length; i++) 
+                    if(uploadImg[0].name == obj.image[i].image)
+                        return;
+
+                upfile.push(uploadImg); // 可修改處
+                const div = document.createElement('div');
+                const img = document.createElement('img');
+                const btn = document.createElement('button');
+                $(btn).attr('class', 'del_btn').text('✖');
+                const reader = new FileReader();
+                if (uploadImg.size >= 5242880) {
+                    $(img).addClass('-warning');
+                }
+                $('.imgArea').append(div);
+                div.append(img);
+                div.append(btn);
+
+                reader.readAsDataURL(uploadImg[0]);
+                reader.addEventListener('load', e => {
+                    img.src = e.target.result;
+                });
+
+
+                btn.addEventListener('click', e => {
+                    upfiledel.push(uploadImg[0].name);
+                    div.remove();
+                })
+            })
+
+        }
+
+        if (obj.progress == 2) {
+            const div = document.createElement('div');
+            div.setAttribute('class','agreeArea');
+            div.innerHTML = `
+            <span>是否同意收購價 : </span>
+            <input id="agree" type="radio" name="agree" value="true"><label for="agree">同意</label>
+            <input id="notagree" type="radio" name="agree" value="false"><label for="notagree">不同意</label>
+            `
+            $('.notChange').append(div);
+        }
+
+        $('.barLine').attr("style",`width : calc( 6% + ( 23.5% * ${obj.progress} ))`);
+
+        $(`.circle:eq(${obj.progress})`).addClass('-now');
 
         $('textarea').on('keyup keypress', function () {
             $(this).height(0);
             $(this).height(this.scrollHeight > 100 ? this.scrollHeight : 100);
         });
 
-        $('#getshot').on('click', function(e){
-            $(this).next().click();
-        })
+        $('#type').val(obj.type);
 
         $('#applicantBankNumber').on('keydown', e => {
             if (e.keyCode < 48 || e.keyCode > 57) {
@@ -775,63 +1005,23 @@
             }
         })
 
-        $('#getshot').next().on('change',function(e){
-            let uploadImg = e.target.files || e.dataTransfer.files;
+        
 
-            if (!uploadImg) 
-                return;
-            
-            for (let i = 0; i < upfile.length; i++) 
-                if(uploadImg[0].name == upfile[i][0].name)
-                    return;
-            
-            for (let i = 0; i < obj.image.length; i++) 
-                if(uploadImg[0].name == obj.image[i].image)
-                    return;
-
-            upfile.push(uploadImg); // 可修改處
+        for (let i = 0; i < obj.image.length; i++) {
             const div = document.createElement('div');
             const img = document.createElement('img');
             const btn = document.createElement('button');
             $(btn).attr('class', 'del_btn').text('✖');
-            const reader = new FileReader();
-            if (uploadImg.size >= 5242880) {
-                $(img).addClass('-warning');
-            }
-            $('.imgArea').append(div);
+            img.src = 'select?imgname='  + obj.image[i].image;
             div.append(img);
-            div.append(btn);
+            if(obj.progress<3)
+                div.append(btn);
+            $('.imgArea').append(div);
 
-            reader.readAsDataURL(uploadImg[0]);
-            reader.addEventListener('load', e => {
-                img.src = e.target.result;
-            });
-
-
-            btn.addEventListener('click', e => {
-                upfiledel.push(uploadImg[0].name);
-                div.remove();
-            })
-        })
-
-        for (let i = 0; i < obj.image.length; i++) {
-            fetch('select?imgname=' + obj.image[i].image)
-                .then(body => {
-                    const div = document.createElement('div');
-                    const img = document.createElement('img');
-                    const btn = document.createElement('button');
-                    $(btn).attr('class', 'del_btn').text('✖');
-                    img.src = body.url;
-                    div.append(img);
-                    div.append(btn);
-                    $('.imgArea').append(div);
-
-                    $(btn).on('click',()=>{
+            $(btn).on('click',()=>{
                         del.push(obj.image[i].image);
                         div.remove();
-                    })
-
-                })
+            })
         }
 
         $('#cancel').on('click', e => {
@@ -880,14 +1070,16 @@
             eventId: obj.eventId,
             productName: productName.value,
             content: content.value,
-            type: type.value,
+            type: $('#type').val(),
             estimate: s_estimate,
             applicantBankNumber: applicantBankNumber.value,
-            image : img_list
+            image : img_list,
+            agree : $('input[name = agree]:checked').val() ?? false,
         })
     })
     .then(resp => resp.json())
     .then(obj => {
+        reqaa = obj ;
     $('#searchValue').val("");
         if (obj.str) {
             Swal.fire({
@@ -895,7 +1087,7 @@
             title: obj.str
             })
         } else {
-            sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+            sessionStorage.setItem('ButEventResult', JSON.stringify(obj));
             $('.swal2-container').remove();
             itemDisplay();
         }
@@ -909,13 +1101,13 @@
     del = [];
     upfile = [];
     upfiledel =[];
-        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        let obj = JSON.parse(sessionStorage.getItem('ButEventResult'));
         if (obj.eventId) {
             obj = [obj];
         }
         const pageBar = document.createElement('div');
         pageBar.setAttribute('class', 'pageBar');
-        const total = Math.floor(obj.length / onePage) + 1;
+        const total = obj.length % onePage == 0 ? obj.length / onePage  :  Math.floor(obj.length / onePage) + 1;
         let start = 1;
         let end = 7 > total ? total : 7;
         if (obj.length > onePage) {
@@ -953,10 +1145,10 @@
                     <span>${obj[i].eventId}</span>
                     <span>${obj[i].productName}</span>
                     <span>${obj[i].memberName}</span>
-                    <span>${obj[i].estimate ?? ''}</span>
-                    <span>${obj[i].approvalState}</span>
+                    <span>${obj[i].price ?? ''}</span>
+                    <span>${getProgress(obj[i].progress)}</span>
                     <span>
-                        <button class="Review_${i}" onclick="ReviewBox(${i})">審</button>
+                        <button class="Review_${i}" onclick="ReviewBox(${i})">查看詳情</button>
                     </span>
                 </div>
                 <div class="hrLine"></div>
@@ -981,6 +1173,7 @@
 
             .then(resp => resp.json())
             .then(obj => {
+                reqaa = obj ;
                 $('#searchValue').val("");
                 if (obj.str) {
                     Swal.fire({
@@ -989,7 +1182,7 @@
                     }
                     )
                 } else {
-                    sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                    sessionStorage.setItem('ButEventResult', JSON.stringify(obj));
                     itemDisplay();
                 }
             })
@@ -1013,6 +1206,7 @@
     })
     .then(resp => resp.json())
     .then(obj => {
+        reqaa = obj ;
             $('#searchValue').val("");
             if (obj.str) {
                 Swal.fire({
@@ -1020,10 +1214,28 @@
                     title: obj.str
                 })
             } else {
-                sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                sessionStorage.setItem('ButEventResult', JSON.stringify(obj));
                 itemDisplay();
             }
     })
+
+
+    function getProgress(i){
+        switch (i) {
+            case 0:
+                return "完成申請";
+            case 1:
+                return "貨品查驗中";
+            case 2:
+                return "議價中";
+            case 3:
+                return "等待付款";
+            case 4:
+                return "已結案";
+            default:
+                return "未通過";
+        }
+    }
 
 </script>
 

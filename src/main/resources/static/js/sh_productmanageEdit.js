@@ -76,7 +76,7 @@ let imd = [];
     })
 
 
-//  ===============讀取資料庫資料(文字)到頁面===============
+//  ===============讀取資料庫資料到頁面===============
     fetch('shp_Select', {
         method: 'POST',
         headers: {
@@ -84,20 +84,16 @@ let imd = [];
         },
         body: JSON.stringify({
             productId: sessionStorage.getItem('productId')
-            // name: SHproName.value,
-            // type: SHproType.value,
-            // price: SHproPrice.value,
-            // content: SHproContent.value,
-            // SHproPho1: SHproPho1.value,
         }),
     })
         .then(resp => resp.json()) // .then(function(resp){resp.json();})
         .then(function (body) {
                 let {
-                    name,
-                    type,
-                    price,
-                    content,
+                    name: name,
+                    type: type,
+                    price: price,
+                    content: content,
+                    image: [...image]
                 } = body;
 
                 console.log("傳入session並回傳取得DB資料")
@@ -107,100 +103,39 @@ let imd = [];
                 SHproPrice.value = price;
                 SHproContent.value = content;
 
-            }
-
-    )
-
-//  ===============讀取資料庫資料(圖片)到頁面===============
-    fetch('shpImg_Select', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            productId: sessionStorage.getItem('productId')
-        }),
-    })
-        .then(resp => resp.json()) // .then(function(resp){resp.json();})
-        .then(function (uploadImg) {
-            console.log("uploadImg" + uploadImg);
-                // for(let file of uploadImg){
-                //     console.log(file);
-                //     console.log("傳入session並回傳取得DB資料")
-                // }
-
-                // ======重打開======
-            // let del = [];
-            //     photoUploadBtn.addEventListener('click', function (e) {
-            //         $(this).next().click();
-            //     })
-            //
-            // $('#photoUploadBtn').next().on('change', function (e) {
-            //     $('#imgView>div').remove();
-            //     uploadImg = e.target.files || e.dataTransfer.files;
-                // ======重打開======
-
-                if (!uploadImg.length) {
-                    return;
-                }
-
-                for (let i = 0; i < uploadImg.length; i++) {
-
-                    // ======重打開======
-                    // const imageUrl = URL.createObjectURL(uploadImg[i]);
-                    // ======重打開======
+                for(let i = 0; i < image.length; i++){
+                    let imageID = image[i].imageId;
+                    let imageUrl = image[i].image;
 
                     const div = document.createElement('div');
                     const img = document.createElement('img');
                     const btn = document.createElement('button');
                     $(btn).attr('class', 'del_btn').text('✖');
 
-                    // ======重打開======
-                    // const reader = new FileReader();
-                    // if (uploadImg[i].size >= 5242880) {
-                    //     $(img).addClass('-warning');
-                    // }
-                    // ======重打開======
-
                     $('#imgView').append(div);
                     div.append(img);
                     div.append(btn);
 
-                    // ======重打開======
-                    // reader.readAsDataURL(uploadImg[i]);
-                    // document.addEventListener('load', e => {
-                        // console.log("目標="+e.target.result)
-                        // img.src = ".."+ uploadImg[i];
-                    // });
-                    // ======重打開======
-
-                    img.src = ".."+ uploadImg[i];
-                    console.log("imgSrc=" + img.src);
+                    img.setAttribute("id", imageID);
+                    img.setAttribute("src", ".." + imageUrl)
 
                     btn.addEventListener('click', e => {
-                        olddel.push(uploadImg[i]);
+                        olddel.push(image[i]);
                         div.remove();
                     })
-
-                }}
-
-                // ======重打開======
-        // )
-        //     }
-            // ======重打開======
-        )
+            }
+            }
+    )
 
 
+    let selectedImages = [];
 
-// ======圖片選擇與刪除=====================
-
+// 图片选择与删除
     photoUploadBtn.addEventListener('click', function (e) {
         $(this).next().click();
-    })
+    });
 
     $('#photoUploadBtn').next().on('change', function (e) {
-        $('#imgView>div').remove();
-
         let uploadImg = e.target.files || e.dataTransfer.files;
         console.log(uploadImg);
         if (!uploadImg.length) {
@@ -208,8 +143,6 @@ let imd = [];
         }
 
         for (let i = 0; i < uploadImg.length; i++) {
-
-
             const div = document.createElement('div');
             const img = document.createElement('img');
             const btn = document.createElement('button');
@@ -225,19 +158,20 @@ let imd = [];
             reader.readAsDataURL(uploadImg[i]);
             reader.addEventListener('load', e => {
                 img.src = e.target.result;
+                selectedImages.push(e.target.result);
             });
 
-
             btn.addEventListener('click', e => {
-                del.push(i);
+                let index = Array.from(div.parentNode.children).indexOf(div);
+                selectedImages.splice(index, 1);
                 div.remove();
-            })
+            });
+        }
+    });
 
-        }})
-
-    $('#photoUploadBtn2').on('change',()=>{
-        del = [];
-    })
+    // $('#photoUploadBtn2').on('change',()=>{
+    //     del = [];
+    // })
 
 // ======圖片選擇與刪除END=====================
 
@@ -277,17 +211,18 @@ let imd = [];
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify([shp = {
+            body: JSON.stringify({
                 productId: sessionStorage.getItem('productId'),
                 name: SHproName.value,
                 type: SHproType.value,
                 price: SHproPrice.value,
-                content: SHproContent.value,
-                image: img_list},
+                content: SHproContent.value})
+                // image: img_list
+
                 // oldImage = {deleteImage: olddel}]
-                oldImage = {olddel}]
-            ),
-        }).then(resp => resp.json()) // .then(function(resp){resp.json();})
+                // oldImage = {olddel}] // 送到資料庫刪除
+    })
+    .then(resp => resp.json()) // .then(function(resp){resp.json();})
             .then(function (body) {
                 console.log(body);
                 const {successful} = body;
