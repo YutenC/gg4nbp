@@ -5,84 +5,94 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>header</title>
+
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap"> -->
     <link rel="stylesheet" href="../fonts/font-awesome.min.css">
-    <!-- <link rel="stylesheet" href="./css/Carousel-Hero.css"> -->
-    <!-- <link rel="stylesheet" href="./css/Footer-with-social-media-icons.css"> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
-    <!-- <link rel="stylesheet" href="./css/Main-Content.css"> -->
-    <!-- <link rel="stylesheet" href="./css/Navbar-Centered-Brand.css"> -->
-    <!-- <link rel="stylesheet" href="./css/Profile-Edit-Form-1.css"> -->
-    <!-- <link rel="stylesheet" href="./css/Profile-Edit-Form.css"> -->
-    <!-- <link rel="stylesheet" href="./css/Profile-with-data-and-skills.css"> -->
-    <!-- <link rel="stylesheet" href="./css/Sidebar-1.css"> -->
-    <!-- <link rel="stylesheet" href="./css/Sidebar.css"> -->
-    <!-- <link rel="stylesheet" href="./css/styles.css"> -->
+    <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
+    <link rel="stylesheet" href="../css/Profile-Edit-Form.css">
+
     <link rel="stylesheet" href="../css/act_finder.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/act_irons.css">
+    <style>
+        .horizontal-menu {
+            display: flex;
+            list-style: none;
+        }
 
+        .centered-menu {
+            justify-content: center;
+        }
+
+        .horizontal-menu li {
+            margin-right: 20px;
+        }
+
+        .horizontal-menu li:last-child {
+            margin-right: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center"></a>
-                <a href="#" style="width: 180px;height: 103.19px;">
-                    <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;"></a>
-                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
-                    <span class="visually-hidden">Toggle navigation</span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;">
-                    <a href="#"></a>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
-                                style="border-width: 20px;margin-top: -10px;">
-                                <img src="../img/gamepad-solid.svg">商城中心</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
-                                style="border-width: 20px;margin-top: -10px;color: var(--bs-dark);">
-                                <img src="../img/dice-solid.svg">二手商城</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
-                                style="border-width: 20px;margin-top: -9px;color: var(--bs-dark);" href="#">
-                                <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
-                                    style="height: 50px;">論壇社群</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
-                                style="border-width: 20px;margin-top: -10px;color: var(--bs-dark);">
-                                <img src="../img/champagne-glasses-solid.svg">活動專區</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
-                                style="margin-top: -10px;">
-                                <img class="d-flex mx-auto align-items-xl-center" src="../img/user-regular.svg"
-                                    style="height: 50px;">會員登入</a>
-                        </li>
-                        <li class="nav-item" style="height: 80px;">
-                            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
-                                style="margin-top: 0px;color: var(--bs-dark);">
-                                <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
-                                    style="height: 40px;">客服中心</a>
-                        </li>
-                        <li class="nav-item"></li>
-                    </ul>
-                    <footer id="footerpad-1"></footer>
-                </div>
+<header>
+    <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center"></a>
+            <a href="../index.html" style="width: 180px;height: 103.19px;">
+                <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
+            </a>
+            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+                <span class="visually-hidden">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
+                <ul class="navbar-nav ms-auto" id="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bss-hover-animate="pulse" href="../shop/shopIndex(Vue).html"
+                           style="border-width: 20px;margin-top: 10px;">
+                            <img src="../img/gamepad-solid.svg">商城中心
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bss-hover-animate="pulse" href="../sh_shop/sh_MainView.html"
+                           style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                            <img src="../img/dice-solid.svg">二手商城
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
+                           style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);"
+                           href="../acticle/article_main.html">
+                            <img class="d-flex mx-auto" src="../img/newspaper-regular.svg" style="height: 50px;">論壇社群
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bss-hover-animate="pulse" href="../activity/act_finder.html"
+                           style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                            <img src="../img/champagne-glasses-solid.svg">活動專區
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bss-hover-animate="pulse" href="../member/member_home.html"
+                           style="margin-top: 10px;">
+                            <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
+                                 style="height: 50px;">會員中心
+                        </a>
+                    </li>
+                    <li class="nav-item login">
+                        <a class="nav-link active" data-bss-hover-animate="pulse" href="../member_login.html"
+                           style="margin-top: 10px;">
+                            <img class="d-flex mx-auto align-items-xl-center" src="../img/user-regular.svg"
+                                 style="height: 50px;">會員登入</a>
+                    </li>
+                </ul>
+                <footer id="footerpad-1"></footer>
             </div>
-        </nav>
-
-    </header>
+        </div>
+    </nav>
+</header>
 
     <div class="main-content" style="height: 800px;">
         <!-- main的區塊 -->
@@ -114,24 +124,7 @@
                     </div>
                 </div>
             </div>
-            <style>
-                .horizontal-menu {
-                    display: flex;
-                    list-style: none;
-                }
 
-                .centered-menu {
-                    justify-content: center;
-                }
-
-                .horizontal-menu li {
-                    margin-right: 20px;
-                }
-
-                .horizontal-menu li:last-child {
-                    margin-right: 0;
-                }
-            </style>
             <div class="container" id="mainTable">
                 <div class="row">
                     <div class="col-4@sm col-3@md">
@@ -165,30 +158,9 @@
 
             <div class="container">
                 <div id="grid" class="row my-shuffle-container">
-                    <figure class="col-3@xs col-4@sm col-3@md picture-item" data-groups='["線下"]'
-                        data-date-created="2017-04-30" data-title="艾爾登山祭">
-                        <div class="picture-item__inner"
-                            onclick="redirectToLink('https://www.youtube.com/watch?v=ts9QoMdE7S4&list=RDJQAl_bQVOBs&index=27')">
-                            <div class="aspect aspect--25x9">
-                                <div class="aspect__inner">
-                                    <img src="../img/img_act/act_1.jpg" alt="別再打女神了來爬山臭宅" />
-                                </div>
-                            </div>
-                            <div class="picture-item__details">
-                                <figcaption class="picture-item__title"><a
-                                        href="https://www.youtube.com/watch?v=ts9QoMdE7S4&list=RDJQAl_bQVOBs&index=27"
-                                        target="_blank" rel="activity">艾爾登山祭</a>
-                                </figcaption>
 
-                                <p class="Location">地點</p>
-                            </div>
-                        </div>
-                    </figure>
                 </div>
             </div>
-
-            <script src="shuffle.js"></script>
-
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
@@ -197,7 +169,7 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="act_finder1.html">1</a></li>
+                    <li class="page-item"><a class="page-link" href="act_finder.html">1</a></li>
                     <li class="page-item"><a class="page-link" href="act_finder2.html">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
@@ -246,8 +218,9 @@
                             </div>
                         </div>
                     </div>
+                </footer>
             </div>
-
+    </div>
 
 
 </body>
@@ -259,13 +232,12 @@
 <!-- <script src="./bootstrap/js/bootstrap.min.js"></script> -->
 <script src="../js/bs-init.js"></script>
 <script src="../js/Profile-Edit-Form.js"></script>
+<script src="../js/member_logout.js"></script>
 <script>
     function redirectToLink(url) {
         window.location.href = url;
 
     }
-</script>
-<script>
     const sponsorTagsElements = document.querySelectorAll('.Sponsor');
     const activityTagsElements = document.querySelectorAll('a[rel="activity"]');
     let sponsorDropdownVisible = false;
@@ -342,14 +314,6 @@
         activityDropdownVisible = true;
     }
 
-
-
-
-</script>
-
-
-
-<script>
     let acts;
     function getActs() {
         $.ajax({
@@ -362,29 +326,24 @@
                     let act=acts[i];
                     let imgPath = decodeURIComponent(act.actImage);
                     let childContent = `
-<figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
-<div class="picture-item__inner" onclick="redirectToLink('http://localhost:8080/gg4nbp/activity/act_apply.html?no='+'${act.id}')">
-<div class="aspect aspect--25x9">
-    <div class="aspect__inner">
-        <img src="${imgPath}" alt="${act.actTime}" />
-    </div>
-</div>
-<div class="picture-item__details">
-    <figcaption class="picture-item__title">
-        <a href='http://localhost:8080/gg4nbp/activity/act_apply.html?no=12'" target="_blank" rel="activity">${act.actName}</a>
-    </figcaption>
-    <p class="Location">${act.actLocation}</p>
-</div>
-</div>
-</figure>`;
-
+                        <figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
+                        <div class="picture-item__inner" onclick="redirectToLink('http://localhost:8080/gg4nbp/activity/act_apply.html?no='+'${act.id}')">
+                        <div class="aspect aspect--25x9">
+                            <div class="aspect__inner">
+                                <img src="${imgPath}" alt="${act.actTime}" />
+                            </div>
+                        </div>
+                        <div class="picture-item__details">
+                            <figcaption class="picture-item__title">
+                                <a href='http://localhost:8080/gg4nbp/activity/act_apply.html?no=12'" target="_blank" rel="activity">${act.actName}</a>
+                            </figcaption>
+                            <p class="Location">${act.actLocation}</p>
+                        </div>
+                        </div>
+                        </figure>`;
                     $("#grid").append(childContent);
-
-
-
         }
                 //acts.for ((act)=>{
-
 
 //                     let childContent = `
 // <figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
@@ -405,17 +364,62 @@
 //
 //                     $("#grid").append(childContent);
 //                 });
-
-
             },
             error: function (xhr, status, error) {
                 console.log(`Error: ${error}`);
             }
          });
     }
-
     // 调用函数来获取所有活动数据并显示在页面上
     getActs();
+
+    $(window).on("load", function () {
+        $.ajax({
+            url: "memberGetPictureServlet",
+            method: "POST",
+            dataType: "json",
+            success: function (response) {
+                let member = response;
+                let isPass = member.successful;
+                if (isPass) {
+                    $("li.login").remove();
+
+                    const li = document.createElement('li');
+                    li.setAttribute('class', 'nav-item logout');
+                    const a = document.createElement("a");
+                    a.setAttribute('class', "nav-link fs-6 text-center");
+                    a.setAttribute('data-bss-hover-animate', 'pulse');
+                    a.setAttribute('id', 'sign_out');
+                    a.setAttribute('style', 'margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;');
+                    a.innerHTML = `
+                    <div id="member_pic-1" class="avatar-bg center"style="width: 60px;height: 60px;margin-left: 0px;"></div>登出
+                    `;
+                    li.append(a);
+                    $('ul#navbar-nav').append(li);
+
+                    if(member.headshot){
+                        $("div#member_pic-1").css("background-image", `url(${member.headshot})`);
+                    } else {
+                        $("div#member_pic-1").css("background-image", `url(https://www.gravatar.com/avatar/1234566?size=200&d=mm)`);
+                    }
+                }
+            }
+        })
+
+
+        $("ul").on("click",'li.logout', function (){
+            $.ajax({
+                url: "memberLogoutServlet",
+                method: "POST",
+                dataType: "json",
+                success:function(){
+                    sessionStorage.clear();
+                    window.location.href="../index.html";
+                }
+            })
+        })
+    })
+
 
 </script>
 

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@WebServlet("/manager/shp_Edit")
 public class EditshpServlet extends HttpServlet {
 
     @Autowired
@@ -33,25 +33,14 @@ public class EditshpServlet extends HttpServlet {
     @Autowired
     private SecondhandProductImageDaoImpl IMAGEDAO;
 
-    @PostMapping("/manager/shp_Edit")
-    protected void doPost(@RequestBody String jsonBody) throws JsonProcessingException {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         boolean state = true;
-        int shpproductId = 0;
 
-//        SecondhandProduct shp = CommonUtil.json2pojo(req[0], SecondhandProduct.class);
+        SecondhandProduct shp = CommonUtil.json2pojo(req, SecondhandProduct.class);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(jsonBody);
-
-        List<String> delImage = objectMapper.convertValue(jsonNode.get("oldImage"), ArrayList.class);
-
-        ObjectNode objectNode = (ObjectNode) jsonNode;
-        objectNode.remove("oldImage");
-
-        SecondhandProduct shp = objectMapper.convertValue(objectNode, SecondhandProduct.class);
-
-        shpproductId = shp.getProductId();
+        int shpproductId = shp.getProductId();
 
         shp = SERVICE.editshp(shp);
 
@@ -65,23 +54,23 @@ public class EditshpServlet extends HttpServlet {
         List<SecondhandProductImage> images = shp.getImage();
         if (images != null) {
             for (SecondhandProductImage img : images) {
-                SERVICE.insertimg(img, shpproductId);
+                SERVICE.updateimg(img, shpproductId);
             }
         }
 
         // =========刪除圖片(頁面能選擇刪除，但無法進資料庫修改)
 
-        List<SecondhandProductImage> allImgs = IMAGEDAO.selectAll();
-
-        for(SecondhandProductImage img: allImgs){
-            int imageId = img.getImageId();
-            String url = img.getImage();
-            for (String oldUrl: delImage){
-                if (url.equals(oldUrl)){
-                    IMAGEDAO.deleteById(imageId);
-                }
-            }
-        }
+//        List<SecondhandProductImage> allImgs = IMAGEDAO.selectAll();
+//
+//        for(SecondhandProductImage img: allImgs){
+//            int imageId = img.getImageId();
+//            String url = img.getImage();
+//            for (String oldUrl: delImage){
+//                if (url.equals(oldUrl)){
+//                    IMAGEDAO.deleteById(imageId);
+//                }
+//            }
+//        }
 
 //        List<SecondhandProductImage> newImages = shp.getImage();
 //        if (newImages != null) {

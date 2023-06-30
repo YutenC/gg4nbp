@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/sh_shop/shp_typeSearch")
+@WebServlet("/secondhand/shp_typeSearch")
 public class TypeSearchServlet extends HttpServlet {
 
     @Autowired

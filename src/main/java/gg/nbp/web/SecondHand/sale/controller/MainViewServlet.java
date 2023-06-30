@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-@WebServlet("/sh_shop/shp_main")
+@WebServlet("/secondhand/shp_main")
 public class MainViewServlet extends HttpServlet {
     // 找圖片
     // 找名字

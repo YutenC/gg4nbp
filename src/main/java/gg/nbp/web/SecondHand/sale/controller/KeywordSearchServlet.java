@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/sh_shop/shp_keywordSearch")
+@WebServlet("/secondhand/shp_keywordSearch")
 public class KeywordSearchServlet extends HttpServlet {
 
     @Autowired

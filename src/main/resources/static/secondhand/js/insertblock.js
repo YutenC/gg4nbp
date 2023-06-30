@@ -44,10 +44,10 @@ side.innerHTML = `
                     Nitendo
                 </span>
                 <div class="brandItem">
-                    <div class="listtype"><span>主機</span></div>
-                    <div class="listtype"><span>手把</span></div>
-                    <div class="listtype"><span>卡帶</span></div>
-                    <div class="listtype"><span>周邊</span></div>
+                    <div class="listtype"><span value="00">主機</span></div>
+                    <div class="listtype"><span value="01">手把</span></div>
+                    <div class="listtype"><span value="02">卡帶</span></div>
+                    <div class="listtype"><span value="03">周邊</span></div>
                 </div>
             </div>
 
@@ -56,10 +56,10 @@ side.innerHTML = `
                     XBOX
                 </span>
                 <div class="brandItem">
-                    <div class="listtype"><span>主機</span></div>
-                    <div class="listtype"><span>手把</span></div>
-                    <div class="listtype"><span>遊戲片</span></div>
-                    <div class="listtype"><span>周邊</span></div>
+                    <div class="listtype"><span value="10">主機</span></div>
+                    <div class="listtype"><span value="11">手把</span></div>
+                    <div class="listtype"><span value="12">遊戲片</span></div>
+                    <div class="listtype"><span value="13">周邊</span></div>
                 </div>
             </div>
             <div class="brandlist">
@@ -67,10 +67,10 @@ side.innerHTML = `
                     PlayStation
                 </span>
                 <div class="brandItem">
-                    <div class="listtype"><span>主機</span></div>
-                    <div class="listtype"><span>手把</span></div>
-                    <div class="listtype"><span>遊戲片</span></div>
-                    <div class="listtype"><span>周邊</span></div>
+                    <div class="listtype"><span value="20">主機</span></div>
+                    <div class="listtype"><span value="21">手把</span></div>
+                    <div class="listtype"><span value="22">遊戲片</span></div>
+                    <div class="listtype"><span value="23">周邊</span></div>
                 </div>
             </div>
             <div class="brandlist">

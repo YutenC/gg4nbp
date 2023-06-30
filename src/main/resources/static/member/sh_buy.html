@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="..\css\sh_index.css">
+    <link rel="stylesheet" href="../secondhand/css/SecondHand.css">
     <title>Document</title>
     <script src="../jquery/jquery-3.7.0.js"></script>
     <!-- ===========boodstrap========== -->
@@ -13,6 +13,18 @@
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css"> -->
     <link rel="stylesheet" href="../css/SecondHand_buy.css">
 
+    <style>
+        div.buyDirectlyPage{
+            width: 90%;
+        }
+
+        main div.content div.showArea{
+            justify-content: center;
+        }
+
+
+
+    </style>
 
 </head>
 
@@ -177,9 +189,10 @@
 </body>
 
 <!-- ====bootstrap====== -->
-<script src="../js/sh_insertblock.js"></script>
+<script src="../secondhand/js/insertblock.js"></script>
 <script>
-insertSide();
+changeTitle('確認購買');
+$('.div_search').remove();
 </script>
 <script src="../js/sh_buy.js"></script>
 <!--<script src="../js/sh_keyTypeSearch.js.js"></script>-->
