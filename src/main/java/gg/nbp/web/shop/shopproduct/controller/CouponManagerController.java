@@ -89,9 +89,9 @@ public class CouponManagerController {
 
 
     public String sendEmail(int action, List<CouponMember> couponMembers) {
-        couponManagerService.sendEmail(action,couponMembers);
+        ResponseMsg responseMsg= couponManagerService.sendEmail(action,couponMembers);
 
 
-        return null;
+        return ConvertJson.toJson(responseMsg);
     }
 }

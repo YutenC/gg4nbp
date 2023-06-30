@@ -186,7 +186,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .append("UPDATE Product SET ");
 
         hql.append("rate = :rate,")
-                .append("revieweCount = :revieweCount,")
+                .append("revieweCount = :revieweCount ")
                 .append("WHERE id = :id");
 
         Query<?> query = session.createQuery(hql.toString());
@@ -206,8 +206,10 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
 
 
         hql.append("amount = :amount,")
-                .append("buyTimes = :buyTimes,")
+                .append("buyTimes = :buyTimes ")
                 .append("WHERE id = :id");
+
+
 
         Query<?> query = session.createQuery(hql.toString());
 
@@ -224,7 +226,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .append("UPDATE Product SET ");
 
 
-        hql.append("state = :state,")
+        hql.append("state = :state ")
                 .append("WHERE id = :id");
 
         Query<?> query = session.createQuery(hql.toString());

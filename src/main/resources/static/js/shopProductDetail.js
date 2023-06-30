@@ -6,11 +6,17 @@ import { saveDataToSessionStorage, getDataFromSessionStorage } from './shopprodu
 const vm = Vue.createApp({
     data() {
         return {
+            ProductDetail_id: 0,
+            currentMainguideContent: 1,
+            mainguideContent: [{ id: 1, text: "商品特色", action: "1", flag: true },
+            { id: 2, text: "商品評論", action: "2", flag: false },
+            { id: 3, text: "注意事項", action: "3", flag: false }],
             nowDate: '',
             minDate: '',
             product: {},
             productDetail: {},
-            productHistory: []
+            productHistory: [],
+            buyAmount: 1
         };
     },
     created() {
@@ -42,7 +48,7 @@ const vm = Vue.createApp({
             axios({
                 method: "GET",
                 url: host_context + "shopDispatcher/getProductDetail",
-                withCredentials: true,
+                // withCredentials: true,
                 params: { id: ProductDetail_id }
             })
                 .then(function (value) {
@@ -55,17 +61,29 @@ const vm = Vue.createApp({
                 });
         },
 
-        addCart: function (id) {
+        addCart: function (action, id) {
+            // productId
+            //buyAmount
+
+
+            let transObj = { productId: id, buyAmount: vm.buyAmount };
+
             axios({
-                method: "Get",
-                url: host_context + "shopDispatcher/addCart",
-                withCredentials: true,
+                method: "Post",
+                url: host_context + "ShoppingList",
+                // withCredentials: true,
                 // crossDomain: true,
                 params: {
-                    id: id
+                    demand: "addOneShoppingList",
+                    transObj: JSON.stringify(transObj)
                 }
             })
                 .then(function (value) {
+
+                    if (action == 1) {
+                        window.location.href = "./shoppingCart(Vue).html";
+                    }
+
                     console.log("addCart then");
 
                 })
@@ -79,7 +97,7 @@ const vm = Vue.createApp({
             axios({
                 method: "Get",
                 url: host_context + "shopDispatcher/addFollow",
-                withCredentials: true,
+                // withCredentials: true,
                 // crossDomain: true,
                 params: {
                     id: id
@@ -102,6 +120,44 @@ const vm = Vue.createApp({
 
         },
 
+        changeMainContent(state, event) {
+            event.preventDefault();
+            vm.mainguideContent[vm.currentMainguideContent - 1].flag = false;
+            vm.mainguideContent[state - 1].flag = true;
+            vm.currentMainguideContent = state;
+
+            vm.getProductCommen()
+
+            // event.target.classList.add("-on");
+            // last_currentMainguideContent
+        },
+        getProductCommen() {
+            axios({
+                method: "Get",
+                url: host_context + "shopDispatcher/getProductCommen",
+                // withCredentials: true,
+                // crossDomain: true,
+                params: {
+                    id: vm.ProductDetail_id
+                }
+            })
+                .then(function (value) {
+                    // let result = value.data;
+                    // if (result.state.toLowerCase() === "ok") {
+                    //     vm.product.follow = result.content;
+                    // }
+
+
+                    console.log("getProductCommen then");
+
+                })
+                .catch(function (e) {
+                    console.log("getProductCommen error " + e);
+                });
+        },
+        changeAmount(buyAmount) {
+            vm.buyAmount = buyAmount;
+        }
 
         // historymouseenter: function () {
         //     // e.preventDefault();
@@ -115,20 +171,22 @@ const vm = Vue.createApp({
     },
 }).mount(".shopmain");
 
-getProductDetail();
+// getProductDetail();
 
 
 function getProductDetail() {
     const ProductDetail_id = getDataFromSessionStorage("currentShopProductDetail_id");
+
     axios({
         method: "GET",
         url: host_context + "shopDispatcher/getProductDetail",
-        withCredentials: true,
+        // withCredentials: true,
         params: { id: ProductDetail_id }
     })
         .then(function (value) {
             vm.productDetail = value.data;
             vm.product = vm.productDetail.product;
+            vm.ProductDetail_id = ProductDetail_id;
             getProductHistory();
             console.log("getProductById then");
 
@@ -142,7 +200,7 @@ function getProductHistory() {
     axios({
         method: "GET",
         url: host_context + "shopDispatcher/getProductHistory",
-        withCredentials: true,
+        // withCredentials: true,
     })
         .then(function (value) {
             vm.productHistory = value.data;

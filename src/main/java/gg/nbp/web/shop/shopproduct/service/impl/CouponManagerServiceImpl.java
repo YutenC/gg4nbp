@@ -5,10 +5,16 @@ import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundFactory;
 import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundHandler;
+import gg.nbp.web.shop.shopproduct.common.schedulertask.SchedulerEntity;
+import gg.nbp.web.shop.shopproduct.common.schedulertask.SchedulerFactory;
+import gg.nbp.web.shop.shopproduct.common.schedulertask.SchedulerTasks;
 import gg.nbp.web.shop.shopproduct.dao.CouponDao;
 import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
+import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
+import gg.nbp.web.shop.shopproduct.pojo.RequestMsg;
+import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.redisdao.CouponActivityRedisDao;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
@@ -126,7 +132,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
     }
 
     @Override
-    public void sendEmail(int action, List<CouponMember> couponMembers) {
+    public ResponseMsg sendEmail(int action, List<CouponMember> couponMembers) {
         switch (action){
             case 0://立即發送
                 BackgroundHandler backgroundHandler = BackgroundFactory.getBackgroundHandler("shopProductBackground");
@@ -139,17 +145,57 @@ public class CouponManagerServiceImpl implements CouponManagerService {
                             System.out.println("send email"+couponMembers_.get(i).getEmail());
                         }
 
-                        return "finish to send email";
+                        Thread.sleep(5000);
+
+                        return "ok";
                     }
                 };
 
                 backgroundHandler.addTask("sendEmail",callable);
 
-                break;
+                return new ResponseMsg("longTime","sendEmail","");
+
             case 1://指定時間
 
-                break;
+                Date time=null;
+                for (CouponMember couponMember:couponMembers ) {
+                    if(couponMember.isCheck()){
+                        time=couponMember.getSendEmailTime();
+                        break;
+                    }
+                }
+
+                if(time==null){
+                    return new ResponseMsg("ok","no need send","");
+                }
+
+                TimerTask timerTask=new TimerTask() {
+                    @Override
+                    public void run() {
+                        List<CouponMember> couponMembers_=couponMembers;
+                        for(int i=0;i<couponMembers_.size();i++){
+                            if(couponMembers_.get(i).isCheck()){
+                                System.out.println("send email"+couponMembers_.get(i).getEmail());
+                            }
+                        }
+
+                        cancel();
+                        SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("sendEmail");
+                        schedulerTasks.removeTimerTask( "coupon"+"sendEmail");
+                        schedulerTasks.clear();
+                    }
+                };
+
+
+
+                SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("sendEmail");
+                schedulerTasks.addTimerTask("coupon"+"sendEmail",new SchedulerEntity(time,timerTask));
+
+
+                return new ResponseMsg("ok","","");
+
         }
+        return new ResponseMsg("error","","");
     }
 
 

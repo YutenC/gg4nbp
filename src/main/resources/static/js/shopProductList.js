@@ -25,7 +25,7 @@ const vm = Vue.createApp({
             axios({
                 method: "Get",
                 url: host_context + "shopDispatcher/addCart",
-                withCredentials: true,
+                // withCredentials: true,
                 // crossDomain: true,
                 params: {
                     id: id
@@ -45,7 +45,7 @@ const vm = Vue.createApp({
             axios({
                 method: "Get",
                 url: host_context + "shopDispatcher/addFollow",
-                withCredentials: true,
+                // withCredentials: true,
                 // crossDomain: true,
                 params: {
                     id: id
@@ -76,7 +76,7 @@ const vm = Vue.createApp({
             axios({
                 method: "Get",
                 url: host_context + "shopDispatcher/getProductByType",
-                withCredentials: true,
+                // withCredentials: true,
                 // crossDomain: true,
                 params: { type: type }
             },)
@@ -94,7 +94,7 @@ const vm = Vue.createApp({
             axios({
                 method: "Get",
                 url: host_context + "shopDispatcher/getProductByBuyTimes",
-                withCredentials: true,
+                // withCredentials: true,
                 // crossDomain: true,
                 params: { type: vm.currentType }
             },)
@@ -132,7 +132,7 @@ const vm2 = Vue.createApp({
             axios({
                 method: "Get",
                 url: host_context + "shopDispatcher/searchProducts",
-                withCredentials: true,
+                // withCredentials: true,
                 // crossDomain: true,
                 params: { search: vm2.searchText }
             },)
@@ -159,7 +159,7 @@ function getAllProduct() {
         method: "GET",
         // url: "http://localhost:8080/MyShop/demo/getAllCouponActivity_json",
         url: host_context + "shopDispatcher/getAllProductWithIndexImg",
-        withCredentials: true,
+        // withCredentials: true,
     })
         .then(function (value) {
             vm.products = value.data;
@@ -179,7 +179,7 @@ function getFollows() {
     axios({
         method: "Get",
         url: host_context + "shopDispatcher/getFollowByMemberId",
-        withCredentials: true,
+        // withCredentials: true,
         // crossDomain: true,
         params: { memberId: vm2.searchText }
     },)

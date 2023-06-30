@@ -243,10 +243,13 @@
 
 
                     <div v-if="currentMainguideContent==3">
-                        <button style="width: 50px; height: 20px;" @click="getCouponMemberInfo()"></button>
+                        <button style="width: 50px; height: 20px;" @click="getCouponMemberInfo()">取得會員</button>
                         <button @click="sendEmail(0)">立即發送</button>
                         <button @click="sendEmail(1)">根據時間發送</button>
 
+                        <input type="datetime-local" v-model="sendEmailTime" class="form-control form-control-sm">
+
+                        <!-- @input="updateLaunchTime(item, $event.target.value)" -->
                         <!-- <div>
                             <input type="checkbox" id="scales" name="scales" checked>
                             <label for="scales">Scales</label>
