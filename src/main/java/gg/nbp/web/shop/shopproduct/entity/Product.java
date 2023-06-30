@@ -58,7 +58,7 @@ public class Product {
     private String content;
 
     @Expose
-    @Column(name = "Launch_Time",insertable = false)
+    @Column(name = "Launch_Time")
     private java.util.Date launchTime;
 
     @Expose

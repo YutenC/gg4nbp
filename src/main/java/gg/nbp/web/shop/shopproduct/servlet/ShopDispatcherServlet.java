@@ -36,7 +36,6 @@ import java.util.Map;
 
 @Component
 @WebServlet("/shopDispatcher/*")
-@CrossOrigin
 //@MultipartConfig
 public class ShopDispatcherServlet extends HttpServlet {
 

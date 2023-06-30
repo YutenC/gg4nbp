@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 //@Component
@@ -197,8 +199,10 @@ public class CreateProductDB<T, P> {
         try {
             Field field = objectClass.getDeclaredField(property);
             if (("java.util.Date").equals(field.getType().getName())) {
-                GregorianCalendar cal = new GregorianCalendar();
-                propertyValue = cal.getTime();
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+                propertyValue=simpleDateFormat.parse((String) propertyValue);
+//                GregorianCalendar cal = new GregorianCalendar();
+//                propertyValue = cal.getTime();
             } else if (("java.lang.Integer").equals(field.getType().getName())) {
                 if(!"type".equals(property)){
                     propertyValue = Integer.valueOf((String) propertyValue);
@@ -218,6 +222,11 @@ public class CreateProductDB<T, P> {
                         break;
                 }
             }
+//            else if ("launchTime".equals(property)) {
+////                String type_ = (String) propertyValue;
+////                type_ = type_.trim();
+//
+//            }
 
             if (field != null) {
                 field.setAccessible(true);
@@ -236,6 +245,8 @@ public class CreateProductDB<T, P> {
         } catch (IllegalAccessException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
 
     }
