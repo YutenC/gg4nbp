@@ -191,8 +191,9 @@
                     Swal.fire({
                         icon: 'success',
                         title: member.message
-                    });
-                    window.location.href = "member_login.html";
+                    }).then(()=>{
+                        window.location.href = "member_login.html";
+                    })
                 } else {
                     Swal.fire({
                         icon: 'error',

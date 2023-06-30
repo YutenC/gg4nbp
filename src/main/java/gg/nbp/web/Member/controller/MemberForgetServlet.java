@@ -37,7 +37,7 @@ public class MemberForgetServlet extends HttpServlet {
         if(fMember.isSuccessful()){
             String title = "NBP.gg 密碼重置信";
             String randomPassword = MemberCommonUitl.verificationCode();
-            String messageContext = "您重製的密碼是：" + randomPassword + " ,請登入後重置密碼。";
+            String messageContext = "您新的密碼是：" + randomPassword + " ,請登入後修改密碼。";
             SENDMAIL.mailService(fMember, title, messageContext);
 
             /*  將重製的密碼用MD5的方式轉換成雜湊值  */
