@@ -68,44 +68,21 @@
         </svg>
     </button>
 
-    <div class="app-main">
+    <div class="app-main" id="app-main">
         <div class="video-call-wrapper">
             <div class="video-participant">
                 <div class="participant-actions">
                 </div>
-                <a href="#" class="name-tag">玩家1</a>
-                <img src="../img/img_act/1.jpg" alt="participant">
+                <img src="../img/img_act/2.jpeg" id="actImage"  alt="participant">
             </div>
-            <div class="video-participant">
-                <div class="participant-actions">
-                </div>
-                <a href="#" class="name-tag">玩家2</a>
-                <img src="../img/img_act/2.jpeg" alt="participant">
+        <div class="chat-container">
+            <div class="chat-header">
+                <img id="imgId" src="" alt="participant">
+
             </div>
-            <div class="video-participant">
-                <div class="participant-actions">
-                </div>
-                <a href="#" class="name-tag">玩家3</a>
-                <img src="../img/img_act/3.jpeg">
-            </div>
-            <div class="video-participant">
-                <div class="participant-actions">
-                </div>
-                <a href="#" class="name-tag">玩家4</a>
-                <img src="../img/img_act/4.jpg" alt="participant">
-            </div>
-            <div class="video-participant">
-                <div class="participant-actions">
-                </div>
-                <a href="#" class="name-tag">玩家5</a>
-                <img src="../img/img_act/5.jpg">
-            </div>
-            <div class="video-participant">
-                <div class="participant-actions">
-                </div>
-                <a href="#" class="name-tag">玩家6</a>
-                <img src="../img/img_act/6.jpg">
-            </div>
+
+    </div>
+
         </div>
         <div class="video-call-actions ">
 
@@ -151,93 +128,19 @@
             <div class="chat-header">
                 <img
                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABM0lEQVR4nO2UvUoDQRSFP7BOlU4wKYOWaY2tNnmBvIMiaKlPkjadBCxjfip9Fu0UjDYrYmTgZlknd2d3ZkdCYD+4xe6ce84sd2egpkbnEniRuiACbWABfAJzoKVoToBVpn6AXqBXysIynbHJtaUxdRXolfJhiZds0lO++DjQK2Vecpdmrs9S5xW90rnMZLfTorkUENNruxwAY5mZqXugU9W0XXAETOir8le/yZqPl9cRGCuh67qrcpwSS2yesywdwe+eXn/QDIvWfbS5rP65diM4FC+vRBGPgAHQLBHWFO1I8Ulcjfb9mq1v4MbReyuavP6pK9gc8gfgK6fZteu8HvN+olwwKnvAPtAF+sCwxJzW60Pp6YqH8QrmzCP4lIgceQQfxgxueAQbbVSegMcK6zVshV91ovgE2+W+PAAAAABJRU5ErkJggg==">
-                <button class="chat-header-button" >
-                    悠久的回憶以重現此刻為浮生一霎
-                </button>
+                <button class="chat-header-button" id ="actName" >悠久的回憶以重現此刻為浮生一霎</button>
             </div>
             <div class="chat-area" id="chat">
-                <!--                    <div class="message-wrapper">-->
-                <!--                        <div class="profile-picture">-->
-                <!--                            <img src="../img/img_act/1.jpg" alt="pp">-->
-                <!--                        </div>-->
-                <!--                        <div class="message-content">-->
-                <!--                            <p class="name">玩家1</p>-->
-                <!--                            <div class="message">這次的主Ｃ強嗎？</div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                    <div class="message-wrapper">-->
-                <!--                        <div class="profile-picture">-->
-                <!--                            <img src="../img/img_act/2.jpeg" alt="pp">-->
-                <!--                        </div>-->
-                <!--                        <div class="message-content">-->
-                <!--                            <p class="name">玩家2</p>-->
-                <!--                            <div class="message">我覺的很強,0突就完全體 <a class="mention">@玩家3</a></div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                    <div class="message-wrapper">-->
-                <!--                        <div class="profile-picture">-->
-                <!--                            <img src="../img/img_act/3.jpeg" alt="pp">-->
-                <!--                        </div>-->
-                <!--                        <div class="message-content">-->
-                <!--                            <p class="name">玩家3</p>-->
-                <!--                            <div class="message">還真的不錯何況是妹子</div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                    <div class="message-wrapper reverse">-->
-                <!--                        <div class="profile-picture">-->
-                <!--                            <img src="../img/img_act/4.jpg" alt="pp">-->
-                <!--                        </div>-->
-                <!--                        <div class="message-content">-->
-                <!--                            <p class="name">玩家4</p>-->
-                <!--                            <div class="message">有能力的人就是要過勞死拉</div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
                 <div class="message-wrapper">
-                    <div class="profile-picture">
-                        <!--                            <img src="../img/img_act/5.jpg" alt="pp">-->
-                    </div>
-                    <div class="message-content">
-                        <!--                            <p class="name">玩家5</p>-->
-                        <!--                            <div class="message">攻略</div>-->
-                        <!--                            <div class="message-file">-->
-                        <!--                                <div class="icon sketch">-->
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path fill="#ffd54f" d="M96 191.02v-144l160-30.04 160 30.04v144z" />
-                            <path fill="#ffecb3" d="M96 191.02L256 16.98l160 174.04z" />
-                            <path fill="#ffa000" d="M0 191.02l256 304 256-304z" />
-                            <path fill="#ffca28" d="M96 191.02l160 304 160-304z" />
-                            <g fill="#ffc107">
-                                <path d="M0 191.02l96-144v144zM416 47.02v144h96z" />
-                            </g>
-                        </svg> -->
-                        <!--                                </div>-->
-                        <!--                                <div class="file-info">-->
-                        <!--                                    <div class="file-name">123456.docx</div>-->
-                        <!--                                    <div class="file-size">120 MB</div>-->
-                        <!--                                </div>-->
+                    <div class="profile-picture"></div>
+                    <div class="message-content"></div>
+                </div>
+            </div>
 
-                    </div>
-                </div>
-            </div>
-            <div class="message-wrapper">
-                <div class="profile-picture">
-                    <!--                            <img src="../img/img_act/6.jpg" alt="pp">-->
-                </div>
-                <div class="message-content">
-                    <!--                            <p class="name">玩家6</p>-->
-                    <!--                            <div class="message">一群87</div>-->
-                    <!--                            <div class="message">明明就很爛 <a class="mention">@all</a></div>-->
-                </div>
-            </div>
             <div class="message-wrapper reverse">
                 <div class="profile-picture">
-                    <!--                            <img src="../img/img_act/4.jpg" alt="pp">-->
-                </div>
-                <!--                        <div class="message-content">-->
-                <!--                            <p class="name">玩家4</p>-->
-                <!--                            <div class="message">不說話沒人當你啞巴</div>-->
-                <!--                        </div>-->
-            </div>
+                     </div>
+               </div>
         </div>
         <div class="chat-typing-area-wrapper">
             <div class="chat-typing-area">
@@ -374,6 +277,24 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script src="../js/act_chat.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><script>
+    let params = new URLSearchParams(window.location.search);
+    let id = params.get('no'); // 從URL查詢參數獲取ID
+    $(document).ready(function(){
+        $.ajax({
+            url: "http://localhost:8080/gg4nbp/act/" + id,
+            type: "GET",
+            success: function(act){
+                let imgPath = decodeURIComponent(act.actImage);
+                $('#actImage').attr('src', imgPath);
+                $('#actName').text(act.actName);
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    });
+</script>
 
 
 </body>

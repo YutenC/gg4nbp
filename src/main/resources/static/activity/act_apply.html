@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>NPB.GG管理系統</title>
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="../fonts/font-awesome.min.css">
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -17,32 +17,175 @@
 
 <body id="page-top">
 
-    <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-            <div class="container-fluid d-flex flex-column p-0">
-                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon ">
-                        <img class="" src="/images/Logo-removebg.png">
+<div id="wrapper">
+    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+        <div class="container-fluid d-flex flex-column p-0">
+            <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                <div class="sidebar-brand-icon ">
+                    <img class="" src="/images/Logo-removebg.png">
+                </div>
+                <div class="sidebar-brand-text mx-3">
+                    <span>NBP.GG管理</span>
+                </div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <ul class="navbar-nav text-light" id="accordionSidebar">
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                           href="#">
+                            <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
+                            <img class="border rounded-circle img-profile" src="images/avatars/avatar1.jpeg">
+                        </a>
+                        <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
+                                &nbsp;Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
+                                &nbsp;Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
+                                &nbsp;Activity log
+                            </a>
+                            <div class="dropdown-divider">
+
+                            </div>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
+                                &nbsp;Logout
+                            </a>
+                        </div>
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>會員</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
+                        </div>
                     </div>
-                    <div class="sidebar-brand-text mx-3">
-                        <span>NBP.GG管理</span>
+                </li>
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>活動</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <!--跟活動有關的連結不需要超連結至誰-->
+                            <a class="dropdown-item" role="presentation" href="#">活動名字</a>
+                            <a class="dropdown-item" role="presentation" id="chat-button" href="#">聊天室</a>
+                            <a class="dropdown-item" role="presentation" href="#">活動名額</a>
+                        </div>
                     </div>
-                </a>
-                <hr class="sidebar-divider my-0">
-                <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                </li>
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>商城連到商城主頁面</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="#"
+                               onclick="confirmAndRedirect('活動名字')">活動名字</a>
+                            <a class="dropdown-item" role="presentation" href="#"
+                               onclick="confirmAndRedirect('轉跳到主辦人頁面')">主辦人名字</a>
+                            <a class="dropdown-item" role="presentation" href="#"
+                               onclick="confirmAndRedirect('活動名額')">活動名額</a>
+                        </div>
+                    </div>
+                </li>
+
+                <script>
+                    function confirmAndRedirect(page) {
+                        if (confirm('是否使用無量空處進行轉跳進入活動瀏覽？')) {
+                            // 根据页面参数进行相应的跳转
+                            if (page === '活動名字') {
+                                window.location.href = '活動名字的URL';
+                            } else if (page === '轉跳到主辦人頁面') {
+                                window.location.href = '主辦人頁面的URL';
+                            } else if (page === '活動名額') {
+                                window.location.href = '活動名額的URL';
+                            }
+                        }
+                    }
+                </script>
+
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>二手商城相關</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="https://www.facebook.com"
+                               onclick="return confirmAndRedirect2('xxxxx1')">xxxxx1</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
+                        </div>
+                    </div>
+                </li>
+
+                <script>
+                    function confirmAndRedirect2(page) {
+                        if (confirm('是否使用時間回娑進行轉跳進入檢舉瀏覽？')) {
+                            // 根据页面参数进行相应的跳转
+                            if (page === 'xxxxx1') {
+                                window.location.href = 'xxxx1的URL';
+                            } else if (page === 'xxxx2') {
+                                window.location.href = 'xxxx2的URL';
+                            } else if (page === 'xxxxxx3') {
+                                window.location.href = 'xxxxxx3的URL';
+                            }
+                        }
+                        return false; // 取消跳转
+                    }
+                </script>
+
+
+                <li class="nav-item">
+                    <div class="x-dropdown dropdown">
+                        <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
+                            <span>系統設定</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
+                            <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content"role="presentation">
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                <div class="container-fluid">
+                    <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h3 class="navbar-nav flex-nowrap text-dark mb-0 nav-bar-top">頁面標題</h3>
+                    <ul class="navbar-nav flex-nowrap ms-auto nav-bar-top">
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow">
+                                <!-- <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
                                 href="#">
                                 <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                <img class="border rounded-circle img-profile" src="images/avatars/avatar1.jpeg">
-                            </a>
-                            <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                    &nbsp;Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
+                                <img class="border rounded-circle img-profile"
+                                    src="images/avatars/avatar1.jpeg">
+                            </a> -->
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                    <!-- <a class="dropdown-item" href="#"> -->
+                                    <!-- <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
+                                    &nbsp;Profile -->
+                                    <!-- </a> -->
+                                    <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
                                     &nbsp;Settings
                                 </a>
@@ -50,519 +193,407 @@
                                     <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
                                     &nbsp;Activity log
                                 </a>
-                                <div class="dropdown-divider">
+                                <div class="dropdown-divider"> -->
 
-                                </div>
+                                    <!-- </div>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
                                     &nbsp;Logout
-                                </a>
-                            </div>
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>會員</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>活動</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <!--跟活動有關的連結不需要超連結至誰-->
-                                <a class="dropdown-item" role="presentation" href="#">活動名字</a>
-                                <a class="dropdown-item" role="presentation" href="轉跳到主辦人頁面">主辦人名字</a>
-                                <a class="dropdown-item" role="presentation" href="#">活動名額</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>商城連到商城主頁面</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#"
-                                    onclick="confirmAndRedirect('活動名字')">活動名字</a>
-                                <a class="dropdown-item" role="presentation" href="#"
-                                    onclick="confirmAndRedirect('轉跳到主辦人頁面')">主辦人名字</a>
-                                <a class="dropdown-item" role="presentation" href="#"
-                                    onclick="confirmAndRedirect('活動名額')">活動名額</a>
-                            </div>
-                        </div>
-                    </li>
-
-                    <script>
-                        function confirmAndRedirect(page) {
-                            if (confirm('是否使用無量空處進行轉跳進入活動瀏覽？')) {
-                                // 根据页面参数进行相应的跳转
-                                if (page === '活動名字') {
-                                    window.location.href = '活動名字的URL';
-                                } else if (page === '轉跳到主辦人頁面') {
-                                    window.location.href = '主辦人頁面的URL';
-                                } else if (page === '活動名額') {
-                                    window.location.href = '活動名額的URL';
-                                }
-                            }
-                        }
-                    </script>
-
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>二手商城相關</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="https://www.facebook.com"
-                                    onclick="return confirmAndRedirect2('xxxxx1')">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-
-                    <script>
-                        function confirmAndRedirect2(page) {
-                            if (confirm('是否使用時間回娑進行轉跳進入檢舉瀏覽？')) {
-                                // 根据页面参数进行相应的跳转
-                                if (page === 'xxxxx1') {
-                                    window.location.href = 'xxxx1的URL';
-                                } else if (page === 'xxxx2') {
-                                    window.location.href = 'xxxx2的URL';
-                                } else if (page === 'xxxxxx3') {
-                                    window.location.href = 'xxxxxx3的URL';
-                                }
-                            }
-                            return false; // 取消跳转
-                        }
-                    </script>
-
-
-                    <li class="nav-item">
-                        <div class="x-dropdown dropdown">
-                            <div class="text-start x-drop-btn" aria-expanded="false" data-bs-toggle="dropdown">
-                                <span>系統設定</span>
-                                <i class="material-icons">keyboard_arrow_down</i>
-                            </div>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">xxxxx1</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxx2</a>
-                                <a class="dropdown-item" role="presentation" href="#">xxxxxx3</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid">
-                        <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <h3 class="navbar-nav flex-nowrap text-dark mb-0 nav-bar-top">頁面標題</h3>
-                        <ul class="navbar-nav flex-nowrap ms-auto nav-bar-top">
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow">
-                                    <!-- <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                    href="#">
-                                    <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
-                                    <img class="border rounded-circle img-profile"
-                                        src="images/avatars/avatar1.jpeg">
                                 </a> -->
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                        <!-- <a class="dropdown-item" href="#"> -->
-                                        <!-- <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Profile -->
-                                        <!-- </a> -->
-                                        <!-- <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Activity log
-                                    </a>
-                                    <div class="dropdown-divider"> -->
-
-                                        <!-- </div>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                                        &nbsp;Logout
-                                    </a> -->
-                                    </div>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-                </nav>
+            </nav>
 
-            </div>
-            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                <table class="table my-0" id="dataTable">
-                    <thead>
-
-                        <tr>
-                            <td><img class="rounded-circle me-2" width="30" class="bg-white sticky-footer">
-                                <div class="container my-auto">
-                                    <div class="text-center my-auto copyright">
-                                        <span>Copyright © NBP.GG 2023</span>
-                                    </div>
-                                </div>
-                                </footer>
-            </div>
-            <a class="border rounded d-inline scroll-to-top" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
         </div>
-        <script src="../bootstrap/js/bootstrap.min.js"></script>
-        <script src="../js/theme.js"></script>
+        <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
+            <table class="table my-0" id="dataTable">
+                <thead>
 
-        <div id="phone">
-            <div class="screen">
-                <h1>活動報名</h1>
-                <div class="empty">
-                    <svg viewBox="0 0 48 48">
-                        <path
+                <tr>
+                    <td><img class="rounded-circle me-2" width="30" class="bg-white sticky-footer">
+                        <div class="container my-auto">
+                            <div class="text-center my-auto copyright">
+                                <span>Copyright © NBP.GG 2023</span>
+                            </div>
+                        </div>
+                        </footer>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/theme.js"></script>
+
+    <div id="phone">
+        <div class="screen">
+            <h1>活動報名</h1>
+            <div class="empty">
+                <svg viewBox="0 0 48 48">
+                    <path
                             d="M47.3296 9.02336C46.9238 8.85514 46.4566 8.94821 46.1461 9.25869L26.2748 29.13C26.1703 29.2345 26.0916 29.3551 26.0386 29.4836C25.9866 29.6094 25.9576 29.7471 25.9567 29.8914C25.9567 29.892 25.9567 29.8925 25.9567 29.8929C25.9567 29.8932 25.9567 29.8933 25.9567 29.8934C25.9567 29.8938 25.9567 29.8941 25.9567 29.8946C25.9567 29.8949 25.9567 29.8951 25.9567 29.8954C25.9567 29.8958 25.9567 29.8959 25.9567 29.8962C25.9567 29.8967 25.9567 29.8973 25.9567 29.8979C25.9567 37.2506 19.975 43.2324 12.6223 43.2324C6.85987 43.2324 2.17195 38.5443 2.17195 32.7821C2.17195 28.2919 5.82494 24.639 10.315 24.639C13.7874 24.639 16.6122 27.4639 16.6122 30.9362C16.6122 33.5944 14.4497 35.7569 11.7916 35.7569C9.78483 35.7569 8.15229 34.1242 8.15229 32.1175C8.15229 30.6319 9.36098 29.4232 10.8466 29.4232C11.4463 29.4232 11.9326 28.9371 11.9326 28.3373C11.9326 27.7375 11.4463 27.2513 10.8466 27.2513C8.16337 27.2513 5.98034 29.4343 5.98034 32.1175C5.98034 35.3219 8.58722 37.9288 11.7916 37.9288C13.6865 37.9288 15.4077 37.1712 16.6683 35.943C16.6915 35.9233 16.7141 35.9026 16.736 35.8808L36.6075 16.0094C37.9281 14.6887 38.6555 12.9328 38.6555 11.065C38.6555 6.39509 34.8563 2.5957 30.1864 2.5957C27.4311 2.5957 24.8408 3.66864 22.8925 5.61688L3.02118 25.4882C2.99522 25.5142 2.97079 25.5412 2.94798 25.569C1.12539 27.4303 0 29.9774 0 32.7821C0 39.7421 5.66237 45.4043 12.6223 45.4043C16.8781 45.4043 20.7386 43.6813 23.5432 40.8958C23.5763 40.8697 23.6081 40.8415 23.6385 40.811L43.4582 20.9913C46.387 18.0626 48 14.1685 48 10.0267C48 9.58741 47.7353 9.19147 47.3296 9.02336ZM24.4283 7.15266C25.9663 5.61471 28.0111 4.76765 30.1862 4.76765C33.6586 4.76765 36.4835 7.59259 36.4835 11.065C36.4835 12.3526 35.9821 13.5632 35.0715 14.4737L18.7826 30.7627C18.6899 26.1724 14.9271 22.4669 10.315 22.4669C9.88181 22.4669 9.45426 22.4939 9.03497 22.546L24.4283 7.15266ZM41.9225 19.4555L27.6501 33.7279C27.9264 32.6444 28.0883 31.5148 28.1221 30.3545L45.5033 12.9732C44.9566 15.4096 43.7313 17.6467 41.9225 19.4555Z"
                             fill="currentColor" />
-                    </svg>
-                    <span>No more letters</span>
-                </div>
-                <div class="content">
-                    <div class="entries" style="height: 4000px;">
-                        <article>
-                            <div class="compact"></div>
-                            <div class="inner">
-                                <div class="info">
-                                    <strong id="current-date"></strong>
-                                    <small>活動契約說明</small>
+                </svg>
+                <span>No more letters</span>
+            </div>
+            <div class="content">
+                <div class="entries" style="height: 4000px;">
+                    <article>
+                        <div class="compact"></div>
+                        <div class="inner">
+                            <div class="info">
+                                <strong id="current-date"></strong>
+                                <small>活動契約說明</small>
+                            </div>
+                            <div class="text">
+                                <p>甲方和乙方在此同意以下條款和條件：</p>
+                                <p>1.參與者責任：
+                                    a. 參與者應確保提供的個人資訊準確無誤。
+                                    b. 參與者應遵守主辦方提供的活動規則和指示。
+                                    c. 參與者需自行負責保管個人財物，主辦方不對損失或損壞負責。</p>
+                                <p>2.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>2.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>2.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <p>3.主辦方責任：
+                                    a. 主辦方將盡合理努力確保活動的順利進行。
+                                    b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
+                                    c. 主辦方將提供適當的急救措施和安全措施。</p>
+                            </div>
+                        </div>
+                    </article>
+                    <script>
+                        // 取得當前日期
+                        var currentDate = new Date();
+
+                        // 取得月份名稱
+                        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                        var monthName = months[currentDate.getMonth()];
+
+                        // 取得日期後綴
+                        var day = currentDate.getDate();
+                        var daySuffix = getDaySuffix(day);
+
+                        // 取得年份
+                        var year = currentDate.getFullYear();
+
+                        // 顯示當前日期
+                        document.getElementById('current-date').innerHTML = monthName + ' ' + day + daySuffix + ', ' + year;
+
+                        // 函式：取得日期後綴
+                        function getDaySuffix(day) {
+                            var suffix = 'th';
+                            if (day === 1 || day === 21 || day === 31) {
+                                suffix = 'st';
+                            } else if (day === 2 || day === 22) {
+                                suffix = 'nd';
+                            } else if (day === 3 || day === 23) {
+                                suffix = 'rd';
+                            }
+                            return suffix;
+                        }
+                    </script>
+                    <article>
+
+                    </article>
+                    <article>
+                        <div class="compact"></div>
+                        <div class="inner">
+                            <div class="info">
+                                <div id="list-example" class="list-group">
+                                    <label class="list-group-item">
+                                        <strong>此活動為付費活動</strong>
+                                        <label class="list-group-item">
+                                            <input class="form-check-input" type="radio" name="list-item"
+                                                   value="#list-item-1">
+                                            賣屁股
+                                        </label>
+                                        <label class="list-group-item">
+                                            <input class="form-check-input" type="radio" name="list-item"
+                                                   value="#Organizer_bank_num">
+                                            ATM轉帳
+                                        </label>
+                                        <label class="list-group-item">
+                                            <input class="form-check-input" type="radio" name="list-item"
+                                                   value="#card">
+                                            信用卡付款
+                                        </label>
+                                        <label class="list-group-item">
+                                            <input class="form-check-input" type="radio" name="list-item"
+                                                   value="#list-item-4">
+                                            活動現場付費
+                                        </label>
+                                    </label>
                                 </div>
-                                <div class="text">
-                                    <p>甲方和乙方在此同意以下條款和條件：</p>
-                                    <p>1.參與者責任：
-                                        a. 參與者應確保提供的個人資訊準確無誤。
-                                        b. 參與者應遵守主辦方提供的活動規則和指示。
-                                        c. 參與者需自行負責保管個人財物，主辦方不對損失或損壞負責。</p>
-                                    <p>2.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>2.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>2.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
-                                    <p>3.主辦方責任：
-                                        a. 主辦方將盡合理努力確保活動的順利進行。
-                                        b. 主辦方將提供必要的設施和設備，以確保活動的舒適性和安全性。
-                                        c. 主辦方將提供適當的急救措施和安全措施。</p>
+                                <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0"
+                                     class="scrollspy-example" tabindex="0">
+                                    <div id="list-item-1">
+                                        <h4>賣屁股</h4>
+                                        <p style="color:gray;">
+                                            當談到屁股這個話題時，我們常常會聯想到一些有趣的事情。屁股是我們身體的一部分，它的形狀和大小各異，有時候會引起一些有趣的場景和笑話。讓我們來探討一下屁股在生活中的各種角色和意義吧！
+
+                                            首先，屁股在我們的日常生活中扮演著一個重要的角色，它是我們坐下時的支撐點。當我們感到疲倦或需要休息時，屁股的舒適支撐讓我們能夠放鬆身體，恢復活力。無論是在辦公室的椅子上、在學校的教室裡，還是在家中的沙發上，屁股都是我們的得力助手。
+
+                                            除了在休息時提供支撐外，屁股也是我們身體運動時的一個關鍵部位。無論是跑步、跳舞、打籃球還是游泳，屁股都參與著我們的動作。屁股的力量和穩定性對於保持平衡、轉向和提供推動力都至關重要。想像一下，如果我們沒有屁股，那麼我們的運動能力將會大大受到限制。
+
+                                            除了功能上的角色外，屁股也在文化和藝術中扮演著重要的角色。它常常成為一些幽默笑話的主題，無論是在喜劇電影、小品還是卡通中，屁股的滑稽形狀和動作經常成為引發笑聲的元素。此外，一些文化中的舞蹈和表演藝術形式也會將屁股的動作和節奏融入其中，展現出活力和獨特的風格。
+
+                                            屁股不僅僅是我們身體的一部分，它還有著多種角色和意義。無論是在日常生活中的支撐和運動，還是在文化和藝術中的表現，屁股都在無形中為我們帶來了樂趣和驚喜。讓我們珍惜這個有趣且
+                                        </p>
+                                    </div>
+                                    <div id="Organizer_bank_num">
+                                        <h4>ATM轉帳</h4>
+                                        <p style="color:gray;">
+                                            當談到ATM（自動提款機）這個話題時，我們不禁想到方便快捷的金融服務和現代生活中的重要角色。ATM的出現為我們的日常生活帶來了便利，讓我們可以隨時隨地處理金融交易。讓我們一起探討一下ATM在我們生活中的重要性和各種情境。
+
+                                            首先，ATM為我們提供了取款和存款的便利。不再需要排隊等待銀行柜台的服務，只需插入卡片，輸入密碼，我們就能夠快速取出現金或將資金存入帳戶。這不僅節省了時間，還提供了更多的自由和靈活性，讓我們能夠更好地管理個人財務。
+
+                                            其次，ATM的普及使得購物和消費更加方便。我們可以使用ATM卡或信用卡在各種商店和商場進行付款，無需攜帶大量現金。這不僅增加了支付的安全性，還提供了便利的支付方式，讓我們能夠更自在地購物和享受消費。
+
+                                            此外，ATM還可以處理其他金融交易，如餘額查詢、轉賬和繳費等。我們可以通過ATM輕鬆地查詢銀行帳戶的餘額，進行轉賬操作，或者繳納各種費用，如水電費、信用卡費用等。這使得我們能夠更加方便地管理財務，提高金融事務的效率。
+
+                                            最後，ATM還在一些緊急情況下發揮著重要作用。當我們身無分文或忘記攜帶錢包時，ATM成為了我們的救星。我們可以通過ATM取款，解決緊急的財務需求，應對突發情況。
+
+                                            總的來說，ATM在現代生活中扮演著重要的角色。它為我們提供了便捷的金融服務，包括取款、存款、付款和其他金融交易。ATM的普及不僅節省了我們的時間和精力，還提供了便利的支付方式，
+                                        </p>
+                                    </div>
+                                    <div id="card">
+                                        <h4>信用卡付款</h4>
+                                        <!--                                            <p>-->
+                                        <!--                                            <form action="process_credit_card" method="POST">-->
+                                        <!--                                                <div class="form-group">-->
+                                        <!--                                                    <label for="card_number">信用卡密碼：</label>-->
+                                        <!--                                                    <input type="text" class="form-control" id="card_number"-->
+                                        <!--                                                        name="card_number" placeholder="请输入信用卡卡號" required>-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <div class="form-group">-->
+                                        <!--                                                    <label for="card_holder">持卡人姓名：</label>-->
+                                        <!--                                                    <input type="text" class="form-control" id="card_holder"-->
+                                        <!--                                                        name="card_holder" placeholder="請输入持卡人姓名" required>-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <div class="form-group">-->
+                                        <!--                                                    <label for="expiry_date">有效期限：</label>-->
+                                        <!--                                                    <input type="text" class="form-control" id="expiry_date"-->
+                                        <!--                                                        name="expiry_date" placeholder="MM/YY" required>-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <div class="form-group">-->
+                                        <!--                                                    <label for="cvv">CVV：</label>-->
+                                        <!--                                                    <input type="text" class="form-control" id="cvv" name="cvv"-->
+                                        <!--                                                        placeholder="请输入 CVV" required>-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <button type="submit" class="btn btn-primary">提交</button>-->
+                                        </form>
+                                        </p>
+                                    </div>
+                                    <div id="list-item-4">
+                                        <h4>活動現場付費</h4>
+                                        <p style="color:gray;">以下是活動現場付費的一般流程和說明：
+
+                                            活動登記：參加者在活動現場到達後，可能需要進行活動登記。這包括填寫一些基本的個人資料或登記表格，以確定參與者的身份和聯繫方式。
+                                            支付方式：活動主辦方通常提供多種支付方式供參與者選擇，例如現金、信用卡、行動支付等。參與者可以根據自己的方便和喜好選擇合適的支付方式。
+                                            費用詳情：活動主辦方會在現場提供相關的費用詳情，包括參與該活動所需支付的金額、是否有不同的票價選擇或特別優惠等。這些費用詳情通常可以在活動現場的資訊櫃臺、展示牌、宣傳單張或網站上找到。
+                                            票券或憑證：在完成付費後，參與者通常會獲得相應的票券、入場憑證或手環等識別物，以作為參與該活動的證明。這些憑證通常需要在活動期間保持妥善，以便在需要時出示。
+                                            附加消費：有些活動可能還會提供一些附加的消費選項，例如食品、飲料、紀念品或其他相關產品或服務。這些消費通常需要額外支付，並可以在活動現場的特定據點進行交易。
+                                            需要注意的是，不同的活動可能會有不同的付費方式和流程。因此，在參加活動之前，最好查看活動的官方資訊或聯繫主辦方以獲取準確的付費說明和指引。
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </article>
-                        <script>
-                            // 取得當前日期
-                            var currentDate = new Date();
+                            <script>
+                                const radioButtons = document.querySelectorAll('.form-check-input');
+                                const scrollContainer = document.querySelector('.scrollspy-example');
 
-                            // 取得月份名稱
-                            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                            var monthName = months[currentDate.getMonth()];
+                                radioButtons.forEach((radioButton) => {
+                                    radioButton.addEventListener('change', () => {
+                                        const selectedValue = document.querySelector('input[name="list-item"]:checked').value;
+                                        const targetElement = document.querySelector(selectedValue);
 
-                            // 取得日期後綴
-                            var day = currentDate.getDate();
-                            var daySuffix = getDaySuffix(day);
+                                        if (targetElement) {
+                                            // 隐藏其他内容
+                                            const allElements = document.querySelectorAll('.scrollspy-example > div');
+                                            allElements.forEach((element) => {
+                                                if (element !== targetElement) {
+                                                    element.style.display = 'none';
+                                                }
+                                            });
 
-                            // 取得年份
-                            var year = currentDate.getFullYear();
+                                            // 显示选中内容
+                                            targetElement.style.display = 'block';
 
-                            // 顯示當前日期
-                            document.getElementById('current-date').innerHTML = monthName + ' ' + day + daySuffix + ', ' + year;
-
-                            // 函式：取得日期後綴
-                            function getDaySuffix(day) {
-                                var suffix = 'th';
-                                if (day === 1 || day === 21 || day === 31) {
-                                    suffix = 'st';
-                                } else if (day === 2 || day === 22) {
-                                    suffix = 'nd';
-                                } else if (day === 3 || day === 23) {
-                                    suffix = 'rd';
-                                }
-                                return suffix;
-                            }
-                        </script>
-                        <article>
-
-                        </article>
-                        <article>
-                            <div class="compact"></div>
-                            <div class="inner">
-                                <div class="info">
-                                    <div id="list-example" class="list-group">
-                                        <label class="list-group-item">
-                                            <strong>此活動為付費活動</strong>
-                                            <label class="list-group-item">
-                                                <input class="form-check-input" type="radio" name="list-item"
-                                                    value="#list-item-1">
-                                                賣屁股
-                                            </label>
-                                            <label class="list-group-item">
-                                                <input class="form-check-input" type="radio" name="list-item"
-                                                    value="#Organizer_bank_num">
-                                                ATM轉帳
-                                            </label>
-                                            <label class="list-group-item">
-                                                <input class="form-check-input" type="radio" name="list-item"
-                                                    value="#card">
-                                                信用卡付款
-                                            </label>
-                                            <label class="list-group-item">
-                                                <input class="form-check-input" type="radio" name="list-item"
-                                                    value="#list-item-4">
-                                                活動現場付費
-                                            </label>
-                                        </label>
-                                    </div>
-                                    <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0"
-                                        class="scrollspy-example" tabindex="0">
-                                        <div id="list-item-1">
-                                            <h4>賣屁股</h4>
-                                            <p style="color:gray;">
-                                                當談到屁股這個話題時，我們常常會聯想到一些有趣的事情。屁股是我們身體的一部分，它的形狀和大小各異，有時候會引起一些有趣的場景和笑話。讓我們來探討一下屁股在生活中的各種角色和意義吧！
-
-                                                首先，屁股在我們的日常生活中扮演著一個重要的角色，它是我們坐下時的支撐點。當我們感到疲倦或需要休息時，屁股的舒適支撐讓我們能夠放鬆身體，恢復活力。無論是在辦公室的椅子上、在學校的教室裡，還是在家中的沙發上，屁股都是我們的得力助手。
-
-                                                除了在休息時提供支撐外，屁股也是我們身體運動時的一個關鍵部位。無論是跑步、跳舞、打籃球還是游泳，屁股都參與著我們的動作。屁股的力量和穩定性對於保持平衡、轉向和提供推動力都至關重要。想像一下，如果我們沒有屁股，那麼我們的運動能力將會大大受到限制。
-
-                                                除了功能上的角色外，屁股也在文化和藝術中扮演著重要的角色。它常常成為一些幽默笑話的主題，無論是在喜劇電影、小品還是卡通中，屁股的滑稽形狀和動作經常成為引發笑聲的元素。此外，一些文化中的舞蹈和表演藝術形式也會將屁股的動作和節奏融入其中，展現出活力和獨特的風格。
-
-                                                屁股不僅僅是我們身體的一部分，它還有著多種角色和意義。無論是在日常生活中的支撐和運動，還是在文化和藝術中的表現，屁股都在無形中為我們帶來了樂趣和驚喜。讓我們珍惜這個有趣且
-                                            </p>
-                                        </div>
-                                        <div id="Organizer_bank_num">
-                                            <h4>ATM轉帳</h4>
-                                            <p style="color:gray;">
-                                                當談到ATM（自動提款機）這個話題時，我們不禁想到方便快捷的金融服務和現代生活中的重要角色。ATM的出現為我們的日常生活帶來了便利，讓我們可以隨時隨地處理金融交易。讓我們一起探討一下ATM在我們生活中的重要性和各種情境。
-
-                                                首先，ATM為我們提供了取款和存款的便利。不再需要排隊等待銀行柜台的服務，只需插入卡片，輸入密碼，我們就能夠快速取出現金或將資金存入帳戶。這不僅節省了時間，還提供了更多的自由和靈活性，讓我們能夠更好地管理個人財務。
-
-                                                其次，ATM的普及使得購物和消費更加方便。我們可以使用ATM卡或信用卡在各種商店和商場進行付款，無需攜帶大量現金。這不僅增加了支付的安全性，還提供了便利的支付方式，讓我們能夠更自在地購物和享受消費。
-
-                                                此外，ATM還可以處理其他金融交易，如餘額查詢、轉賬和繳費等。我們可以通過ATM輕鬆地查詢銀行帳戶的餘額，進行轉賬操作，或者繳納各種費用，如水電費、信用卡費用等。這使得我們能夠更加方便地管理財務，提高金融事務的效率。
-
-                                                最後，ATM還在一些緊急情況下發揮著重要作用。當我們身無分文或忘記攜帶錢包時，ATM成為了我們的救星。我們可以通過ATM取款，解決緊急的財務需求，應對突發情況。
-
-                                                總的來說，ATM在現代生活中扮演著重要的角色。它為我們提供了便捷的金融服務，包括取款、存款、付款和其他金融交易。ATM的普及不僅節省了我們的時間和精力，還提供了便利的支付方式，
-                                            </p>
-                                        </div>
-                                        <div id="card">
-                                            <h4>信用卡付款</h4>
-<!--                                            <p>-->
-<!--                                            <form action="process_credit_card" method="POST">-->
-<!--                                                <div class="form-group">-->
-<!--                                                    <label for="card_number">信用卡密碼：</label>-->
-<!--                                                    <input type="text" class="form-control" id="card_number"-->
-<!--                                                        name="card_number" placeholder="请输入信用卡卡號" required>-->
-<!--                                                </div>-->
-<!--                                                <div class="form-group">-->
-<!--                                                    <label for="card_holder">持卡人姓名：</label>-->
-<!--                                                    <input type="text" class="form-control" id="card_holder"-->
-<!--                                                        name="card_holder" placeholder="請输入持卡人姓名" required>-->
-<!--                                                </div>-->
-<!--                                                <div class="form-group">-->
-<!--                                                    <label for="expiry_date">有效期限：</label>-->
-<!--                                                    <input type="text" class="form-control" id="expiry_date"-->
-<!--                                                        name="expiry_date" placeholder="MM/YY" required>-->
-<!--                                                </div>-->
-<!--                                                <div class="form-group">-->
-<!--                                                    <label for="cvv">CVV：</label>-->
-<!--                                                    <input type="text" class="form-control" id="cvv" name="cvv"-->
-<!--                                                        placeholder="请输入 CVV" required>-->
-<!--                                                </div>-->
-<!--                                                <button type="submit" class="btn btn-primary">提交</button>-->
-                                            </form>
-                                            </p>
-                                        </div>
-                                        <div id="list-item-4">
-                                            <h4>活動現場付費</h4>
-                                            <p style="color:gray;">以下是活動現場付費的一般流程和說明：
-
-                                                活動登記：參加者在活動現場到達後，可能需要進行活動登記。這包括填寫一些基本的個人資料或登記表格，以確定參與者的身份和聯繫方式。
-                                                支付方式：活動主辦方通常提供多種支付方式供參與者選擇，例如現金、信用卡、行動支付等。參與者可以根據自己的方便和喜好選擇合適的支付方式。
-                                                費用詳情：活動主辦方會在現場提供相關的費用詳情，包括參與該活動所需支付的金額、是否有不同的票價選擇或特別優惠等。這些費用詳情通常可以在活動現場的資訊櫃臺、展示牌、宣傳單張或網站上找到。
-                                                票券或憑證：在完成付費後，參與者通常會獲得相應的票券、入場憑證或手環等識別物，以作為參與該活動的證明。這些憑證通常需要在活動期間保持妥善，以便在需要時出示。
-                                                附加消費：有些活動可能還會提供一些附加的消費選項，例如食品、飲料、紀念品或其他相關產品或服務。這些消費通常需要額外支付，並可以在活動現場的特定據點進行交易。
-                                                需要注意的是，不同的活動可能會有不同的付費方式和流程。因此，在參加活動之前，最好查看活動的官方資訊或聯繫主辦方以獲取準確的付費說明和指引。
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    const radioButtons = document.querySelectorAll('.form-check-input');
-                                    const scrollContainer = document.querySelector('.scrollspy-example');
-
-                                    radioButtons.forEach((radioButton) => {
-                                        radioButton.addEventListener('change', () => {
-                                            const selectedValue = document.querySelector('input[name="list-item"]:checked').value;
-                                            const targetElement = document.querySelector(selectedValue);
-
-                                            if (targetElement) {
-                                                // 隐藏其他内容
-                                                const allElements = document.querySelectorAll('.scrollspy-example > div');
-                                                allElements.forEach((element) => {
-                                                    if (element !== targetElement) {
-                                                        element.style.display = 'none';
-                                                    }
-                                                });
-
-                                                // 显示选中内容
-                                                targetElement.style.display = 'block';
-
-                                                // 页面滚动到选中内容所在位置
-                                                scrollContainer.scrollTo({
-                                                    top: targetElement.offsetTop,
-                                                    behavior: 'smooth'
-                                                });
-                                            }
-                                        });
+                                            // 页面滚动到选中内容所在位置
+                                            scrollContainer.scrollTo({
+                                                top: targetElement.offsetTop,
+                                                behavior: 'smooth'
+                                            });
+                                        }
                                     });
-                                </script>
-                        </article>
-                        <article id="mainTable">
+                                });
+                            </script>
+                        </div>
+                    </article>
+                    <article id="mainTable">
 
-                        </article>
-                        <script>
-                            var checkbox = document.getElementById('validationFormCheck1');
-                            var submitBtn = document.getElementById('submitBtn');
-                            var form = document.querySelector('form');
+                    </article>
+                    <script>
+                        var checkbox = document.getElementById('validationFormCheck1');
+                        var submitBtn = document.getElementById('submitBtn');
+                        var form = document.querySelector('form');
 
-                            checkbox.addEventListener('change', function () {
-                                submitBtn.style.display = this.checked ? 'block' : 'none';
-                            });
+                        checkbox.addEventListener('change', function () {
+                            submitBtn.style.display = this.checked ? 'block' : 'none';
+                        });
 
-                            form.addEventListener('submit', function (event) {
-                                if (!checkbox.checked) {
-                                    event.preventDefault(); // 阻止表單的提交
-                                    checkbox.parentElement.classList.add('was-validated');
+                        form.addEventListener('submit', function (event) {
+                            if (!checkbox.checked) {
+                                event.preventDefault(); // 阻止表單的提交
+                                checkbox.parentElement.classList.add('was-validated');
+                            }
+                        });
+                    </script>
+
+                    <script>
+                        function submitForm() {
+
+                            // 防止默认提交行为
+                            // event.preventDefault();
+
+                            // const name = document.getElementById('nameInput').value;
+                            const email = document.getElementById('accountInput').value;
+                            const content = document.getElementById('mainTable').innerHTML;
+
+                            // 创建发送的数据对象
+                            var applyData = {
+                                name: name,
+                                email: email,
+                                content: content
+                            };
+
+                            // 使用 jQuery.ajax 发送 POST 请求
+                            $.ajax({
+                                url: "http://localhost:8080/gg4nbp/apply", // 你提到的 'no' 是在全局作用域定义的，我假设它在这里是可访问的
+                                type: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify(applyData),
+                                success: function(response) {
+                                    console.log(response);
+                                },
+                                error: function(error) {
+                                    console.log(error);
                                 }
                             });
-                        </script>
 
-                        <script>
-                            function submitForm() {
-                                // 取得名字和帳號的值
-                                var name = document.getElementById('nameInput').value;
-                                var account = document.getElementById('accountInput').value;
-
-                                // 執行相應的操作，例如送出表單或驗證帳號密碼
-
-                                // 在這裡可以使用取得到的名字和帳號進行後續處理
-                                console.log('名字:', name);
-                                console.log('帳號:', account);
-
-                                // 鎖定資料
-                                document.getElementById('nameInput').disabled = true;
-                                document.getElementById('accountInput').disabled = true;
-
-                                // 顯示警示框
-                                alert('表單已提交成功！');
-                            }
-                        </script>
+                            // // 取得名字和帳號的值
+                            // var name = document.getElementById('nameInput').value;
+                            // var account = document.getElementById('accountInput').value;
+                            //
+                            // // 執行相應的操作，例如送出表單或驗證帳號密碼
+                            //
+                            // // 在這裡可以使用取得到的名字和帳號進行後續處理
+                            // console.log('名字:', name);
+                            // console.log('帳號:', account);
+                            //
+                            // // 鎖定資料
+                            // document.getElementById('nameInput').disabled = true;
+                            // document.getElementById('accountInput').disabled = true;
+                            //
+                            // // 顯示警示框
+                            // alert('表單已提交成功！');
+                        }
+                    </script>
 
 
-                    </div>
                 </div>
             </div>
-            <div class="time">11:30</div>
-            <svg class="battery" viewBox="0 0 25 12">
-                <rect opacity="0.35" x="0.5" y="0.833374" width="21" height="10.3333" rx="2.16667" fill="none"
-                    stroke="currentColor" />
-                <path opacity="0.4"
-                    d="M23 4V8C23.8047 7.66122 24.328 6.87313 24.328 6C24.328 5.12687 23.8047 4.33878 23 4"
-                    fill="currentColor" />
-                <rect x="2" y="2.33337" width="18" height="7.33333" rx="1.33333" fill="currentColor" />
-            </svg>
-            <svg class="wifi" viewBox="0 0 16 12">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M8.33045 2.60802C10.5463 2.60811 12.6775 3.45955 14.2835 4.98635C14.4044 5.10422 14.5977 5.10274 14.7168 4.98302L15.8728 3.81635C15.9331 3.75563 15.9667 3.67338 15.9662 3.58779C15.9657 3.50221 15.9311 3.42036 15.8701 3.36035C11.655 -0.679198 5.00522 -0.679198 0.79012 3.36035C0.729062 3.42032 0.694418 3.50215 0.693855 3.58773C0.693292 3.67331 0.726856 3.75558 0.78712 3.81635L1.94345 4.98302C2.06248 5.10292 2.25593 5.10441 2.37679 4.98635C3.98294 3.45945 6.11434 2.60801 8.33045 2.60802ZM8.33045 6.40368C9.54794 6.40361 10.722 6.85614 11.6245 7.67335C11.7465 7.78933 11.9388 7.78682 12.0578 7.66768L13.2125 6.50102C13.2733 6.43982 13.307 6.3568 13.3061 6.27054C13.3052 6.18427 13.2698 6.10196 13.2078 6.04202C10.4596 3.48563 6.20365 3.48563 3.45545 6.04202C3.39338 6.10196 3.35796 6.18432 3.35714 6.27061C3.35633 6.3569 3.39019 6.43991 3.45112 6.50102L4.60545 7.66768C4.72444 7.78682 4.91672 7.78933 5.03879 7.67335C5.94066 6.85668 7.11377 6.40419 8.33045 6.40368ZM10.6434 8.9575C10.6452 9.04401 10.6112 9.12741 10.5495 9.18802L8.55212 11.2037C8.49357 11.2629 8.41374 11.2963 8.33045 11.2963C8.24716 11.2963 8.16734 11.2629 8.10879 11.2037L6.11112 9.18802C6.04941 9.12736 6.01546 9.04394 6.01729 8.95743C6.01912 8.87092 6.05657 8.789 6.12079 8.73102C7.39636 7.65213 9.26455 7.65213 10.5401 8.73102C10.6043 8.78905 10.6417 8.87099 10.6434 8.9575Z"
-                    fill="currentColor" />
-            </svg>
-            <svg class="cellular" viewBox="0 0 18 12">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M16.6665 0.666626H15.6665C15.1142 0.666626 14.6665 1.11434 14.6665 1.66663V10.3333C14.6665 10.8856 15.1142 11.3333 15.6665 11.3333H16.6665C17.2188 11.3333 17.6665 10.8856 17.6665 10.3333V1.66663C17.6665 1.11434 17.2188 0.666626 16.6665 0.666626ZM10.9998 2.99996H11.9998C12.5521 2.99996 12.9998 3.44767 12.9998 3.99996V10.3333C12.9998 10.8856 12.5521 11.3333 11.9998 11.3333H10.9998C10.4476 11.3333 9.99984 10.8856 9.99984 10.3333V3.99996C9.99984 3.44767 10.4476 2.99996 10.9998 2.99996ZM7.33317 5.33329H6.33317C5.78089 5.33329 5.33317 5.78101 5.33317 6.33329V10.3333C5.33317 10.8856 5.78089 11.3333 6.33317 11.3333H7.33317C7.88546 11.3333 8.33317 10.8856 8.33317 10.3333V6.33329C8.33317 5.78101 7.88546 5.33329 7.33317 5.33329ZM2.6665 7.33329H1.6665C1.11422 7.33329 0.666504 7.78101 0.666504 8.33329V10.3333C0.666504 10.8856 1.11422 11.3333 1.6665 11.3333H2.6665C3.21879 11.3333 3.6665 10.8856 3.6665 10.3333V8.33329C3.6665 7.78101 3.21879 7.33329 2.6665 7.33329Z"
-                    fill="currentColor" />
-            </svg>
         </div>
+        <div class="time">11:30</div>
+        <svg class="battery" viewBox="0 0 25 12">
+            <rect opacity="0.35" x="0.5" y="0.833374" width="21" height="10.3333" rx="2.16667" fill="none"
+                  stroke="currentColor" />
+            <path opacity="0.4"
+                  d="M23 4V8C23.8047 7.66122 24.328 6.87313 24.328 6C24.328 5.12687 23.8047 4.33878 23 4"
+                  fill="currentColor" />
+            <rect x="2" y="2.33337" width="18" height="7.33333" rx="1.33333" fill="currentColor" />
+        </svg>
+        <svg class="wifi" viewBox="0 0 16 12">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M8.33045 2.60802C10.5463 2.60811 12.6775 3.45955 14.2835 4.98635C14.4044 5.10422 14.5977 5.10274 14.7168 4.98302L15.8728 3.81635C15.9331 3.75563 15.9667 3.67338 15.9662 3.58779C15.9657 3.50221 15.9311 3.42036 15.8701 3.36035C11.655 -0.679198 5.00522 -0.679198 0.79012 3.36035C0.729062 3.42032 0.694418 3.50215 0.693855 3.58773C0.693292 3.67331 0.726856 3.75558 0.78712 3.81635L1.94345 4.98302C2.06248 5.10292 2.25593 5.10441 2.37679 4.98635C3.98294 3.45945 6.11434 2.60801 8.33045 2.60802ZM8.33045 6.40368C9.54794 6.40361 10.722 6.85614 11.6245 7.67335C11.7465 7.78933 11.9388 7.78682 12.0578 7.66768L13.2125 6.50102C13.2733 6.43982 13.307 6.3568 13.3061 6.27054C13.3052 6.18427 13.2698 6.10196 13.2078 6.04202C10.4596 3.48563 6.20365 3.48563 3.45545 6.04202C3.39338 6.10196 3.35796 6.18432 3.35714 6.27061C3.35633 6.3569 3.39019 6.43991 3.45112 6.50102L4.60545 7.66768C4.72444 7.78682 4.91672 7.78933 5.03879 7.67335C5.94066 6.85668 7.11377 6.40419 8.33045 6.40368ZM10.6434 8.9575C10.6452 9.04401 10.6112 9.12741 10.5495 9.18802L8.55212 11.2037C8.49357 11.2629 8.41374 11.2963 8.33045 11.2963C8.24716 11.2963 8.16734 11.2629 8.10879 11.2037L6.11112 9.18802C6.04941 9.12736 6.01546 9.04394 6.01729 8.95743C6.01912 8.87092 6.05657 8.789 6.12079 8.73102C7.39636 7.65213 9.26455 7.65213 10.5401 8.73102C10.6043 8.78905 10.6417 8.87099 10.6434 8.9575Z"
+                  fill="currentColor" />
+        </svg>
+        <svg class="cellular" viewBox="0 0 18 12">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M16.6665 0.666626H15.6665C15.1142 0.666626 14.6665 1.11434 14.6665 1.66663V10.3333C14.6665 10.8856 15.1142 11.3333 15.6665 11.3333H16.6665C17.2188 11.3333 17.6665 10.8856 17.6665 10.3333V1.66663C17.6665 1.11434 17.2188 0.666626 16.6665 0.666626ZM10.9998 2.99996H11.9998C12.5521 2.99996 12.9998 3.44767 12.9998 3.99996V10.3333C12.9998 10.8856 12.5521 11.3333 11.9998 11.3333H10.9998C10.4476 11.3333 9.99984 10.8856 9.99984 10.3333V3.99996C9.99984 3.44767 10.4476 2.99996 10.9998 2.99996ZM7.33317 5.33329H6.33317C5.78089 5.33329 5.33317 5.78101 5.33317 6.33329V10.3333C5.33317 10.8856 5.78089 11.3333 6.33317 11.3333H7.33317C7.88546 11.3333 8.33317 10.8856 8.33317 10.3333V6.33329C8.33317 5.78101 7.88546 5.33329 7.33317 5.33329ZM2.6665 7.33329H1.6665C1.11422 7.33329 0.666504 7.78101 0.666504 8.33329V10.3333C0.666504 10.8856 1.11422 11.3333 1.6665 11.3333H2.6665C3.21879 11.3333 3.6665 10.8856 3.6665 10.3333V8.33329C3.6665 7.78101 3.21879 7.33329 2.6665 7.33329Z"
+                  fill="currentColor" />
+        </svg>
+    </div>
 
-        <!-- dribbble - twitter -->
-        <!-- <a class="dribbble" href="https://dribbble.com/ai" target="_blank"><img
-                src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg"
-                alt=""></a>
-        <a class="twitter" target="_top" href="https://twitter.com/aaroniker_me"><svg xmlns="http://www.w3.org/2000/svg"
-                width="72" height="72" viewBox="0 0 72 72">
-                <path
-                    d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z">
-                </path>
-            </svg></a> -->
-        <script src="../js/act_apply.js"></script>
+    <!-- dribbble - twitter -->
+    <!-- <a class="dribbble" href="https://dribbble.com/ai" target="_blank"><img
+            src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg"
+            alt=""></a>
+    <a class="twitter" target="_top" href="https://twitter.com/aaroniker_me"><svg xmlns="http://www.w3.org/2000/svg"
+            width="72" height="72" viewBox="0 0 72 72">
+            <path
+                d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z">
+            </path>
+        </svg></a> -->
+    <script src="../js/act_apply.js"></script>
+
 </body>
 <script src="../jquery/jquery-3.4.1.min.js"></script>
 <script
@@ -577,7 +608,7 @@
     console.log( 'no: ' + no);
 
 
-getAct(no);
+    getAct(no);
     function getAct(id) {
         axios
             .get("http://localhost:8080/gg4nbp/act/"+id)
@@ -619,7 +650,7 @@ getAct(no);
                                     <p> ${act.actLocation}</p>
                                      <p id="act_Price">付費金額</p>
                                     <small id="act_price">${act.actPrice}</small>
-
+                                        <p id="act_Time">時間</p>
                                     <p id="act_Time">${act.actTime}</p>
                                     <div class="compact"></div>
                                     <div class="inner">
@@ -629,16 +660,8 @@ getAct(no);
                                         </div>
                                         <div class="text">
 
-                                            <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" id="nameInput" placeholder="王小明">
-                                                <label for="nameInput">名字</label>
-                                            </div>
-                                            <div class="form-floating">
-                                                <input type="email" class="form-control" id="accountInput" placeholder="name@example.com">
-                                                <label for="accountInput">帳號</label>
-                                            </div>
+
                                             <p></p>
-                                            <button onclick="submitForm()">送出</button>
                                             <p> 1.</p>
                                             <p>資訊不完整：活動的組織者無法獲得您的必要資訊，如姓名、聯絡方式等，這可能影響他們與您的溝通以及您對活動的參與。</p>
                                             <p>2.</p>
@@ -651,17 +674,15 @@ getAct(no);
                                             </p>
                                         </div>
                                     </div>
-                                    <div>
-                                        <input type="checkbox" class="form-check-input" id="validationFormCheck1"
-                                            required>
-                                        <label class="form-check-label" for="validationFormCheck1">關看完後請打勾</label>
-                                        <div class="invalid-feedback">請勾選此框</div>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary" id="submitBtn"
-                                        style="display: none;">確認參加</button>
-
-
+                                     <div class="form-floating mb-3">
+<!--                                                <input type="text" class="form-control" id="nameInput" placeholder="王小明">-->
+<!--                                                <label for="nameInput">名字</label>-->
+                                            </div>
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" id="accountInput" placeholder="name@example.com">
+                                                <label for="accountInput">帳號</label>
+                                            </div>
+                                            <button onclick="submitForm()">送出</button>
                                 </div>
                             </div>
                         </article>`
@@ -670,7 +691,25 @@ getAct(no);
 
 
 
-$("#mainTable").prepend(childContent);
+                $("#mainTable").prepend(childContent);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+</script>
+<script>
+    let urlParams = new URLSearchParams(window.location.search);
+    let id = urlParams.get('no'); // 把 no 存為全局變數 id
+    console.log( 'no: ' + id);
+
+    getAct(id);
+    function getAct(id) {
+        axios
+            .get("http://localhost:8080/gg4nbp/act/" + id)
+            .then((response) => {
+                // 省略的部分
             })
             .catch((error) => {
                 console.error(error);
@@ -678,8 +717,44 @@ $("#mainTable").prepend(childContent);
 
     }
 
+    function submitForm() {
+        // 防止默认提交行为
+        event.preventDefault();
+        const name = document.getElementById("nameInput").value;
+        const email = document.getElementById('accountInput').value;
+        const actValue = document.getElementById('act_value').textContent;
+        const actLocation = document.getElementById('Act_location').nextElementSibling.textContent.trim();
+        const actPrice = document.getElementById('act_price').textContent;
+        const actTime = document.getElementById('act_Time').textContent;
+
+        // 建立要傳送的資料物件
+        var applyData = {
+            email: $("#email").val(),
+        };
+
+        // 使用 jQuery.ajax 发送 POST 请求
+        $.ajax({
+            url: 'http://localhost:8080/gg4nbp/apply',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(applyData),
+            success: function(response) {
+                alert('Email has been sent!');
+            },
+            error: function(error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
+
 
 </script>
+<script>
+    let params = new URLSearchParams(window.location.search);
+    let id = params.get('no'); // 從URL查詢參數獲取ID
+    let chatUrl = "http://localhost:8080/gg4nbp/activity/act_chat.html?no=" + id;
 
+    $('#chat-button').attr('href', chatUrl);
+</script>
 
 </html>
