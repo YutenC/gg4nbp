@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.shop.shoporder.dao.OrderDetailDao;
 import gg.nbp.web.shop.shoporder.entity.OrderDetail;
-import gg.nbp.web.shop.shoporder.entity.PKOrderDeatail;
+import gg.nbp.web.shop.shoporder.entity.PKOrderDetail;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -39,7 +39,7 @@ public class OrderDetailDaoImple implements OrderDetailDao {
 	}
 	
 	@Override
-	public OrderDetail selectByPKOrderDetail(PKOrderDeatail pkod) {
+	public OrderDetail selectByPKOrderDetail(PKOrderDetail pkod) {
 		return session.get(OrderDetail.class, pkod);
 	}
 
@@ -68,11 +68,20 @@ public class OrderDetailDaoImple implements OrderDetailDao {
 
 	@Override
 	public List<OrderDetail> selectByOrderId(Integer orderId) {
-		String hql = "FROM OrderDetail WHERE pkOrderDeatail.orderId = :orderId";
+		String hql = "FROM OrderDetail WHERE pkOrderDetail.orderId = :orderId";
 		return session
 				.createQuery(hql, OrderDetail.class)
 				.setParameter("orderId", orderId)
 				.getResultList();
 	}
 
+	@Override
+	public List<OrderDetail> selectByProductId(Integer productId) {
+		String hql = "FROM OrderDetail WHERE pkOrderDetail.productId = :productId";
+		return session
+				.createQuery(hql, OrderDetail.class)
+				.setParameter("productId", productId)
+				.getResultList();
+	}
+	
 }

@@ -82,6 +82,14 @@ public class OrderDetailController extends HttpServlet {
     		return;
     	}
     	
+    	String getProductComments = req.getParameter("getProductComments");
+    	if (getProductComments != null) {
+    		Integer productId = Integer.valueOf(getProductComments);
+    		List<TransOrderProduct> trlist = oDetailService.getCommentContentsByProductId(productId);
+    		pw.println(gson.toJson(trlist));
+    		return;
+    	}
+    	
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

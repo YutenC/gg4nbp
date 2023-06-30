@@ -24,7 +24,7 @@ import gg.nbp.web.shop.shoporder.dao.OrderDetailDao;
 import gg.nbp.web.shop.shoporder.dao.OrderMasterDao;
 import gg.nbp.web.shop.shoporder.entity.OrderDetail;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
-import gg.nbp.web.shop.shoporder.entity.PKOrderDeatail;
+import gg.nbp.web.shop.shoporder.entity.PKOrderDetail;
 import gg.nbp.web.shop.shoporder.entity.PKShoppingList;
 import gg.nbp.web.shop.shoporder.entity.ShoppingList;
 import gg.nbp.web.shop.shoporder.service.OrderDetailService;
@@ -86,12 +86,12 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			// 新增OrderDetail
 			Integer prodcutTotalPrice = 0;
 			for (TransOrderProduct trObj : trObjList) {
-				PKOrderDeatail pkod = new PKOrderDeatail();
+				PKOrderDetail pkod = new PKOrderDetail();
 				pkod.setOrderId(orderId);
 				pkod.setProductID(trObj.getProductId());
 				
 				OrderDetail od = new OrderDetail();
-				od.setPkOrderDeatail(pkod);
+				od.setPkOrderDetail(pkod);
 				od.setQuantity(trObj.getBuyAmount());
 				Product checkProduct = pService.getProductById(trObj.getProductId());
 				od.setTotalPrice(trObj.getBuyAmount() * checkProduct.getPrice());
@@ -103,6 +103,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				Product pd = pService.getProductById(trObj.getProductId());
 				Integer oldStock = pd.getAmount();
 				pd.setAmount(oldStock - trObj.getBuyAmount());
+				pd.setBuyTimes(pd.getBuyTimes() + trObj.getBuyAmount());
 				pdDao.update(pd);
 				
 				// 刪除購物清單
@@ -394,7 +395,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 					od.setIsReturn(1);
 					odDao.update(od);
 					
-					Product pd = pService.getProductById(od.getPkOrderDeatail().getProductID());  // 回補商品庫存量
+					Product pd = pService.getProductById(od.getPkOrderDetail().getProductID());  // 回補商品庫存量
 					pd.setAmount(pd.getAmount() + od.getQuantity());
 					pdDao.updateProductAmountBuyTimes(pd);
 				}

@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PKOrderDeatail implements Serializable{
+public class PKOrderDetail implements Serializable{
 	
 	private static final long serialVersionUID = 7275579179233163110L;
 
@@ -40,7 +40,7 @@ public class PKOrderDeatail implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PKOrderDeatail other = (PKOrderDeatail) obj;
+		PKOrderDetail other = (PKOrderDetail) obj;
 		return Objects.equals(orderId, other.orderId) && Objects.equals(productID, other.productID);
 	}
 	

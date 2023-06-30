@@ -22,7 +22,7 @@ public class OrderDetail implements java.io.Serializable{
 	private static final long serialVersionUID = 1404904578291894640L;
 
 	@EmbeddedId
-	private PKOrderDeatail pkOrderDeatail;
+	private PKOrderDetail pkOrderDetail;
 	
 	private Integer quantity;
 	

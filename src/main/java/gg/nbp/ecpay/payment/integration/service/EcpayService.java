@@ -55,7 +55,7 @@ public class EcpayService implements CoreService{
 			String shopContent = "";
 			List<OrderDetail> odlist = odDao.selectByOrderId(om.getOrderId());
 			for (OrderDetail od : odlist) {
-				Product pd = pdDao.selectById(od.getPkOrderDeatail().getProductID());
+				Product pd = pdDao.selectById(od.getPkOrderDetail().getProductID());
 				shopContent += pd.getProductName() + " ";
 			} 
 			aio.setItemName(shopContent);	// 購買商品名稱字串，需換行以#分隔，最大400字

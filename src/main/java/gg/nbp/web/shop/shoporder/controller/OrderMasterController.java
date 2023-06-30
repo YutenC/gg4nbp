@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,8 +70,8 @@ public class OrderMasterController extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     	Member login = new Member();
-		login.setAccount("ReimuHakurei");
-		login.setPassword("HakureiShrine");
+		login.setAccount("Black");
+		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
 		
 		Member mber = memberService.login(login);
 		
@@ -411,6 +414,13 @@ public class OrderMasterController extends HttpServlet {
 			OrderMaster fromManager = gson.fromJson(omStr, OrderMaster.class);
 			
 			pw.println(orderMasterService.updateFromManager(fromManager));
+			
+			Notice notice = new Notice();
+			notice.setMember_id(memberId);
+			Format sfm1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			notice.setNotice_value("會員 " + member.getNick() + " 您已於" + sfm1.format(new Date()) + "完成取消，訂單編號" + fromManager.getOrderId());
+			
+			noticeService.addNotice(notice);
 			return;
 		}
 		
