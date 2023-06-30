@@ -24,13 +24,17 @@ public class Coupon {
     @Column(name = "discount_code")
     String discountCode;
 
+    @Column(name = "state")
+    Integer state;
+
     public Coupon() {
     }
 
-    public Coupon(Integer discount, Integer conditionPrice, Date deadline, String discountCode) {
+    public Coupon(Integer discount, Integer conditionPrice, Date deadline, String discountCode,Integer state) {
         this.discount = discount;
         this.conditionPrice = conditionPrice;
         this.deadline = deadline;
         this.discountCode = discountCode;
+        this.state=state;
     }
 }

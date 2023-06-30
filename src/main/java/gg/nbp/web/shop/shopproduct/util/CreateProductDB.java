@@ -2,12 +2,9 @@ package gg.nbp.web.shop.shopproduct.util;
 
 import gg.nbp.web.shop.shopproduct.dao.ProductDao;
 import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
-import gg.nbp.web.shop.shopproduct.dao.impl.ProductDaoImpl;
-import gg.nbp.web.shop.shopproduct.dao.impl.ProductImageDaoImpl;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.entity.ProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -203,18 +200,21 @@ public class CreateProductDB<T, P> {
                 GregorianCalendar cal = new GregorianCalendar();
                 propertyValue = cal.getTime();
             } else if (("java.lang.Integer").equals(field.getType().getName())) {
-                propertyValue = Integer.valueOf((String) propertyValue);
+                if(!"type".equals(property)){
+                    propertyValue = Integer.valueOf((String) propertyValue);
+                }
+
             }
 
             if ("type".equals(property)) {
                 String type_ = (String) propertyValue;
                 type_ = type_.trim();
                 switch (type_) {
-                    case "PS5"://22
-                        propertyValue = "1";//22
+                    case "PS5 game"://22
+                        propertyValue = ProductType.XBOXGame.getValue();//22
                         break;
-                    case "Switch"://02
-                        propertyValue = "2";//02
+                    case "Switch game"://2
+                        propertyValue = ProductType.NSGame.getValue();//2
                         break;
                 }
             }

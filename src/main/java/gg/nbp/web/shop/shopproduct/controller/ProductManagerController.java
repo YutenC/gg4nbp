@@ -46,4 +46,12 @@ return null;
     public void takeOffProduct(Integer id) {
         productManagerService.takeOffProduct(id);
     }
+
+    public void removeTakeOningProduct(Integer id) {
+        productManagerService.removeTakeOningProduct(id);
+    }
+
+    public void removeTakeOffingProduct(Integer id) {
+        productManagerService.removeTakeOffingProduct(id);
+    }
 }

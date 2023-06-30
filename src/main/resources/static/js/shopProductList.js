@@ -158,7 +158,7 @@ function getAllProduct() {
     axios({
         method: "GET",
         // url: "http://localhost:8080/MyShop/demo/getAllCouponActivity_json",
-        url: host_context + "shopDispatcher/getAllProduct",
+        url: host_context + "shopDispatcher/getAllProductWithIndexImg",
         withCredentials: true,
     })
         .then(function (value) {

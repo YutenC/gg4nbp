@@ -1,9 +1,10 @@
 package gg.nbp.web.shop.shopproduct.entity;
 
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+ import jakarta.persistence.*;
 
 @Getter
 @Setter
@@ -24,11 +25,6 @@ public class ProductImage {
     @Expose
     @Column(name = "Image", length = 2048)
     private String image;
-
-    @Expose
-    @Column(name = "state")
-    private Integer state;
-
 
     @Transient
     private String name;

@@ -2,6 +2,7 @@ package gg.nbp.web.shop.shopproduct.controller;
 
 import com.google.gson.Gson;
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
+import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
 import gg.nbp.web.shop.shopproduct.pojo.ErrorMsg;
 import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
@@ -80,4 +81,17 @@ public class CouponManagerController {
     }
 
 
+    public String getCouponMemberInfo(){
+        List<CouponMember> couponMembers= couponManagerService.getCouponMemberInfo();
+
+        return ConvertJson.toJson(couponMembers);
+    }
+
+
+    public String sendEmail(int action, List<CouponMember> couponMembers) {
+        couponManagerService.sendEmail(action,couponMembers);
+
+
+        return null;
+    }
 }

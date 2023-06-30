@@ -1,8 +1,14 @@
 package gg.nbp.web.shop.shopproduct.service.impl;
 
+import gg.nbp.web.Member.dao.MemberDao;
+import gg.nbp.web.Member.entity.Member;
+import gg.nbp.web.Member.service.MemberService;
+import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundFactory;
+import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundHandler;
 import gg.nbp.web.shop.shopproduct.dao.CouponDao;
 import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
+import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
 import gg.nbp.web.shop.shopproduct.redisdao.CouponActivityRedisDao;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
@@ -13,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Callable;
 
 @Service
 @Transactional
@@ -27,6 +34,9 @@ public class CouponManagerServiceImpl implements CouponManagerService {
     @Autowired
     CouponDao couponDao;
 
+
+    @Autowired
+    MemberService memberService;
     public CouponManagerServiceImpl() {
     }
 
@@ -90,7 +100,6 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         }
 
 
-
         RedisContent redisService = new RedisContent() {
             @Override
             public int run() {
@@ -101,6 +110,46 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         RedisFactory.getRedisServiceInstance().registerRedisService(redisService);
 
         return true;
+    }
+
+    @Override
+    public List<CouponMember> getCouponMemberInfo() {
+        List<Member> members= memberService.findAll();
+
+        List<CouponMember> couponMembers=new ArrayList<>();
+
+        for(Member member : members){
+            couponMembers.add(new CouponMember(member.getAccount(),member.getEmail()));
+        }
+
+        return couponMembers;
+    }
+
+    @Override
+    public void sendEmail(int action, List<CouponMember> couponMembers) {
+        switch (action){
+            case 0://立即發送
+                BackgroundHandler backgroundHandler = BackgroundFactory.getBackgroundHandler("shopProductBackground");
+
+                Callable<String> callable=new Callable() {
+                    @Override
+                    public Object call() throws Exception {
+                        List<CouponMember> couponMembers_=couponMembers;
+                        for(int i=0;i<couponMembers_.size();i++){
+                            System.out.println("send email"+couponMembers_.get(i).getEmail());
+                        }
+
+                        return "finish to send email";
+                    }
+                };
+
+                backgroundHandler.addTask("sendEmail",callable);
+
+                break;
+            case 1://指定時間
+
+                break;
+        }
     }
 
 
@@ -114,34 +163,34 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         Coupon coupon;
         switch (index){
             case 0:
-                coupon = new Coupon(100, 1000, deadline, "Qb12BJZO22");
+                coupon = new Coupon(100, 1000, deadline, "Qb12BJZO22",0);
                 break;
             case 1:
-                coupon = new Coupon(100, 2000, deadline, "Qb34FFFO11");
+                coupon = new Coupon(100, 2000, deadline, "Qb34FFFO11",0);
                 break;
             case 2:
-                coupon = new Coupon(50, 500, deadline, "Qb55ASZ678");
+                coupon = new Coupon(50, 500, deadline, "Qb55ASZ678",0);
                 break;
             case 3:
-                coupon = new Coupon(150, 2000, deadline, "Qb56BGFO90");
+                coupon = new Coupon(150, 2000, deadline, "Qb56BGFO90",0);
                 break;
             case 4:
-                coupon = new Coupon(100, 500, deadline, "Qb77XCVO22");
+                coupon = new Coupon(100, 500, deadline, "Qb77XCVO22",0);
                 break;
             case 5:
-                coupon = new Coupon(100, 1000, deadline, "Qb345XZO67");
+                coupon = new Coupon(100, 1000, deadline, "Qb345XZO67",0);
                 break;
             case 6:
-                coupon = new Coupon(200, 1500, deadline, "Qb875IRO93");
+                coupon = new Coupon(200, 1500, deadline, "Qb875IRO93",0);
                 break;
             case 7:
-                coupon = new Coupon(300, 3000, deadline, "Qb345VBO67");
+                coupon = new Coupon(300, 3000, deadline, "Qb345VBO67",0);
                 break;
             case 8:
-                coupon = new Coupon(100, 600, deadline, "Qb245DYO88");
+                coupon = new Coupon(100, 600, deadline, "Qb245DYO88",0);
                 break;
             default:
-                coupon = new Coupon(100, 1000, deadline, "Qb345XZO67");
+                coupon = new Coupon(100, 1000, deadline, "Qb345XZO67",0);
                 break;
 
         }
@@ -161,7 +210,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
 
         String discountCode = genCouponCode();
         System.out.println("discountCode: " + discountCode);
-        Coupon coupon = new Coupon(discount, condition_price, deadline, discountCode);
+        Coupon coupon = new Coupon(discount, condition_price, deadline, discountCode,0);
 
         return coupon;
     }

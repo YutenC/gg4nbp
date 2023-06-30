@@ -3,13 +3,18 @@ package gg.nbp.web.shop.shopproduct.service;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.entity.ProductDetail;
 import gg.nbp.web.shop.shopproduct.entity.ProductImage;
+import gg.nbp.web.shop.shopproduct.pojo.ProductSelect;
 
 import java.util.List;
 import java.util.Map;
 
 public interface ProductService {
 
-    List<Product> getAllProduct(Integer memId);
+    List<Product> getAllProduct(Integer memId, Integer limit);
+
+    List<Product> getAllProductByCondition(Integer memId, ProductSelect productSelect);
+
+    List<Product> getAllProductWithIndexImg(Integer memId);
 
     Product getProductById(Integer id);
 

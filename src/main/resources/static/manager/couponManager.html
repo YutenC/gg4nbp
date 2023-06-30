@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../fonts/material-icons.min.css">
     <link rel="stylesheet" href="../css/x-dropdown.css">
     <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../css/couponManagerMain.css">
 </head>
 
 <body id="page-top">
@@ -21,201 +22,277 @@
             <div id="content">
                 <!-- 上方導覽欄 -->
                 <div class="container-fluid" id="vue-body">
-                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <!--                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#">-->
-                        <!--                            新增優惠券-->
-                        <!--                        </a>-->
-                        <button class="btn btn-primary btn-sm d-none d-sm-inline-block"
-                            @click="autoGenerateCouponActivity()">新增優惠券</button>
+
+                    <div class="mainguide">
+                        <ul>
+                            <li v-for="item in mainguideContent" @click="changeMainContent(item.id)">
+                                <span>{{item.text}}</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <!-- card shadow 視窗整體
-                    mb-4 視窗間間距
-                    py-3 視窗內間距
-                    card-header 標題框
-                    card-body 視窗主體 -->
+                    <div v-if="currentMainguideContent==1">
+
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 fw-bold">優惠券</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 text-nowrap">
+                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                            <label class="form-label">Show&nbsp;
+                                                <select class="d-inline-block form-select form-select-sm">
+                                                    <option value="10" selected="">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>&nbsp;
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                            <label class="form-label">
+                                                <input type="search" class="form-control form-control-sm"
+                                                    aria-controls="dataTable" placeholder="Search">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                                    aria-describedby="dataTable_info">
+                                    <table class="table my-0" id="dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>活動名稱</th>
+                                                <th>活動代碼</th>
+                                                <th>折扣代碼</th>
+                                                <th>折扣金額</th>
+                                                <th>滿額金額</th>
+                                                <th>使用期限</th>
+                                                <td>折價券狀態</td>
+                                                <th>更新</th>
+                                                <th>刪除</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <div v-if="showCouponActivity">
+                                                <tr v-for="item in couponActivity">
+                                                    <td>{{item.activityName}}</td>
+                                                    <td>{{item.activityCode}}</td>
+                                                    <td><input v-model="item.coupon.discountCode" type="text"></td>
+                                                    <!--                                                <td>{{item.coupon.discountCode}}</td>-->
+                                                    <td>{{item.coupon.discount}}</td>
+                                                    <td>{{item.coupon.conditionPrice}}</td>
+                                                    <td>{{item.coupon.deadline}}</td>
+
+                                                    <td>{{item.coupon.state}}</td>
+                                                    <td><button style="width: 50px; height: 20px;"
+                                                            @click="updateCouponActivity(item.coupon.id)">更新</button>
+                                                    </td>
+                                                    <td><button style="width: 50px; height: 20px;"
+                                                            @click="deleteCouponActivity(item.coupon.id)">刪除</button>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            <div v-else>
+                                                <p>error</p>
+                                                <p>{{AllCouponActivityRequest.content}}</p>
+                                            </div>
 
 
 
-                    <!-- <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">無用表格</p>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td><strong>活動名稱</strong></td>
+                                                <td><strong>活動代碼</strong></td>
+                                                <td><strong>折扣代碼</strong></td>
+                                                <td><strong>折扣金額</strong></td>
+                                                <td><strong>滿額金額</strong></td>
+                                                <td><strong>使用期限</strong></td>
+                                                <td><strong>折價券狀態</strong></td>
+                                                <td><strong>更新</strong></td>
+                                                <td><strong>刪除</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 align-self-center">
+                                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                                            Showing 1 to 10 of 27</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <nav
+                                            class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                            <ul class="pagination">
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" aria-label="Previous" href="#">
+                                                        <span aria-hidden="true">«</span>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item active">
+                                                    <a class="page-link" href="#">1</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">2</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">3</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" aria-label="Next" href="#">
+                                                        <span aria-hidden="true">»</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            無用視窗
-                        </div>
-                    </div> -->
 
-                    <div class="table-responsive table mt-2" id="dataTable" role="grid"
-                        aria-describedby="dataTable_info">
-                        <table class="table my-0" id="dataTable">
-                            <thead>
-                                <tr>
-                                    <th>活動名稱</th>
-                                    <th>活動代碼</th>
-                                    <th>折扣代碼</th>
-                                    <th>折扣金額</th>
-                                    <th>滿額金額</th>
-                                    <th>使用期限</th>
 
-                                    <th>新增</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input v-model.lazy="newcouponActivity.activityName"
-                                            class="form-control form-control-sm"></td>
-                                    <td><input v-model.lazy="newcouponActivity.activityCode"
-                                            class="form-control form-control-sm"></td>
-                                    <td><input v-model.lazy="newCoupon.discountCode"
-                                            class="form-control form-control-sm"></td>
-                                    <td><input v-model.lazy="newCoupon.discount" type="number"
-                                            class="form-control form-control-sm">
-                                    </td>
-                                    <td><input v-model.lazy="newCoupon.conditionPrice" type="number"
-                                            class="form-control form-control-sm"></td>
-
-                                    <td><input type="date" v-bind:value="newCoupon.deadline" v-bind:min="minDate"
-                                            v-model.lazy="newCoupon.deadline" class="form-control form-control-sm">
-
-                                    <td><button style="width: 50px; height: 20px;"
-                                            @click="addCouponActivity()">新增</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td><strong>活動名稱</strong></td>
-                                    <td><strong>活動代碼</strong></td>
-                                    <td><strong>折扣代碼</strong></td>
-                                    <td><strong>折扣金額</strong></td>
-                                    <td><strong>滿額金額</strong></td>
-                                    <td><strong>使用期限</strong></td>
-                                    <td><strong>新增</strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
                     </div>
+
+
+                    <div v-if="currentMainguideContent==2">
+
+                        <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                            <!--                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#">-->
+                            <!--                            新增優惠券-->
+                            <!--                        </a>-->
+                            <button class="btn btn-primary btn-sm d-none d-sm-inline-block"
+                                @click="autoGenerateCouponActivity()">新增優惠券</button>
+                        </div>
+
+                        <!-- card shadow 視窗整體
+                        mb-4 視窗間間距
+                        py-3 視窗內間距
+                        card-header 標題框
+                        card-body 視窗主體 -->
+
+
+
+                        <!-- <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 fw-bold">無用表格</p>
+                            </div>
+                            <div class="card-body">
+                                無用視窗
+                            </div>
+                        </div> -->
+
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                            aria-describedby="dataTable_info">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>活動名稱</th>
+                                        <th>活動代碼</th>
+                                        <th>折扣代碼</th>
+                                        <th>折扣金額</th>
+                                        <th>滿額金額</th>
+                                        <th>使用期限</th>
+
+                                        <th>新增</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input v-model.lazy="newcouponActivity.activityName"
+                                                class="form-control form-control-sm"></td>
+                                        <td><input v-model.lazy="newcouponActivity.activityCode"
+                                                class="form-control form-control-sm"></td>
+                                        <td><input v-model.lazy="newCoupon.discountCode"
+                                                class="form-control form-control-sm"></td>
+                                        <td><input v-model.lazy="newCoupon.discount" type="number"
+                                                class="form-control form-control-sm">
+                                        </td>
+                                        <td><input v-model.lazy="newCoupon.conditionPrice" type="number"
+                                                class="form-control form-control-sm"></td>
+
+                                        <td><input type="date" v-bind:value="newCoupon.deadline" v-bind:min="minDate"
+                                                v-model.lazy="newCoupon.deadline" class="form-control form-control-sm">
+
+                                        <td><button style="width: 50px; height: 20px;"
+                                                @click="addCouponActivity()">新增</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>活動名稱</strong></td>
+                                        <td><strong>活動代碼</strong></td>
+                                        <td><strong>折扣代碼</strong></td>
+                                        <td><strong>折扣金額</strong></td>
+                                        <td><strong>滿額金額</strong></td>
+                                        <td><strong>使用期限</strong></td>
+
+                                        <td><strong>新增</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div v-if="currentMainguideContent==3">
+                        <button style="width: 50px; height: 20px;" @click="getCouponMemberInfo()"></button>
+                        <button @click="sendEmail(0)">立即發送</button>
+                        <button @click="sendEmail(1)">根據時間發送</button>
+
+                        <!-- <div>
+                            <input type="checkbox" id="scales" name="scales" checked>
+                            <label for="scales">Scales</label>
+                        </div> -->
+
+
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                            aria-describedby="dataTable_info">
+
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>選取</th>
+                                        <th>帳戶</th>
+                                        <th>信箱</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div>
+                                        <tr v-for="item in couponMembers">
+                                            <td><input type="checkbox" v-model="item.check"></td>
+                                            <td>{{item.account}}</td>
+                                            <td>{{item.email}}</td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>選取</strong></td>
+                                        <td><strong>帳戶</strong></td>
+                                        <td><strong>信箱</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+
+                        </div>
+
+
+                    </div>
+
+
                     <!-- // -->
 
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">優惠券</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <label class="form-label">Show&nbsp;
-                                            <select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm"
-                                                aria-controls="dataTable" placeholder="Search">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid"
-                                aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>活動名稱</th>
-                                            <th>活動代碼</th>
-                                            <th>折扣代碼</th>
-                                            <th>折扣金額</th>
-                                            <th>滿額金額</th>
-                                            <th>使用期限</th>
 
-                                            <th>刪除</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <div v-if="showCouponActivity">
-                                            <tr v-for="item in couponActivity">
-                                                <td>{{item.activityName}}</td>
-                                                <td>{{item.activityCode}}</td>
-                                                <td><input v-model="item.coupon.discountCode" type="text"></td>
-                                                <!--                                                <td>{{item.coupon.discountCode}}</td>-->
-                                                <td>{{item.coupon.discount}}</td>
-                                                <td>{{item.coupon.conditionPrice}}</td>
-                                                <td>{{item.coupon.deadline}}</td>
-
-                                                </td>
-                                                <td><button style="width: 50px; height: 20px;"
-                                                        @click="updateCouponActivity(item.coupon.id)">更新</button>
-                                                </td>
-                                                <td><button style="width: 50px; height: 20px;"
-                                                        @click="deleteCouponActivity(item.coupon.id)">刪除</button>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                        <div v-else>
-                                            <p>error</p>
-                                            <p>{{AllCouponActivityRequest.content}}</p>
-                                        </div>
-
-
-
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td><strong>活動名稱</strong></td>
-                                            <td><strong>活動代碼</strong></td>
-                                            <td><strong>折扣代碼</strong></td>
-                                            <td><strong>折扣金額</strong></td>
-                                            <td><strong>滿額金額</strong></td>
-                                            <td><strong>使用期限</strong></td>
-
-                                            <td><strong>刪除</strong></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of 27</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav
-                                        class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" aria-label="Previous" href="#">
-                                                    <span aria-hidden="true">«</span>
-                                                </a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" aria-label="Next" href="#">
-                                                    <span aria-hidden="true">»</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>

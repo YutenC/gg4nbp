@@ -1,11 +1,10 @@
 package gg.nbp.web.shop.shopproduct.entity;
 
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+ import jakarta.persistence.*;
 import java.util.List;
 
 @Getter
@@ -13,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "product", schema = "five")
 public class Product {
-
     @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +23,8 @@ public class Product {
     private String productName;
 
     @Expose
-    @Column(name = "Type", nullable = false)
-    private Integer type;
+    @Column(name = "Type", nullable = false, length = 8)
+    private String type;
 
     @Expose
     @Column(name = "Price", nullable = false)
@@ -37,7 +35,7 @@ public class Product {
     private Integer amount;
 
     @Expose
-    @Column(name = "Buy_Times", nullable = false)
+    @Column(name = "Buy_Times")
     private Integer buyTimes;
 
     @Expose
@@ -45,11 +43,11 @@ public class Product {
     private String brand;
 
     @Expose
-    @Column(name = "Rate", nullable = false)
+    @Column(name = "Rate")
     private Integer rate;
 
     @Expose
-    @Column(name = "Reviewe_count", nullable = false)
+    @Column(name = "Reviewe_count")
     private Integer revieweCount;
 
     @Expose
@@ -58,17 +56,8 @@ public class Product {
     private String content;
 
     @Expose
-    @Column(name = "Launch_Time",insertable = false)
+    @Column(name = "Launch_Time")
     private java.util.Date launchTime;
-
-    @Expose
-    @Column(name = "Takeoff_Time",insertable = false)
-    private java.util.Date takeoffTime;
-
-    @Expose
-    @Column(name = "state",insertable = false)
-    private Integer state;
-
 
     @Expose
     @Transient
@@ -80,4 +69,5 @@ public class Product {
     @Expose
     @Transient
     int follow;
+
 }
