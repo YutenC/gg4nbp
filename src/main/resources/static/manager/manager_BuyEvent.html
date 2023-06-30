@@ -447,7 +447,7 @@
     let reqaa = [];
 
     function ReviewBox(i) {
-        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        let obj = JSON.parse(sessionStorage.getItem('searchResult'));
         obj = obj[i];
         Swal.fire({
             html: `
@@ -459,7 +459,7 @@
                         <div><span>請求人 :</span><span>${obj.memberName || ''}</span></div>
                         <div><span>商品名稱 :</span><span>${obj.productName || ''}</span></div>
                         <div><span>商品種類 :</span><span>${obj.type}</span></div>
-                        <div><span>預估價 :</span><span>${obj.estimate || '0'}</span></div>
+                        <div><span>預估價 :</span><span>${obj.estimate || ''}</span></div>
                         <div><span>申請時間 :</span><input  type="datetime-local" value="${obj.applyDate}" disabled></input></div>
                         <div><span>銀行帳號 :</span><span>${obj.applicantBankNumber || ''}</span></div>
                     </div>
@@ -470,7 +470,7 @@
                     </div>
                     <div class="Change">
                         <div><span>收購價 :</span><input id="price" type="number" value="${obj.price || ''}"></div>
-                        <div><span>審核時間 :</span><input id="confirmTime" type="datetime-local" value="${obj.confirmDate || ''}"></div>
+                        <div><span>審核時間 :</span><input id="confirmTime" type="datetime-local" value="${obj.confirmDate || ''}" disabled></div>
                         <div>
                             <span>付款狀態 :</span>
                             <select id="payState"  value="${obj.payState}">
@@ -522,21 +522,20 @@
 
         $('#commit').on('click',e =>{
             let p = price.value || -1 ;
-            let t = confirmTime.value ?  confirmTime.value+":00.000Z" :  new Date();
             fetch('update',{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 eventId : obj.eventId,
                 price : p,
-                confirmTime : t,
                 payState : payState.value,
                 approvalState : approvalState.value
             })
             })
             .then(res => res.json())
             .then(result  => {
-                sessionStorage.setItem('searcgResult', JSON.stringify(result));
+                reqaa = result ;
+                sessionStorage.setItem('searchResult', JSON.stringify(result));
                 reqaa = result;
                 Swal.fire(
                 '完成!',
@@ -557,13 +556,13 @@
 
 
     function itemDisplay(page = 1) {
-        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        let obj = JSON.parse(sessionStorage.getItem('searchResult'));
         if (obj.eventId) {
             obj = [obj];
         }
         const pageBar = document.createElement('div');
         pageBar.setAttribute('class', 'pageBar');
-        const total = Math.floor(obj.length / onePage) + 1;
+        const total = obj.length % onePage == 0 ? obj.length / onePage  :  Math.floor(obj.length / onePage) + 1;
         let start = 1;
         let end = 7 > total ? total : 7;
         if (obj.length > onePage) {
@@ -599,7 +598,7 @@
                     <span>${obj[i].eventId}</span>
                     <span>${obj[i].productName}</span>
                     <span>${obj[i].memberName}</span>
-                    <span>${obj[i].estimate}</span>
+                    <span>${obj[i].estimate ?? ''} </span>
                     <span>${obj[i].approvalState}</span>
                     <span>
                         <button class="Review_${i}" onclick="ReviewBox(${i})">審</button>
@@ -641,7 +640,7 @@
                     }
                     )
                 } else {
-                    sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                    sessionStorage.setItem('searchResult', JSON.stringify(obj));
                     itemDisplay();
                 }
             })
@@ -663,7 +662,6 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                str: $('#searchValue').val()
             })
         })
 
@@ -678,7 +676,7 @@
                     }
                     )
                 } else {
-                    sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                    sessionStorage.setItem('searchResult', JSON.stringify(obj));
                     itemDisplay();
                 }
             })

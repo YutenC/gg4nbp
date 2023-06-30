@@ -236,13 +236,97 @@
 
         div.swal2-html-container>div {
             margin: 10px;
-            height: 570px;
+            height: 630px;
             border-radius: 3px;
 
         }
 
         div.reviewMain {
             flex-wrap: wrap;
+        }
+
+
+
+        div.reviewMain div.barArea{
+            display: flex;
+            justify-content: center;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div{
+            display: flex;
+            width: 100px;
+            height:50px;
+            user-select: none;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 100;
+            align-items: center;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div>span{
+            display: inline-block;
+            color: #ffffff;
+            font-weight: bold;
+            user-select: none;
+            margin-top: 5px;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div div.circle{
+            display: inline-block;
+            border: 3px solid #2531d0;
+            height: 10px;
+            width: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div div.-now{
+            border: 3px solid #ff0034;
+            height: 12px;
+            width: 12px;
+            border-radius: 6px;
+        }
+
+
+
+        div.reviewMain div.barArea div.progressBar{
+            margin: 10px;
+            background-color: #4ea4b7;
+            border: 2px solid #308395;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            height: 60px;
+            padding: 30px;
+            width: 90%;
+            align-items: center;
+        }
+
+        
+
+        div.reviewMain div.barArea div.progressBar div.backBar{
+            display: inline-block;
+            width: calc(100% - 115px);
+            height: 1px;
+            border: 3px solid rgb(185, 185, 185);
+            position: absolute;
+            top: 14px;
+            border-radius: 2px;
+            margin : 0px  10px;
+            z-index: 0;
+        }
+
+
+        div.reviewMain div.barArea div.progressBar div.backBar div.barLine{
+            height: 1px;
+            border: 3px solid rgb(229, 165, 76);
+            position: absolute;
+            border-radius: 2px;
+            z-index: 5;
+            width: 6%;
+            top: -3px;
+            left: -3px;
         }
 
 
@@ -280,14 +364,38 @@
         div.reviewMain div.editMain div.Pic {
             display: inline-block;
             margin: 10px;
-            border: 2px solid black;
+            border: 2px solid rgb(119, 33, 33);
             background-color: #ffeaeac6;
             border-radius: 2px;
             height: 410px;
             width: calc(100% - 40% - 40px);
             padding: 10px;
             overflow: overlay;
+
         }
+        div.reviewMain div.editMain div.Pic::-webkit-scrollbar{
+            width: 8px;
+            height: 8px;
+        }
+
+        div.reviewMain div.editMain div.Pic::-webkit-scrollbar-track{
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            background: #c87373;
+        }
+
+
+
+        div.reviewMain div.editMain div.Pic::-webkit-scrollbar-thumb {
+            background: #702626;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
+            border-radius: 8px;
+        }
+
+        div.reviewMain div.editMain div.Pic::-webkit-scrollbar-thumb:window-inactive {
+            background: #702626;
+        }
+
 
         div.reviewMain div.editMain div.Pic div.imgArea {
             display: flex;
@@ -336,7 +444,7 @@
         div.reviewMain div.editMain div.notChange {
             display: inline-block;
             margin: 10px;
-            border: 2px solid black;
+            border: 2px solid #2d6e2a;
             background-color: #f1ffeac6;
             border-radius: 2px;
             height: 410px;
@@ -595,6 +703,8 @@
                 </div>
             </div>
         </div>
+
+       
     </footer>
 
 
@@ -724,14 +834,24 @@
     let del = [];
     let upfile = [];
     let upfiledel =[];
-
+    let reqaa = [];
     function ReviewBox(i) {
-        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        let obj = JSON.parse(sessionStorage.getItem('ButEventResult'));
         obj = obj[i];
         Swal.fire({
             html: `
                 <div class="reviewMain">
                     <div style="font-size: 2em;color: white;text-shadow: 0px 0px 2px burlywood;">收購審核</div>
+                    <div class="barArea">
+                        <div class="progressBar">
+                            <div><div class="circle" ></div><span>案件成立</span></div>
+                            <div><div class="circle"></div><span>管理員審核</span></div> 
+                            <div><div class="circle"></div><span>議價中</span></div>
+                            <div><div class="circle"></div><span>待付款</span></div>
+                            <div><div class="circle"></div><span>已完成</span></div>
+                            <div class="backBar"><div class="barLine"></div></div>
+                        </div>
+                    </div>
                 <div class="editMain">
                     <div class="notChange">
                         <div><span>收購編號 :</span><span>${obj.eventId}</span></div>
@@ -777,6 +897,9 @@
         })
 
 
+        $('.barLine').attr("style",`width : calc( 6% + ( 23.5% * ${obj.progress} ))`);
+
+        $(`.circle:eq(${obj.progress})`).addClass('-now');
 
         $('textarea').on('keyup keypress', function () {
             $(this).height(0);
@@ -906,6 +1029,7 @@
     })
     .then(resp => resp.json())
     .then(obj => {
+        reqaa = obj ;
     $('#searchValue').val("");
         if (obj.str) {
             Swal.fire({
@@ -913,7 +1037,7 @@
             title: obj.str
             })
         } else {
-            sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+            sessionStorage.setItem('ButEventResult', JSON.stringify(obj));
             $('.swal2-container').remove();
             itemDisplay();
         }
@@ -927,13 +1051,13 @@
     del = [];
     upfile = [];
     upfiledel =[];
-        let obj = JSON.parse(sessionStorage.getItem('searcgResult'));
+        let obj = JSON.parse(sessionStorage.getItem('ButEventResult'));
         if (obj.eventId) {
             obj = [obj];
         }
         const pageBar = document.createElement('div');
         pageBar.setAttribute('class', 'pageBar');
-        const total = Math.floor(obj.length / onePage) + 1;
+        const total = obj.length % onePage == 0 ? obj.length / onePage  :  Math.floor(obj.length / onePage) + 1;
         let start = 1;
         let end = 7 > total ? total : 7;
         if (obj.length > onePage) {
@@ -999,6 +1123,7 @@
 
             .then(resp => resp.json())
             .then(obj => {
+                reqaa = obj ;
                 $('#searchValue').val("");
                 if (obj.str) {
                     Swal.fire({
@@ -1007,7 +1132,7 @@
                     }
                     )
                 } else {
-                    sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                    sessionStorage.setItem('ButEventResult', JSON.stringify(obj));
                     itemDisplay();
                 }
             })
@@ -1031,6 +1156,7 @@
     })
     .then(resp => resp.json())
     .then(obj => {
+        reqaa = obj ;
             $('#searchValue').val("");
             if (obj.str) {
                 Swal.fire({
@@ -1038,7 +1164,7 @@
                     title: obj.str
                 })
             } else {
-                sessionStorage.setItem('searcgResult', JSON.stringify(obj));
+                sessionStorage.setItem('ButEventResult', JSON.stringify(obj));
                 itemDisplay();
             }
     })

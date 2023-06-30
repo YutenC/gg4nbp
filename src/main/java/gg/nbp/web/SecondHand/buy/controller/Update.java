@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/secondhand/update")
+@WebServlet("/manager/update")
 public class Update extends HttpServlet {
 	private static final long serialVersionUID = -3236355283493258651L;
 	@Autowired
