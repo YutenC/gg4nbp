@@ -72,7 +72,6 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 			pkslist.setProductId(trpd.getProductId());
 			slist.setPkShoppingList(pkslist);
 			slist.setQuantity(trpd.getBuyAmount());
-			System.out.println(slist);
 			jediShdao.update(slist);
 			jediShdao.renewExpireDate(memberId);
 			return true;

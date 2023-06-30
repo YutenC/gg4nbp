@@ -401,7 +401,7 @@ public class OrderMasterController extends HttpServlet {
 			return;
 		}
 		
-		if ("updateOM".equals(demand)) {
+		if ("updateOMfromManager".equals(demand)) {
 			Reader rd = req.getReader();
 			BufferedReader brd = new BufferedReader(rd);
 			String reqStr = brd.readLine();

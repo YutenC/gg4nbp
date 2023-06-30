@@ -45,7 +45,7 @@ const orderContent = Vue.createApp({
                         method: 'post',
                         url: projectFolder + '/OrderMaster',
                         params: {
-                            demand: 'updateOM',
+                            demand: 'updateOMfromManager',
                         },
                         data: {
                             order: order,

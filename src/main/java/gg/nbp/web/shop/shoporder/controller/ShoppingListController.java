@@ -97,7 +97,6 @@ public class ShoppingListController extends HttpServlet {
 		
 		Member member = (Member)httpSession.getAttribute("member");
 		Integer memberId = member.getMember_id();
-		System.out.println(memberId);
 		
 		String demand = req.getParameter("demand");
 		

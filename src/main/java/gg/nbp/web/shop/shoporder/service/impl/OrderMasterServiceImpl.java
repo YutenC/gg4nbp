@@ -388,6 +388,21 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 	public boolean updateFromManager(OrderMaster fromManager) {
 		try {
 			omdao.update(fromManager);
+			if (fromManager.getOrderStatus() == 2) {	// 若接受退訂，修改order detail的退貨狀態為退貨。※商品評價保留不另刪除。
+				List<OrderDetail> odlist = odDao.selectByOrderId(fromManager.getOrderId());
+				for (OrderDetail od : odlist) {
+					od.setIsReturn(1);
+					odDao.update(od);
+					
+					Product pd = pService.getProductById(od.getPkOrderDeatail().getProductID());  // 回補商品庫存量
+					pd.setAmount(pd.getAmount() + od.getQuantity());
+					pdDao.updateProductAmountBuyTimes(pd);
+				}
+				
+				Member mb = mService.selectMember(fromManager.getMemberId());  // 回扣會員持有紅利，暫不考慮回扣時，會員已把持有紅利使用光，而造成負值的情境
+				mb.setBonus(mb.getBonus() - fromManager.getTotalPrice() * BONUS_RATE);
+				mService.edit(mb);
+			}
 			return true;
 		} catch (Exception e) {
 			return false;
