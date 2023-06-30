@@ -6,6 +6,8 @@ import gg.nbp.web.Member.entity.Member;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.File;
+
 public class MemberCommonUitl {
 
     // 因為前端用ajax接收JSON物件，所以只要將重複的gson轉換json物件並回應的方法，拉出來寫一次就可以重複用
@@ -52,5 +54,10 @@ public class MemberCommonUitl {
             verificationCode += code.charAt((int)(Math.random() * 62));
         }
         return verificationCode;
+    }
+
+    public static String getAbsolutePath(String relativePath) {
+        File file = new File(relativePath);
+        return file.getAbsolutePath();
     }
 }

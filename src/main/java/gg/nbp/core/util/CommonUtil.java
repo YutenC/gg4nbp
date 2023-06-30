@@ -28,9 +28,6 @@ public class CommonUtil<V> {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
+
+
 }
