@@ -529,6 +529,30 @@
             width: 25px;
         }
 
+        div.reviewMain div.editMain div.notChange div.agreeArea{
+            justify-content: start;
+
+        }
+
+
+        div.reviewMain div.editMain div.notChange div.agreeArea>span{
+            width: 100px;
+            font-size: .7em;
+            color: red;
+        }
+
+        div.reviewMain div.editMain div.notChange div.agreeArea>label{
+            font-size: .9em;
+            width: 50px;
+            text-align: left;
+        }
+
+
+        div.reviewMain div.editMain div.notChange div.agreeArea>input{
+            width: 15px;
+            height: 15px;
+            margin:  0px 10px ;
+        }
 
     </style>
 </head>
@@ -704,7 +728,7 @@
             </div>
         </div>
 
-       
+  
     </footer>
 
 
@@ -865,12 +889,8 @@
                         <div><span>收購價 :</span><input type="number" value="${obj.price || ''}" disabled></div>
                         <div><span>審核時間 :</span><input type="datetime-local" value="${obj.confirmDate || ''}" disabled></div>
                         <div>
-                            <span>付款狀態 :</span>
-                            <span>${obj.payState}</span>
-                        </div>
-                        <div>
-                            <span>審核狀態 :</span>
-                            <span>${obj.approvalState}</span>
+                            <span>案件進度 :</span>
+                            <span>${getProgress(obj.progress)}</span>
                         </div>
                     </div>
                     <div class="Pic">
@@ -896,6 +916,17 @@
             showConfirmButton: false,
         })
 
+
+        if (obj.progress == 2) {
+            const div = document.createElement('div');
+            div.setAttribute('class','agreeArea');
+            div.innerHTML = `
+            <span>是否同意收購價 : </span>
+            <input id="agree" type="radio" name="agree" value="true"><label for="agree">同意</label>
+            <input id="notagree" type="radio" name="agree" value="false"><label for="notagree">不同意</label>
+            `
+            $('.notChange').append(div);
+        }
 
         $('.barLine').attr("style",`width : calc( 6% + ( 23.5% * ${obj.progress} ))`);
 
@@ -1168,6 +1199,24 @@
                 itemDisplay();
             }
     })
+
+
+    function getProgress(i){
+        switch (i) {
+            case 0:
+                return "完成申請";
+            case 1:
+                return "貨品查驗中";
+            case 2:
+                return "議價中";
+            case 3:
+                return "等待付款";
+            case 4:
+                return "已結案";
+            default:
+                break;
+        }
+    }
 
 </script>
 
