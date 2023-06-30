@@ -1,7 +1,9 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.util.CommonUtil;
@@ -32,8 +34,8 @@ public class SelectshpServlet extends HttpServlet {
         sp = SERVICE.selectOne(sp.getProductId());
 
 
-//        List<SecondhandProductImage> imgs = SERVICE.selectimg(sp);
-
+        List<SecondhandProductImage> imgs = SERVICE.selectimg(sp);
+        sp.setImage(imgs);
 
 //        SecondhandProduct newsp = new SecondhandProduct();
 //        newsp.setProductId(sp.getProductId());
