@@ -3,6 +3,10 @@ import { host_context, nowDate } from './shopproductCommon.js';
 const vm = Vue.createApp({
     data() {
         return {
+            currentMainguideContent: 1,
+            mainguideContent: [{ id: 1, text: "折價券管理", action: "manageCoupon" },
+            { id: 2, text: "折價券新增", action: "addCoupon" },
+            { id: 3, text: "其他", action: "otherSetting" }],
             nowDate: '',
             minDate: '',
             newCouponActivity: {},
@@ -11,7 +15,8 @@ const vm = Vue.createApp({
             couponActivity: [],
             coupon: [],
             AllCouponActivityRequest: {},
-            showCouponActivity: true
+            showCouponActivity: true,
+            couponMembers: []
         };
     },
     methods: {
@@ -168,6 +173,55 @@ const vm = Vue.createApp({
 
 
         },
+        changeMainContent(action) {
+            vm.currentMainguideContent = action;
+            console.log("action " + action);
+        },
+        getCouponMemberInfo() {
+            axios({
+                method: "GET",
+                url: host_context + "shopDispatcher/getCouponMemberInfo",
+            })
+                .then(function (value) {
+                    let temp = value.data;
+
+                    temp.forEach(element => {
+                        element.check = false;
+                    });
+
+                    vm.couponMembers = temp;
+                    console.log("getCouponMemberInfo then");
+
+                })
+                .catch(function (e) {
+                    console.log("getCouponMemberInfo error " + e);
+                });
+        },
+        sendEmail(action) {
+            console.log(vm.couponMembers)
+
+            let object = { "action": action, "couponMembers": vm.couponMembers };
+            const jsonObject = JSON.stringify(object);
+            const encodeObj = encodeURI(jsonObject);
+
+            axios({
+                method: "GET",
+                url: host_context + "shopDispatcher/sendEmail",
+                params: {
+                    params: encodeObj
+                }
+            })
+                .then(function (value) {
+                    let temp = value.data;
+
+
+                    console.log("sendEmail then");
+
+                })
+                .catch(function (e) {
+                    console.log("sendEmail error " + e);
+                });
+        }
     },
 }).mount("#vue-body");
 

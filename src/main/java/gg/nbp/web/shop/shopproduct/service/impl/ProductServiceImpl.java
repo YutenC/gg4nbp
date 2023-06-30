@@ -5,12 +5,13 @@ import gg.nbp.web.shop.shoporder.entity.PKShoppingList;
 import gg.nbp.web.shop.shoporder.entity.ShoppingList;
 import gg.nbp.web.shop.shopproduct.dao.ProductDao;
 import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
+import gg.nbp.web.shop.shopproduct.dao.ProductRepository;
 import gg.nbp.web.shop.shopproduct.entity.*;
+import gg.nbp.web.shop.shopproduct.pojo.ProductSelect;
 import gg.nbp.web.shop.shopproduct.redisdao.ProductRedisDao;
 import gg.nbp.web.shop.shopproduct.service.FollowService;
 import gg.nbp.web.shop.shopproduct.service.ProductService;
 import gg.nbp.web.shop.shopproduct.util.ConstUtil;
-import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -38,11 +39,29 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     FollowService followService;
 
+    @Autowired
+    ProductRepository productRepository;
     public ProductServiceImpl() {
     }
 
     @Override
-    public List<Product> getAllProduct(Integer memId) {
+    public List<Product> getAllProduct(Integer memId, Integer limit) {
+        List<Product> products = productDao.selectAll();
+//        setProductIndexImg(products);
+        setFollows(memId,products);
+//        List<Product>  pp= productRepository.selectBySpecified(0,150,"任天堂");
+        return products;
+    }
+
+    @Override
+    public List<Product> getAllProductByCondition(Integer memId, ProductSelect productSelect) {
+        List<Product> products =  productDao.selectByCondition(productSelect);
+
+        return products;
+    }
+
+    @Override
+    public List<Product> getAllProductWithIndexImg(Integer memId) {
         List<Product> products = productDao.selectAll();
         setProductIndexImg(products);
         setFollows(memId,products);
@@ -111,6 +130,10 @@ public class ProductServiceImpl implements ProductService {
         return productDao.updateProductAmountBuyTimes(product);
     }
 
+    @Override
+    public int updateProductInfo(Product product) {
+        return productDao.update(product);
+    }
 
 
     @Override

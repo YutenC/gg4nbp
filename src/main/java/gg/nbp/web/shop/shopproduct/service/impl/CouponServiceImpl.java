@@ -2,10 +2,7 @@ package gg.nbp.web.shop.shopproduct.service.impl;
 
 import gg.nbp.web.shop.shopproduct.dao.CouponDao;
 import gg.nbp.web.shop.shopproduct.entity.Coupon;
-import gg.nbp.web.shop.shopproduct.entity.ProductImage;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
-import gg.nbp.web.shop.shopproduct.util.ConstUtil;
-import gg.nbp.web.shop.shopproduct.util.ObjectInstance;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

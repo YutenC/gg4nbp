@@ -4,7 +4,6 @@ import gg.nbp.web.shop.shopproduct.core.CoreDaoImpl;
 import gg.nbp.web.shop.shopproduct.dao.FollowDao;
 import gg.nbp.web.shop.shopproduct.entity.FollowList;
 import gg.nbp.web.shop.shopproduct.entity.FollowListId;
-import gg.nbp.web.shop.shopproduct.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

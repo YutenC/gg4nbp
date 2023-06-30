@@ -63,11 +63,14 @@
                                     <div class="col-md-6 text-nowrap">
                                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                                             <label class="form-label">Show&nbsp;
-                                                <select class="d-inline-block form-select form-select-sm">
-                                                    <option value="10" selected="">10</option>
+                                                <select @change="limitNumOfSelectChanre($event.target.value)"
+                                                    class="d-inline-block form-select form-select-sm">
+                                                    <option v-for="item in limitNumOfSelect" :value="item">{{item}}
+                                                    </option>
+                                                    <!-- <option value="10" selected="">10</option>
                                                     <option value="25">25</option>
                                                     <option value="50">50</option>
-                                                    <option value="100">100</option>
+                                                    <option value="100">100</option> -->
                                                 </select>&nbsp;
                                             </label>
                                         </div>
@@ -95,33 +98,95 @@
                                                 <td><strong>產品總評價</strong></td>
                                                 <td><strong>產品評價人數</strong></td>
                                                 <td><strong>產品上架日期</strong></td>
-                                                <td><strong>產品上架</strong></td>
+                                                <!-- <td><strong>產品上架</strong></td> -->
                                                 <td><strong>產品下架日期</strong></td>
-                                                <td><strong>產品下架</strong></td>
+                                                <!-- <td><strong>產品下架</strong></td> -->
+                                                <td><strong>產品上下架操作</strong></td>
+                                                <td><strong>產品狀態</strong></td>
+                                                <td><strong>更新</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="item in products">
-                                                <!-- <td><img class="rounded-circle me-2" width="30" height="30"
-                                                        src="images/avatars/avatar1.jpeg">Airi Satou</td> -->
-                                                <td>{{item.productName}}</td>
-                                                <td>{{item.type}}</td>
-                                                <td>{{item.price}}</td>
-                                                <td>{{item.amount}}</td>
-                                                <td>{{item.buyTimes}}</td>
-                                                <td>{{item.brand}}</td>
-                                                <td>{{item.rate}}</td>
-                                                <td>{{item.revieweCount}}</td>
-                                                <td>{{item.launchTime}}</td>
-                                                <td><button style="width: 40px; height: 20px;"
-                                                        @click="takeOnProduct(item.id)"></button></td>
-                                                <td><input type="date" v-bind:value="takeOffTime" v-bind:min="minDate"
-                                                        v-model.lazy="takeOffTime" class="form-control form-control-sm">
-                                                </td>
-                                                <td><button style="width: 40px; height: 20px;"
-                                                        @click="takeOffProduct(item.id)"></button></td>
-                                            </tr>
+                                            <template v-for="(item,index) in products">
 
+
+                                                <tr>
+                                                    <!-- <td><img class="rounded-circle me-2" width="30" height="30"
+                                                        src="images/avatars/avatar1.jpeg">Airi Satou</td> -->
+                                                    <!-- <td @click="editText($event)">
+                                                        {{item.productName}}
+                                                        <Child v-model="item.productName" />
+                                                    </td> -->
+                                                    <!-- <td @click="editText($event)">{{item.type}}</td> -->
+                                                    <td><input :value="item.productName" v-model="item.productName">
+                                                    </td>
+                                                    <td><input :value="item.type" v-model="item.type"></td>
+                                                    <td><input :value="item.price" v-model="item.price"></td>
+                                                    <td><input :value="item.amount" v-model="item.amount"></td>
+                                                    <td><input :value="item.buyTimes" v-model="item.buyTimes"></td>
+                                                    <td><input :value="item.brand" v-model="item.brand"></td>
+                                                    <td><input :value="item.rate" v-model="item.rate"></td>
+                                                    <td><input :value="item.revieweCount" v-model="item.revieweCount">
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 95px;">{{item.launchTime}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 95px;">{{item.takeoffTime}}</div>
+                                                    </td>
+
+                                                    <!-- <td>{{item.launchTime}}</td> -->
+                                                    <!-- <td><input type="datetime-local" :value="item.launchTime"
+                                                            @input="updateLaunchTime(item, $event.target.value)"
+                                                            class="form-control form-control-sm"> -->
+                                                    <!-- <td><button style="width: 40px; height: 20px;"
+                                                            @click="takeOnProduct(item.id)"></button></td> -->
+                                                    <!-- <td><input type="datetime-local" v-bind:value="item.takeoffTime"
+                                                            v-bind:min="minDate"
+                                                            @input="updatetakeOffTime(item, $event.target.value)"
+                                                            class="form-control form-control-sm">
+                                                    </td> -->
+                                                    <!-- <td><button style="width: 40px; height: 20px;"
+                                                            @click="takeOffProduct(item.id)"></button></td> -->
+
+                                                    <td>
+                                                        <select
+                                                            @change="productSelectActionchange(index,$event.target.value)">
+                                                            <!-- <option selected disabled>--請選擇縣市--</option> -->
+                                                            <option v-for="action in productSelectAction"
+                                                                :value="action">
+                                                                {{action}}
+                                                            </option>
+
+                                                        </select>
+
+                                                        <div v-if="item.currentProductSelectAction== '排定上架'">
+                                                            <input type="datetime-local" :value="item.launchTime"
+                                                                @input="updateLaunchTime(item, $event.target.value)"
+                                                                class="form-control form-control-sm">
+                                                        </div>
+                                                        <div v-else-if="item.currentProductSelectAction=='排定下架'">
+                                                            <input type="datetime-local" v-bind:value="item.takeoffTime"
+                                                                v-bind:min="minDate"
+                                                                @input="updatetakeOffTime(item, $event.target.value)"
+                                                                class="form-control form-control-sm">
+                                                        </div>
+                                                        <div v-else>
+                                                            xxx
+                                                        </div>
+
+                                                        <button style="width: 40px; height: 20px;"
+                                                            @click="btnAction(index)"></button>
+                                                    </td>
+                                                    <td>
+                                                        <div style="width: 80px;">{{item.currentProductState}}</div>
+                                                    </td>
+
+                                                    <td><button style="width: 40px; height: 20px;"
+                                                            @click="updateProductInfo(index)"></button>
+                                                    </td>
+                                                </tr>
+                                            </template>
 
                                         </tbody>
                                         <tfoot>
@@ -135,9 +200,12 @@
                                                 <td><strong>產品總評價</strong></td>
                                                 <td><strong>產品評價人數</strong></td>
                                                 <td><strong>產品上架日期</strong></td>
-                                                <td><strong>產品上架</strong></td>
+                                                <!-- <td><strong>產品上架</strong></td> -->
                                                 <td><strong>產品下架日期</strong></td>
-                                                <td><strong>產品下架</strong></td>
+                                                <!-- <td><strong>產品下架</strong></td> -->
+                                                <td><strong>產品上下架操作</strong></td>
+                                                <td><strong>產品狀態</strong></td>
+                                                <td><strong>更新</strong></td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -223,7 +291,8 @@
                                                     class="form-control form-control-sm">
                                             </td>
                                             <td><input v-model.lazy="newProduct.amount"
-                                                    class="form-control form-control-sm"></td>
+                                                    class="form-control form-control-sm">
+                                            </td>
 
                                             <td><input v-model.lazy="newProduct.content"
                                                     class="form-control form-control-sm">

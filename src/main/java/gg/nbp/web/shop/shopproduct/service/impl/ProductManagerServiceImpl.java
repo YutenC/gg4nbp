@@ -14,9 +14,8 @@ import gg.nbp.web.shop.shopproduct.pojo.ProductPojo;
 import gg.nbp.web.shop.shopproduct.service.ProductManagerService;
 import gg.nbp.web.shop.shopproduct.util.ConstUtil;
 import gg.nbp.web.shop.shopproduct.util.CreateProductDB;
-import gg.nbp.web.shop.shopproduct.util.ObjectInstance;
+import gg.nbp.web.shop.shopproduct.util.ProductState;
 import jakarta.transaction.Transactional;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -140,6 +139,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
                 Product product= productDao.selectById(productId);
 //                HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
                 System.out.println("take On" +product.getProductName());
+                product.setState(ProductState.TakeOn.getValue());
 
                 cancel();
                 SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
@@ -150,6 +150,8 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 
         SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
         schedulerTasks.addTimerTask(product.getId()+"takeOn",new SchedulerEntity(product.getLaunchTime(),timerTask));
+        product.setState(ProductState.TakeOning.getValue());
+        productDao.updateProductState(product);
     }
 
     @Override
@@ -167,8 +169,60 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 
     @Override
     public void takeOffProduct(Integer id) {
+        Product product= productDao.selectById(id);
+        TimerTask timerTask=new TimerTask() {
+            @Override
+            public void run() {
+                Integer productId=id;
+//                HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+                Product product= productDao.selectById(productId);
+//                HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
+                System.out.println("take Off" +product.getProductName());
+                product.setState(ProductState.TakeOff.getValue());
+
+                cancel();
+                SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
+                schedulerTasks.removeTimerTask(productId+"takeOff");
+                schedulerTasks.clear();
+            }
+        };
+
+        SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
+        schedulerTasks.addTimerTask(product.getId()+"takeOff",new SchedulerEntity(product.getLaunchTime(),timerTask));
+        product.setState(ProductState.TakeOffing.getValue());
+        productDao.updateProductState(product);
+    }
+
+    @Override
+    public void removeTakeOningProduct(Integer id){
+        Product product= productDao.selectById(id);
+
+        if(product.getState()==ProductState.TakeOning.getValue()){
+            String key=id+"takeOn";
+            SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
+            schedulerTasks.getTimerTask(key).getTimerTask().cancel();
+            schedulerTasks.removeTimerTask(id+"takeOn");
+            schedulerTasks.clear();
+        }
+
 
     }
+
+    @Override
+    public void removeTakeOffingProduct(Integer id){
+        Product product= productDao.selectById(id);
+
+        if(product.getState()==ProductState.TakeOffing.getValue()){
+            String key=id+"takeOff";
+            SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
+            schedulerTasks.getTimerTask(key).getTimerTask().cancel();
+            schedulerTasks.removeTimerTask(key);
+            schedulerTasks.clear();
+        }
+
+    }
+
+
 
 
     String getSomeProduct(Integer pageIndex){

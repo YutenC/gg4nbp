@@ -3,12 +3,8 @@ package gg.nbp.web.shop.shopproduct.dao.impl;
 import gg.nbp.web.shop.shopproduct.core.CoreDaoImpl;
 import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
 import gg.nbp.web.shop.shopproduct.entity.ProductImage;
-import gg.nbp.web.shop.shopproduct.util.ConstUtil;
-import jakarta.persistence.NoResultException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository

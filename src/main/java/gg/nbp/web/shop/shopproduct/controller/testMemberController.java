@@ -21,7 +21,7 @@ public class testMemberController {
     }
 
     public Member getDefaultMember() {
-        Member member = memberDao.selectByAccount("ASDFsss");
+        Member member = memberDao.selectByAccount("Black");
 
         return member;
     }

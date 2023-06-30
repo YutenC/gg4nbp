@@ -15,4 +15,8 @@ public interface ProductManagerService {
     void cancelTakeOnProduct(Integer id);
 
     void takeOffProduct(Integer id);
+
+    void removeTakeOningProduct(Integer id);
+
+    void removeTakeOffingProduct(Integer id);
 }

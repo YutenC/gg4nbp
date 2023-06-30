@@ -1,11 +1,9 @@
 package gg.nbp.web.shop.shopproduct.controller;
 
-import com.google.gson.Gson;
-import gg.nbp.web.shop.shopproduct.pojo.RequestMsg;
+import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.pojo.ProductPojo;
 import gg.nbp.web.shop.shopproduct.service.ProductManagerService;
 import gg.nbp.web.shop.shopproduct.util.ConvertJson;
-import gg.nbp.web.shop.shopproduct.util.ObjectInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +22,7 @@ public class ProductManagerController {
 
     public String longTimeProcess(){
         productManagerService.longTimeProcess();
-        RequestMsg requestMsg=new RequestMsg("longTime","longTimeProcess","");
+        ResponseMsg requestMsg=new ResponseMsg("longTime","longTimeProcess","");
 
         return ConvertJson.toJson(requestMsg);
     }
@@ -47,5 +45,13 @@ return null;
 
     public void takeOffProduct(Integer id) {
         productManagerService.takeOffProduct(id);
+    }
+
+    public void removeTakeOningProduct(Integer id) {
+        productManagerService.removeTakeOningProduct(id);
+    }
+
+    public void removeTakeOffingProduct(Integer id) {
+        productManagerService.removeTakeOffingProduct(id);
     }
 }

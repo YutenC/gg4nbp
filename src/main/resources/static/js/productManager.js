@@ -3,6 +3,8 @@ import { host_context, nowDate } from './shopproductCommon.js';
 // import managerSideTemplate from "static/npb/js/managerSideTemplate.vue";
 // {/* <script th:src="@{/static/npb/js/productManager.js}"></script> */ }
 
+//    //狀態 {0：新增  ; 1:上架 ; 2 :排定上架; 11 :下架;12 :排定下架}
+const productState = {};
 const vm = Vue.createApp({
     data() {
         return {
@@ -16,7 +18,11 @@ const vm = Vue.createApp({
             newProductImg: [],
             products: [],
             file: null,
-            takeOffTime: ''
+            takeOffTime: '',
+            productSelectAction: ['排定上架', '排定下架', "移除排定上架", "移除排定下架"],
+            currentProductSelectAction: '',
+            limitNumOfSelect: [5, 10, 15, 20],
+            limitNum: 5
         };
     },
     components: {
@@ -31,20 +37,7 @@ const vm = Vue.createApp({
     // template: '#my-template',
     methods: {
         getallproduct: function () {
-            console.log('getAllProduct');
-            axios({
-                method: "GET",
-                // url: "http://localhost:8080/MyShop/demo/getallproduct_json",
-                url: host_context + "shopDispatcher/getAllProduct",
-            })
-                .then(function (value) {
-                    vm.products = value.data;
-
-                    console.log("getallproduct then");
-                })
-                .catch(function (e) {
-                    console.log("getallproduct error " + e);
-                });
+            getAllProduct();
         },
         createProductFromcsv: function () {
             console.log('createProductFromcsv');
@@ -230,7 +223,93 @@ const vm = Vue.createApp({
                 .catch(function (e) {
                     console.log("getSomeProduct error " + e);
                 });
+        },
+
+        updateProductInfo(index) {
+            let product = Object.assign({}, vm.products[index]);
+
+            const dateObject = new Date(product.launchTime);
+            const formattedDateTime = dateObject.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true
+            });
+            product.launchTime = formattedDateTime;
+
+            if (product.takeoffTime != null) {
+
+                const dateObject = new Date(product.takeoffTime);
+                const formattedDateTime = dateObject.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    hour12: true
+                });
+
+                product.takeoffTime = formattedDateTime;
+            }
+
+
+
+            axios({
+                method: "POST",
+                url: host_context + "shopDispatcher/updateProductInfo",
+                data: {
+                    product,
+                }
+            })
+                .then(function (value) {
+                    console.log("updateProductInfo then");
+                })
+                .catch(function (e) {
+                    console.log("updateProductInfo error " + e);
+                });
+        },
+        updateLaunchTime(item, value) {
+            item.launchTime = value;
+        },
+
+        updatetakeOffTime(item, value) {
+            item.takeoffTime = value;
+        },
+        editText(e) {
+            e.target.setAttribute('contenteditable', true);
+            e.target.focus();
+        },
+        productSelectActionchange(index, action) {
+            console.log(action);
+            vm.products[index].currentProductSelectAction = action;
+            // vm.currentProductSelectAction = action;
+        },
+        btnAction(index) {
+            let id = vm.products[index].id;
+            // { 排定上架,排定下架,移除排定上架,移除排定下架  }
+            switch (vm.products[index].currentProductSelectAction) {
+                case '排定上架':
+                    productOperate('takeOnProduct', id);
+                    break;
+                case '排定下架':
+                    productOperate('TakeOffProduct', id);
+                    break;
+                case '移除排定上架':
+                    productOperate('removeTakeOningProduct', id);
+                    break;
+                case '移除排定下架':
+                    productOperate('removeTakeOffingProduct', id);
+                    break;
+            }
+        },
+        limitNumOfSelectChanre(limit) {
+            vm.limitNum = limit;
         }
+
     },
 }).mount("#vue-body");
 
@@ -258,3 +337,110 @@ vm.newProduct.launch_time = vm.nowDate;
 // timesCount();
 
 // Vue.component('shared-content', managerSideTemplate);
+
+
+
+function getAllProduct() {
+    console.log('getAllProduct');
+
+    let sqlConditions = [];
+    let conditions = [];
+
+    sqlConditions.push({ "key": "limit", "value": vm.limitNum });
+    sqlConditions.push({ "key": "offset", "value": 0 });
+    // conditions.push({ "key": "type", "value": 2 });
+
+    let object = {
+        "msg": "getA",
+        "conditions": conditions,
+        "sqlConditions": sqlConditions
+    }
+
+    let jsonObject = JSON.stringify(object);
+    // let encodedJsonObject = URLEncoder.encode(jsonObject, StandardCharsets.UTF_8);
+    let encodedJsonObject = encodeURIComponent(jsonObject);
+    axios({
+        method: "Get",
+        // url: "http://localhost:8080/MyShop/demo/getallproduct_json",
+        url: host_context + "shopDispatcher/getAllProductByCondition",
+        withCredentials: true,
+        crossDomain: true,
+        params: {
+            params: encodedJsonObject
+        }
+    })
+        .then(function (value) {
+            let products_ = value.data;
+            products_.forEach(element => {
+                let originalDate = element.launchTime;
+                let dateObject = new Date(originalDate);
+                let formattedDateTime = dateObject.toISOString().slice(0, 16);
+                element.launchTime = formattedDateTime;
+
+                if (element.takeoffTime != null) {
+                    dateObject = new Date(element.takeoffTime);
+                    formattedDateTime = dateObject.toISOString().slice(0, 16);
+                    element.takeoffTime = formattedDateTime;
+                }
+
+                ////    //狀態 {0：新增  ; 1:已上架 ; 2 :已排定上架; 11 :已下架;12 :已排定下架}
+                switch (element.state) {
+                    case 0:
+                        element.currentProductState = '新增';
+                        element.currentProductSelectAction = '排定上架';
+                        break;
+                    case 1:
+                        element.currentProductState = '已上架';
+                        break;
+                    case 2:
+                        element.currentProductState = '已排定上架';
+                        break;
+                    case 11:
+                        element.currentProductState = '已下架';
+                        break;
+                    case 12:
+                        element.currentProductState = '已排定下架';
+                        break;
+                }
+
+
+
+            });
+
+
+
+
+
+            // { 排定上架,排定下架,移除排定上架,移除排定下架  }
+
+            vm.products = products_;
+
+            console.log("getallproduct then");
+        })
+        .catch(function (e) {
+            console.log("getallproduct error " + e);
+        });
+}
+
+
+
+
+function productOperate(action, id) {
+    console.log('productOperate');
+    axios({
+        method: "GET",
+        url: host_context + "shopDispatcher/" + action,
+        params: {
+            id: id
+        }
+    })
+        .then(function (value) {
+            // vm.products = value.data;
+            console.log("productOperate then");
+
+        })
+        .catch(function (e) {
+            console.log("productOperate error " + e);
+        });
+}
+

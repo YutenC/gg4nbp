@@ -1,6 +1,7 @@
 package gg.nbp.web.shop.shopproduct.service;
 
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
+import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface CouponManagerService {
 
     boolean deleteCoupon(Integer couponId);
 
+
+    List<CouponMember>  getCouponMemberInfo();
+
+    void sendEmail(int action, List<CouponMember> couponMembers);
 }
