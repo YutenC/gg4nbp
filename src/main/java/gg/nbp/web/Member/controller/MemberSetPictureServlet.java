@@ -35,21 +35,17 @@ public class MemberSetPictureServlet extends HttpServlet {
         Part imgPart = request.getPart("image");
         // 獲取圖片 Part
 
-
-
         String storageFolder = "src/main/resources/static/img/member/member_pic";
 //      定義圖片存儲的資料夾路徑（相對於專案的位置）
 
         String storagePath = System.getProperty("user.dir") + "/" + storageFolder;
 //      獲取目標資料夾的動態路徑（相對於專案的位置）
-        System.out.println(storagePath);
 
         String imgName = imgPart.getSubmittedFileName();
 //      獲取圖片的檔名
 
         String absolutePath = MemberCommonUitl.getAbsolutePath(storagePath);
 //      將相對路徑轉換為絕對路徑
-        System.out.println(absolutePath);
 
         imgPart.write(absolutePath + File.separator + imgName);
 //      將圖片儲存到目標路徑
