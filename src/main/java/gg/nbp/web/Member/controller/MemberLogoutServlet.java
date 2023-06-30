@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet({"/member/memberLogoutServlet","/memberLogoutServlet"})
+@WebServlet({"/member/memberLogoutServlet","/memberLogoutServlet","/activity/memberLogoutServlet"})
 public class MemberLogoutServlet extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1342428795951762191L;

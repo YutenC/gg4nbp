@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.io.Serial;
 
-@WebServlet({"/memberGetPictureServlet","/member/memberGetPictureServlet"})
+@WebServlet({"/memberGetPictureServlet","/member/memberGetPictureServlet","/activity/memberGetPictureServlet"})
 public class MemberGetPictureServlet extends HttpServlet {
     @Serial
     private static final long serialVersionUID = -3659793488389285126L;
