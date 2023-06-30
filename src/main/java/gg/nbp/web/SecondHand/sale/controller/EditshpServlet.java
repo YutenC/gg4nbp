@@ -44,6 +44,7 @@ public class EditshpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         boolean state = true;
+        resp.setContentType("image/*");
 
         BufferedReader reader = req.getReader();
         StringBuilder jsonBody = new StringBuilder();
@@ -81,10 +82,11 @@ public class EditshpServlet extends HttpServlet {
             SecondhandProductImage img = gson.fromJson(imageObject, SecondhandProductImage.class);
 
             // 讀取圖片物件的屬性值
-            img.setProductId(productId);
+//            img.setProductId(productId);
 
             // 在這裡可以使用讀取到的值進行後續的處理
-            IMAGEDAO.insert(img);
+            SERVICE.insertimg(img, productId);
+//            IMAGEDAO.insert(img);
             System.out.println("圖片新增成功");
         }
 
