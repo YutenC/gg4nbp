@@ -34,8 +34,8 @@ public class MemberLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Member member = new Member();
         Login_record loginRecord = new Login_record();
-        member.setAccount(request.getParameter("account").trim());
-        String password = request.getParameter("password").trim();
+        member.setAccount(request.getParameter("account"));
+        String password = request.getParameter("password");
         String loginDevice = request.getParameter("login_device");
         String loginCity = request.getParameter("login_city");
         String ip = request.getParameter("host_name");
@@ -52,7 +52,12 @@ public class MemberLoginServlet extends HttpServlet {
         String hashedPassword = DigestUtils.md5DigestAsHex(password.getBytes());
         member.setPassword(hashedPassword);
         member = SERVICE.login(member);
-        
+
+        if(!member.isSuccessful()){
+            MemberCommonUitl.gsonToJson(response,member);
+            return;
+        }
+
         
         //停權檢查
         
