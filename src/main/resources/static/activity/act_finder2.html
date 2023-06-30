@@ -262,6 +262,7 @@
 <script>
     function redirectToLink(url) {
         window.location.href = url;
+
     }
 </script>
 <script>
@@ -359,18 +360,18 @@
                  acts=response;
                 for(let i=12;i<50;i++){
                     let act=acts[i];
-
+                    let imgPath = decodeURIComponent(act.actImage);
                     let childContent = `
 <figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
-<div class="picture-item__inner" onclick="redirectToLink('${act.actLink}')">
+<div class="picture-item__inner" onclick="redirectToLink('http://localhost:8080/gg4nbp/activity/act_apply.html?no='+'${act.id}')">
 <div class="aspect aspect--25x9">
     <div class="aspect__inner">
-        <img src="${act.actImage}"alt="${act.actTime}" />
+        <img src="${imgPath}" alt="${act.actTime}" />
     </div>
 </div>
 <div class="picture-item__details">
     <figcaption class="picture-item__title">
-        <a href="${act.actLink}" target="_blank" rel="activity">${act.actName}</a>
+        <a href='http://localhost:8080/gg4nbp/activity/act_apply.html?no=12'" target="_blank" rel="activity">${act.actName}</a>
     </figcaption>
     <p class="Location">${act.actLocation}</p>
 </div>

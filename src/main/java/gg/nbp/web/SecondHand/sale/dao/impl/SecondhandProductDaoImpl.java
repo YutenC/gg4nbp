@@ -75,7 +75,7 @@ public class SecondhandProductDaoImpl implements SecondhandProductDao {
     public List<SecondhandProduct> selectByTime() {
 //        Session session = getSession();
 //        Transaction transaction = session.beginTransaction();
-        final String hql = "FROM SecondhandProduct ORDER BY launchTime";
+        final String hql = "FROM SecondhandProduct ORDER BY launchTime desc";
         List<SecondhandProduct> result = session.createQuery(hql, SecondhandProduct.class).getResultList();
 //        transaction.commit();
         return result;
@@ -86,6 +86,22 @@ public class SecondhandProductDaoImpl implements SecondhandProductDao {
         final String hql = "FROM SecondhandProduct WHERE isLaunch = '1'";
         List<SecondhandProduct> result = session.createQuery(hql, SecondhandProduct.class).getResultList();
         return result;
+    }
+
+
+    @Override
+    public List<SecondhandProduct> searchType(String type) {
+        String sql = "select * from secondhand_product where Type = :type AND is_Launch = '1'";
+        List <SecondhandProduct> result = session.createNativeQuery(sql, SecondhandProduct.class).setParameter("type", type).getResultList();
+        return result;
+    }
+
+    @Override
+    public List<SecondhandProduct> searchKeyWord(String keyword) {
+        String sql = "select * from secondhand_product where Name like CONCAT('%',:keyword, '%') AND is_Launch = '1'";
+        List <SecondhandProduct> result = session.createNativeQuery(sql, SecondhandProduct.class).setParameter("keyword", keyword).getResultList();
+        return result;
+
     }
 
 

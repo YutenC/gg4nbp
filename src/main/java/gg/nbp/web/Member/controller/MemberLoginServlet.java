@@ -34,11 +34,12 @@ public class MemberLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Member member = new Member();
         Login_record loginRecord = new Login_record();
-        member.setAccount(request.getParameter("account").trim());
-        String password = request.getParameter("password").trim();
+        member.setAccount(request.getParameter("account"));
+        String password = request.getParameter("password");
         String loginDevice = request.getParameter("login_device");
         String loginCity = request.getParameter("login_city");
         String ip = request.getParameter("host_name");
+        System.out.println(loginCity);
 
         if ((member.getAccount().equals("")) || (password.equals(""))) {
             member = new Member();
@@ -51,13 +52,18 @@ public class MemberLoginServlet extends HttpServlet {
         String hashedPassword = DigestUtils.md5DigestAsHex(password.getBytes());
         member.setPassword(hashedPassword);
         member = SERVICE.login(member);
-        
+
+        if(!member.isSuccessful()){
+            MemberCommonUitl.gsonToJson(response,member);
+            return;
+        }
+
         
         //停權檢查
         
         boolean isSuspending= false;
         
-        if (member.getMember_ver_state()== 2) {
+        if (member.getMember_ver_state() == 2) {
         	LocalDate currentDate = LocalDate.now();
             LocalDate ban_deadline = member.getSuspend_deadline().toLocalDate();
         	if (currentDate.isAfter(ban_deadline)) {
@@ -67,7 +73,7 @@ public class MemberLoginServlet extends HttpServlet {
             }else {
             	isSuspending= true;
             }
-        }else if (member.getMember_ver_state()== 3) {
+        }else if (member.getMember_ver_state() == 3) {
         	isSuspending= true;
         }
         
@@ -81,7 +87,9 @@ public class MemberLoginServlet extends HttpServlet {
         
         
         if (member.isSuccessful()) {
-
+            if(loginCity == null){
+                loginCity = "使用者未開啟定位";
+            }
             loginRecord.setMember_id(member.getMember_id());
             loginRecord.setLogin_device(loginDevice);
             loginRecord.setLogin_city(loginCity);

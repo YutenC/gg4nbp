@@ -307,39 +307,39 @@
     const email = $("input#email").val();
 
     $("button#submit").on("click", function () {
-        if(!checkAccount(account)){
+        if(checkAccount(account)){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
-                text: '格式限定英文或數字',
+                text: '帳號格式限定英文或數字',
             })
             return;
         }
-        if(!checkNickname(nickname)){
+        if(checkNickname(nickname)){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
-                text: '格式限定中英文或數字',
+                text: '暱稱格式限定中英文或數字',
             })
             return;
         }
-        if(!checkPassword(password)){
+        if(checkPassword(password)){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
-                text: '格式限定英文或數字',
+                text: '密碼格式限定英文或數字',
             })
             return;
         }
-        if(!checkConfirmPassword(confirmPassword)){
+        if(checkConfirmPassword(confirmPassword)){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
-                text: '格式限定英文或數字',
+                text: '確認密碼格式限定英文或數字',
             })
             return;
         }
-        if(!checkIdNumber(idNumber)){
+        if(checkIdNumber(idNumber)){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -347,7 +347,7 @@
             })
             return;
         }
-        if(!checkPhoneNumber(phoneNumber)){
+        if(checkPhoneNumber(phoneNumber)){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -355,7 +355,7 @@
             })
             return;
         }
-        if(!checkEmail(email)){
+        if(checkEmail(email)){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',

@@ -572,20 +572,25 @@
         referrerpolicy="no-referrer"
 ></script>
 <script>
+    let urlParams = new URLSearchParams(window.location.search);
+    let no = urlParams.get('no');
+    console.log( 'no: ' + no);
 
-getAct(22);
+
+getAct(no);
     function getAct(id) {
         axios
             .get("http://localhost:8080/gg4nbp/act/"+id)
             .then((response) => {
                 let act = response.data;
+                let imgPath = decodeURIComponent(act.actImage);
                 // console.log(data.name);
                 let childContent=` <article>
                             <div class="compact"></div>
                             <div class="inner">
                                 <div class="info">
                                     <strong>活動資訊</strong>
-                                    <small id="act_Name">校園嘉年華</small>
+                                    <small id="act_Name">${act.actName}</small>
                                 </div>
                                 <div class="text">
                                     <p>${act.actName}</p>
@@ -599,7 +604,7 @@ getAct(22);
                                         </div>
                                         <div class="carousel-inner" id="act_Image">
                                             <div class="carousel-item active">
-                                                <img src="${act.actImage}" class="d-block w-100" alt="...">
+                                                <img src="${imgPath}" class="d-block w-100" alt="...">
                                             </div>
 
                                         </div>
@@ -675,5 +680,6 @@ $("#mainTable").prepend(childContent);
 
 
 </script>
+
 
 </html>

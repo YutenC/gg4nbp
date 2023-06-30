@@ -35,19 +35,19 @@ public class SelectshpServlet extends HttpServlet {
 //        List<SecondhandProductImage> imgs = SERVICE.selectimg(sp);
 
 
-        SecondhandProduct newsp = new SecondhandProduct();
-        newsp.setProductId(sp.getProductId());
+//        SecondhandProduct newsp = new SecondhandProduct();
+//        newsp.setProductId(sp.getProductId());
 //        newsp.setIsLaunch(sp.getIsLaunch());
-        newsp.setName(sp.getName());
-        newsp.setType(sp.getType());
-        newsp.setPrice(sp.getPrice());
-        newsp.setContent(sp.getContent());
+//        newsp.setName(sp.getName());
+//        newsp.setType(sp.getType());
+//        newsp.setPrice(sp.getPrice());
+//        newsp.setContent(sp.getContent());
 
 //            newsp.setLaunchTime(sp.getLaunchTime());
 
 
 
-        CommonUtil.writepojo2Json(resp, newsp);
+        CommonUtil.writepojo2Json(resp, sp);
 
     }
 }
