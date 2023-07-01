@@ -15,6 +15,7 @@
     <!-- header -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&amp;display=swap">
     <link rel="stylesheet" href="../fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <!-- <link rel="stylesheet" href="./css/Footer-with-social-media-icons.css"> -->
 
@@ -26,6 +27,43 @@
         .other-message {
             text-align: left;
             background-color: lightgreen;
+        }
+    </style>
+    <style>
+        .custom-alert {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .custom-alert-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .btn-wrapper {
+            margin-top: 20px;
+        }
+
+        .btn-wrapper button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -84,34 +122,29 @@
     </div>
 
         </div>
-        <div class="video-call-actions ">
-
-            <div class="btnI1">
-
-                <!-- 貼上圖示的程式碼 -->
-                <i class="fas fa-search"></i>
-
-
-                <!-- 將value的「搜尋」兩個文字拿掉 -->
-                <input type="button" value="" class="ctrlbutton">
+        <div id="custom-alert" class="custom-alert">
+            <div class="custom-alert-content">
+                <p>您確定要執行此操作嗎？</p>
+                <div class="btn-wrapper">
+                    <button id="confirm-button">確定</button>
+                    <button id="cancel-button">取消</button>
+                </div>
             </div>
+        </div>
+
+        <div class="video-call-actions">
             <div class="btnI2">
-
-                <i class="fas fa-radiation"></i>
-
-                <input type="button" value="" class="ctrlbutton">
-            </div>
-
-            <div class="btnI3">
-                <i class="fas fa-user-friends"></i>
-                <input type="button" value="" class="ctrlbutton">
+                <a href="http://localhost:8080/gg4nbp/activity/act_report_list.html" onclick="return showConfirmation();">
+                    <i class="fas fa-radiation"></i>
+                    <input type="button" value="" class="ctrlbutton">
+                </a>
             </div>
             <div class="btnI4">
-                <i class="fas fa-sign-out-alt"></i>
-                <input type="button" value="" class="ctrlbutton">
-
+                <a href="http://localhost:8080/gg4nbp/activity/act_finder.html" onclick="return showConfirmation();">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <input type="button" value="" class="ctrlbutton">
+                </a>
             </div>
-
         </div>
     </div>
     <div class="right-side">
@@ -295,6 +328,33 @@
         });
     });
 </script>
+
+    <script>
+        function showConfirmation() {
+            event.preventDefault();
+            document.getElementById("custom-alert").style.display = "block";
+
+            // 取得當前點擊的按鈕 URL
+            var buttonUrl = event.currentTarget.getAttribute("href");
+
+            // 呈現自訂的 Alert 彈窗
+            document.getElementById("custom-alert").style.display = "block";
+
+            // 綁定按鈕點擊事件
+            document.getElementById("confirm-button").addEventListener("click", function() {
+                confirmAction(buttonUrl);
+            });
+            document.getElementById("cancel-button").addEventListener("click", cancelAction);
+        }
+
+        function confirmAction(url) {
+            window.location.href = url;
+        }
+
+        function cancelAction() {
+            document.getElementById("custom-alert").style.display = "none";
+        }
+    </script>
 
 
 </body>

@@ -10,12 +10,11 @@
     <link rel="stylesheet" href="../fonts/font-awesome.min.css">
     <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
     <link rel="stylesheet" href="../css/Profile-Edit-Form.css">
-
+    <link rel="stylesheet" href="../fonts/font-awesome.min.css">
     <link rel="stylesheet" href="../css/act_finder.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/act_irons.css">
-
     <style>
         .horizontal-menu {
             display: flex;
@@ -95,157 +94,165 @@
     </nav>
 </header>
 
-<div class="main-content" style="height: 800px;">
-    <!-- main的區塊 -->
-    <div class="container">
-        <div class="row">
-            <div class="col-12@sm">
-                <h1>活動舉辦區</h1>
-                <h2>C8763</h2>
+<div class="main-content"">
+<!-- main的區塊 -->
+<div class="container">
+    <div class="row">
+        <div class="col-12@sm">
+            <h1>活動舉辦區</h1>
+            <h2>C8763</h2>
 
-                <ul class="horizontal-menu">
-                    <div class="btnI1">
+            <ul class="horizontal-menu">
+                <div class="btnI1">
+                    <i class="fas fa-comments-alt"></i>
+                    <input type="button" value="" class="ctrlbutton">
+                </div>
+                <div class="btnI2">
+                    <i class="fas fa-clipboard-list" style="color: ctrlbutton"></i>
+                    <input type="button" value="" class="ctrlbutton">
+                </div>
+                <div class="btnI3">
+                    <i class="fas fa-radiation"></i>
+                    <input type="button" value="" class="ctrlbutton">
+                </div>
 
-                        <!-- 貼上圖示的程式碼 -->
-                        <i class="fas fa-search"></i>
-                        <!-- 將value的「搜尋」兩個文字拿掉 -->
-                        <input type="button" value="" class="ctrlbutton">
-                    </div>
-                    <div class="btnI2">
-                        <i class="fas fa-clipboard-list" style="color: ctrlbutton"></i>
-                        <input type="button" value="" class="ctrlbutton">
-                    </div>
-                    <li><a href="#"><i class="icon-bookmark"></i></a></li>
-                    <li><a href="#">活動列表 <i class="icon-location-arrow"></i></a></li>
-                    <li><a href="#">活動參與清單<i class="icon-gear"></i></a></li>
-                    <li><a href="#">報名狀態<i class="icon-credit-card"></i></a></li>
-                    <li><a href="#">活動檢舉<i class="icon-group"></i></a></li>
-                </ul>
+                <script>
+                    document.querySelector('.btnI1 .ctrlbutton').addEventListener('click', function() {
+                        window.location.href = 'http://localhost:8080/gg4nbp/activity/act_chat.html';
+                    });
 
+                    document.querySelector('.btnI2 .ctrlbutton').addEventListener('click', function() {
+                        window.location.href = 'http://localhost:8080/gg4nbp/activity/act_set.html';
+                    });
+
+                    document.querySelector('.btnI3 .ctrlbutton').addEventListener('click', function() {
+                        window.location.href = 'http://localhost:8080/gg4nbp/activity/act_report_list.html';
+                    });
+                </script>
+
+                <li><a href="#"><i class="icon-bookmark"></i></a></li>
+            </ul>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="container" id="mainTable">
+    <div class="row">
+        <div class="col-4@sm col-3@md">
+            <div class="filters-group">
+                <label for="filters-search-input" class="filter-label">Search</label>
+                <input class="textfield filter__search js-shuffle-search" type="search"
+                       id="filters-search-input" />
             </div>
         </div>
     </div>
+    <script>let input = document.getElementById('filters-search-input');
+    input.addEventListener('keyup', function(e) {
+        let searchString = e.target.value.toLowerCase();
 
-    <div class="container" id="mainTable">
-        <div class="row">
-            <div class="col-4@sm col-3@md">
-                <div class="filters-group">
-                    <label for="filters-search-input" class="filter-label">Search</label>
-                    <input class="textfield filter__search js-shuffle-search" type="search"
-                           id="filters-search-input"/>
-                </div>
-            </div>
-        </div>
+        // 獲取所有活動元素
+        let activities = document.querySelectorAll('.picture-item');
 
-        <div class="row">
-            <div class="col-12@sm filters-group-wrap">
-                <div class="btn-group filter-options">
-                    <button class="btn btn--primary" onclick="toggleTags('sponsor')">主辦人</button>
-                    <div id="dropdown-sponsor" class="dropdown-content"></div>
+        for(let i = 0; i < activities.length; i++) {
+            let activity = activities[i];
 
-                </div>
+            // 獲取活動的名稱並轉為小寫
+            let activityName = activity.getAttribute('data-title').toLowerCase();
+
+            if(activityName.includes(searchString)) {
+                // 如果活動的名稱包含了搜尋的字串，顯示該活動
+                activity.style.display = '';
+            } else {
+                // 如果活動的名稱不包含搜尋的字串，隱藏該活動
+                activity.style.display = 'none';
+            }
+        }
+    });
+
+    </script>
 
 
-                <fieldset class="filters-group">
-                    <div class="btn-group sort-options">
-                        <button class="btn btn--primary" onclick="toggleTags('activity')"
-                                rel="activity">活動
-                        </button>
-                        <div id="dropdown-activity" class="dropdown-content"></div>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
+    <div class="row">
+
     </div>
+</div>
+</div>
 
-    <div class="container">
-        <div id="grid" class="row my-shuffle-container">
-            <figure class="col-3@xs col-4@sm col-3@md picture-item" data-groups='["線下"]'
-                    data-date-created="2017-04-30" data-title="艾爾登山祭">
-                <div class="picture-item__inner"
-                     onclick="redirectToLink('https://www.youtube.com/watch?v=ts9QoMdE7S4&list=RDJQAl_bQVOBs&index=27')">
-                    <div class="aspect aspect--25x9">
-                        <div class="aspect__inner">
-                            <img src="../img/img_act/act_1.jpg" alt="別再打女神了來爬山臭宅"/>
-                        </div>
-                    </div>
-                    <div class="picture-item__details">
-                        <figcaption class="picture-item__title"><a
-                                href="https://www.youtube.com/watch?v=ts9QoMdE7S4&list=RDJQAl_bQVOBs&index=27"
-                                target="_blank" rel="activity">艾爾登山祭</a>
-                        </figcaption>
+<div class="container">
+    <div id="grid" class="row my-shuffle-container">
 
-                        <p class="Location">地點</p>
-                    </div>
-                </div>
-            </figure>
-        </div>
     </div>
+</div>
 
-    <!--            <script src="../js/shuffle.js"></script>-->
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="act_finder1.html">1</a></li>
-            <li class="page-item"><a class="page-link" href="act_finder2.html">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="sticky-top">
-        <footer id="footerpad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-lg-8 mx-auto">
-                        <ul class="list-inline text-center">
-                            <li class="list-inline-item">
-                                <a href="#">
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="act_finder.html">1</a></li>
+        <li class="page-item"><a class="page-link" href="act_finder2.html">2</a></li>
+        <li class="page-item"><a class="page-link" href="act_finder3.html">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<div class="sticky-top">
+    <footer id="footerpad">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-8 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
                                             <span class="fa-stack fa-lg">
                                                 <i class="fa fa-circle fa-stack-2x"></i>
                                                 <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
                                             </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#">
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
                                             <span class="fa-stack fa-lg">
                                                 <i class="fa fa-circle fa-stack-2x"></i>
                                                 <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
                                             </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#">
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
                                             <span class="fa-stack fa-lg">
                                                 <i class="fa fa-circle fa-stack-2x"></i>
                                                 <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
                                             </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item"><a href="#"></a>
-                            </li>
-                        </ul>
-                        <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by
-                            Designer
-                        </p>
-                    </div>
+                            </a>
+                        </li>
+                        <li class="list-inline-item"><a href="#"></a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted text-center">Copyright © NBP.gg 2023 | Web Design by
+                        Designer
+                    </p>
                 </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
+</div>
 </div>
 
+
 </body>
+
+
+
 <script src="../jquery/jquery-1.9.1.min.js"></script>
+
 <!-- <script src="./bootstrap/js/bootstrap.min.js"></script> -->
 <script src="../js/bs-init.js"></script>
 <script src="../js/Profile-Edit-Form.js"></script>
@@ -253,82 +260,7 @@
 <script>
     function redirectToLink(url) {
         window.location.href = url;
-    }
 
-    const sponsorTagsElements = document.querySelectorAll('.Sponsor');
-    const activityTagsElements = document.querySelectorAll('a[rel="activity"]');
-    let sponsorDropdownVisible = false;
-    let activityDropdownVisible = false;
-
-    const activityLinks = Array.from(activityTagsElements).map(element => element.href);
-
-    function toggleTags(group) {
-        const dropdown = document.getElementById(`dropdown-${group}`);
-        let dropdownVisible;
-
-        if (group === 'sponsor') {
-            dropdownVisible = sponsorDropdownVisible;
-        } else if (group === 'activity') {
-            dropdownVisible = activityDropdownVisible;
-        }
-
-        if (!dropdownVisible) {
-            dropdown.innerHTML = '';
-
-            if (group === 'sponsor') {
-                sponsorTagsElements.forEach((element, index) => {
-                    const tag = document.createElement('p');
-                    const link = document.createElement('a');
-                    link.href = activityLinks[index] || '#'; // 使用索引值來對應活動超連結位置
-                    link.target = '_blank';
-                    link.rel = 'activity';
-                    link.textContent = element.textContent;
-                    tag.appendChild(link);
-                    dropdown.appendChild(tag);
-                });
-                sponsorDropdownVisible = true;
-            } else if (group === 'activity') {
-                activityTagsElements.forEach((element, index) => {
-                    const tag = document.createElement('p');
-                    const link = document.createElement('a');
-                    link.href = element.href;
-                    link.target = '_blank';
-                    link.rel = 'activity';
-                    link.textContent = element.textContent;
-                    tag.appendChild(link);
-                    dropdown.appendChild(tag);
-                });
-                activityDropdownVisible = true;
-            }
-
-            dropdown.style.display = 'block';
-        } else {
-            dropdown.style.display = 'none';
-            if (group === 'sponsor') {
-                sponsorDropdownVisible = false;
-            } else if (group === 'activity') {
-                activityDropdownVisible = false;
-            }
-        }
-    }
-
-    // 初始化活動下拉菜單
-    if (activityTagsElements.length > 0 && !activityDropdownVisible) {
-        const dropdown = document.getElementById('dropdown-activity');
-        dropdown.innerHTML = '';
-
-        activityTagsElements.forEach((element, index) => {
-            const tag = document.createElement('p');
-            const link = document.createElement('a');
-            link.href = element.href;
-            link.target = '_blank';
-            link.rel = 'activity';
-            link.textContent = element.textContent;
-            tag.appendChild(link);
-            dropdown.appendChild(tag);
-        });
-
-        activityDropdownVisible = true;
     }
 
     let acts;
@@ -338,32 +270,29 @@
             type: 'GET',
             success: function (response) {
 
-                acts = response;
-                for (let i = 0; i < 11; i++) {
-                    let act = acts[i];
+                acts=response;
+                for(let i=0;i<12;i++){
+                    let act=acts[i];
+                    let imgPath = decodeURIComponent(act.actImage);
                     let childContent = `
-                <figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
-                <div class="picture-item__inner" onclick="redirectToLink('http://localhost:8080/gg4nbp/activity/act_apply.html')"></div>
-                <div class="aspect aspect--25x9">
-                <div class="aspect__inner">
-                        <img src="${URLDecoder.decode(act.actImage)}" alt="${act.actTime}" />
-                </div>
-                </div>
-                <div class="picture-item__details">
-                <figcaption class="picture-item__title">
-                <a href="http://localhost:8080/gg4nbp/activity/act_apply.html" target="_blank" rel="activity">${act.actName}</a>
-                </figcaption>
-                <p class="Location">${act.actLocation}</p>
-                </div>
-                </div>
-                </figure>`;
-
+                        <figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
+                        <div class="picture-item__inner" onclick="redirectToLink('http://localhost:8080/gg4nbp/activity/act_apply.html?no='+'${act.id}')">
+                        <div class="aspect aspect--25x9">
+                            <div class="aspect__inner">
+                                <img src="${imgPath}" alt="${act.actTime}" />
+                            </div>
+                        </div>
+                        <div class="picture-item__details">
+                            <figcaption class="picture-item__title">
+                                <a href='http://localhost:8080/gg4nbp/activity/act_apply.html?no=12'" target="_blank" rel="activity">${act.actName}</a>
+                            </figcaption>
+                            <p class="Location">${act.actLocation}</p>
+                        </div>
+                        </div>
+                        </figure>`;
                     $("#grid").append(childContent);
-
-
                 }
                 //acts.for ((act)=>{
-
 
 //                     let childContent = `
 // <figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
@@ -384,18 +313,14 @@
 //
 //                     $("#grid").append(childContent);
 //                 });
-
-
             },
             error: function (xhr, status, error) {
                 console.log(`Error: ${error}`);
             }
         });
     }
-
     // 调用函数来获取所有活动数据并显示在页面上
     getActs();
-
 
     $(window).on("load", function () {
         $.ajax({
@@ -443,6 +368,7 @@
             })
         })
     })
+
 
 </script>
 
