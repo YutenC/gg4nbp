@@ -190,6 +190,8 @@ window.addEventListener('scroll', e => {
 
 document.querySelectorAll('.nav div')[0].addEventListener('click', e => {
     e.preventDefault;
+    sessionStorage.removeItem("type");
+    sessionStorage.removeItem("keyword");
     window.location.href = 'SecondHand_MainView.html';
 
 })
