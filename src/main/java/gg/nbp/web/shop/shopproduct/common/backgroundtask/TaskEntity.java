@@ -17,24 +17,6 @@ public class TaskEntity {
     Callable<?> callable;
     Future<?> result;
 
-
-
-//    Map<String,Runnable> taskRunnable=new ConcurrentHashMap<>();
-//    Map<String, Future<?>> taskResult=new ConcurrentHashMap<>();
-//    Map<String,TaskState> taskInfo=new ConcurrentHashMap<>();
-
-
-
-//    public TaskEntity(String name,Runnable runnable){
-//
-//    }
-
-
-    public TaskEntity(String name, Runnable runnable) {
-        this.name = name;
-        this.runnable = runnable;
-    }
-
     public <T> TaskEntity(String name, Callable<T> callable) {
         this.name = name;
         this.callable = callable;

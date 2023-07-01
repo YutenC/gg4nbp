@@ -2,7 +2,7 @@ package gg.nbp.web.shop.shopproduct.pojo;
 
 public class ResponseMsg {
 
-    private String state;
+    private String state; //更正為:ok   舊的:success
     private String msg;
     private Object content;
 
@@ -29,7 +29,7 @@ public class ResponseMsg {
         private Object content="";
 
 
-        public ResponseMsg.Builder setState(String state) {
+        public  ResponseMsg.Builder setState(String state) {
             this.state = state;
             return this;
         }
