@@ -6,6 +6,7 @@ import { saveDataToSessionStorage, getDataFromSessionStorage } from './shopprodu
 const vm = Vue.createApp({
     data() {
         return {
+
             ProductDetail_id: 0,
             currentMainguideContent: 1,
             mainguideContent: [{ id: 1, text: "商品特色", action: "1", flag: true },
@@ -16,10 +17,16 @@ const vm = Vue.createApp({
             product: {},
             productDetail: {},
             productHistory: [],
-            buyAmount: 1
+            buyAmount: 1,
+            comments: '',
+
         };
     },
     created() {
+
+
+
+
         console.log('created');
     },
     mounted() {
@@ -126,7 +133,10 @@ const vm = Vue.createApp({
             vm.mainguideContent[state - 1].flag = true;
             vm.currentMainguideContent = state;
 
-            vm.getProductCommen()
+            if (state == 2) {
+                vm.getProductCommen();
+            }
+
 
             // event.target.classList.add("-on");
             // last_currentMainguideContent
@@ -134,19 +144,19 @@ const vm = Vue.createApp({
         getProductCommen() {
             axios({
                 method: "Get",
-                url: host_context + "shopDispatcher/getProductCommen",
+                url: host_context + "OrderDetail",
                 // withCredentials: true,
                 // crossDomain: true,
                 params: {
-                    id: vm.ProductDetail_id
+                    getProductComments: vm.ProductDetail_id
                 }
             })
                 .then(function (value) {
-                    // let result = value.data;
+                    let result = value.data;
                     // if (result.state.toLowerCase() === "ok") {
                     //     vm.product.follow = result.content;
                     // }
-
+                    vm.comments = result;
 
                     console.log("getProductCommen then");
 

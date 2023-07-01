@@ -18,7 +18,8 @@ const vm = Vue.createApp({
             showCouponActivity: true,
             couponMembers: [],
             longTimeAction: '',
-            sendEmailTime: ''
+            sendEmailTime: '',
+            sendEmailState: ""
         };
     },
     methods: {
@@ -205,9 +206,10 @@ const vm = Vue.createApp({
 
 
             switch (action) {
-                case 0:
+                case 0://立即發送
+                    vm.sendEmailState = "傳送中";
                     break;
-                case 1:
+                case 1://根據時間
                     //
                     const dateObject = new Date(vm.sendEmailTime);
                     const formattedDateTime = dateObject.toLocaleDateString('en-us', {
@@ -227,6 +229,7 @@ const vm = Vue.createApp({
 
 
                     });
+                    vm.sendEmailState = "";
                     break;
             }
 
@@ -252,6 +255,7 @@ const vm = Vue.createApp({
                             }, 1000);
                             break;
                         case "ok":
+                            vm.sendEmailState = "完成時間設定";
                             break;
                     }
                     console.log("sendEmail then");
@@ -296,6 +300,7 @@ function getBackgroundMessage() {
                 }, 1000);
             }
             else {
+                vm.sendEmailState = "傳送完成";
                 console.log("longTime process OK");
             }
 

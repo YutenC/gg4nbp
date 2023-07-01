@@ -50,7 +50,25 @@ export function getDataFromSessionStorage(key) {
     return obj;
 }
 
+export function getURLSearch() {
+    let search = window.document.location.search;
 
+    let urlSearch = [];
+    if ("" != search) {
+        search = search.split("?")[1];
+        search = search.split("&");
+
+        search.forEach(element => {
+            let temp = element.split("=");
+            let key = temp[0];
+            let value = temp[1];
+            let obj = { key: key, value: value };
+            urlSearch.push(obj);
+        });
+    }
+
+    return urlSearch;
+}
 
 
 export { host_context, nowDate };

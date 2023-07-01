@@ -10,11 +10,11 @@ public interface ProductDao extends CoreDao<Product,Integer> {
 
     List<Product> selectByCondition(ProductSelect productSelect);
 
-    List<Product> selectByType(String type);
+    List<Product> selectByType(Integer type);
 
-    List<Product> selectByBuyTimes(String type);
+    List<Product> selectByBuyTimes(Integer type);
 
-    List<Product> selectByBuyTimes(Integer limit, String type);
+    List<Product> selectByBuyTimes(Integer limit, Integer type);
 
     List<Product> searchProducts(String search);
 

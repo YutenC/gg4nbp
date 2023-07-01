@@ -17,7 +17,6 @@ public abstract class BackgroundHandler implements Runnable {
 
     public BackgroundHandler() {
         backgroundTasks = new BackgroundTasks();
-
     }
 
     @Override
