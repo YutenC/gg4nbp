@@ -60,10 +60,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		if (memberId != sl.getMemberId())
 			throw new SQLException();
 
-		/* 因為有外來鍵的限制，先刪除圖片 */
-		for (SecondhandBuyPicture img : selectimg(sl))
-			delImg(img);
-
 		/* 再刪除事件 */
 		return delbuyList(sl);
 
@@ -84,7 +80,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		dao.selectAll().stream()
 					   .filter(p -> p.getPayState() != 2)  //篩選掉已經完成的案件
 					   .forEach(sl -> {
-						   sl.setImage(selectimg(sl));
 						   listDTO.add(new BuyEvent(sl,daoMember));
 					   });
 		
@@ -110,11 +105,11 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
-		// 有辦法優化 ?
-		for (SecondhandBuylist sl : dao.selectByMemberId(member.getMember_id())) {
-			sl.setImage(selectimg(sl));
-			listDTO.add(new BuyEvent(sl,daoMember));
-		}
+		// 有辦法優化 ?		
+		dao.selectByMemberId(member.getMember_id()).stream()
+												   .forEach(sl -> {
+													   listDTO.add(new BuyEvent(sl,daoMember));
+												   });
 
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)
@@ -128,7 +123,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	@Override
 	public List<BuyEvent> searchById(Integer id) {
 		SecondhandBuylist sl = dao.selectById(id);
-		sl.setImage(selectimg(sl));
 		List<BuyEvent> list = new ArrayList<>();
 		list.add(new BuyEvent(sl,daoMember));
 		return list;
@@ -151,7 +145,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
 		for (SecondhandBuylist sl : dao.selectByName(name)) {
-			sl.setImage(selectimg(sl));
 			listDTO.add(new BuyEvent(sl,daoMember));
 		}
 		
@@ -179,7 +172,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
 		for (SecondhandBuylist sl : dao.selectByName4Member(name,member.getMember_id())) {
-			sl.setImage(selectimg(sl));
 			listDTO.add(new BuyEvent(sl,daoMember));
 		}
 		
@@ -232,14 +224,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		return true;
 	}
 
-	public List<SecondhandBuyPicture> selectimg(SecondhandBuylist s) {
-		return daoPic.selectBylistId(s.getBuylistId());
-	}
-
-	public boolean delImg(SecondhandBuyPicture s) {
-		daoPic.deleteById(s.getImageId());
-		return true;
-	}
 
 	public boolean delbuyList(SecondhandBuylist sl) {
 		dao.deleteById(sl.getBuylistId());
