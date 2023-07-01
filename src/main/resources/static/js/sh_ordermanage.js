@@ -197,10 +197,10 @@ orderListContainer.addEventListener("change", function (){
 
 function getProductId(productId){
     sessionStorage.setItem("productId", productId);
-    window.location.href="../member/member_shorderinfo.html";
+    window.location.href="../manager/sh_shorderinfo.html";
 }
 
 function getOrderId(orderId){
     sessionStorage.setItem("orderId", orderId);
-    window.location.href="../member/member_shorderinfo.html";
+    window.location.href="../manager/sh_shorderinfo.html";
 }

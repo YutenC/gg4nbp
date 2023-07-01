@@ -34,7 +34,8 @@ nav {
     padding-bottom: 25px;
 
 }
-nav div.login{
+nav div.login,
+nav div.logout {
     user-select:none;
     width: 100%;
     display: flex;
@@ -45,8 +46,9 @@ nav div.login{
     
 }
 
-nav div.login>span{
-    
+nav div.login>span,
+nav div.logout>span {
+
     font-weight: bold;
     padding-top: 4px;
     border-radius: 10px;
@@ -57,7 +59,8 @@ nav div.login>span{
     width: 50px;
 }
 
-nav div.login>span:hover{
+nav div.login>span:hover,
+nav div.logout>span:hover {
     cursor: pointer;
     background-color: #fff;
     color: #000000;
