@@ -91,6 +91,23 @@ public class OrderDetailController extends HttpServlet {
 		res.setContentType("application/json");
 		PrintWriter pw = res.getWriter();
 		
+		HttpSession httpSession = req.getSession();
+    	Member login = new Member();
+    	login.setAccount("Black");
+    	login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
+    	Member member = memberService.login(login);
+    	httpSession.setAttribute("member", member);
+    	
+    	Member getMember = (Member)httpSession.getAttribute("member");
+    	Integer memberId;
+    	
+    	if (getMember == null) {
+    		res.sendRedirect("/gg4nbp");
+    		return;
+    	} else {
+    		memberId = getMember.getMember_id();
+    	}
+		
     	String comment = req.getParameter("comment");
     	if (comment != null) {
     		Reader rd =  req.getReader();
@@ -98,11 +115,7 @@ public class OrderDetailController extends HttpServlet {
 			String reqStr = brd.readLine();
 			reqStr = reqStr.substring(reqStr.indexOf(":") + 1, reqStr.length());
 			
-			System.out.println(reqStr);
 			String[] elms = reqStr.split(",");
-			for (String elm : elms) {
-				System.out.println(elm);
-			}
 			
 			Integer orderId = Integer.valueOf(elms[0].split(":")[1]);
 			Integer productId = Integer.valueOf(elms[1].split(":")[1]);
@@ -110,12 +123,6 @@ public class OrderDetailController extends HttpServlet {
 			Integer starNum = Integer.valueOf(starStr.substring(1, starStr.length() - 1));
 			String commentStr = elms[3].split(":")[1];
 			String commentContent = commentStr.substring(1, commentStr.length() - 3);
-			
-			System.out.println(orderId);
-			System.out.println(productId);
-			System.out.println(starNum);
-			System.out.println(commentContent);
-			
 			pw.println(oDetailService.commentProduct(orderId, productId, starNum, commentContent));
 			
     	}

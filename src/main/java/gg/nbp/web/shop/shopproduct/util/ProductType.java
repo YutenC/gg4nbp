@@ -6,6 +6,7 @@ public enum ProductType {
 // 10: XBOX主機; 11: XBOX手把; 12: XBOX遊戲片; 13: XBOX周邊;
 // 20: PS主機; 21: PS手把; 22: PS遊戲片; 23: PS周邊 }
 
+    any(-1),
     NSMachine(0),
     NSHandle(1),
     NSGame(2),

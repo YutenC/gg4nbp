@@ -16,7 +16,10 @@ const vm = Vue.createApp({
             coupon: [],
             AllCouponActivityRequest: {},
             showCouponActivity: true,
-            couponMembers: []
+            couponMembers: [],
+            longTimeAction: '',
+            sendEmailTime: '',
+            sendEmailState: ""
         };
     },
     methods: {
@@ -200,6 +203,36 @@ const vm = Vue.createApp({
         sendEmail(action) {
             console.log(vm.couponMembers)
 
+
+
+            switch (action) {
+                case 0://立即發送
+                    vm.sendEmailState = "傳送中";
+                    break;
+                case 1://根據時間
+                    //
+                    const dateObject = new Date(vm.sendEmailTime);
+                    const formattedDateTime = dateObject.toLocaleDateString('en-us', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric',
+                        hour12: true
+                    });
+
+                    vm.couponMembers.forEach(element => {
+                        if (element.check) {
+                            element.sendEmailTime = formattedDateTime;
+                        }
+
+
+                    });
+                    vm.sendEmailState = "";
+                    break;
+            }
+
             let object = { "action": action, "couponMembers": vm.couponMembers };
             const jsonObject = JSON.stringify(object);
             const encodeObj = encodeURI(jsonObject);
@@ -214,7 +247,17 @@ const vm = Vue.createApp({
                 .then(function (value) {
                     let temp = value.data;
 
-
+                    switch (temp.state) {
+                        case "longTime":
+                            vm.longTimeAction = temp.msg;
+                            setTimeout(function () {
+                                getBackgroundMessage();
+                            }, 1000);
+                            break;
+                        case "ok":
+                            vm.sendEmailState = "完成時間設定";
+                            break;
+                    }
                     console.log("sendEmail then");
 
                 })
@@ -237,3 +280,33 @@ vm.getAllCouponActivity();
 vm.nowDate = nowDate;
 vm.minDate = vm.nowDate;
 // vm.newcouponActivity.coupon.deadline = vm.nowDate;
+
+
+function getBackgroundMessage() {
+    console.log('getBackgroundMessage');
+    axios({
+        method: "GET",
+        url: host_context + "shopDispatcher/getBackgroundMessage",
+        params: {
+            taskName: vm.longTimeAction
+        }
+    })
+        .then(function (value) {
+
+            if ("longTime" === value.data.state) {
+                console.log(value.data.msg);
+                setTimeout(function () {
+                    getBackgroundMessage();
+                }, 1000);
+            }
+            else {
+                vm.sendEmailState = "傳送完成";
+                console.log("longTime process OK");
+            }
+
+            console.log("getBackgroundMessage then");
+        })
+        .catch(function (e) {
+            console.log("getBackgroundMessage error " + e);
+        });
+}

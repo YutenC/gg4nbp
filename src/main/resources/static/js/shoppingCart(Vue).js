@@ -2,7 +2,7 @@
 const href = window.location.href;
 const host = href.substring(0, href.indexOf('/', 8));
 const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 11);
-const projectFolder = '/gg4nbp';
+const projectFolder = 'http://localhost:8080/gg4nbp';
 
 // 增添商品到購物車內按鈕變化
 
@@ -240,7 +240,7 @@ const shoppingContent = Vue.createApp({
         // 消費折抵選擇
         checkCoupon: function () {
             // 向後端確認是否為有效折購代碼
-            // 查詢到資料後更新this.resCoupon -- 待接上coupon controller
+            // 查詢到資料後更新this.resCoupon
             axios.get(projectFolder + '/shopDispatcher/getCouponByDiscountCode?discountCode=' + this.couponCode)
                 .then(res => {
                     if (res.data != '') {
@@ -277,7 +277,7 @@ const shoppingContent = Vue.createApp({
             str = str.replace(/\D/g, "");
             event.target.value = str;
         },
-        bonusValid: function (event) {
+        bonusValid: function (event) {  // 若輸入非數字仍會有機會被保留...
             let str = event.target.value;
             // 用正則表達式，將找到的全部(g)非數字值，取代為空字串
             str = str.replace(/\D/g, "");
@@ -285,7 +285,8 @@ const shoppingContent = Vue.createApp({
                 str = this.bonusStock;
                 this.bonus = this.bonusStock;
             }
-            // event.target.value = str;
+            this.bonus = Number.parseInt(str);
+            event.target.value = str;
         },
         allProductCheckedSwitch: function (event) {
             let allChecked = event.target.checked;
@@ -426,14 +427,20 @@ const promoProduct = Vue.createApp({
     },
     methods: {
         leave: function (location, otherDetail) {
-            // sessionStorage.clear();
-            // sessionStorage.setItem('productId', otherDetail);
-            window.location.replace(projectHref + '/' + location + '#' + otherDetail);
+            sessionStorage.setItem('productId', otherDetail);
+            window.location.replace(projectHref + '/' + location);
         }
     },
     created() {
-        axios.get(projectFolder + '/shopDispatcher/getProdcutsBuyTimes?amount=' + this.recomendAmount + '&type=""')
-            .then(res => this.promoProduct = res.data)
-            .catch(err => console.log(err));
+        const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
+        const require = ['productIndexImage'];
+        const req = { sort: sort, required: require };
+        axios({
+            method: 'get',
+            url: projectFolder + '/shopDispatcher/getAllProductByCondition',
+            params: {
+                params: encodeURIComponent(JSON.stringify(req))
+            }
+        });
     }
 }).mount('#promoProduct');

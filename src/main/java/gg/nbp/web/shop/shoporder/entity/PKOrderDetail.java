@@ -17,19 +17,19 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PKOrderDeatail implements Serializable{
+public class PKOrderDetail implements Serializable{
 	
 	private static final long serialVersionUID = 7275579179233163110L;
 
 	@Column(name = "PRODUCT_ID", updatable = false)
-	private Integer productID;
+	private Integer productId;
 	
 	@Column(name = "ORDER_ID", updatable = false)
 	private Integer orderId;
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(orderId, productID);
+		return Objects.hash(orderId, productId);
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class PKOrderDeatail implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PKOrderDeatail other = (PKOrderDeatail) obj;
-		return Objects.equals(orderId, other.orderId) && Objects.equals(productID, other.productID);
+		PKOrderDetail other = (PKOrderDetail) obj;
+		return Objects.equals(orderId, other.orderId) && Objects.equals(productId, other.productId);
 	}
 	
 }

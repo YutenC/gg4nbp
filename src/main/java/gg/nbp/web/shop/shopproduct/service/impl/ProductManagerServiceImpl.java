@@ -71,7 +71,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 
     @Override
     public void longTimeProcess(){
-        BackgroundHandler backgroundHandler= BackgroundFactory.getBackgroundHandler("productBackground");
+        BackgroundHandler backgroundHandler= BackgroundFactory.getBackgroundHandler("shopProductBackground");
 
         Callable<String> task=new Callable<String>() {
             @Override
@@ -79,7 +79,8 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 
                 Thread.sleep(5000);
 
-                return "finish longTimeProcess";
+//                return "finish longTimeProcess";
+                return "ok";
             }
         };
 

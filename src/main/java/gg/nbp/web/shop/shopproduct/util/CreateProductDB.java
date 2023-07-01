@@ -215,10 +215,13 @@ public class CreateProductDB<T, P> {
                 type_ = type_.trim();
                 switch (type_) {
                     case "PS5 game"://22
-                        propertyValue = ProductType.XBOXGame.getValue();//22
+                        propertyValue = ProductType.PSGame.getValue();//22
                         break;
                     case "Switch game"://2
                         propertyValue = ProductType.NSGame.getValue();//2
+                        break;
+                    case "XBOX Game"://12
+                        propertyValue = ProductType.XBOXGame.getValue();//12
                         break;
                 }
             }

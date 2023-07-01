@@ -107,31 +107,6 @@ public class ShoppingListController extends HttpServlet {
 			return;
 		}
 		
-//		// OrderMaster include ShoppingList(移除已結帳商品)
-//		if ("checkOut".equals(demand)) {
-//		List<TransOrderProduct> purchaseProducts = (List<TransOrderProduct>)req.getAttribute("purchaseProducts");
-//		if (purchaseProducts != null) {
-//			
-//			List<ShoppingList> spLists = new ArrayList<>();
-//			
-//			for (TransOrderProduct trObj : purchaseProducts) {
-//				PKShoppingList pksplist = new PKShoppingList();
-//				pksplist.setMemmberId(memberId);
-//				pksplist.setProductId(trObj.getProductId());
-//				
-//				ShoppingList splist = new ShoppingList();
-//				splist.setPkShoppingList(pksplist);
-//				
-//				spLists.add(splist);
-//			}
-//			
-//			boolean rmSplist = shoppingListService.removeItem(spLists);
-//			req.setAttribute("rmSplist", rmSplist);
-//			req.removeAttribute("trObjList");
-//			return;
-//		} else {
-//			return;
-//		}
-//	}
   }
+	
 }

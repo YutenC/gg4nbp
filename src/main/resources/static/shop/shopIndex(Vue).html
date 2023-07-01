@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
     <link rel="stylesheet" href="../fonts/font-awesome.min.css">
     <link rel="stylesheet" href="../css/shopMainNav.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <style>
         * {
@@ -92,6 +94,8 @@
             margin-bottom: 30px;
             background-color: #fff;
             border-radius: 10px;
+            position: relative;
+            padding: 10px;
         }
 
         .mainlist>span {
@@ -99,6 +103,9 @@
             width: 10%;
             text-align: left;
             margin: 5px;
+            position: absolute;
+            left: 0;
+            top: 0;
         }
 
         .mainlist span a {
@@ -123,13 +130,13 @@
 
         .product ul {
             margin: 0;
-            padding: 0;
+            padding: 10px;
             width: 100%;
             height: 100%;
             display: flex;
             list-style: none;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
         }
 
         .product ul li {
@@ -146,8 +153,8 @@
 
         .product ul li img {
             display: block;
-            max-width: 100%;
-            height: 200px;
+            width: 100%;
+            height: 80%;
             margin: auto;
             object-fit: scale-down;
         }
@@ -160,6 +167,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin: 3px;
         }
 
         footer {
@@ -226,11 +234,7 @@
                     </div>
                 </li>
                 <li>
-                    <form action="shopProductList.html" class="search">
-                        <select name="productCondition" class="productCondition">
-                            <option value="new">新品</option>
-                            <option value="secondhand">二手商品</option>
-                        </select>
+                    <form action="" class="search">
                         <input name="keyword" class="searchinput" type="text" placeholder="請輸入商品名稱或關鍵字">
                         <button type="submit" class="searchicon">
                             <img class="icons" src="../img/icon/magnifying-glass-solid.svg" alt=""></button>
@@ -418,7 +422,7 @@
                 </div>
             </div>
             <div class="mainlist">
-                <span><a href="">商城商品</a></span>
+                <span><a href="">一般商城</a></span>
                 <div class="product">
                     <ul>
                         <li>
@@ -460,44 +464,16 @@
                     </ul>
                 </div>
             </div>
-            <div class="mainlist">
-                <span><a href="">二手商品</a></span>
+            <div class="mainlist" id="secondSP">
+                <span><a href="../sh_shop/sh_MainView.html">二手商品</a></span>
                 <div class="product">
                     <ul>
-                        <li>
-                            <a href="">
-                                <img src="../img/gameSoftware/Nitendo/Zelda/81e40b6f7d7f88d24e680c7ddc1kz8f5.jpg"
-                                    alt="商品圖片">
+                        <li v-for="item in secondhandproduct">
+                            <a href="" @click="leave('/sh_shop/sh_Mall.html', item.productId)">
+                                <img :src="'..' + item.image[0].image" :alt="item.name">
                             </a>
-                            <a href="" class="productname">
-                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssssssssssssssssss
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../img/gameSoftware/PS5/NarutoXBoruto/b188a106bf4ea35363463e47fc1l9i05.jpg"
-                                    alt="商品圖片">
-                            </a>
-                            <a href="" class="productname">
-                                商品名稱：一二三 ddsfdfdsfsfd五六七拉fssssssssssssssssssssss
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../img/peripherals/Nintendo/Zelda/2a14aa702d831e8f7f2803e1601l4t05.jpg"
-                                    alt="商品圖片">
-                            </a>
-                            <a href="" class="productname">
-                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfsssssssssssssss六七發九時一一sss五六七八sss
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../img/gameSoftware/Xbox/APlagueTaleRequiem/71f1f728084288700f873190711eniv5.jpg"
-                                    alt="商品圖片">
-                            </a>
-                            <a href="" class="productname">
-                                商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssu -4n0 sfdsdf3一二三四ssssssssssssssss
+                            <a href="" class="productname" @click="leave('/sh_shop/sh_Mall.html', item.productId)">
+                                商品名稱：{{ item.name }}
                             </a>
                         </li>
                     </ul>
@@ -546,10 +522,11 @@
     <script src="../jquery/jquery-3.4.1.min.js"></script>
     <script src="../js/shopIndexCmCarousel.js"></script>
     <script src="../js/shopRightSideMiniMenu.js"></script>
-    <script src="../js/shopMainNavSearchBar.js"></script>
     <script src="../js/shopNavBarShowup.js"></script>
     <script src="../js/shopMainNavHelping.js"></script>
-    <script src="../js/sh_mainShop.js"></script>
+    <script src="../js/shopMainNavSearchBar.js"></script>
+    <script src="../js/shopIndex(Vue).js"></script>
+    <!-- <script src="../js/sh_mainShop.js"></script> -->
 
 </body>
 

@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter("/shopDispatcher/*")
+@WebFilter("/shopDispatcher/*")//,/ShoppingList/*
 public class HibernateFilterShopProduct extends HttpFilter {
 
     @Override

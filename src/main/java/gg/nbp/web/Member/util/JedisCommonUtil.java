@@ -9,7 +9,7 @@ import redis.clients.jedis.Jedis;
 public class JedisCommonUtil{
 
     public static void saveCodes(Member member, String verificationCode){
-        Jedis jedis = new Jedis("localhost", 6379);
+        Jedis jedis = new Jedis();
         String eamil = member.getEmail();
         jedis.set(eamil, verificationCode);
         jedis.expire(eamil, 30);
@@ -18,7 +18,7 @@ public class JedisCommonUtil{
     }
 
     public static Member getCodes(Member member, String verfiyCode){
-        Jedis jedis = new Jedis("localhost", 6379);
+        Jedis jedis = new Jedis();
         String eamil = member.getEmail();
         String checkEmail = jedis.get(eamil);
         System.out.println("取得信件資料");

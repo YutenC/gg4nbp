@@ -121,6 +121,12 @@
             text-overflow: ellipsis;
         }
 
+        #productResults h2,
+        #secondProductResults h2 {
+            color: red;
+            margin: 10px;
+        }
+
         footer {
             font-size: 16px;
             text-align: center;
@@ -133,10 +139,11 @@
 <body>
     <header>
         <nav class="subNav">
-            <div class="contact"><a href=""><img class="icons" src="../img/icon/square-envelope-solid.svg" alt=""></a><a
-                    href=""><img class="icons" src="../img/icon/square-facebook.svg" alt=""></a><a href=""><img
-                        HEAD:src/main/webapp/shop/shopIndex3.html class="icons" src="../img/icon/square-instagram.svg"
-                        alt=""></a></div>
+            <div class="contact">
+                <a href=""><img class="icons" src="../img/icon/square-envelope-solid.svg" alt=""></a>
+                <a href=""><img class="icons" src="../img/icon/square-facebook.svg" alt=""></a>
+                <a href=""><img class="icons" src="../img/icon/square-instagram.svg" alt=""></a>
+            </div>
         </nav>
         <nav class="mainNav">
             <a href="" class="logo"><img src="../img/Logo-removebg.png" alt=""></a>
@@ -181,7 +188,7 @@
                     </div>
                 </li>
                 <li>
-                    <form action="shopProductList.html" class="search">
+                    <form action="" class="search">
                         <select name="productCondition" class="productCondition">
                             <option value="new">新品</option>
                             <option value="secondhand">二手商品</option>
@@ -266,13 +273,16 @@
                     <ul>
                         <li v-for="item in secondProductResults">
                             <a href="" @click="leave('/sh_shop/sh_Mall.html', item.productId)">
-                                <img :src=item.productImgUrl :alt=item.productName>
+                                <img :src="'..' + item.image[0].image" :alt=item.name>
                             </a>
                             <a href="" class="productname" @click="leave('/sh_shop/sh_Mall.html', item.productId)">
-                                商品名稱：{{ item.productName }}
+                                商品名稱：{{ item.name }}
                             </a>
                         </li>
                     </ul>
+                    <h2 v-if="secondProductResults.length === 0">
+                        二手商城無搜尋到符合項目
+                    </h2>
                 </div>
             </div>
     </main>
@@ -316,10 +326,10 @@
     </footer>
     <script src="../jquery/jquery-3.4.1.min.js"></script>
     <script src="../js/shopRightSideMiniMenu.js"></script>
-    <script src="../js/shopMainNavSearchBar.js"></script>
     <script src="../js/shopNavBarShowup.js"></script>
     <script src="../js/shopMainNavHelping.js"></script>
-    <script src="../js/shopIndexSeachResult(Vue).js"></script>
+    <script src="../js/shopMainNavSearchBar.js"></script>
+    <script src="../js/shopIndexSearchResult(Vue).js"></script>
 </body>
 
 </html>

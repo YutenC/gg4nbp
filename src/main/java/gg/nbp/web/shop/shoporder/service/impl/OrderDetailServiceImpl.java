@@ -13,7 +13,7 @@ import gg.nbp.web.shop.shoporder.dao.OrderDetailDao;
 import gg.nbp.web.shop.shoporder.dao.OrderMasterDao;
 import gg.nbp.web.shop.shoporder.entity.OrderDetail;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
-import gg.nbp.web.shop.shoporder.entity.PKOrderDeatail;
+import gg.nbp.web.shop.shoporder.entity.PKOrderDetail;
 import gg.nbp.web.shop.shoporder.service.OrderDetailService;
 import gg.nbp.web.shop.shoporder.util.ResOrderDetail;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
@@ -41,14 +41,14 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			List<TransOrderProduct> odProdcuts = new ArrayList<>();
 			List<OrderDetail> orderDetails = odDao.selectByOrderId(orderId);
 			for (OrderDetail od : orderDetails) {
-				Product pd = pdDao.selectById(od.getPkOrderDeatail().getProductID());
+				Product pd = pdDao.selectById(od.getPkOrderDetail().getProductId());
 				TransOrderProduct trPd = new TransOrderProduct();
 				
 				trPd.setBrand(pd.getBrand());
 				trPd.setBuyAmount(od.getQuantity());
 				trPd.setChecked(true);
 				trPd.setPrice(pd.getPrice());
-				trPd.setProductId(od.getPkOrderDeatail().getProductID());
+				trPd.setProductId(od.getPkOrderDetail().getProductId());
 				trPd.setProductName(pd.getProductName());
 				Integer comment = od.getComment();
 				if (comment != null) {
@@ -74,13 +74,34 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			return null;
 		}
 	}
+	
+	@Transactional
+	@Override
+	public List<TransOrderProduct> getCommentContentsByProductId(Integer productId) {
+		try {
+			List<OrderDetail> odlist = odDao.selectByProductId(productId);
+			List<TransOrderProduct> trlist = new ArrayList<>();
+			
+			for (OrderDetail od : odlist) {
+				TransOrderProduct trop = new TransOrderProduct();
+				trop.setProductId(od.getPkOrderDetail().getProductId());
+				trop.setCommentContent(od.getCommentContent());
+				trlist.add(trop);
+			}
+			return trlist;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
 
 	@Transactional
 	@Override
 	public Collection<ResOrderDetail> getMemberAllOrderDetail(Integer memberId) {
 		try {
 			List<OrderMaster> omList = omDao.selectByMemberId(memberId);
-			List<ResOrderDetail> resODList = new ArrayList<>();
 			Map<Integer, ResOrderDetail> checkMap = new HashMap<>();
 			
 			for (OrderMaster om : omList) {
@@ -88,9 +109,9 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 				for (OrderDetail od : odList) {
 					ResOrderDetail rsOD = new ResOrderDetail();
 					rsOD.setProductAmount(od.getQuantity());
-					rsOD.setProductId(od.getPkOrderDeatail().getProductID());
+					rsOD.setProductId(od.getPkOrderDetail().getProductId());
 					rsOD.setPurchaseDate(om.getCommitDate());
-					Product pd = pdDao.selectById(od.getPkOrderDeatail().getProductID());
+					Product pd = pService.getProductById(od.getPkOrderDetail().getProductId());
 					rsOD.setProductName(pd.getProductName());
 					rsOD.setProductPrice(pd.getPrice());
 					ResOrderDetail checkUnit = (ResOrderDetail)checkMap.get(pd.getId());
@@ -102,6 +123,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			}
 			return checkMap.values();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -110,7 +132,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	@Override
 	public boolean commentProduct(Integer orderId, Integer productId, Integer starNum, String commentContent) {
 		try {
-			PKOrderDeatail pkod = new PKOrderDeatail(productId, orderId);
+			PKOrderDetail pkod = new PKOrderDetail(productId, orderId);
 			OrderDetail od = odDao.selectByPKOrderDetail(pkod);
 			od.setComment(starNum);
 			od.setCommentContent(commentContent);

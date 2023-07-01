@@ -1,4 +1,4 @@
-const projectFolder = '/gg4nbp';
+const projectFolder = 'http://localhost:8080/gg4nbp';
 
 const productResults = Vue.createApp({
     data() {
@@ -8,9 +8,8 @@ const productResults = Vue.createApp({
     },
     methods: {
         leave: function (location, otherDetail) {
-            sessionStorage.clear();
             sessionStorage.setItem('productId', otherDetail);
-            window.location.replace(projectHref + '/' + location);
+            window.location.href = projectHref + '/' + location;
         }
     },
     created() {
@@ -29,14 +28,17 @@ const secondProductResults = Vue.createApp({
     },
     methods: {
         leave: function (location, otherDetail) {
-            sessionStorage.clear();
             sessionStorage.setItem('productId', otherDetail);
-            window.location.replace(projectHref + '/' + location);
+            window.location.href = projectHref + '/' + location;
         }
     },
     created() {
-        axios.get(projectFolder + '')
-            .then(res => this.secondProductResults = res.data)
+        let searchKey = sessionStorage.getItem('searchKeyword');
+        axios({
+            method: 'post',
+            url: projectFolder + '/secondhand/shp_keywordSearch',
+            data: { name: searchKey }
+        }).then(res => this.secondProductResults = res.data)
             .catch(err => console.log(err))
     }
 }).mount('#secondProductResults');
