@@ -41,14 +41,14 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			List<TransOrderProduct> odProdcuts = new ArrayList<>();
 			List<OrderDetail> orderDetails = odDao.selectByOrderId(orderId);
 			for (OrderDetail od : orderDetails) {
-				Product pd = pdDao.selectById(od.getPkOrderDetail().getProductID());
+				Product pd = pdDao.selectById(od.getPkOrderDetail().getProductId());
 				TransOrderProduct trPd = new TransOrderProduct();
 				
 				trPd.setBrand(pd.getBrand());
 				trPd.setBuyAmount(od.getQuantity());
 				trPd.setChecked(true);
 				trPd.setPrice(pd.getPrice());
-				trPd.setProductId(od.getPkOrderDetail().getProductID());
+				trPd.setProductId(od.getPkOrderDetail().getProductId());
 				trPd.setProductName(pd.getProductName());
 				Integer comment = od.getComment();
 				if (comment != null) {
@@ -84,7 +84,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			
 			for (OrderDetail od : odlist) {
 				TransOrderProduct trop = new TransOrderProduct();
-				trop.setProductId(od.getPkOrderDetail().getProductID());
+				trop.setProductId(od.getPkOrderDetail().getProductId());
 				trop.setCommentContent(od.getCommentContent());
 				trlist.add(trop);
 			}
@@ -109,9 +109,9 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 				for (OrderDetail od : odList) {
 					ResOrderDetail rsOD = new ResOrderDetail();
 					rsOD.setProductAmount(od.getQuantity());
-					rsOD.setProductId(od.getPkOrderDetail().getProductID());
+					rsOD.setProductId(od.getPkOrderDetail().getProductId());
 					rsOD.setPurchaseDate(om.getCommitDate());
-					Product pd = pService.getProductById(od.getPkOrderDetail().getProductID());
+					Product pd = pService.getProductById(od.getPkOrderDetail().getProductId());
 					rsOD.setProductName(pd.getProductName());
 					rsOD.setProductPrice(pd.getPrice());
 					ResOrderDetail checkUnit = (ResOrderDetail)checkMap.get(pd.getId());

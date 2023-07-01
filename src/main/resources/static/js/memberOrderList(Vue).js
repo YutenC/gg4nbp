@@ -16,6 +16,7 @@ const memberOrder = Vue.createApp({
             filterSelect: '1',
             offset: 0,
             listLength: 0,
+
         }
     },
     methods: {

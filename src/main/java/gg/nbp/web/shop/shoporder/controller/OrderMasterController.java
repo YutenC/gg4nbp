@@ -32,9 +32,7 @@ import gg.nbp.web.shop.shoporder.util.MemberViewOrder;
 import gg.nbp.web.shop.shoporder.util.OrderSelection;
 import gg.nbp.web.shop.shoporder.util.ResOrderMaster;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
-import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -55,20 +53,21 @@ public class OrderMasterController extends HttpServlet {
 	private OrderMasterService orderMasterService;
 	
 	@Autowired
-	private OrderDetailService orderDetailService;
-	
-	@Autowired
 	private NoticeService noticeService;
 	
-	@Autowired
-	private CouponService couponService;
- 
 	public OrderMasterController() {
         super();
         this.gson = new Gson();
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    	req.setCharacterEncoding("UTF-8");
+    	
+    	Gson gson = new Gson();
+    	res.setCharacterEncoding("UTF-8");
+    	res.setContentType("application/json");
+    	PrintWriter pw = res.getWriter();
+
     	Member login = new Member();
 		login.setAccount("Black");
 		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
@@ -79,19 +78,15 @@ public class OrderMasterController extends HttpServlet {
 		httpSession.setAttribute("member", mber);
 		
 		if (httpSession.getAttribute("member") == null) {
-			res.sendRedirect("/Five_NBP.gg");
+			res.sendRedirect("/gg4nbp");
+			Member failLogin = new Member();
+			failLogin.setSuccessful(false);
+			pw.println(gson.toJson(failLogin));
 			return;
 		}
 		
 		Member member = (Member)httpSession.getAttribute("member");
 		Integer memberId = member.getMember_id();
-		
-    	req.setCharacterEncoding("UTF-8");
-		
-    	Gson gson = new Gson();
-    	res.setCharacterEncoding("UTF-8");
-    	res.setContentType("application/json");
-    	PrintWriter pw = res.getWriter();
     	
     	if (req.getParameter("manageAll") != null) {
     		int limit = 10;
@@ -100,7 +95,6 @@ public class OrderMasterController extends HttpServlet {
     		Integer sortBy = Integer.valueOf(req.getParameter("sortBy"));
     		
     		Map<String, String> orderBy = new HashMap<>();
-    		String sortKey = null;
     		switch (sortBy) {
 			case 1:
 				orderBy.put("orderBy", "orderId");
@@ -230,9 +224,6 @@ public class OrderMasterController extends HttpServlet {
     	
     	String searchUser = req.getParameter("searchUser");
     	if (searchUser != null) {
-//    		System.out.println(searchUser);
-//    		System.out.println(req.getParameter("offset"));
-//    		System.out.println(req.getParameter("sortWay"));
     		Integer offset = Integer.valueOf(req.getParameter("offset")) * 10;
     		Integer sortWay = Integer.valueOf(req.getParameter("sortWay"));
     		Map<String, Integer> limitOffset = new HashMap<>();
@@ -306,13 +297,6 @@ public class OrderMasterController extends HttpServlet {
 			return;
 		}
 		
-		String recomendFromAll = req.getParameter("recomendFromAll");
-		if (recomendFromAll != null) {
-			Integer recomAmount = Integer.valueOf(recomendFromAll);
-			List<TransOrderProduct> trpdList = orderMasterService.getRecomendFromAll(recomAmount);
-			pw.println(gson.toJson(trpdList));
-			return;
-		}
     }
     
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -331,7 +315,10 @@ public class OrderMasterController extends HttpServlet {
 		httpSession.setAttribute("member", mber);
 		
 		if (httpSession.getAttribute("member") == null) {
-			res.sendRedirect("/Five_NBP.gg");
+			res.sendRedirect("/gg4nbp");
+			Member failLogin = new Member();
+			failLogin.setSuccessful(false);
+			pw.println(gson.toJson(failLogin));
 			return;
 		}
 		
@@ -362,18 +349,15 @@ public class OrderMasterController extends HttpServlet {
 					purchaseProducts.add(trOdPd);
 				}
 			}
-//			System.out.println(trObjList);
 						
 			// 取得結帳信用卡資訊Json物件
 			String cardStr = reqStr.substring(cardIndex  , addressIndex - 2);
 			cardStr = cardStr.substring(cardStr.indexOf(":") + 1, cardStr.length());
-//			System.out.println(cardStr);
 			JsonObject cardDetail = JsonParser.parseString(cardStr).getAsJsonObject();
 			
 			// 取得配送地址資訊Json物件
 			String addressStr = reqStr.substring(addressIndex, reqStr.length());
 			addressStr = addressStr.substring(addressStr.indexOf(":") + 1, addressStr.length());
-//			System.out.println(addressStr);
 			JsonObject addressDetail = JsonParser.parseString(addressStr).getAsJsonObject();
 			
 			String commitType = req.getParameter("payment"); // 取得付款類別

@@ -432,8 +432,15 @@ const promoProduct = Vue.createApp({
         }
     },
     created() {
-        axios.get(projectFolder + '/shopDispatcher/getProdcutsBuyTimes?amount=' + this.recomendAmount + '&type=""')
-            .then(res => this.promoProduct = res.data)
-            .catch(err => console.log(err));
+        const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
+        const require = ['productIndexImage'];
+        const req = { sort: sort, required: require };
+        axios({
+            method: 'get',
+            url: projectFolder + '/shopDispatcher/getAllProductByCondition',
+            params: {
+                params: encodeURIComponent(JSON.stringify(req))
+            }
+        });
     }
 }).mount('#promoProduct');

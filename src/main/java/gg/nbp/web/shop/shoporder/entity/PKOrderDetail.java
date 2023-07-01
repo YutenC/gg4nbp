@@ -22,14 +22,14 @@ public class PKOrderDetail implements Serializable{
 	private static final long serialVersionUID = 7275579179233163110L;
 
 	@Column(name = "PRODUCT_ID", updatable = false)
-	private Integer productID;
+	private Integer productId;
 	
 	@Column(name = "ORDER_ID", updatable = false)
 	private Integer orderId;
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(orderId, productID);
+		return Objects.hash(orderId, productId);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class PKOrderDetail implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		PKOrderDetail other = (PKOrderDetail) obj;
-		return Objects.equals(orderId, other.orderId) && Objects.equals(productID, other.productID);
+		return Objects.equals(orderId, other.orderId) && Objects.equals(productId, other.productId);
 	}
 	
 }

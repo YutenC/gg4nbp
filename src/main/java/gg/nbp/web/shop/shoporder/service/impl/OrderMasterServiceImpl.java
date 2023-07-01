@@ -88,7 +88,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			for (TransOrderProduct trObj : trObjList) {
 				PKOrderDetail pkod = new PKOrderDetail();
 				pkod.setOrderId(orderId);
-				pkod.setProductID(trObj.getProductId());
+				pkod.setProductId(trObj.getProductId());
 				
 				OrderDetail od = new OrderDetail();
 				od.setPkOrderDetail(pkod);
@@ -395,7 +395,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 					od.setIsReturn(1);
 					odDao.update(od);
 					
-					Product pd = pService.getProductById(od.getPkOrderDetail().getProductID());  // 回補商品庫存量
+					Product pd = pService.getProductById(od.getPkOrderDetail().getProductId());  // 回補商品庫存量
 					pd.setAmount(pd.getAmount() + od.getQuantity());
 					pdDao.updateProductAmountBuyTimes(pd);
 				}
