@@ -54,14 +54,12 @@ i:hover + .ctrlbutton, .ctrlbutton:hover {
     position: relative;
 }
 /* 放大鏡設為相對位置 */
-i.fa-search{
+i.fa-comments-alt{
     position: absolute;
     top: 16px;
     left: 26px;
     color: white;
 }
-
-
 /* 游標移動到圖示時，游標改變 */
 
 i.fa-radiation {

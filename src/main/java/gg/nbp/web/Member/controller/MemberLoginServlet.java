@@ -3,7 +3,6 @@ package gg.nbp.web.Member.controller;
 import java.io.IOException;
 import java.io.Serial;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.google.gson.JsonObject;
 import gg.nbp.web.Member.entity.Login_record;
@@ -26,10 +25,10 @@ public class MemberLoginServlet extends HttpServlet {
     @Serial
     private static final long serialVersionUID = -5239242805789930921L;
     @Autowired
-   	private MemberService SERVICE ;
+    private MemberService SERVICE;
     @Autowired
     private LoginRecordService LOGIN_SERVICE;
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Member member = new Member();
@@ -39,13 +38,12 @@ public class MemberLoginServlet extends HttpServlet {
         String loginDevice = request.getParameter("login_device");
         String loginCity = request.getParameter("login_city");
         String ip = request.getParameter("host_name");
-        System.out.println(loginCity);
 
         if ((member.getAccount().equals("")) || (password.equals(""))) {
             member = new Member();
             member.setMessage("請填寫帳號密碼");
             member.setSuccessful(false);
-            MemberCommonUitl.gsonToJson(response,member);
+            MemberCommonUitl.gsonToJson(response, member);
             return;
         }
 
@@ -53,41 +51,40 @@ public class MemberLoginServlet extends HttpServlet {
         member.setPassword(hashedPassword);
         member = SERVICE.login(member);
 
-        if(!member.isSuccessful()){
-            MemberCommonUitl.gsonToJson(response,member);
+        if (!member.isSuccessful()) {
+            MemberCommonUitl.gsonToJson(response, member);
             return;
         }
 
-        
+
         //停權檢查
-        
-        boolean isSuspending= false;
-        
+
+        boolean isSuspending = false;
+
         if (member.getMember_ver_state() == 2) {
-        	LocalDate currentDate = LocalDate.now();
+            LocalDate currentDate = LocalDate.now();
             LocalDate ban_deadline = member.getSuspend_deadline().toLocalDate();
-        	if (currentDate.isAfter(ban_deadline)) {
-        		member.setSuspend_deadline(null);
-        		member.setMember_ver_state(1);
-        		SERVICE.edit(member);
-            }else {
-            	isSuspending= true;
+            if (currentDate.isAfter(ban_deadline)) {
+                member.setSuspend_deadline(null);
+                member.setMember_ver_state(1);
+                SERVICE.edit(member);
+            } else {
+                isSuspending = true;
             }
-        }else if (member.getMember_ver_state() == 3) {
-        	isSuspending= true;
+        } else if (member.getMember_ver_state() == 3) {
+            isSuspending = true;
         }
-        
+
         if (isSuspending) {
-        	member.setSuccessful(false);
-        	member.setMessage("此帳號已停權，請洽客服人員");
-        	MemberCommonUitl.gsonToJson(response,member);
+            member.setSuccessful(false);
+            member.setMessage("此帳號已停權，請洽客服人員");
+            MemberCommonUitl.gsonToJson(response, member);
             return;
         }
-        
-        
-        
+
+
         if (member.isSuccessful()) {
-            if(loginCity == null){
+            if (loginCity == null) {
                 loginCity = "使用者未開啟定位";
             }
             loginRecord.setMember_id(member.getMember_id());

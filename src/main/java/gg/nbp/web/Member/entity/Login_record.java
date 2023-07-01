@@ -4,6 +4,7 @@ package gg.nbp.web.Member.entity;
 import java.io.Serial;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import gg.nbp.core.pojo.Core;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,5 +42,6 @@ public class Login_record extends Core {
     private String login_city;
     @Column
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private Date login_time;
 }

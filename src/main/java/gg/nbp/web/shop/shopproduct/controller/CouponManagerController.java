@@ -3,9 +3,11 @@ package gg.nbp.web.shop.shopproduct.controller;
 import com.google.gson.Gson;
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
 import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
+import gg.nbp.web.shop.shopproduct.pojo.DaoConditionSelect;
 import gg.nbp.web.shop.shopproduct.pojo.ErrorMsg;
 import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
+import gg.nbp.web.shop.shopproduct.service.CouponService;
 import gg.nbp.web.shop.shopproduct.util.ConvertJson;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,14 @@ public class CouponManagerController {
     @Autowired
     CouponManagerService couponManagerService;
 
+    @Autowired
+    CouponService couponService;
+
     public CouponManagerController() {
     }
 
     public String getAllCouponActivity(HttpSession session) {
-        System.out.println("getAllCouponActivity");
+//        System.out.println("getAllCouponActivity");
         List<CouponActivity> couponActivities = null;
         String out = null;
         ResponseMsg requestMsg = null;
@@ -33,7 +38,7 @@ public class CouponManagerController {
         try {
             couponActivities = couponManagerService.getAllCouponActivity();
 
-            requestMsg = new ResponseMsg("success", couponActivities);
+            requestMsg = new ResponseMsg("ok", couponActivities);
             out = ConvertJson.toJson(requestMsg);
         } catch (RuntimeException e) {
             if ("Could not get a resource from the pool".equals(e.getMessage())) {
@@ -48,11 +53,15 @@ public class CouponManagerController {
         return out;
     }
 
+    public String getCouponActivityByCondition(DaoConditionSelect daoConditionSelect){
+        List<CouponActivity>  couponActivities=  couponManagerService.getCouponActivityByCondition(daoConditionSelect);
 
-
+        ResponseMsg responseMsg=new ResponseMsg("ok",couponActivities);
+        return ConvertJson.toJson(responseMsg);
+    }
 
     public String addCouponActivity(HttpSession session, String newCouponActivity) {
-        System.out.println("addCouponActivity");
+//        System.out.println("addCouponActivity");
 
         Gson gson = new Gson();
         CouponActivity couponActivity = gson.fromJson(newCouponActivity, CouponActivity.class);
@@ -75,7 +84,7 @@ public class CouponManagerController {
 
 
     public String deleteCoupon(Integer couponId) {
-        System.out.println("deleteCoupon");
+//        System.out.println("deleteCoupon");
         couponManagerService.deleteCoupon(couponId);
         return "";
     }
@@ -83,15 +92,20 @@ public class CouponManagerController {
 
     public String getCouponMemberInfo(){
         List<CouponMember> couponMembers= couponManagerService.getCouponMemberInfo();
-
         return ConvertJson.toJson(couponMembers);
     }
 
-
     public String sendEmail(int action, List<CouponMember> couponMembers) {
         ResponseMsg responseMsg= couponManagerService.sendEmail(action,couponMembers);
-
-
         return ConvertJson.toJson(responseMsg);
     }
+
+    public String publishCouponActivity(Integer couponId) {
+        couponManagerService.publishCouponActivity(couponId);
+        ResponseMsg responseMsg=new ResponseMsg.Builder().setState("ok").build();
+        return ConvertJson.toJson(responseMsg);
+    }
+
+
+
 }

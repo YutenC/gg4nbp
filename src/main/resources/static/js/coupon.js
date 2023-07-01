@@ -20,12 +20,10 @@ const vm = Vue.createApp({
     }
 }).mount(".shopmain");
 
-// vm.getAllCouponActivity();
 
 function getAllCouponActivity() {
     axios({
         method: "GET",
-        // url: "http://localhost:8080/shop/shopDispatcher/getAllCouponActivity",
         url: host_context + "shopDispatcher/getAllCouponActivity",
         params: {
             activityCode: 2

@@ -2,6 +2,7 @@ package gg.nbp.web.Member.entity;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import gg.nbp.core.pojo.Core;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
