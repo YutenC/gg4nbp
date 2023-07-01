@@ -331,10 +331,43 @@ submitBtn.addEventListener("click", function(e) {
 
         })
     })
+            .then(resp => resp.json()) // .then(function(resp){resp.json();})
+            .then(function (body) {
+                    console.log(body);
+                    const {successful} = body;
+                    if (successful) {
+                        console.log("state=" + successful);
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: '訂單成立',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
 
-     window.location.href="../secondhand/SecondHand_MainView.html"
+                        setTimeout(function() {
+                            window.location.href = "../secondhand/SecondHand_MainView.html";
+                        }, 1800);
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '新增失敗',
+                            text: '內容都需填寫喔',
+                            // footer: '<a href="">Why do I have this issue?</a>'
+                        });
+                    }
+
+                }
+            )
+
+
 
     })
+
+
+
+
 
 
 
