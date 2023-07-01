@@ -331,7 +331,7 @@
     </header>
     <div class="shopmain">
         <aside class="sidebar">
-            <div class="brandlist" @click="getProductByType(2)">
+            <div class="brandlist" @click="getProductByType(enumPageCurrentType.NS)">
                 <span class="N_brand">
                     Nitendo
                 </span>
@@ -343,7 +343,7 @@
                 </div>
             </div>
 
-            <div class="brandlist" @click="getProductByType(3)">
+            <div class="brandlist" @click="getProductByType(enumPageCurrentType.XBOX)">
                 <span class="B_brand">
                     XBOX
                 </span>
@@ -354,7 +354,7 @@
                     <div class="listtype"><span>周邊</span></div>
                 </div>
             </div>
-            <div class="brandlist" @click="getProductByType(1)">
+            <div class="brandlist" @click="getProductByType(enumPageCurrentType.PS)">
                 <span class="P_brand">
                     PlayStation
                 </span>

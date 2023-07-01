@@ -67,65 +67,83 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     @Override
     public List<Product> selectByCondition(ProductSelect productSelect) {
 
-        String conditionStr="";
-        for(int i=0;i<productSelect.getConditions().size();i++){
-            if(i==0){
-                conditionStr+= " where ";
-            }
-            ProductSelect.Condition condition=productSelect.getConditions().get(i);
-            conditionStr+=" "+condition.getKey()+ " = "+condition.getValue()+" ";
-//            conditionStr+=" "+condition.getKey()+ " = "+2+" ";
-        }
+        String conditionStr = "";
 
+        if (productSelect.getConditions() != null) {
+            for (int i = 0; i < productSelect.getConditions().size(); i++) {
+                if (i == 0) {
+                    conditionStr += " where ";
+                } else {
+                    conditionStr += " AND ";
+                }
+                ProductSelect.Condition condition = productSelect.getConditions().get(i);
+
+                if (condition.getAction() == null || "=".equals(condition.getAction())) {
+                    conditionStr += " " + condition.getKey() + " = " + condition.getValue() + " ";
+                } else if ("like".equals(condition.getAction())) {
+                    conditionStr += " " + condition.getKey() + " like '%" + condition.getValue() + "%' ";
+                }
+
+            }
+        }
 
         String hql = "from Product  " + conditionStr;
 
-        Integer limit=-1;
-        Integer offset=-1;
-        String hql2="";
-        for(int i=0;i<productSelect.getSqlConditions().size();i++){
-            ProductSelect.Condition condition=productSelect.getSqlConditions().get(i);
-            if("limit".equals(condition.getKey())){
-//                hql2+=" 'limit' "+condition.getValue() +" ";
-//                hql2+=" 'limit' "+5 +" ";
-                Object oValue= condition.getValue();
-//                limit=Integer.TYPE.cast( oValue);
-                limit= ((Double)oValue).intValue();
-            } else if ("offset".equals(condition.getKey())) {
-                Object oValue= condition.getValue();
-                offset= ((Double)oValue).intValue();
+        Integer limit = -1;
+        Integer offset = -1;
+        String hql2 = "";
+        if (productSelect.getSqlConditions() != null) {
+            for (int i = 0; i < productSelect.getSqlConditions().size(); i++) {
+                ProductSelect.Condition condition = productSelect.getSqlConditions().get(i);
+                if ("limit".equals(condition.getKey())) {
+                    Object oValue = condition.getValue();
+                    limit = ((Double) oValue).intValue();
+                } else if ("offset".equals(condition.getKey())) {
+                    Object oValue = condition.getValue();
+                    offset = ((Double) oValue).intValue();
+                }
+            }
+        }
 
+
+        String hql3 = "";
+        if (productSelect.getSort() != null) {
+            ProductSelect.Condition condition = productSelect.getSort();
+
+            if ("order".equalsIgnoreCase(condition.getAction())) {
+                if (condition.getKey() == null || "".equals(condition.getKey()) || "asc".equalsIgnoreCase(condition.getKey())) {
+                    hql3 = "order by " + condition.getValue() + " ";
+                } else if ("desc".equalsIgnoreCase(condition.getKey())) {
+                    hql3 = "order by " + condition.getValue() + " " + "DESC";
+                }
             }
 
         }
 
-        hql=hql+hql2;
-
+        hql = hql + hql2+hql3;
         System.out.println(hql);
         Query<Product> query;
-        if(limit==-1){
-            query=session.createQuery(hql, Product.class);
-        }
-        else{
-            query= session.createQuery(hql, Product.class).setMaxResults(limit);
+        if (limit == -1) {
+            query = session.createQuery(hql, Product.class);
+        } else {
+            query = session.createQuery(hql, Product.class).setMaxResults(limit);
         }
 
-        if(offset!=-1){
+        if (offset != -1) {
             query.setFirstResult(offset);
         }
-
         return query.getResultList();
     }
 
     @Override
-    public List<Product> selectByType(String type) {
+    public List<Product> selectByType(Integer type) {
         String hql = "from Product  where type = " + type;
         System.out.println("hql: " + hql);
         return session.createQuery(hql, Product.class).getResultList();
     }
 
     @Override
-    public List<Product> selectByBuyTimes(String type) {
+    public List<Product> selectByBuyTimes(Integer type) {
         String hql;
         if ("".equals(type) || "0".equals(type)) {
             hql = "from Product " + "order by buyTimes DESC";
@@ -138,9 +156,9 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     }
 
     @Override
-    public List<Product> selectByBuyTimes(Integer limit, String type) {
+    public List<Product> selectByBuyTimes(Integer limit, Integer type) {
         String hql;
-        if ("".equals(type) || "0".equals(type)) {
+        if (type == -1) {
             hql = "from Product " + "order by buyTimes DESC";
         } else {
             hql = "from Product where type = " + type + "order by buyTimes DESC";
@@ -208,7 +226,6 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
         hql.append("amount = :amount,")
                 .append("buyTimes = :buyTimes ")
                 .append("WHERE id = :id");
-
 
 
         Query<?> query = session.createQuery(hql.toString());
