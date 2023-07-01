@@ -291,11 +291,11 @@
                     <div class="purchase">
                         <div>
                             <h3 class="productname">{{product.productName}}</h3>
-                            <ul>
+                            <!-- <ul>
                                 <li>商品特點1</li>
                                 <li>商品特點2</li>
                                 <li>依需求產生特點介紹，最多5點</li>
-                            </ul>
+                            </ul> -->
                             <div class="price">
                                 售價:<span>{{product.price}}</span>元
                                 <!-- 特價:<span>9,990</span>元 -->
@@ -399,12 +399,9 @@
                     <div class="contentPage" v-else-if="currentMainguideContent==2">
                         <ul>
 
-                            <li v-for="(item,index) in mainguideContent" :key="index">
+                            <li v-for="(item,index) in comments" :key="index">
 
-                                <a v-if="item.flag" href="" :data-target="'tab' + (index+1) " class="tab -on"
-                                    @click="changeMainContent((index+1),$event)">{{item.text}}</a>
-                                <a v-else href="" :data-target="'tab' + (index+1) " class="tab"
-                                    @click="changeMainContent((index+1),$event)">{{item.text}}</a>
+                                <div>{{item.commentContent}}</div>
 
                             </li>
 

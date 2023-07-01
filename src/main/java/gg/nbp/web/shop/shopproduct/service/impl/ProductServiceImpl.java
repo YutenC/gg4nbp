@@ -12,6 +12,7 @@ import gg.nbp.web.shop.shopproduct.redisdao.ProductRedisDao;
 import gg.nbp.web.shop.shopproduct.service.FollowService;
 import gg.nbp.web.shop.shopproduct.service.ProductService;
 import gg.nbp.web.shop.shopproduct.util.ConstUtil;
+import gg.nbp.web.shop.shopproduct.util.MyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAllProduct(Integer memId, Integer limit) {
         List<Product> products = productDao.selectAll();
-//        setProductIndexImg(products);
+//        setProductIndexImage(products);
         setFollows(memId,products);
 //        List<Product>  pp= productRepository.selectBySpecified(0,150,"任天堂");
         return products;
@@ -57,21 +58,31 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProductByCondition(Integer memId, ProductSelect productSelect) {
         List<Product> products =  productDao.selectByCondition(productSelect);
 
+        List<String> required= productSelect.getRequired();
+        for(String key:required){
+            if(products!=null && products.size()!=0){
+                Product product= products.get(0);
+                if(MyUtil.checkNULL(key,product,Product.class)){
+                    MyUtil.runMethod(key,this,ProductServiceImpl.class,List.class,products);
+                }
+            }
+        }
+
         return products;
     }
 
     @Override
     public List<Product> getAllProductWithIndexImg(Integer memId) {
         List<Product> products = productDao.selectAll();
-        setProductIndexImg(products);
+        setProductIndexImage(products);
         setFollows(memId,products);
         return products;
     }
 
     @Override
     public List<Product> getProductByType(Integer memId,Integer type) {
-        List<Product> products = productDao.selectByType(type.toString());
-        setProductIndexImg(products);
+        List<Product> products = productDao.selectByType(type);
+        setProductIndexImage(products);
         setFollows(memId,products);
         return products;
     }
@@ -80,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> searchProducts(Integer memId,String search) {
         List<Product> products = productDao.searchProducts(search);
-        setProductIndexImg(products);
+        setProductIndexImage(products);
         setFollows(memId,products);
         return products;
     }
@@ -105,8 +116,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductByBuyTimes(Map<String,Object> map,Integer type) {
         Integer limit=(Integer)map.get("limit");
-        List<Product> products = productDao.selectByBuyTimes(limit,type.toString());
-        setProductIndexImg(products);
+        List<Product> products = productDao.selectByBuyTimes(limit,type);
+        setProductIndexImage(products);
 
         Integer memId=  (Integer)map.get("memId");
         setFollows(memId,products);
@@ -115,8 +126,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductByBuyTimes(Integer amount, Integer type) {
-        List<Product> products = productDao.selectByBuyTimes(amount, type.toString());
-        setProductIndexImg(products);
+        List<Product> products = productDao.selectByBuyTimes(amount, type);
+        setProductIndexImage(products);
         return products;
     }
 
@@ -201,7 +212,7 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    private void setProductIndexImg(List<Product> products) {
+    private void setProductIndexImage(List<Product> products) {
         for (Product p : products) {
             ProductImage productImages = getProductIndexImg(p.getId());
             p.setProductIndexImage(productImages);
