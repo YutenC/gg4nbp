@@ -37,7 +37,7 @@ public class AddEvent extends HttpServlet  {
 		HttpSession session = req.getSession();
 		Member member = (Member) session.getAttribute("member");
 		if(member == null) {
-			resp.sendRedirect(req.getContextPath()+"/member_login.html");
+			doGet(req, resp);
 			return;
 		}
 		
@@ -75,7 +75,7 @@ public class AddEvent extends HttpServlet  {
 		
 		if(isLogin == null || isLogin == false) {
 			resp.sendRedirect(req.getContextPath()+"/member_login.html");
-			
+			session.setAttribute("memberLocation", req.getHeader("referer"));
 		}
 		else {
 			writepojo2Json(resp, new OneString("已登入"));
