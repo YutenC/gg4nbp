@@ -59,14 +59,17 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products =  productDao.selectByCondition(productSelect);
 
         List<String> required= productSelect.getRequired();
-        for(String key:required){
-            if(products!=null && products.size()!=0){
-                Product product= products.get(0);
-                if(MyUtil.checkNULL(key,product,Product.class)){
-                    MyUtil.runMethod(key,this,ProductServiceImpl.class,List.class,products);
+        if (required != null) {
+            for(String key:required){
+                if(products!=null && products.size()!=0){
+                    Product product= products.get(0);
+                    if(MyUtil.checkNULL(key,product,Product.class)){
+                        MyUtil.runMethod(key,this,ProductServiceImpl.class,List.class,products);
+                    }
                 }
             }
         }
+
 
         return products;
     }

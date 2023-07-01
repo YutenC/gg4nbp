@@ -1,6 +1,6 @@
 package gg.nbp.web.shop.shopproduct.service.impl;
 
-import gg.nbp.web.Member.dao.MemberDao;
+
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundFactory;
@@ -11,9 +11,8 @@ import gg.nbp.web.shop.shopproduct.common.schedulertask.SchedulerTasks;
 import gg.nbp.web.shop.shopproduct.dao.CouponDao;
 import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
-import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
-import gg.nbp.web.shop.shopproduct.pojo.RequestMsg;
+import gg.nbp.web.shop.shopproduct.pojo.DaoConditionSelect;
 import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.redisdao.CouponActivityRedisDao;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
@@ -22,7 +21,6 @@ import gg.nbp.web.shop.shopproduct.util.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -47,17 +45,20 @@ public class CouponManagerServiceImpl implements CouponManagerService {
     }
 
     @Override
+//    @Transactional
     public void generateCouponActivity() {
         for (int i = 0; i < 10; i++) {
             CouponActivity couponActivity = new CouponActivity("Activity " + i, "MF");
             couponActivity.setCoupon(genFixCouponData(i));//genCouponData()
             addCouponActivity(couponActivity);
+            setAutoCouponState(couponActivity.getCoupon());
         }
     }
 
     @Override
     public void addCouponActivity(CouponActivity couponActivity) {
         Coupon coupon = couponActivity.getCoupon();
+        coupon.setState(CouponState.unPublish.getValue());
         couponService.addCoupon(coupon);
 
         RedisContent redisService = new RedisContent() {
@@ -73,8 +74,24 @@ public class CouponManagerServiceImpl implements CouponManagerService {
     }
 
     @Override
+//    @Transactional
     public List<CouponActivity> getAllCouponActivity() throws RuntimeException {
         return  couponActivityRedisDao.getAllCouponActivity();
+    }
+
+    @Override
+    public List<CouponActivity> getCouponActivityByCondition(DaoConditionSelect daoConditionSelect) throws RuntimeException {
+        List<Coupon> coupons= couponDao.selectByCondition(daoConditionSelect);
+        List<CouponActivity> couponActivities= couponActivityRedisDao.getCouponActivitiesByCoupons(coupons);
+        return couponActivities;
+    }
+
+
+
+    @Override
+//    @Transactional
+    public CouponActivity getCouponActivityByCouponId(Integer couponId) {
+        return couponActivityRedisDao.getCouponActivityByCouponId(couponId);
     }
 
     @Override
@@ -83,6 +100,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
     }
 
     @Override
+//    @Transactional
     public void updateCouponActivity(CouponActivity couponActivity) {
         Coupon coupon = couponActivity.getCoupon();
         couponDao.update(coupon);
@@ -104,7 +122,6 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         if(couponService.getCouponById(couponId)!=null){
             couponService.deleteCoupon(couponId);
         }
-
 
         RedisContent redisService = new RedisContent() {
             @Override
@@ -129,6 +146,18 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         }
 
         return couponMembers;
+    }
+
+    @Override
+//    @Transactional
+    public void publishCouponActivity(Integer couponId) {
+        Coupon coupon= couponService.getCouponById(couponId);
+        CouponActivity couponActivity=couponActivityRedisDao.getCouponActivityByCouponId(couponId);
+        coupon.setState(CouponState.publish.getValue());
+        couponActivity.setCoupon(coupon);
+        updateCouponActivity(couponActivity);
+
+        setAutoCouponState(coupon);
     }
 
     @Override
@@ -199,6 +228,33 @@ public class CouponManagerServiceImpl implements CouponManagerService {
     }
 
 
+    public void setAutoCouponState(Coupon coupon){
+        List<Coupon> coupons= couponDao.selectAll();
+
+        SchedulerTasks schedulerTasks=  SchedulerFactory.getSchedulerTasks("autoCouponState");
+
+        TimerTask timerTask= new TimerTask() {
+            @Override
+//            @Transactional
+            public void run() {
+                Coupon coupon_=coupon;
+                CouponActivity couponActivity=couponActivityRedisDao.getCouponActivityByCouponId(coupon_.getId());
+                coupon_.setState(CouponState.inValid.getValue());
+                couponActivity.setCoupon(coupon_);
+                updateCouponActivity(couponActivity);
+                System.out.println("setAutoCouponState: "+coupon_.getId()+"failed");
+
+                cancel();
+                SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("autoCouponState");
+                schedulerTasks.removeTimerTask( "coupon"+coupon.getId());
+                schedulerTasks.clear();
+            }
+        };
+
+        SchedulerEntity schedulerEntity=new SchedulerEntity(coupon.getDeadline(),timerTask);
+        schedulerTasks.addTimerTask("coupon"+coupon.getId(),schedulerEntity);
+    }
+
     private Coupon genFixCouponData(Integer index){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar cal = new GregorianCalendar();
@@ -206,19 +262,22 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         String date = simpleDateFormat.format(cal.getTime());
         java.sql.Date deadline = java.sql.Date.valueOf(date);
 
+        cal.setTimeInMillis(cal.getTimeInMillis() - 10 * 24 * 60 * 60 * 1000);
+        date = simpleDateFormat.format(cal.getTime());
+        java.sql.Date failedDeadline=java.sql.Date.valueOf(date);
         Coupon coupon;
         switch (index){
             case 0:
-                coupon = new Coupon(100, 1000, deadline, "Qb12BJZO22",0);
+                coupon = new Coupon(100, 1000, failedDeadline, "Qb12BJZO22",0);
                 break;
             case 1:
-                coupon = new Coupon(100, 2000, deadline, "Qb34FFFO11",0);
+                coupon = new Coupon(100, 2000, failedDeadline, "Qb34FFFO11",0);
                 break;
             case 2:
                 coupon = new Coupon(50, 500, deadline, "Qb55ASZ678",0);
                 break;
             case 3:
-                coupon = new Coupon(150, 2000, deadline, "Qb56BGFO90",0);
+                coupon = new Coupon(150, 2000, failedDeadline, "Qb56BGFO90",0);
                 break;
             case 4:
                 coupon = new Coupon(100, 500, deadline, "Qb77XCVO22",0);
@@ -236,7 +295,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
                 coupon = new Coupon(100, 600, deadline, "Qb245DYO88",0);
                 break;
             default:
-                coupon = new Coupon(100, 1000, deadline, "Qb345XZO67",0);
+                coupon = new Coupon(100, 1000, deadline, "Qb345X3367",0);
                 break;
 
         }

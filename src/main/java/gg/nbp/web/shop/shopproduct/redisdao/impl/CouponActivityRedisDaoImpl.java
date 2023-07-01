@@ -1,6 +1,7 @@
 package gg.nbp.web.shop.shopproduct.redisdao.impl;
 
 import com.google.gson.Gson;
+import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
 import gg.nbp.web.shop.shopproduct.redisdao.CouponActivityRedisDao;
 import gg.nbp.web.shop.shopproduct.util.RedisFactory;
@@ -15,20 +16,20 @@ import java.util.*;
 @Component
 public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
 
-    @Override
-    public List<String> getAllCouponActivity_string() throws JedisException {
-        List<String> couponActivities = new ArrayList<String>();
-        Jedis jedis = RedisFactory.getRedisServiceInstance().getJedis(ShopProductConst.REDIS_SELECT_INDEX);
-
-        Gson gson = new Gson();
-        Set<String> items = jedis.smembers("CouponActivity:outline");
-        for (String str : items) {
-            Map<String, String> couponActivityMap = jedis.hgetAll("CouponActivity:" + str);
-            String json = gson.toJson(couponActivityMap);
-            couponActivities.add(json);
-        }
-        return couponActivities;
-    }
+//    @Override
+//    public List<String> getAllCouponActivity_string() throws JedisException {
+//        List<String> couponActivities = new ArrayList<String>();
+//        Jedis jedis = RedisFactory.getRedisServiceInstance().getJedis(ShopProductConst.REDIS_SELECT_INDEX);
+//
+//        Gson gson = new Gson();
+//        Set<String> items = jedis.smembers("CouponActivity:outline");
+//        for (String str : items) {
+//            Map<String, String> couponActivityMap = jedis.hgetAll("CouponActivity:" + str);
+//            String json = gson.toJson(couponActivityMap);
+//            couponActivities.add(json);
+//        }
+//        return couponActivities;
+//    }
 
     @Override
     public List<CouponActivity> getAllCouponActivity() throws JedisException {
@@ -37,7 +38,6 @@ public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
 
         Set<String> items = jedis.smembers("CouponActivity:outline");
 
-
         for (String str : items) {
             Map<String, String> couponActivityMap = jedis.hgetAll("CouponActivity:" + str);
             CouponActivity couponActivity = StringToObjectUtil.mapStringToEntity(couponActivityMap, CouponActivity.class);
@@ -45,6 +45,27 @@ public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
         }
 
         return couponActivities;
+    }
+
+    @Override
+    public List<CouponActivity> getCouponActivitiesByCoupons(List<Coupon> coupons) {
+        Jedis jedis = RedisFactory.getRedisServiceInstance().getJedis(ShopProductConst.REDIS_SELECT_INDEX);
+        List<CouponActivity> couponActivities=new ArrayList<>();
+        for(Coupon coupon:coupons){
+            Map<String, String> couponActivityMap = jedis.hgetAll("CouponActivity:" + coupon.getId().toString());
+            CouponActivity couponActivity = StringToObjectUtil.mapStringToEntity(couponActivityMap, CouponActivity.class);
+            couponActivities.add(couponActivity);
+        }
+
+        return couponActivities;
+    }
+
+    @Override
+    public CouponActivity getCouponActivityByCouponId(Integer couponId) {
+        Jedis jedis = RedisFactory.getRedisServiceInstance().getJedis(ShopProductConst.REDIS_SELECT_INDEX);
+        Map<String, String> couponActivityMap = jedis.hgetAll("CouponActivity:" + couponId.toString());
+        CouponActivity couponActivity = StringToObjectUtil.mapStringToEntity(couponActivityMap, CouponActivity.class);
+        return couponActivity;
     }
 
     @Override
@@ -78,11 +99,9 @@ public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
         Jedis jedis = RedisFactory.getRedisServiceInstance().getJedis(ShopProductConst.REDIS_SELECT_INDEX);
 
         String cp_id_str = null;
-        System.out.println("couponActivity.getCoupon(): " + couponActivity.getCoupon());
+//        System.out.println("couponActivity.getCoupon(): " + couponActivity.getCoupon());
 
         cp_id_str = jedis.hget("CouponActivity:" + couponActivity.getCoupon().getId().toString(), "couponId");
-
-
         if (cp_id_str != null) {
             Gson gson = new Gson();
             HashMap<String, String> map = new HashMap<String, String>();
@@ -115,9 +134,8 @@ public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
                 jedis.del("CouponActivity:" + str);
                 jedis.srem("CouponActivity:outline", str);
             }
-
         }
-
     }
+
 
 }

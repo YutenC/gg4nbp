@@ -12,8 +12,5 @@ import java.util.TimerTask;
 @AllArgsConstructor
 public class SchedulerEntity {
     private Date date;
-//    private SchedulerTask schedulerTask;
     private TimerTask timerTask;
-
-
 }
