@@ -41,6 +41,7 @@ import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
 import gg.nbp.web.shop.shopproduct.service.ProductService;
+import gg.nbp.web.shop.shopproduct.util.ProductType;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -482,7 +483,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 		try {
 			List<TransOrderProduct> trPdList = new ArrayList<>();
 			
-			List<Product> pdList = pdDao.selectByBuyTimes(recomendAmount, "");
+			List<Product> pdList = pdDao.selectByBuyTimes(recomendAmount, ProductType.any.getValue());
 			for (Product pd : pdList) {
 				TransOrderProduct trPd = new TransOrderProduct();
 				trPd.setPrice(pd.getPrice());
