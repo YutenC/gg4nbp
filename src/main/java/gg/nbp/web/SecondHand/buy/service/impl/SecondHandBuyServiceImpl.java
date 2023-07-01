@@ -81,10 +81,16 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
 		// 有辦法優化 ?
-		for (SecondhandBuylist sl : dao.selectAll()) {
-			sl.setImage(selectimg(sl));
-			listDTO.add(new BuyEvent(sl,daoMember));
-		}
+		dao.selectAll().stream()
+					   .filter(p -> p.getPayState() != 2)  //篩選掉已經完成的案件
+					   .forEach(sl -> {
+						   sl.setImage(selectimg(sl));
+						   listDTO.add(new BuyEvent(sl,daoMember));
+					   });
+		
+		
+		
+		
 
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)
