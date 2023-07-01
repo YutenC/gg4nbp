@@ -520,19 +520,61 @@
 
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
         <script>
+          // 定义计数器变量和标志变量
+          let submitCount = 0;
+          let isSuccess = false;
+
           document.getElementById("reportForm").addEventListener("submit", function(event) {
             event.preventDefault(); // 阻止默认表单提交行为
 
-            // let rr=document.getElementById("reportedName");
-            // const reportedName=rr.value;
-            const reportPerson =document.getElementById("reportPerson").value;
+            // 检查是否前三次提交且成功标志为 false
+            if (submitCount < 3 && !isSuccess) {
+              // 提示提交失败
+              Swal.fire({
+                icon: 'error',
+                title: '你沒看進來的警示吧？',
+                text: '不會吧,真的玻璃到要檢舉人。',
+              });
+              submitCount++; // 增加计数器
+              // 清空表单输入
+              document.getElementById("reportPerson").value = "";
+              document.getElementById("reportedName").value = "";
+              document.getElementById("reportTime").value = "";
+              document.getElementById("reportContent").value = "";
+              document.getElementById("reportImage").value = "";
+              document.getElementById("imagePreview").innerHTML = ""; // 清空图片预览
+              return; // 阻止表单提交
+            }
+
+            // 获取表单数据
+            const reportPerson = document.getElementById("reportPerson").value;
             const reportedName = document.getElementById("reportedName").value;
             const reportTime = document.getElementById("reportTime").value;
             const reportContent = document.getElementById("reportContent").value;
             const reportImage = document.getElementById("reportImage").value;
+
+            // 检查必填字段
+            if (submitCount >= 3 && (reportPerson === "" || reportedName === "" || reportTime === "" || reportContent === "")) {
+              // 提示错误消息
+              Swal.fire({
+                icon: 'error',
+                title: '提交失敗',
+                text: '填寫所有必填字段。',
+              });
+              return; // 阻止表单提交
+            }
+
+            // 检查是否所有字段都填写
+            if (submitCount >= 3 && (reportPerson === "" || reportedName === "" || reportTime === "" || reportContent === "" || reportImage === "")) {
+              // 提示错误消息
+              Swal.fire({
+                icon: 'error',
+                title: '提交失敗',
+                text: '填寫所有必填字段。',
+              });
+              return; // 阻止表单提交
+            }
 
             const report = {
               reportPerson: reportPerson,
@@ -542,52 +584,43 @@
               reportImage: reportImage
             };
 
+            // 提交表单数据
             axios.post("http://localhost:8080/gg4nbp/actReportList", report).then((response) => {
               console.log(response.data);
-              // 其他处理代码
+
+
+              // 提示提交成功
+              Swal.fire({
+                icon: 'success',
+                title: '好吧看來你確實有事',
+                text: '我姑且就放你檢舉。',
+              });
+
+              // 提交成功后清空表单输入
+              document.getElementById("reportPerson").value = "";
+              document.getElementById("reportedName").value = "";
+              document.getElementById("reportTime").value = "";
+              document.getElementById("reportContent").value = "";
+              document.getElementById("reportImage").value = "";
+              document.getElementById("imagePreview").innerHTML = ""; // 清空图片预览
+
+              // 设置提交成功标志
+              isSuccess = true;
+            }).catch((error) => {
+              console.error(error);
+              // 提交失败后显示警示框
+              Swal.fire({
+                icon: 'error',
+                title: '提交失敗',
+                text: '提交時出現錯誤。',
+              });
             });
-
-            // 清空表单输入
-            document.getElementById("reportPerson").value = "";
-            document.getElementById("reportedName").value = "";
-            document.getElementById("reportTime").value = "";
-            document.getElementById("reportContent").value = "";
-            document.getElementById("reportImage").value = "";
           });
-
         </script>
 
-        <script>    // 获取按钮元素
-        // 获取按钮元素
-        var submitButton = document.querySelector('.btn.btn-primary');
 
-        // 获取表单元素
-        var form = document.querySelector('form.was-validated');
 
-        // 定义表单提交事件处理程序
-        function handleSubmit(event) {
-          event.preventDefault(); // 阻止表单默认提交行为
 
-          // 在这里执行您的表单处理逻辑，例如验证表单数据、准备提交数据等
-          console.log('表单已提交！');
-        }
-
-        // 添加表单提交事件监听器
-        form.addEventListener('submit', handleSubmit);
-
-        // 检查表单验证状态
-        function checkFormValidity() {
-          if (form.checkValidity()) {
-            submitButton.removeAttribute('disabled'); // 启用提交按钮
-          } else {
-            submitButton.setAttribute('disabled', 'disabled'); // 禁用提交按钮
-          }
-        }
-
-        // 添加表单验证状态检查
-        form.addEventListener('change', checkFormValidity);
-        form.addEventListener('keyup', checkFormValidity);
-        </script>
         </form>
 
         <script src="../jquery/jquery-3.4.1.min.js"></script>
