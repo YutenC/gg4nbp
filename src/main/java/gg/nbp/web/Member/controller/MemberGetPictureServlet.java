@@ -29,7 +29,6 @@ public class MemberGetPictureServlet extends HttpServlet {
         }
         Member headshot = new Member();
         headshot.setHeadshot(member.getHeadshot());
-        System.out.println(headshot);
         headshot.setSuccessful(true);
         MemberCommonUitl.gsonToJson(response,headshot);
     }

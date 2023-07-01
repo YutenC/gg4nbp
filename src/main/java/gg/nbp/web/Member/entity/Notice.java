@@ -2,6 +2,7 @@ package gg.nbp.web.Member.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import gg.nbp.core.pojo.Core;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +32,7 @@ public class Notice extends Core {
     private String notice_value;
     @Column
     private Integer member_id;
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Column
     private Date notice_time;
     @Column
