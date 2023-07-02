@@ -25,7 +25,7 @@ const vm = Vue.createApp({
             sendEmailTime: '',
             sendEmailState: "",
             limitNumOfSelect: [5, 10, 15, 20],
-            limitNum: "5"
+            limitNum: "20"
         };
     },
     methods: {
@@ -38,6 +38,7 @@ const vm = Vue.createApp({
 
             const date = new Date(coupon_.deadline);
             const formatDate = date.toLocaleString('en-US', {
+                timeZone: 'Asia/Taipei',
                 month: 'short',
                 day: 'numeric',
                 year: 'numeric',
@@ -46,6 +47,8 @@ const vm = Vue.createApp({
                 second: 'numeric',
                 hour12: true
             });
+            // const formatDate = date.toLocaleString('en-US', { timeZone: 'Asia/Singapore', hour12: true });
+
 
             coupon_.deadline = formatDate;
             couponActivity.coupon = coupon_;
@@ -136,6 +139,7 @@ const vm = Vue.createApp({
                     });
 
                     vm.couponMembers = temp;
+                    vm.sendEmailState = "已取得會員資訊";
                     console.log("getCouponMemberInfo then");
 
                 })
@@ -152,7 +156,8 @@ const vm = Vue.createApp({
                 case 1://根據時間
                     //
                     const dateObject = new Date(vm.sendEmailTime);
-                    const formattedDateTime = dateObject.toLocaleDateString('en-us', {
+                    const formattedDateTime = dateObject.toLocaleString('en-us', {
+                        timeZone: 'Asia/Taipei',
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',
@@ -169,7 +174,7 @@ const vm = Vue.createApp({
 
 
                     });
-                    vm.sendEmailState = "";
+                    vm.sendEmailState = "時間已設定";
                     break;
             }
 
@@ -273,7 +278,7 @@ function getBackgroundMessage() {
                 }, 1000);
             }
             else {
-                vm.sendEmailState = "傳送完成";
+                vm.sendEmailState = "傳送郵件完成";
                 console.log("longTime process OK");
             }
 
@@ -291,7 +296,6 @@ function getAllCouponActivity() {
 
     sqlConditions.push({ "key": "limit", "value": vm.limitNum });
     sqlConditions.push({ "key": "offset", "value": 0 });
-    // conditions.push({ "key": "type", "value": 2 });
 
     let object = {
         "msg": "getAllCouponActivity",
@@ -320,7 +324,10 @@ function getAllCouponActivity() {
                 for (let i = 0; i < couponActivity.length; i++) {
                     let deadline = couponActivity[i].coupon.deadline;
                     deadline = new Date(deadline);
-                    deadline = deadline.toISOString().slice(0, 16);
+                    deadline.setHours(deadline.getHours() + 8);
+                    deadline = deadline.toISOString();
+                    deadline = deadline.slice(0, 16);//16
+                    // deadline = deadline.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
                     couponActivity[i].coupon.deadline = deadline;
                 }
 

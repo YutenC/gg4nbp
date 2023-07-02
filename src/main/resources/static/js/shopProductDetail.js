@@ -19,7 +19,8 @@ const vm = Vue.createApp({
             productHistory: [],
             buyAmount: 1,
             comments: '',
-
+            smallImageIndex: 0,
+            isHistoryAreaHidden: true
         };
     },
     created() {
@@ -167,17 +168,21 @@ const vm = Vue.createApp({
         },
         changeAmount(buyAmount) {
             vm.buyAmount = buyAmount;
+        },
+        clickPrevNext(e) {
+            if (e.classList.contains('prev')) {
+                vm.smallImageIndex = (--vm.smallImageIndex < 0) ? 0 : vm.smallImageIndex;
+            } else if (e.classList.contains('next')) {
+                vm.smallImageIndex = (++vm.smallImageIndex > 2) ? 2 : vm.smallImageIndex;
+            }
+        },
+        historymouseenter: function () {
+            vm.isHistoryAreaHidden = false;
+        },
+        historymouseleave() {
+            vm.isHistoryAreaHidden = true;
         }
 
-        // historymouseenter: function () {
-        //     // e.preventDefault();
-        //     // let historyArea = this.$refs.historyArea;
-
-        //     // if (!historyArea.classList.contains("hidden")) {
-        //     //     historyArea.classList.remove("hidden");
-        //     // }
-        // }
-        // 
     },
 }).mount(".shopmain");
 
@@ -220,6 +225,4 @@ function getProductHistory() {
         .catch(function (e) {
             console.log("getProductHistory error " + e);
         });
-
-
 }

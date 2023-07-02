@@ -22,9 +22,6 @@ const vm = Vue.createApp({
             limitNum: 5
         };
     },
-    components: {
-        'my-template': { template: '#my-template' }
-    },
     methods: {
         getallproduct: function () {
             getAllProduct();
@@ -195,6 +192,7 @@ const vm = Vue.createApp({
 
             const dateObject = new Date(product.launchTime);
             const formattedDateTime = dateObject.toLocaleString('en-US', {
+                timeZone: 'Asia/Taipei',
                 month: 'short',
                 day: 'numeric',
                 year: 'numeric',
@@ -208,7 +206,8 @@ const vm = Vue.createApp({
             if (product.takeoffTime != null) {
 
                 const dateObject = new Date(product.takeoffTime);
-                const formattedDateTime = dateObject.toLocaleDateString('en-US', {
+                const formattedDateTime = dateObject.toLocaleString('en-US', {
+                    timeZone: 'Asia/Taipei',
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric',
@@ -270,7 +269,8 @@ const vm = Vue.createApp({
             }
         },
         limitNumOfSelectChanre(limit) {
-            vm.limitNum = limit;
+            vm.limitNum = parseInt(limit);
+            getAllProduct();
         }
 
     },
@@ -303,7 +303,6 @@ function getAllProduct() {
     let encodedJsonObject = encodeURIComponent(jsonObject);
     axios({
         method: "Get",
-        // url: "http://localhost:8080/MyShop/demo/getallproduct_json",
         url: host_context + "shopDispatcher/getAllProductByCondition",
         withCredentials: true,
         crossDomain: true,
@@ -316,13 +315,19 @@ function getAllProduct() {
             products_.forEach(element => {
                 let originalDate = element.launchTime;
                 let dateObject = new Date(originalDate);
+                let showLaunchTime = dateObject.toLocaleString('zh-TW', { TimeZone: 'Asia/Taipei' });
+                dateObject.setHours(dateObject.getHours() + 8);
                 let formattedDateTime = dateObject.toISOString().slice(0, 16);
                 element.launchTime = formattedDateTime;
+                element.showLaunchTime = showLaunchTime;
 
                 if (element.takeoffTime != null) {
                     dateObject = new Date(element.takeoffTime);
+                    let showTakeoffTime = dateObject.toLocaleString('zh-TW', { TimeZone: 'Asia/Taipei' });
+                    dateObject.setHours(dateObject.getHours() + 8);
                     formattedDateTime = dateObject.toISOString().slice(0, 16);
                     element.takeoffTime = formattedDateTime;
+                    element.showTakeoffTime = showTakeoffTime;
                 }
 
                 ////    //狀態 {0：新增  ; 1:已上架 ; 2 :已排定上架; 11 :已下架;12 :已排定下架}

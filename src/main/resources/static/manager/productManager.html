@@ -129,25 +129,12 @@
                                                     <td><input :value="item.revieweCount" v-model="item.revieweCount">
                                                     </td>
                                                     <td>
-                                                        <div style="width: 95px;">{{item.launchTime}}</div>
+                                                        <div style="width: 100px;">{{item.showLaunchTime}}</div>
                                                     </td>
                                                     <td>
-                                                        <div style="width: 95px;">{{item.takeoffTime}}</div>
+                                                        <div style="width: 100px;">{{item.showTakeoffTime}}</div>
                                                     </td>
 
-                                                    <!-- <td>{{item.launchTime}}</td> -->
-                                                    <!-- <td><input type="datetime-local" :value="item.launchTime"
-                                                            @input="updateLaunchTime(item, $event.target.value)"
-                                                            class="form-control form-control-sm"> -->
-                                                    <!-- <td><button style="width: 40px; height: 20px;"
-                                                            @click="takeOnProduct(item.id)"></button></td> -->
-                                                    <!-- <td><input type="datetime-local" v-bind:value="item.takeoffTime"
-                                                            v-bind:min="minDate"
-                                                            @input="updatetakeOffTime(item, $event.target.value)"
-                                                            class="form-control form-control-sm">
-                                                    </td> -->
-                                                    <!-- <td><button style="width: 40px; height: 20px;"
-                                                            @click="takeOffProduct(item.id)"></button></td> -->
 
                                                     <td>
                                                         <select
@@ -182,8 +169,8 @@
                                                         <div style="width: 80px;">{{item.currentProductState}}</div>
                                                     </td>
 
-                                                    <td><button style="width: 40px; height: 20px;"
-                                                            @click="updateProductInfo(index)"></button>
+                                                    <td><button style="width: 50px; height: 30px;"
+                                                            @click="updateProductInfo(index)">更新</button>
                                                     </td>
                                                 </tr>
                                             </template>
