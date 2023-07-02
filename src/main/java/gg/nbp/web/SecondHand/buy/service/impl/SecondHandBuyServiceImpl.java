@@ -79,6 +79,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		// 有辦法優化 ?
 		dao.selectAll().stream()
 					   .filter(p -> p.getPayState() != 2)  //篩選掉已經完成的案件
+					   .filter(p -> !(p.getApprovalState().equals("3") || p.getApprovalState().equals("4")))  //篩選掉不成立的案件
 					   .forEach(sl -> {
 						   listDTO.add(new BuyEvent(sl,daoMember));
 					   });
@@ -194,7 +195,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	/* 交易控制 : 修改資料 */
 	@Transactional
 	@Override
-	public List<BuyEvent>  update4Mem(BuyEvent be, Member member) throws SQLException{
+	public List<BuyEvent>  update4Mem(BuyEvent be, Member member) throws SQLException,NullPointerException{
 		/* 如果訂單不屬於該會員則丟出例外 */
 		if(!searchById(be.getEventId()).get(0).getMemberId().equals(member.getMember_id()))
 			throw new SQLException();

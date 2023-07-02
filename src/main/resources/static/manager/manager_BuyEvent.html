@@ -207,7 +207,7 @@
 
         div.swal2-html-container>div {
             margin: 10px;
-            height: 570px;
+            height:600px;
             border-radius: 3px;
 
         }
@@ -244,7 +244,6 @@
         div.reviewMain div.editMain {
             display: flex;
             flex-wrap: wrap;
-            height: 80%;
             justify-content: start;
         }
 
@@ -294,7 +293,7 @@
             border: 2px solid black;
             background-color: #ffffffc6;
             border-radius: 2px;
-            height: 150px;
+            height: 110px;
             width: calc(100% - 20px);
             padding: 10px;
         }
@@ -364,9 +363,120 @@
             border-radius: 5px;
             width: 220px;
             height: 25px;
+            padding-top: 3px;
         }
         
 
+        div.reviewMain div.editMain div.Change div.checkArea{
+            justify-content: start;
+
+        }
+
+
+        div.reviewMain div.editMain div.Change div.checkArea>span{
+            width: 100px;
+            font-size: .7em;
+            color: red;
+        }
+
+        div.reviewMain div.editMain div.Change div.checkArea>label{
+            font-size: .9em;
+            width: 70px;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+
+        div.reviewMain div.editMain div.Change div.checkArea>input{
+            width: 15px;
+            height: 15px;
+            margin:  0px 0px 0px 10px;
+            padding: 0px;
+        }
+
+
+        div.reviewMain div.barArea{
+            display: flex;
+            justify-content: center;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div{
+            display: flex;
+            width: 100px;
+            height:50px;
+            user-select: none;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 100;
+            align-items: center;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div>span{
+            display: inline-block;
+            color: #ffffff;
+            font-weight: bold;
+            user-select: none;
+            margin-top: 5px;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div div.circle{
+            display: inline-block;
+            border: 3px solid #2531d0;
+            height: 10px;
+            width: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        div.reviewMain div.barArea div.progressBar>div div.-now{
+            border: 3px solid #ff0034;
+            height: 12px;
+            width: 12px;
+            border-radius: 6px;
+        }
+
+
+
+        div.reviewMain div.barArea div.progressBar{
+            margin: 10px;
+            background-color: #4ea4b7;
+            border: 2px solid #308395;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            height: 60px;
+            padding: 30px;
+            width: 90%;
+            align-items: center;
+        }
+
+        
+
+        div.reviewMain div.barArea div.progressBar div.backBar{
+            display: inline-block;
+            width: calc(100% - 115px);
+            height: 1px;
+            border: 3px solid rgb(185, 185, 185);
+            position: absolute;
+            top: 14px;
+            border-radius: 2px;
+            margin : 0px  10px;
+            z-index: 0;
+        }
+
+
+        div.reviewMain div.barArea div.progressBar div.backBar div.barLine{
+            height: 1px;
+            border: 3px solid rgb(229, 165, 76);
+            position: absolute;
+            border-radius: 2px;
+            z-index: 5;
+            width: 6%;
+            top: -3px;
+            left: -3px;
+            max-width: 100%;
+        }
         
     </style>
 
@@ -453,6 +563,16 @@
             html: `
                 <div class="reviewMain">
                     <div style="font-size: 2em;color: white;text-shadow: 0px 0px 2px burlywood;">收購審核</div>
+                    <div class="barArea">
+                        <div class="progressBar">
+                            <div><div class="circle" ></div><span>案件成立</span></div>
+                            <div><div class="circle"></div><span>管理員審核</span></div> 
+                            <div><div class="circle"></div><span>議價中</span></div>
+                            <div><div class="circle"></div><span>待付款</span></div>
+                            <div><div class="circle"></div><span>已完成</span></div>
+                            <div class="backBar"><div class="barLine"></div></div>
+                        </div>
+                    </div>
                 <div class="editMain">
                     <div class="notChange">
                         <div><span>收購編號 :</span><span>${obj.eventId}</span></div>
@@ -471,26 +591,6 @@
                     <div class="Change">
                         <div><span>收購價 :</span><input id="price" type="number" max="1000000"  value="${obj.price || ''}"></div>
                         <div><span>審核時間 :</span><input id="confirmTime" type="datetime-local" value="${obj.confirmDate || ''}" disabled></div>
-                        <div>
-                            <span>付款狀態 :</span>
-                            <select id="payState"  value="${obj.payState}">
-                                <option value="待審核">待審核</option>
-                                <option value="待付款">待付款</option>
-                                <option value="已付款">已付款</option>
-                            </select>
-                        </div>
-                        <div>
-                            <span>審核狀態 :</span>
-                            <select id="approvalState" value="${obj.approvalState}">
-                                <option value="待審核">待審核</option>
-                                <option value="查驗中">查驗中</option>
-                                <option value="議價中">議價中</option>
-                                <option value="非收購品項">非收購品項</option>
-                                <option value="不合格品">不合格品</option>
-                                <option value="已退回">已退回</option>
-                                <option value="已完成">已完成</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <div>
@@ -505,6 +605,46 @@
             showConfirmButton: false,
         })
 
+
+        const check = document.createElement('div');
+        check.setAttribute('class','checkArea');
+        switch (obj.progress) {
+            case 0:
+                // 已收到商品即將進行查驗  或是非收購品相關程式碼
+                check.innerHTML =`
+                    <span>是否為收購品 :</span>
+                    <input id="gobuy" type="radio" name="dobuy" value="true"><label for="gobuy">是</label>
+                    <input id="notbuy" type="radio" name="dobuy" value="false"><label for="notbuy">否</label>
+                `;
+                break;
+            case 1:
+            check.innerHTML =`
+                <span>是否合格 :</span>
+                <input id="isOK" type="radio" name="dobuy" value="true"><label for="isOK">是</label>
+                <input id="notOK" type="radio" name="dobuy" value="false"><label for="notOK">否</label>
+                `;
+                break;
+            case 2:
+                // 議價相關 就打價格就好
+                break;
+            case 3:
+                // 付款相關
+                check.innerHTML =`
+                <span>付款狀態 :</span>
+                <input id="isOK" type="radio" name="dobuy" value="true"><label for="isOK">已付款</label>
+                <input id="notOK" type="radio" name="dobuy" value="false"><label for="notOK">未付款</label>
+                `;
+                $('#price').attr("disabled",'disabled');
+                break;
+            case 4:
+                // 已結案
+                $('#price').attr("disabled",'disabled');
+                break;
+            default:
+                //未通過
+                break;
+        }
+        $('.Change').append(check);
 
 
         $('#price').on('change',function(){
@@ -523,6 +663,17 @@
         })
 
         $('#commit').on('click',e =>{
+
+            if(obj.progress == 2 && !$('#price').val()){
+                Swal.fire({
+                        icon: 'warning',
+                        title: "請提供收購價"
+                    })
+                return;
+            }
+
+
+
             let p = price.value || -1 ;
             fetch('update',{
             method: 'POST',
@@ -530,8 +681,7 @@
             body: JSON.stringify({
                 eventId : obj.eventId,
                 price : p,
-                payState : payState.value,
-                approvalState : approvalState.value,
+                agree : $('input[name = dobuy]:checked').val() ?? false 
             })
             })
             .then(res => res.json())
@@ -551,6 +701,8 @@
         $('#payState').val(obj.payState);
         
         $('#approvalState').val(obj.approvalState);
+
+        $('.barLine').attr("style",`width : calc( 6% + ( 23.5% * ${obj.progress} ))`);
 
     }
 
@@ -688,7 +840,7 @@
             function getProgress(i){
         switch (i) {
             case 0:
-                return "完成申請";
+                return "申請中";
             case 1:
                 return "貨品查驗中";
             case 2:

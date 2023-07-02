@@ -327,6 +327,7 @@
             width: 6%;
             top: -3px;
             left: -3px;
+            max-width: 100%;
         }
 
 
@@ -480,6 +481,8 @@
             border-radius: 5px;
             width: 220px;
             height: 25px;
+            padding-top: 3px;
+
         }
 
         div.reviewMain div.editMain div.notChange>div.change>select,
@@ -543,15 +546,17 @@
 
         div.reviewMain div.editMain div.notChange div.agreeArea>label{
             font-size: .9em;
-            width: 50px;
+            width: 70px;
             text-align: left;
+            padding-left: 10px;
         }
 
 
         div.reviewMain div.editMain div.notChange div.agreeArea>input{
             width: 15px;
             height: 15px;
-            margin:  0px 10px ;
+            margin:  0px 0px 0px 10px;
+            padding: 0px;
         }
 
     </style>
@@ -1013,7 +1018,7 @@
             const btn = document.createElement('button');
             $(btn).attr('class', 'del_btn').text('✖');
             img.src = 'select?imgname='  + obj.image[i].image;
-            div.append(img);
+            div.append(img);  
             if(obj.progress<3)
                 div.append(btn);
             $('.imgArea').append(div);
@@ -1223,7 +1228,7 @@
     function getProgress(i){
         switch (i) {
             case 0:
-                return "完成申請";
+                return "申請中";
             case 1:
                 return "貨品查驗中";
             case 2:
