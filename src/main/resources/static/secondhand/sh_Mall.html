@@ -11,9 +11,12 @@
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/8f52e540a9.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
-
-
+        .small_img:hover,
+        .previewIMG:hover {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -28,15 +31,15 @@
                     </div>
 
                     <div class="small_img">
-                        <img id = "small1" src="..\img\secondHand\switch_ProductTest01.jpg" alt="商品圖片" class="small_img">
+                        <img id = "small1" src="..\img\secondHand\PlayStation_ProductTest03.jpg" alt="商品圖片" class="small_img" onclick="replaceImage('small1')">
                     </div>
 
                     <div class="small_img">
-                        <img id = "small2" src="..\img\secondHand\switch_ProductTest01.jpg" alt="商品圖片" class="small_img">
+                        <img id = "small2" src="..\img\secondHand\PlayStation_ProductTest02.jpg" alt="商品圖片" class="small_img" onclick="replaceImage('small2')">
                     </div>
 
                     <div class="small_img">
-                        <img id = "small3" src="..\img\secondHand\switch_ProductTest01.jpg" alt="商品圖片" class="small_img">
+                        <img id = "small3" src="..\img\secondHand\PlayStation_ProductTest01.jpg" alt="商品圖片" class="small_img" onclick="replaceImage('small3')">
                     </div>
                 </div>
                 <div class="description_basic">
@@ -54,8 +57,8 @@
                             二手價格: <span>10,000 </span>元
                         </div>
                         <div class="direct_buy">
-                            <input type="button" value="直接購買" class="direct_buybtn">
-                            <input type="button" value="加入追蹤清單" class="ctrlbutton">
+                            <input type="button" value="直接購買" class="direct_buybtn" style="width: calc(100%)">
+<!--                            <input type="button" value="加入追蹤清單" class="ctrlbutton">-->
                         </div>
 
                     </div>
@@ -67,48 +70,48 @@
                     test
                     test
                 </div>
-                <div class="similar_product">相似商品
-                    <table class="similar_product">
-                        <thead>
-                            <th>商品名稱</th>
-                            <th>價格（NT$）</th>
-                            <th>瀏覽詳情</th>
-                            <th> </th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="similarName1">Product1</td>
-                                <td id="similarPrice1">500</td>
-                                <td class="similarLink" id="similarLink1">
-                                    <a class="similarLink" href="#">瀏覽詳情</a>
-                                </td>
-                                <td id="similarBuyLink1">
-                                    <input type="button" value="直接購買">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td id="similarName2">Product2</td>
-                                <td id="similarPrice2">2500</td>
-                                <td class="similarLink" id="simlarLink2">
-                                    <a class="similarLink" href="#">瀏覽詳情</a>
-                                </td>
-                                <td id="simlarBuyLink2">
-                                    <input type="button" value="直接購買">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td id="similarName3">Product3</td>
-                                <td id="similarPrice3">5500</td>
-                                <td class="similarLink" id="similarLink3">
-                                    <a class="similarLink" href="#">瀏覽詳情</a>
-                                </td>
-                                <td id="similarBuyLink3">
-                                    <input type="button" value="直接購買">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+<!--                <div class="similar_product">相似商品-->
+<!--                    <table class="similar_product">-->
+<!--                        <thead>-->
+<!--                            <th>商品名稱</th>-->
+<!--                            <th>價格（NT$）</th>-->
+<!--                            <th>瀏覽詳情</th>-->
+<!--                            <th> </th>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                            <tr>-->
+<!--                                <td id="similarName1">Product1</td>-->
+<!--                                <td id="similarPrice1">500</td>-->
+<!--                                <td class="similarLink" id="similarLink1">-->
+<!--                                    <a class="similarLink" href="#">瀏覽詳情</a>-->
+<!--                                </td>-->
+<!--                                <td id="similarBuyLink1">-->
+<!--                                    <input type="button" value="直接購買">-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td id="similarName2">Product2</td>-->
+<!--                                <td id="similarPrice2">2500</td>-->
+<!--                                <td class="similarLink" id="simlarLink2">-->
+<!--                                    <a class="similarLink" href="#">瀏覽詳情</a>-->
+<!--                                </td>-->
+<!--                                <td id="simlarBuyLink2">-->
+<!--                                    <input type="button" value="直接購買">-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td id="similarName3">Product3</td>-->
+<!--                                <td id="similarPrice3">5500</td>-->
+<!--                                <td class="similarLink" id="similarLink3">-->
+<!--                                    <a class="similarLink" href="#">瀏覽詳情</a>-->
+<!--                                </td>-->
+<!--                                <td id="similarBuyLink3">-->
+<!--                                    <input type="button" value="直接購買">-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
             </div>
 
         </div>
