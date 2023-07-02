@@ -1,7 +1,4 @@
 // 路徑常數
-const href = window.location.href;
-const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('Five_NBP.gg') + 11);
 const projectFolder = '/gg4nbp';
 
 const orderContent = Vue.createApp({
@@ -56,6 +53,11 @@ const orderContent = Vue.createApp({
                     cancel();
                 }
             });
+        },
+        leave: function (location, otherDetail, event) {
+            event.preventDefault();
+            sessionStorage.setItem('productId', otherDetail);
+            window.location.href = projectHref + '/' + location;
         },
         cancel: function () {
             for (let key in this.updateOrder) {
