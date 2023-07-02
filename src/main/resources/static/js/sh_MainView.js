@@ -32,6 +32,7 @@ const type_btn = document.querySelectorAll('.listtype>span');
 for (let i = 0; i < type_btn.length; i++) {
     let type1 = Math.floor(i / 4) +""+ i % 4 ; 
     type_btn[i].addEventListener('click',function(){
+        sessionStorage.removeItem("keyword")
         goSearch(type1);
     })
 }
@@ -149,13 +150,82 @@ keywordInput.addEventListener('keydown', function(e) {
         keywordValue = keywordInput.value;
         console.log(keywordValue);
         sessionStorage.setItem("keyword", keywordValue);
-        history.go(0);
+        location.href ='SecondHand_MainView.html';
     }
 });
 
-// 全部上架商品
-if(!sessionStorage.getItem("type")){
 
+
+
+if(sessionStorage.getItem("type")){
+// 從資料庫取種類商品
+    fetch('shp_typeSearch', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            type: sessionStorage.getItem("type", typeValue)
+            // type: typeValue
+        }),
+    })
+        .then(resp => resp.json()) // .then(function(resp){resp.json();})
+        .then(
+            jsondata => {
+
+                console.log("typeSelect" + jsondata);
+                jsondata.forEach(
+                    secondhandproduct => {
+                        let Mainshp_array_item = {
+                            productId: secondhandproduct.productId,
+                            name: secondhandproduct.name,
+                            type: secondhandproduct.type,
+                            image: secondhandproduct.image.map(item => item.image),
+                        }
+                        Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
+                        console.log(Mainshp_array);
+                        showList();
+                    }
+                )
+
+            }
+        )
+
+}else if(sessionStorage.getItem("keyword")){
+
+// 從資料庫取關鍵字商品
+    fetch('shp_keywordSearch', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: sessionStorage.getItem("keyword", keywordValue)
+        }),
+    })
+        .then(resp => resp.json()) // .then(function(resp){resp.json();})
+        .then(
+            jsondata => {
+
+                console.log("keywordSelect" + jsondata);
+                jsondata.forEach(
+                    secondhandproduct => {
+                        let Mainshp_array_item = {
+                            productId: secondhandproduct.productId,
+                            name: secondhandproduct.name,
+                            type: secondhandproduct.type,
+                            image: secondhandproduct.image.map(item => item.image),
+                        }
+                        Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
+                        console.log(Mainshp_array);
+                        showList();
+                    }
+                )
+
+            }
+        )
+}else{
+    // 全部上架商品
     fetch('shp_main', {
         method: 'get',
         headers: {
@@ -177,82 +247,17 @@ if(!sessionStorage.getItem("type")){
                         showList();
                     }
                 )
-    
+
             }
         )
+
 }
 
 
 
 
-// 從資料庫取種類商品
-fetch('shp_typeSearch', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        type: sessionStorage.getItem("type", typeValue)
-        // type: typeValue
-    }),
-})
-    .then(resp => resp.json()) // .then(function(resp){resp.json();})
-    .then(
-        jsondata => {
-
-            console.log("typeSelect" + jsondata);
-            jsondata.forEach(
-                secondhandproduct => {
-                    let Mainshp_array_item = {
-                        productId: secondhandproduct.productId,
-                        name: secondhandproduct.name,
-                        type: secondhandproduct.type,
-                        image: secondhandproduct.image.map(item => item.image),
-                    }
-                    Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
-                    console.log(Mainshp_array);
-                    showList();
-                }
-            )
-
-        }
-    )
 
 
-
-
-
-// 從資料庫取關鍵字商品
-fetch('shp_keywordSearch', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        name: sessionStorage.getItem("keyword", keywordValue)
-    }),
-})
-    .then(resp => resp.json()) // .then(function(resp){resp.json();})
-    .then(
-        jsondata => {
-
-            console.log("keywordSelect" + jsondata);
-            jsondata.forEach(
-                secondhandproduct => {
-                    let Mainshp_array_item = {
-                        productId: secondhandproduct.productId,
-                        name: secondhandproduct.name,
-                        type: secondhandproduct.type,
-                        image: secondhandproduct.image.map(item => item.image),
-                    }
-                    Mainshp_array[secondhandproduct.productId] = (Mainshp_array_item);
-                    console.log(Mainshp_array);
-                    showList();
-                }
-            )
-
-        }
-    )
 
 
 
@@ -311,6 +316,7 @@ function showList() {
             );
 
             MainshpListContainer.innerHTML = html;
+
 
 
 }

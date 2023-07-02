@@ -42,23 +42,27 @@
                                     <div class="col-md-6 text-nowrap">
                                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                                             <label class="form-label">Show&nbsp;
-                                                <select class="d-inline-block form-select form-select-sm">
-                                                    <option value="10" selected="">10</option>
-                                                    <option value="25">25</option>
-                                                    <option value="50">50</option>
-                                                    <option value="100">100</option>
+                                                <select class="d-inline-block form-select form-select-sm"
+                                                    @change="numSelectChange($event.target.value)">
+                                                    <option v-for="item in limitNumOfSelect" :value="item">{{item}}
+                                                    </option>
+                                                    <!-- <option value=5>5</option>
+                                                    <option value=10 selected="">10</option>
+                                                    <option value=25>25</option>
+                                                    <option value=50>50</option>
+                                                    <option value=100>100</option> -->
                                                 </select>&nbsp;
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="text-md-end dataTables_filter" id="dataTable_filter">
                                             <label class="form-label">
                                                 <input type="search" class="form-control form-control-sm"
                                                     aria-controls="dataTable" placeholder="Search">
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="table-responsive table mt-2" id="dataTable" role="grid"
                                     aria-describedby="dataTable_info">
@@ -73,36 +77,59 @@
                                                 <th>使用期限</th>
                                                 <td>折價券狀態</td>
                                                 <th>更新</th>
-                                                <th>刪除</th>
+                                                <th>發佈</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <div v-if="showCouponActivity">
-                                                <tr v-for="item in couponActivity">
-                                                    <td>{{item.activityName}}</td>
-                                                    <td>{{item.activityCode}}</td>
-                                                    <td><input v-model="item.coupon.discountCode" type="text"></td>
-                                                    <!--                                                <td>{{item.coupon.discountCode}}</td>-->
-                                                    <td>{{item.coupon.discount}}</td>
-                                                    <td>{{item.coupon.conditionPrice}}</td>
-                                                    <td>{{item.coupon.deadline}}</td>
+                                            <template v-if="showCouponActivity">
+                                                <template v-for="item in couponActivity">
+                                                    <tr>
+                                                        <td><input v-model="item.activityName" type="text"
+                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                        <td><input v-model="item.activityCode" type="text"
+                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                        <td><input v-model="item.coupon.discountCode" type="text"
+                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                        </td>
 
-                                                    <td>{{item.coupon.state}}</td>
-                                                    <td><button style="width: 50px; height: 20px;"
-                                                            @click="updateCouponActivity(item.coupon.id)">更新</button>
-                                                    </td>
-                                                    <td><button style="width: 50px; height: 20px;"
-                                                            @click="deleteCouponActivity(item.coupon.id)">刪除</button>
-                                                    </td>
-                                                </tr>
-                                            </div>
-                                            <div v-else>
+                                                        <td><input v-model="item.coupon.discount" type="text"
+                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                        </td>
+                                                        <td><input v-model="item.coupon.conditionPrice" type="text"
+                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                        </td>
+                                                        <td>
+                                                            <input type="datetime-local"
+                                                                v-bind:value="item.coupon.deadline"
+                                                                @input="updateDeadline(item, $event.target.value)"
+                                                                class="form-control form-control-sm"
+                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                        </td>
+                                                        <td>
+                                                            <button style="width: 70px; height: 20px;">
+                                                                {{enumCouponStateInfo[item.coupon.state]}}</button>
+
+                                                        </td>
+                                                        <td><button style="width: 50px; height: 20px;"
+                                                                @click="updateCouponActivity(item)"
+                                                                :disabled="item.coupon.state >= enumCouponState.publish">更新</button>
+                                                        </td>
+                                                        <td><button style="width: 50px; height: 20px;"
+                                                                @click="publishCouponActivity(item)"
+                                                                :disabled="item.coupon.state >= enumCouponState.publish">發佈</button>
+                                                        </td>
+
+                                                    </tr>
+                                                </template>
+
+
+                                            </template>
+                                            <template v-else>
+
                                                 <p>error</p>
                                                 <p>{{AllCouponActivityRequest.content}}</p>
-                                            </div>
 
-
-
+                                            </template>
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -114,7 +141,7 @@
                                                 <td><strong>使用期限</strong></td>
                                                 <td><strong>折價券狀態</strong></td>
                                                 <td><strong>更新</strong></td>
-                                                <td><strong>刪除</strong></td>
+                                                <td><strong>發佈</strong></td>
                                             </tr>
                                         </tfoot>
                                     </table>

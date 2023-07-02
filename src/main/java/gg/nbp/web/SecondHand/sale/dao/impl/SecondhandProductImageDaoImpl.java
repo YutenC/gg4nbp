@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 import gg.nbp.web.SecondHand.sale.dao.SecondhandProductImageDao;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class SecondhandProductImageDaoImpl implements SecondhandProductImageDao {
 
 	@PersistenceContext

@@ -173,7 +173,21 @@ let del = [];
                     console.log(body);
                     const {successful} = body;
                     if (successful) {
-                        btnSubmit();
+                        // btnSubmit();
+
+                        console.log("state=" + successful);
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: '商品新增上架完成',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                        setTimeout(function() {
+                            window.location.href = "../manager/sh_productmanage.html";
+                        }, 1800);
+
                     } else {
                         Swal.fire({
                             icon: 'error',

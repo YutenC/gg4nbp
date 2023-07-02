@@ -1,8 +1,12 @@
 import { host_context, nowDate } from './shopproductCommon.js';
 
+//狀態 {0：新增/未發佈  ; 1:有效/已發佈 ; 2 :失效; }
+
 const vm = Vue.createApp({
     data() {
         return {
+            enumCouponState: { unpublish: 0, publish: 1, failed: 2 },
+            enumCouponStateInfo: ["未發佈", "發佈", "失效"],
             currentMainguideContent: 1,
             mainguideContent: [{ id: 1, text: "折價券管理", action: "manageCoupon" },
             { id: 2, text: "折價券新增", action: "addCoupon" },
@@ -19,98 +23,38 @@ const vm = Vue.createApp({
             couponMembers: [],
             longTimeAction: '',
             sendEmailTime: '',
-            sendEmailState: ""
+            sendEmailState: "",
+            limitNumOfSelect: [5, 10, 15, 20],
+            limitNum: "5"
         };
     },
     methods: {
         getAllCouponActivity: function () {
-            console.log('getproduct');
-            axios({
-                method: "GET",
-                // url: "http://localhost:8080/MyShop/demo/getAllCouponActivity_json",
-                url: host_context + "shopDispatcher/getAllCouponActivity",
-                // params: {
-                //     pro_id: 2
-                // }
-            })
-                .then(function (value) {
-                    vm.AllCouponActivityRequest = value.data;
-                    let state = value.data.state;
-                    if (state === "success") {
-                        vm.showCouponActivity = true;
-                        vm.couponActivity = value.data.content;
-                        console.log("vm.couponActivity " + vm.couponActivityf);
-                        for (let i = 0; i < vm.couponActivity.length; i++) {
-                            console.log(vm.couponActivity[i].coupon);
-                            let json = JSON.parse(vm.couponActivity[i].coupon);
-                            vm.coupon.push(json);
-
-                            vm.couponActivity[i].coupon = json;
-                        }
-                    }
-                    else {
-                        vm.showCouponActivity = false;
-                        console.log(value.data.content);
-
-                    }
-
-
-
-
-
-                    // if (!value.data.includes("error")) {
-                    //     vm.couponActivity = value.data;
-                    //     console.log("vm.couponActivity " + vm.couponActivityf);
-                    //     for (let i = 0; i < vm.couponActivity.length; i++) {
-                    //         console.log(vm.couponActivity[i].coupon);
-                    //         let json = JSON.parse(vm.couponActivity[i].coupon);
-                    //         vm.coupon.push(json);
-
-                    //         vm.couponActivity[i].coupon = json;
-                    //     }
-                    // }
-                    // else {
-                    //     let state = value.data.state;
-                    //     if (state === "success") {
-
-                    //     }
-                    //     else {
-
-                    //         console.log(value.data.content);
-
-                    //     }
-                    // }
-
-
-
-
-
-                    console.log("getAllCouponActivity then");
-
-                })
-                .catch(function (e) {
-                    console.log("getAllCouponActivity error " + e);
-                });
+            getAllCouponActivity();
         },
-        updateCouponActivity: function (id) {
-            console.log("updateCouponActivity: id " + id);
-            // vm.newcouponActivity.coupon = vm.newCoupon;
+        updateCouponActivity: function (couponActivity) {
 
-            let singlecouponActivity;
-            vm.couponActivity.forEach(element => {
-                if (element.coupon.id == id) {
-                    singlecouponActivity = element;
-                }
+            let coupon_ = Object.assign({}, couponActivity.coupon);
+
+            const date = new Date(coupon_.deadline);
+            const formatDate = date.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true
             });
 
-            // let singlecouponActivity = vm.couponActivity[id]
-            let jsonnewcouponActivity = JSON.stringify(singlecouponActivity);
+            coupon_.deadline = formatDate;
+            couponActivity.coupon = coupon_;
+
+            let jsonnewcouponActivity = JSON.stringify(couponActivity);
             axios({
                 method: "POST",
-                // url: "http://localhost:8080/MyShop/demo/deleteCoupon",
                 url: host_context + "shopDispatcher/updateCouponActivity",
                 params: {
-                    couponId: id,
                     newCouponActivity: jsonnewcouponActivity
                 }
             })
@@ -147,7 +91,6 @@ const vm = Vue.createApp({
             let jsonnewcouponActivity = JSON.stringify(vm.newcouponActivity);
             axios({
                 method: "POST",
-                // url: "http://localhost:8080/MyShop/nbpShop/addCouponActivity",
                 url: host_context + "shopDispatcher/addCouponActivity",
                 params: {
                     newCouponActivity: jsonnewcouponActivity
@@ -202,9 +145,6 @@ const vm = Vue.createApp({
         },
         sendEmail(action) {
             console.log(vm.couponMembers)
-
-
-
             switch (action) {
                 case 0://立即發送
                     vm.sendEmailState = "傳送中";
@@ -264,6 +204,47 @@ const vm = Vue.createApp({
                 .catch(function (e) {
                     console.log("sendEmail error " + e);
                 });
+        },
+        updateDeadline(item, value) {
+            item.coupon.deadline = value;
+        },
+        publishCouponActivity(item) {
+            axios({
+                method: "GET",
+                url: host_context + "shopDispatcher/publishCouponActivity",
+                params: {
+                    couponId: item.couponId
+                }
+            })
+                .then(function (value) {
+
+                    const result = value.data;
+
+                    if (result.state === "ok") {
+                        item.coupon.state = vm.enumCouponState.publish;
+                    }
+
+
+                    // if ("longTime" === value.data.state) {
+                    //     console.log(value.data.msg);
+                    //     setTimeout(function () {
+                    //         getBackgroundMessage();
+                    //     }, 1000);
+                    // }
+                    // else {
+                    //     vm.sendEmailState = "傳送完成";
+                    //     console.log("longTime process OK");
+                    // }
+
+                    // console.log("getBackgroundMessage then");
+                })
+                .catch(function (e) {
+                    console.log("publishCouponActivity error " + e);
+                });
+        },
+        numSelectChange(num) {
+            vm.limitNum = num;
+            getAllCouponActivity()
         }
     },
 }).mount("#vue-body");
@@ -271,16 +252,9 @@ const vm = Vue.createApp({
 // vm.$data.message = 'SSSSS';
 vm.getAllCouponActivity();
 
-// const currentDate = new Date();
-// const year = currentDate.getFullYear();
-// const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-// const day = String(currentDate.getDate()).padStart(2, '0');
-// vm.nowDate = `${year}-${month}-${day}`;
 
 vm.nowDate = nowDate;
 vm.minDate = vm.nowDate;
-// vm.newcouponActivity.coupon.deadline = vm.nowDate;
-
 
 function getBackgroundMessage() {
     console.log('getBackgroundMessage');
@@ -292,7 +266,6 @@ function getBackgroundMessage() {
         }
     })
         .then(function (value) {
-
             if ("longTime" === value.data.state) {
                 console.log(value.data.msg);
                 setTimeout(function () {
@@ -308,5 +281,64 @@ function getBackgroundMessage() {
         })
         .catch(function (e) {
             console.log("getBackgroundMessage error " + e);
+        });
+}
+
+function getAllCouponActivity() {
+
+    let sqlConditions = [];
+    let conditions = [];
+
+    sqlConditions.push({ "key": "limit", "value": vm.limitNum });
+    sqlConditions.push({ "key": "offset", "value": 0 });
+    // conditions.push({ "key": "type", "value": 2 });
+
+    let object = {
+        "msg": "getAllCouponActivity",
+        "conditions": conditions,
+        "sqlConditions": sqlConditions
+    }
+
+    let jsonObject = JSON.stringify(object);
+    let encodedJsonObject = encodeURIComponent(jsonObject);
+
+
+    axios({
+        method: "GET",
+        // url: host_context + "shopDispatcher/getAllCouponActivity",
+        url: host_context + "shopDispatcher/getCouponActivityByCondition",
+        params: {
+            params: encodedJsonObject
+        }
+    })
+        .then(function (value) {
+            vm.AllCouponActivityRequest = value.data;
+            let state = value.data.state;
+            if (state === "ok") {
+                let couponActivity = value.data.content;
+
+                for (let i = 0; i < couponActivity.length; i++) {
+                    let deadline = couponActivity[i].coupon.deadline;
+                    deadline = new Date(deadline);
+                    deadline = deadline.toISOString().slice(0, 16);
+                    couponActivity[i].coupon.deadline = deadline;
+                }
+
+                vm.showCouponActivity = true;
+                vm.couponActivity = couponActivity;
+
+
+            }
+            else {
+                vm.showCouponActivity = false;
+                console.log(value.data.content);
+
+            }
+
+            console.log("getAllCouponActivity then");
+
+        })
+        .catch(function (e) {
+            console.log("getAllCouponActivity error " + e);
         });
 }

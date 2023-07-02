@@ -144,7 +144,7 @@ const vm = Vue.createApp({
         getProductCommen() {
             axios({
                 method: "Get",
-                url: host_context + "OrderDetail",
+                url: host_context + "publicComment",
                 // withCredentials: true,
                 // crossDomain: true,
                 params: {

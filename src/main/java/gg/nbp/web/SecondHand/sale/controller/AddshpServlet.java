@@ -30,6 +30,7 @@ public class AddshpServlet extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("image/*");
 
         int shpproductId = 0;
         SecondhandProduct shp = null;

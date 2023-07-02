@@ -1,7 +1,8 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
-import gg.nbp.web.SecondHand.buy.util.Constant;
+import gg.nbp.web.Member.util.MemberCommonUitl;
 import gg.nbp.web.SecondHand.sale.service.SecondhandProductService;
+import gg.nbp.web.SecondHand.sale.util.SecondhandProductConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,12 +32,36 @@ public class TestPic extends HttpServlet {
 
 		Collection<Part> parts = req.getParts();
 		try {
-			File file = new File(Constant.SAVE_URL);
+
+			File file = new File(SecondhandProductConstants.SAVE_URL);
 			if (!file.exists()) {
 				file.mkdirs();
 			}
+
 			for (Part part : parts) {
-				String url = Constant.SAVE_URL + part.getName();
+//				String url = "C:\\CHA101G5_workspace\\Five_NBP.gg\\src\\main\\webapp\\img\\secondHand\\" + part.getName();
+				String url = SecondhandProductConstants.SAVE_URL + part.getName();
+//				String url = req.getContextPath() + "src/main/resources/static/img" + part.getName();
+
+
+
+//				String storageFolder = "src/main/resources/static/img/secondHand";
+//				//      定義圖片存儲的資料夾路徑（相對於專案的位置）
+//
+//				String storagePath = System.getProperty("user.dir") + "/" + storageFolder;
+//				//      獲取目標資料夾的動態路徑（相對於專案的位置）
+//
+//				String imgName = part.getSubmittedFileName();
+//				//      獲取圖片的檔名
+//
+//				String absolutePath = MemberCommonUitl.getAbsolutePath(storagePath);
+//				//      將相對路徑轉換為絕對路徑
+//
+//				String url = absolutePath + File.separator + imgName;
+//				//      將圖片儲存到目標路徑
+
+
+
 				File upfile = new File(url);
 				try (InputStream reader = part.getInputStream();
 					 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(upfile)))

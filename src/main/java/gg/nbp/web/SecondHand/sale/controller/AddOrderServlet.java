@@ -28,14 +28,24 @@ public class AddOrderServlet extends HttpServlet {
     int shpPrice = 0;
     long deliFee = 0;
     long totalPrice = 0;
+    boolean state = true;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        SecondhandOrder od = CommonUtil.json2pojo(req, SecondhandOrder.class);
+
         try {
-            SecondhandOrder od = CommonUtil.json2pojo(req, SecondhandOrder.class);
+
             Member member = MemberCommonUitl.getMemberSession(req,"member");
             int memberId = member.getMember_id();
+
+            if (od.getDeliverName().trim().isEmpty() || od.getDeliverLocation().trim().isEmpty() || od.getPayState().describeConstable().isEmpty()){
+                od = new SecondhandOrder();
+                od.setMessage("無二手商品資訊");
+                state = false;
+            }
+
 
             od.setMemberId(memberId);
             od.setProductId(od.getProductId());
@@ -70,8 +80,14 @@ public class AddOrderServlet extends HttpServlet {
             shp.setIsLaunch("0");
             PROSERVICE.editshp(shp);
 
+            od.setSuccessful(true);
+            CommonUtil.writepojo2Json(resp, od);
+
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
+            od = new SecondhandOrder();
+            od.setSuccessful(false);
+            CommonUtil.writepojo2Json(resp, od);
         }
 
 

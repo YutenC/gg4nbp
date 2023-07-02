@@ -22,16 +22,7 @@ public class BackgroundTasks {
         taskEntity.setResult(future);
     }
 
-//    public void runTask(String sessionName,String taskName){
-//
-//        TaskEntity taskEntity=concurrentMap.get(sessionName);
-//        Future<?>  future=threadPoolExecutor.submit(taskEntity.getTaskRunnable().get(taskName));
-//        taskEntity.getTaskResult().put(taskName,future);
-//
-//    }
-
     public void addTask() {
-
     }
 
     public TaskEntity getTask(String name) {

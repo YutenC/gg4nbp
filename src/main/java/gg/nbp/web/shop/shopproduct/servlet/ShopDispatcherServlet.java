@@ -7,6 +7,7 @@ import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.shop.shopproduct.controller.*;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
+import gg.nbp.web.shop.shopproduct.pojo.DaoConditionSelect;
 import gg.nbp.web.shop.shopproduct.pojo.ProductPojo;
 import gg.nbp.web.shop.shopproduct.pojo.ProductSelect;
 import gg.nbp.web.shop.shopproduct.util.ConvertJson;
@@ -85,6 +86,7 @@ public class ShopDispatcherServlet extends HttpServlet {
         System.out.println(path);
         HttpSession session = req.getSession();
         String strOut = "";
+        DaoConditionSelect daoConditionSelect=null;
         Member member = (Member) session.getAttribute("member");
         switch (path) {
 //            case  "/exPay":
@@ -230,17 +232,11 @@ public class ShopDispatcherServlet extends HttpServlet {
                 productManagerController.createProductFromcsv();
                 break;
             case "/getAllProduct":
-
-
-
-
-
                 String obj=req.getParameter("limit");
                 Integer limit=-1;
                 if(obj!=null){
                     limit= Integer.valueOf(obj) ;
                 }
-
 
                 strOut = productController.getAllProduct(member.getMember_id(),limit);
                 break;
@@ -315,6 +311,13 @@ public class ShopDispatcherServlet extends HttpServlet {
             case "/getAllCouponActivity":
                 strOut = couponManagerController.getAllCouponActivity(session);
                 break;
+
+            case "/getCouponActivityByCondition":
+                daoConditionSelect= getDaoConditionSelect(req);
+                if(daoConditionSelect!=null){
+                    strOut = couponManagerController.getCouponActivityByCondition(daoConditionSelect);
+                }
+                break;
             case "/getCouponByDiscountCode":
                 String discountCode = req.getParameter("discountCode");
                 strOut = couponController.getCouponByDiscountCode(discountCode);
@@ -329,7 +332,6 @@ public class ShopDispatcherServlet extends HttpServlet {
 
             case "/updateCouponActivity":
                 String json_newCouponActivity = req.getParameter("newCouponActivity");
-
                 strOut = couponManagerController.updateCouponActivity(json_newCouponActivity);
                 break;
 
@@ -340,6 +342,15 @@ public class ShopDispatcherServlet extends HttpServlet {
             case "/deleteCoupon":
                 Integer couponId = Integer.parseInt(req.getParameter("couponId"));
                 couponManagerController.deleteCoupon(couponId);
+                break;
+
+            case "/publishCouponActivity":
+                String object= req.getParameter("couponId");
+                if(object!=null){
+                    Integer couponId_ = Integer.parseInt(object);
+                    strOut=  couponManagerController.publishCouponActivity(couponId_);
+                }
+
                 break;
 
             case "/getCouponMemberInfo":
@@ -432,7 +443,17 @@ public class ShopDispatcherServlet extends HttpServlet {
         System.out.println(payloadData);
 
         return payloadData;
+    }
 
+    private DaoConditionSelect getDaoConditionSelect(HttpServletRequest req){
+        String params = req.getParameter("params");
+        DaoConditionSelect daoConditionSelect=null;
+        if(params!=null){
+            String params_encode = URLDecoder.decode(params, StandardCharsets.UTF_8);
+            System.out.println(params_encode);
+            daoConditionSelect=  new Gson().fromJson(params_encode, DaoConditionSelect.class);
+        }
+        return daoConditionSelect;
     }
 
 }
