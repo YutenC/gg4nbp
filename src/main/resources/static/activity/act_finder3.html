@@ -118,15 +118,15 @@
 
                             <script>
                                 document.querySelector('.btnI1 .ctrlbutton').addEventListener('click', function() {
-                                    window.location.href = 'http://localhost:8080/gg4nbp/activity/act_chat.html';
+                                    window.location.href = '/gg4nbp/activity/act_chat.html';
                                 });
 
                                 document.querySelector('.btnI2 .ctrlbutton').addEventListener('click', function() {
-                                    window.location.href = 'http://localhost:8080/gg4nbp/activity/act_set.html';
+                                    window.location.href = '/gg4nbp/activity/act_set.html';
                                 });
 
                                 document.querySelector('.btnI3 .ctrlbutton').addEventListener('click', function() {
-                                    window.location.href = 'http://localhost:8080/gg4nbp/activity/act_report_list.html';
+                                    window.location.href = '/gg4nbp/activity/act_report_list.html';
                                 });
                             </script>
 
@@ -266,7 +266,7 @@
     let acts;
     function getActs() {
         $.ajax({
-            url: 'http://localhost:8080/gg4nbp/act',
+            url: '/gg4nbp/act',
             type: 'GET',
             success: function (response) {
 
@@ -276,7 +276,7 @@
                     let imgPath = decodeURIComponent(act.actImage);
                     let childContent = `
                         <figure class="col-3@xs col-4@sm col-3@md picture-item"  data-date-created="${act.actTime}" data-title="${act.actName}" data-id="${act.id}">
-                        <div class="picture-item__inner" onclick="redirectToLink('http://localhost:8080/gg4nbp/activity/act_apply.html?no='+'${act.id}')">
+                        <div class="picture-item__inner" onclick="redirectToLink('/gg4nbp/activity/act_apply.html?no='+'${act.id}')">
                         <div class="aspect aspect--25x9">
                             <div class="aspect__inner">
                                 <img src="${imgPath}" alt="${act.actTime}" />
@@ -284,7 +284,7 @@
                         </div>
                         <div class="picture-item__details">
                             <figcaption class="picture-item__title">
-                                <a href='http://localhost:8080/gg4nbp/activity/act_apply.html?no=12'" target="_blank" rel="activity">${act.actName}</a>
+                                <a href='/gg4nbp/activity/act_apply.html?no=12'" target="_blank" rel="activity">${act.actName}</a>
                             </figcaption>
                             <p class="Location">${act.actLocation}</p>
                         </div>
