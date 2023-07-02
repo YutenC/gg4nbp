@@ -52,11 +52,6 @@ public class OrderDetailController extends HttpServlet {
     	PrintWriter pw = res.getWriter();
     	
     	HttpSession httpSession = req.getSession();
-    	Member login = new Member();
-    	login.setAccount("Black");
-    	login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
-    	Member member = memberService.login(login);
-    	httpSession.setAttribute("member", member);
     	
     	Member getMember = (Member)httpSession.getAttribute("member");
     	Integer memberId;
@@ -92,12 +87,7 @@ public class OrderDetailController extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 		
 		HttpSession httpSession = req.getSession();
-    	Member login = new Member();
-    	login.setAccount("Black");
-    	login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
-    	Member member = memberService.login(login);
-    	httpSession.setAttribute("member", member);
-    	
+		
     	Member getMember = (Member)httpSession.getAttribute("member");
     	Integer memberId;
     	

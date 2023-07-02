@@ -144,10 +144,12 @@
                                     <tbody>
                                         <template v-for="item in orderDetails">
                                             <tr>
-                                                <td><img class="rounded-circle me-2" width="30" height="30"
-                                                        :src="item.productImgUrl" :alt="item.productName"><a href="">{{
-                                                        item.productName
-                                                        }}</a></td>
+                                                <td><img class="me-2" width="100" height="100" :src="item.productImgUrl"
+                                                        :alt="item.productName">
+                                                    <a href=""
+                                                        @click="leave('shop/shopProductDetail.html', item.id, $event)">{{
+                                                        item.productName }}</a>
+                                                </td>
                                                 <td>{{ item.buyAmount }}</td>
                                                 <td>{{ item.price }}</td>
                                                 <td>{{ item.buyAmount * item.price }}</td>
@@ -172,7 +174,7 @@
                                     </select>
                                 </div>
                                 <div class="payment">
-                                    <span>付款方式：<span>{{ showCommitType[order.commitType] }}</span></span>
+                                    <td><span>付款方式：<span>{{ showCommitType[order.commitType] }}</span></span></td>
                                     <span>付款狀態：</span>
                                     <select name="payStatus" id="" v-model="updateOrder.payStatus">
                                         <option value="1">待付款</option>
@@ -181,7 +183,7 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <span>訂單總價：$<strong>{{ order.totalPrice }}</strong></span>
+                                    <td><span>訂單總價：$<strong>{{ order.totalPrice }}</strong></span></td>
                                 </div>
                             </div>
                             <div class="row">

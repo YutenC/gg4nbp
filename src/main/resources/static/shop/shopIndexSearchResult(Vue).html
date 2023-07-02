@@ -257,14 +257,18 @@
                 <div class="product">
                     <ul>
                         <li v-for="item in productResults">
-                            <a href="" @click="leave('/shop/shopProductList.html', item.productId)">
-                                <img :src=item.productImgUrl :alt=item.productName>
+                            <a href="" @click="leave('shop/shopProductDetail.html', item.id, $event)">
+                                <img :src=item.productIndexImage.image :alt=item.productName>
                             </a>
-                            <a href="" class="productname" @click="leave('/shop/shopProductList.html', item.productId)">
+                            <a href="" class="productname"
+                                @click="leave('shop/shopProductDetail.html', item.id, $event)">
                                 商品名稱：{{ item.productName }}
                             </a>
                         </li>
                     </ul>
+                    <h2 v-if="productResults.length === 0">
+                        一般商城無搜尋到符合項目
+                    </h2>
                 </div>
             </div>
             <div class="mainlist" id="secondProductResults">
@@ -272,10 +276,11 @@
                 <div class="product">
                     <ul>
                         <li v-for="item in secondProductResults">
-                            <a href="" @click="leave('/sh_shop/sh_Mall.html', item.productId)">
+                            <a href="" @click="leave('secondhand/sh_Mall.html', item.productId, $event)">
                                 <img :src="'..' + item.image[0].image" :alt=item.name>
                             </a>
-                            <a href="" class="productname" @click="leave('/sh_shop/sh_Mall.html', item.productId)">
+                            <a href="" class="productname"
+                                @click="leave('secondhand/sh_Mall.html', item.productId, $event)">
                                 商品名稱：{{ item.name }}
                             </a>
                         </li>

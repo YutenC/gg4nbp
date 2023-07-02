@@ -149,15 +149,15 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			switch (commitType) {
 			case "credit":
 				commitTypeSetting = 1;
-				om.setPayStatus(2);
+				om.setPayStatus(1);		// 信用卡預設未付款
 				break;
 			case "transfer":
 				commitTypeSetting = 2;
-				om.setPayStatus(1);
+				om.setPayStatus(1);		// 轉帳預設未付款
 				break;
 			case "onDeliver":
 				commitTypeSetting = 3;
-				om.setPayStatus(3);
+				om.setPayStatus(3);		// 貨到付款預設為貨到付款
 				break;
 			}
 			om.setCommitType(commitTypeSetting);
@@ -195,8 +195,8 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			Integer usedbonus = 0;	// 確保所輸入的紅利點數未超過會員所持有量
 			if (bonus != null && bonus.trim().length() != 0) {
 				usedbonus = Integer.valueOf(bonus.trim());
-				if (usedbonus < (member.getBonus() == null? 0: member.getBonus())) {
-					usedbonus = 0;
+				if (usedbonus > (member.getBonus() == null? 0: member.getBonus())) {
+					usedbonus = Integer.parseInt(member.getBonus().toString());
 				}
 			}
 			
@@ -206,12 +206,12 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				om.setCouponId(checkCoupon.getId());
 			} else {							// 會員選擇使用紅利折抵
 				totalPrice = productPrice - usedbonus;
-				om.setBonusUse(usedbonus);
 			}
+			om.setBonusUse(usedbonus);
 			
 			om.setTotalPrice(totalPrice);
 			
-			om.setOrderStatus(1);  // 預設固定為未付款
+			om.setOrderStatus(1);  // 預設訂單狀態為已成立
 
 			return om;
 		} catch (Exception e) {
