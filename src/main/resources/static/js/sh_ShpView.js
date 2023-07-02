@@ -117,3 +117,17 @@ const shpImg3 = document.getElementById('small3');
 //     sessionStorage.setItem('productId', productId);
 //     window.location.href = "../secondhand/sh_Mall.html";
 // }
+
+// 圖片點選替換
+function replaceImage(id) {
+    // console.log("clickkkk")
+    const small0 = document.getElementById('small0');
+    const smallImage = document.getElementById(id);
+
+    const small0Src = small0.getAttribute('src');
+    const smallImageSrc = smallImage.getAttribute('src');
+
+    small0.setAttribute('src', smallImageSrc);
+    smallImage.setAttribute('src', small0Src);
+}
+
