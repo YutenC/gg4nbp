@@ -62,7 +62,7 @@ public class EcpayService implements CoreService{
 			
 			aio.setReturnURL("http://211.23.128.214:5000");		// 接收綠界收款回覆的controller網址，controller做完資料分析及資料儲存後，回覆1|OK給綠界
 //			obj.setChooseSubPayment("Credit");	// 限定付款方式?
-			aio.setOrderResultURL("http://localhost:8080/gg4nbp");		// 設定付款完成後消費者要看到的網頁(轉網址)
+			aio.setOrderResultURL("http://localhost:8080/gg4nbp/OrderResult");		// 設定付款完成後消費者要看到的網頁(轉網址)
 			aio.setNeedExtraPaidInfo("N");	// 是否需額外的付款資訊，如信用卡部分號碼、授權碼等
 			
 			String form = all.aioCheckOut(aio, null);

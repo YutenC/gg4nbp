@@ -545,7 +545,7 @@
 
         // 使用 jQuery.ajax 发送 POST 请求
         $.ajax({
-            url: "http://localhost:8080/gg4nbp/apply", // 你提到的 'no' 是在全局作用域定义的，我假设它在这里是可访问的
+            url: "/gg4nbp/apply", // 你提到的 'no' 是在全局作用域定义的，我假设它在这里是可访问的
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(applyData),
@@ -592,7 +592,7 @@
     getAct(no);
     function getAct(id) {
         axios
-            .get("http://localhost:8080/gg4nbp/act/"+id)
+            .get("/gg4nbp/act/"+id)
             .then((response) => {
                 let act = response.data;
                 let imgPath = decodeURIComponent(act.actImage);
@@ -650,7 +650,7 @@
                                             <p>3.</p>
                                             <p>錯失機會：填寫活動資料可以使組織者更好地了解您的需求和興趣，進而提供更貼合您的活動體驗。如果您不提供資料，您可能錯失了個性化的活動安排或與其他參與者互動的機會。
                                             </p>
-                                            <p>★★★★★★★★★★★★★注意事項★★★★★★★★★★★★</p>
+                                            <p>★★★★★★★★★★★注意事項★★★★★★★★★★</p>
                                             <p>活動資料的收集和使用應符合相關的隱私政策和法規，組織者應該保護您的個人資訊並維護您的隱私權利。如果您對組織者的資料處理方式有疑慮，建議您詳細閱讀相關的隱私聲明或與組織者進行溝通以獲得更多資訊。
                                             </p>
                                         </div>
@@ -688,7 +688,7 @@
     getAct(id);
     function getAct(id) {
         axios
-            .get("http://localhost:8080/gg4nbp/act/" + id)
+            .get("/gg4nbp/act/" + id)
             .then((response) => {
                 // 省略的部分
             })
@@ -715,7 +715,7 @@
 
         // 使用 jQuery.ajax 发送 POST 请求
         $.ajax({
-            url: 'http://localhost:8080/gg4nbp/apply',
+            url: '/gg4nbp/apply',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(applyData),
@@ -733,7 +733,7 @@
 <script>
     let params = new URLSearchParams(window.location.search);
     let id = params.get('no'); // 從URL查詢參數獲取ID
-    let chatUrl = "http://localhost:8080/gg4nbp/activity/act_chat.html?no=" + id;
+    let chatUrl = "/gg4nbp/activity/act_chat.html?no=" + id;
 
     $('#chat-button').attr('href', chatUrl);
 </script>

@@ -20,12 +20,12 @@
 <body>
     <header class="cartHeader">
         <div class="ctHeaderUp">
-            <a href="/gg4nbp/shop/shopIndex.html" class="logo">
+            <a href="shopIndex.html" class="logo">
                 <img src="../img/Logo-removebg.png" alt="">
             </a>
-            <h2>
+            <span>
                 NBP.gg商城購物系統
-            </h2>
+            </span>
         </div>
         <div class="addAdditional">
             <div class="addButtons">
@@ -80,7 +80,7 @@
                             <tr>
                                 <td>{{ item.productId }}</td>
                                 <td>{{ item.productName }}</td>
-                                <td>{{ item.purchaseDate }}</td>
+                                <td>{{ dateFormat(item.purchaseDate) }}</td>
                                 <td>${{ item.productPrice }}</td>
                                 <td><button @click="addToCart(item.productId)">加入購物車</button></td>
                             </tr>
@@ -112,6 +112,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr v-if="shoppingList.length < 1">
+                        <td colspan="9">目前購物車內無商品</td>
+                    </tr>
                     <template v-for="(item, index) in shoppingList">
                         <tr>
                             <td><input type="checkbox" v-model="item.checked"></td>
@@ -119,7 +122,7 @@
                                 <img :src="item.productImgUrl" :alt="item.productName">
                             </td>
                             <td>
-                                <a :href="'/gg4nbp/shopProductDetail.html' + item.productId"> <!--獲取-->
+                                <a :href="'/gg4nbp/shop/shopProductDetail.html' + item.productId"> <!--獲取-->
                                     {{ item.productName }}
                                 </a>
                             </td>
@@ -129,8 +132,8 @@
                             <td>
                                 <select name="amount1" v-model="item.buyAmount" @changed="couponCondition()">
                                     <!--依實際庫存增減可選數量-->
-                                    <option v-for="pic in item.stockAmount" :value="pic">
-                                        {{ item.stockAmounut > 20 ? 20 : pic }}
+                                    <option v-for="pic in (item.stockAmount > 20? 20 : item.stockAmount)" :value="pic">
+                                        {{ pic }}
                                     </option>
                                 </select>
                             </td>
@@ -193,8 +196,7 @@
         </div>
         <div class="brLine"></div>
         <div class="billTotal">
-            結帳總金額<span>NTD$</span><span>{{ productSubtotal + deliverCal}}</span><a
-                href="/gg4nbp/shopIndex.html">回賣場選購</a>
+            結帳總金額<span>NTD$</span><span>{{ productSubtotal + deliverCal}}</span><a href="shopIndex.html">回賣場選購</a>
         </div>
         <div class="brLine"></div>
         <h3>付款方式</h3>
@@ -270,7 +272,7 @@
             <template v-for="item in promoProduct">
                 <li>
                     <a href="" @click="leave('/shop/shopProductDetail.html', item.productId)">
-                        <img :src="item.productImgUrl" :alt="item.productName">
+                        <img :src="item.productIndexImage.image" :alt="item.productName">
                     </a>
                     <a href="" @click="leave('/shop/shopProductDetail.html', item.productId)">
                         <span>{{ item.productName }}</span>

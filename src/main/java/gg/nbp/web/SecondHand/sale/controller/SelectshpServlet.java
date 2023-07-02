@@ -25,6 +25,7 @@ public class SelectshpServlet extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("image/*");
 
         // 先拿session
         // 再拿id 呼叫edit方法

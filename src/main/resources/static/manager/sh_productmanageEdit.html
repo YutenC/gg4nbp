@@ -18,7 +18,8 @@
 
     <!-- ==================圖片設定==================-->
     <style>
-        div#imgView img {
+        div#imgView img,
+        div#oldImgView img {
             margin: 10px;
             object-fit: cover;
             border-radius: 3px;
@@ -27,11 +28,13 @@
             width: 200px;
         }
 
-        div#imgView img.-warning {
+        div#imgView img,
+        div#oldImgView img {
             box-shadow: 0px 0px 3px rgb(255, 0, 0);
         }
 
-        div#imgView img:hover {
+        div#imgView img,
+        div#oldImgView img {
             box-shadow: 0px 0px 2px black;
             cursor: pointer;
         }
@@ -169,6 +172,9 @@
                                         <input id="photoUploadBtn2" type="file" accept="image/*" value="選取照片"
                                             style="display: none;" multiple capture>
                                         上限 5 MB
+                                    </div>
+                                    <div id="oldImgView">
+
                                     </div>
                                     <div id="imgView">
 

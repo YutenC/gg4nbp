@@ -1,7 +1,9 @@
 const header = document.createElement('header');
 header.innerHTML = `
 <nav>
- <div class ="login" ><span>登入</span> / <span>註冊</span></div>
+ <div class ="login"><span>登入</span> / <span>註冊</span></div>
+ <div class ="logout"><span id="logout" style="display: none">登出</span></div>
+ 
     <div class="mall_title">
         二手商城
     </div>
@@ -10,10 +12,10 @@ header.innerHTML = `
 <div class="search">
     <div class="nav">
        <div>回首頁</div>
-       <div>客服中心</div>
+       <div>商城首頁</div>
        <div>一般商城</div>
        <div>二手商城</div>
-       <div>我的訂單</div>
+       <div>會員中心</div>
 </div>
     <div class="search_div">
         <div id="input_search"><input type="text" placeholder="搜尋"></div>
@@ -28,7 +30,7 @@ footer.innerHTML = `
 <!--  footer第一行 -->
 </div>
         <div>
-        ######@$$mail.com
+        nbp@ggmail.com
         <!-- footer 第二行 -->
         </div>
         <div>
@@ -186,14 +188,102 @@ window.addEventListener('scroll', e => {
     }
 })
 
-
-
 document.querySelectorAll('.nav div')[0].addEventListener('click', e => {
     e.preventDefault;
+    sessionStorage.removeItem("type");
+    sessionStorage.removeItem("keyword");
+    window.location.href = './../index.html';
+
+})
+
+document.querySelectorAll('.nav div')[1].addEventListener('click', e => {
+    e.preventDefault;
+    sessionStorage.removeItem("type");
+    sessionStorage.removeItem("keyword");
+    window.location.href = './../shop/shopIndex(Vue).html';
+
+})
+
+document.querySelectorAll('.nav div')[2].addEventListener('click', e => {
+    e.preventDefault;
+    sessionStorage.removeItem("type");
+    sessionStorage.removeItem("keyword");
+    window.location.href = './../shop/shopProductList.html';
+
+})
+
+document.querySelectorAll('.nav div')[3].addEventListener('click', e => {
+    e.preventDefault;
+    sessionStorage.removeItem("type");
+    sessionStorage.removeItem("keyword");
     window.location.href = 'SecondHand_MainView.html';
 
+})
+
+document.querySelectorAll('.nav div')[4].addEventListener('click', e => {
+    e.preventDefault;
+    sessionStorage.removeItem("type");
+    sessionStorage.removeItem("keyword");
+    window.location.href = './../member/member_home.html';
+
+})
+
+document.querySelectorAll('.login span')[0].addEventListener('click', e => {
+    e.preventDefault;
+    // sessionStorage.removeItem("type");
+    // sessionStorage.removeItem("keyword");
+    window.location.href = './../member_login.html';
+})
+
+document.querySelectorAll('.login span')[1].addEventListener('click', e => {
+    e.preventDefault;
+    // sessionStorage.removeItem("type");
+    // sessionStorage.removeItem("keyword");
+    window.location.href = './../member_register.html';
 })
 
 function changeTitle(str) {
     $('.mall_title').text(str);
 }
+
+
+// 確認是否登入
+window.addEventListener("load", function (){
+    // 登入 把span0.1 display: none 2:displa出現
+    // 登出按鈕綁controller
+    fetch('/gg4nbp/secondhand/memberCheck', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(resp => resp.json())
+        .then(function (body){
+            const {successful} = body;
+            if (successful) {
+                console.log("success")
+                $('.login').hide();
+                $('#logout').css("display", "block");
+            }
+        })
+})
+
+// 登出
+$('#logout').on('click', function (){
+    fetch('/gg4nbp/member/memberLogoutServlet', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(function (){
+            console.log("logout")
+            sessionStorage.removeItem('id');
+            $('.login').show();
+            $('#logout').css("display", "none");
+            window.location.href = '../secondhand/SecondHand_MainView.html';
+        })
+
+
+
+})

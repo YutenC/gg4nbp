@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-@WebServlet("/member/sh_orderInfo")
-public class OrderInfo extends HttpServlet {
+@WebServlet("/manager/sh_orderInfo")
+public class ManagerOrderInfo extends HttpServlet {
 
 //    member
 //    product
@@ -39,8 +39,6 @@ private SecondhandProductServiceImpl PROSERVICE;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Member member = MemberCommonUitl.getMemberSession(req,"member");
-        int memberId = member.getMember_id();
 
         SecondhandOrder data = CommonUtil.json2pojo(req, SecondhandOrder.class);
         productId = data.getProductId();
@@ -49,9 +47,11 @@ private SecondhandProductServiceImpl PROSERVICE;
         System.out.println(productId);
         System.out.println(orderId);
 
-        Member mem = MEMSERVICE.selectMember(memberId);
         SecondhandProduct shp = PROSERVICE.selectOne(productId);
         SecondhandOrder od = ODSERVICE.selectOne(orderId);
+        int memberId = od.getMemberId();
+
+        Member mem = MEMSERVICE.selectMember(memberId);
 
         Object[] objects = {mem, shp, od};
 

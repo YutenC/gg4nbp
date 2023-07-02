@@ -138,13 +138,13 @@
 
         <div class="video-call-actions">
             <div class="btnI2">
-                <a href="http://localhost:8080/gg4nbp/activity/act_report_list.html" onclick="return showConfirmation();">
+                <a href="/gg4nbp/activity/act_report_list.html" onclick="return showConfirmation();">
                     <i class="fas fa-radiation"></i>
                     <input type="button" value="" class="ctrlbutton">
                 </a>
             </div>
             <div class="btnI4">
-                <a href="http://localhost:8080/gg4nbp/activity/act_finder.html" onclick="return showConfirmation();">
+                <a href="/gg4nbp/activity/act_finder.html" onclick="return showConfirmation();">
                     <i class="fas fa-sign-out-alt"></i>
                     <input type="button" value="" class="ctrlbutton">
                 </a>
@@ -323,7 +323,7 @@
 
     $(document).ready(function(){
         $.ajax({
-            url: "http://localhost:8080/gg4nbp/act/" + id,
+            url: "/gg4nbp/act/" + id,
             type: "GET",
             success: function(act){
                 let imgPath = decodeURIComponent(act.actImage);

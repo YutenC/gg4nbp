@@ -1,4 +1,4 @@
-let olddel = [];
+var olddel = [];
 let del = [];
 let imd = [];
 
@@ -76,7 +76,7 @@ let imd = [];
     })
 
 
-//  ===============讀取資料庫資料到頁面===============
+//  ===============讀取資料庫資料到頁面#oldImgView===============
     fetch('shp_Select', {
         method: 'POST',
         headers: {
@@ -112,7 +112,7 @@ let imd = [];
                     const btn = document.createElement('button');
                     $(btn).attr('class', 'del_btn').text('✖');
 
-                    $('#imgView').append(div);
+                    $('#oldImgView').append(div);
                     div.append(img);
                     div.append(btn);
 
@@ -128,14 +128,16 @@ let imd = [];
     )
 
 
-    let selectedImages = [];
 
-// 图片选择与删除
+
+// ======new圖片選擇與刪除#imgView=====================
     photoUploadBtn.addEventListener('click', function (e) {
         $(this).next().click();
     });
 
     $('#photoUploadBtn').next().on('change', function (e) {
+        $('#imgView>div').remove();
+
         let uploadImg = e.target.files || e.dataTransfer.files;
         console.log(uploadImg);
         if (!uploadImg.length) {
@@ -143,6 +145,8 @@ let imd = [];
         }
 
         for (let i = 0; i < uploadImg.length; i++) {
+
+
             const div = document.createElement('div');
             const img = document.createElement('img');
             const btn = document.createElement('button');
@@ -158,20 +162,18 @@ let imd = [];
             reader.readAsDataURL(uploadImg[i]);
             reader.addEventListener('load', e => {
                 img.src = e.target.result;
-                selectedImages.push(e.target.result);
             });
 
             btn.addEventListener('click', e => {
-                let index = Array.from(div.parentNode.children).indexOf(div);
-                selectedImages.splice(index, 1);
+                del.push(i);
                 div.remove();
-            });
-        }
-    });
+            })
 
-    // $('#photoUploadBtn2').on('change',()=>{
-    //     del = [];
-    // })
+        }})
+
+    $('#photoUploadBtn2').on('change',()=>{
+        del = [];
+    })
 
 // ======圖片選擇與刪除END=====================
 
@@ -182,7 +184,7 @@ let imd = [];
         console.log("saveBtn");
 
 
-    //  =========1. 重新上傳圖片進入本機端(測試可進入本機)=========
+    //  =========1. new圖片進入本機(測試可進入本機) #imgView=========
     let img_list = [];
     const file = $('#photoUploadBtn').next()[0].files;
     filter:
@@ -204,7 +206,9 @@ let imd = [];
 
     console.log(img_list);
 
-    // =========2. 修改商品內容(文字OK，image不行，只能選擇無法進資料庫)=========
+    // =========2. 修改商品內容=========
+        // #imgView newImage新增圖片處理
+        // #oldImageView oldImage刪除圖片處理
 
         fetch('shp_Edit', {
             method: 'POST',
@@ -216,11 +220,10 @@ let imd = [];
                 name: SHproName.value,
                 type: SHproType.value,
                 price: SHproPrice.value,
-                content: SHproContent.value})
-                // image: img_list
+                content: SHproContent.value,
+                newImage: img_list,
+                oldImage: olddel})
 
-                // oldImage = {deleteImage: olddel}]
-                // oldImage = {olddel}] // 送到資料庫刪除
     })
     .then(resp => resp.json()) // .then(function(resp){resp.json();})
             .then(function (body) {

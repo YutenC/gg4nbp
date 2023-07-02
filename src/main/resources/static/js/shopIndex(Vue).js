@@ -1,5 +1,131 @@
-const projectFolder = 'http://localhost:8080/gg4nbp';
+const projectFolder = '/gg4nbp';
 
+// cm輪播圖商品
+let enumPageCurrentType = { NS: 2, PS: 22, XBOX: 12 };
+const cm = Vue.createApp({
+    data() {
+        return {
+            cmProduct: '',
+            slideIndex: 1
+        }
+    },
+    methods: {
+        leave: function (location, otherDetail, event) {
+            event.preventDefault();
+            sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
+            window.location.href = projectFolder + '/' + location;
+        },
+        // Thumbnail image controls
+        currentSlide: function (n) {
+            this.showSlides(this.slideIndex = n);
+        },
+        plusSlides: function (n) {
+            this.showSlides(this.slideIndex += n);
+        },
+        showSlides: function (n) {
+            this.$nextTick(() => {
+                let i;
+                let slides = this.$refs.mySlides;
+                let dots = this.$refs.dot;
+                if (n > slides.length) { this.slideIndex = 1 }
+                if (n < 1) { this.slideIndex = slides.length }
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[this.slideIndex - 1].style.display = "block";
+                dots[this.slideIndex - 1].className += " active";
+            });
+        },
+    },
+    created() {
+        let randomNum = Math.floor(Math.random() * 3);
+        let productType = enumPageCurrentType[Object.keys(enumPageCurrentType)[randomNum]];
+        const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
+        const conditions = [{ key: "type", value: productType }];
+        const require = ['productIndexImage'];
+        const sqlConditions = [{ key: 'limit', value: 5 }];
+        const req = { sort: sort, required: require, sqlConditions: sqlConditions, conditions: conditions };
+        axios({
+            method: 'get',
+            url: projectFolder + '/shopDispatcher/getAllProductByCondition',
+            params: {
+                params: encodeURIComponent(JSON.stringify(req))
+            }
+        }).then(res => this.cmProduct = res.data)
+            .catch(err => console.log(err));
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.showSlides(this.slideIndex);
+            setInterval(this.plusSlides, 5000, 1);
+        });
+    },
+}).mount('#cm');
+
+// 熱銷商品
+const popularPicks = Vue.createApp({
+    data() {
+        return {
+            popularPicks: []
+        }
+    },
+    methods: {
+        leave: function (location, otherDetail, event) {
+            event.preventDefault();
+            sessionStorage.setItem('productId', otherDetail);
+            window.location.href = projectFolder + '/' + location;
+        }
+    },
+    created() {
+        const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
+        const require = ['productIndexImage'];
+        const sqlConditions = [{ key: 'limit', value: 5 }];
+        const req = { sort: sort, required: require, sqlConditions: sqlConditions };
+        axios({
+            method: 'get',
+            url: projectFolder + '/shopDispatcher/getAllProductByCondition',
+            params: {
+                params: encodeURIComponent(JSON.stringify(req))
+            }
+        }).then(res => this.popularPicks = res.data)
+            .catch(err => console.log(err));
+    }
+}).mount('#popularPicks');
+
+// 一般新品
+const newProdcut = Vue.createApp({
+    data() {
+        return {
+            newProdcut: []
+        }
+    },
+    method: {
+        leave: function (location, otherDetail, event) {
+            event.preventDefault();
+            sessionStorage.setItem('productId', otherDetail);
+            window.location.href = projectFolder + '/' + location;
+        }
+    },
+    created() {
+        const sort = { action: 'order', key: 'desc', value: 'launchTime' };
+        const require = ['productIndexImage'];
+        const sqlConditions = [{ key: 'limit', value: 5 }];
+        const req = { sort: sort, required: require, sqlConditions: sqlConditions };
+        axios({
+            method: 'get',
+            url: projectFolder + '/shopDispatcher/getAllProductByCondition',
+            params: {
+                params: encodeURIComponent(JSON.stringify(req))
+            }
+        }).then(res => this.newProdcut = res.data)
+            .catch(err => console.log(err));
+    }
+}).mount('#newProdcut');
+
+// 二手商城商品
 const secondSP = Vue.createApp({
     data() {
         return {
@@ -7,9 +133,10 @@ const secondSP = Vue.createApp({
         }
     },
     methods: {
-        leave: function (location, otherDetail) {
+        leave: function (location, otherDetail, event) {
+            event.preventDefault();
             sessionStorage.setItem('productId', otherDetail);
-            window.location.href = projectHref + '/' + location;
+            window.location.href = projectFolder + '/' + location;
         }
     },
     created() {
@@ -18,3 +145,41 @@ const secondSP = Vue.createApp({
             .catch(err => console.log(err))
     }
 }).mount('#secondSP');
+
+// 二手收購確認是否會員已登入
+$('.gobuylist').on('click', e => {
+    e.preventDefault;
+    fetch('/secondhand/addEvent', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(resp => {
+            if (resp.redirected == true) {
+                let timerInterval
+                Swal.fire({
+                    title: '您尚未登入！',
+                    html: ' <b></b> 秒後跳轉到登入頁面',
+                    timer: 3000,
+                    timerProgressBar: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Math.floor(Swal.getTimerLeft() / 1000)
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        sessionStorage.setItem('backTo', location.href);
+                        location.href = resp.url;
+                    }
+                })
+            } else {
+                location.href = projectFolder + '/secondhand/SecondHand_Buylist.html';
+            }
+        })
+});
+
