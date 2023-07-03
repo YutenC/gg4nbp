@@ -288,19 +288,10 @@
         <div class="shopmain">
             <div class="miniMenu">
                 <div class="miniMenuContent">
-                    <!-- <div class="viewRecord">
-                        <a href=""><img
-                                src="../img/gameSoftware/Nitendo/NoPlaceLikeHome/8d49654f86cee337e2a7317d031l9ro5.jpg"
-                                alt=""></a>
-                        <a href=""><img src="../img/peripherals/Nintendo/Zelda/335ced22c1dbccd628a4001e9a1l4xo5.jpg"
-                                alt=""></a>
-                        <a href=""><img src="../img/peripherals/Nintendo/Zelda/4262aa92a53a61f67e57e46e0b1l4tv5.jpg"
-                                alt=""></a>
-                    </div> -->
                     <div class="miniMenuBut">
                         <a href="" class="goTop"><img src="../img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
-                        <!-- <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
-                        <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a> -->
+                        <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
+                        <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a>
                     </div>
                 </div>
             </div>
@@ -320,46 +311,47 @@
                             <a href="" @click="leave('shop/shopProductDetail.html', item.id, $event)">
                                 <img :src="item.productIndexImage.image" :alt="item.productName">
                             </a>
-                            <a href="" class="productname" @click="leave('shop/shopProductDetail.html', item.id, $event)>
+                            <a href="" class="productname"
+                                @click="leave('shop/shopProductDetail.html', item.id, $event)">
                                 商品名稱：{{ item.productName }}
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class=" mainlist">
-                                <span><a href="">新品</a></span>
-                                <div class="product" id="newProdcut">
-                                    <ul>
-                                        <li v-for="item in newProdcut">
-                                            <a href="" @click="leave('shop/shopProductDetail.html', item.id, $event)">
-                                                <img :src="item.productIndexImage.image" :alt="item.productName">
-                                            </a>
-                                            <a href="" class="productname" @click="leave('shop/shopProductDetail.html', item.id, $event)>
-                                                商品名稱：{{ item.productName }}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+            <div class="mainlist">
+                <span><a href="">新品</a></span>
+                <div class="product" id="newProdcut">
+                    <ul>
+                        <li v-for="item in newProdcut">
+                            <a href="" @click="leave('shop/shopProductDetail.html', item.id, $event)">
+                                <img :src="item.productIndexImage.image" :alt="item.productName">
+                            </a>
+                            <a href="" class="productname"
+                                @click="leave('shop/shopProductDetail.html', item.id, $event)">
+                                商品名稱：{{ item.productName }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class=" mainlist" id="secondSP">
-                                                <span><a href="../secondhand/SecondHand_MainView.html">二手商品</a></span>
-                                                <div class="product">
-                                                    <ul>
-                                                        <li v-for="item in secondhandproduct">
-                                                            <a href=""
-                                                                @click="leave('secondhand/sh_Mall.html', item.productId, $event)">
-                                                                <img :src="'..' + item.image[0].image" :alt="item.name">
-                                                            </a>
-                                                            <a href="" class="productname"
-                                                                @click="leave('secondhand/sh_Mall.html', item.productId, $event)">
-                                                                商品名稱：{{ item.name }}
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                </div>
+            </div>
+            <div class="mainlist" id="secondSP">
+                <span><a href="../secondhand/SecondHand_MainView.html">二手商品</a></span>
+                <div class="product">
+                    <ul>
+                        <li v-for="item in secondhandproduct">
+                            <a href="" @click="leave('secondhand/sh_Mall.html', item.productId, $event)">
+                                <img :src="'..' + item.image[0].image" :alt="item.name">
+                            </a>
+                            <a href="" class="productname"
+                                @click="leave('secondhand/sh_Mall.html', item.productId, $event)">
+                                商品名稱：{{ item.name }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </div>
     </main>
     <footer id="footerpad">
         <div class="container">
