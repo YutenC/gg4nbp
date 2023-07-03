@@ -29,7 +29,6 @@ fetch('../manager/member_list', {
             let member_array_item = {
                 member_id: member.member_id,
                 account: member.account,
-                password: member.password,
                 nick: member.nick,
                 email: member.email,
                 phone: member.phone,
@@ -41,7 +40,6 @@ fetch('../manager/member_list', {
                 suspend_deadline: (member.suspend_deadline ?? ""),
                 headshot: member.headshot,
                 ver_deadline: member.ver_deadline,
-                violation: member.violation
             }
             member_array[member.member_id] = (member_array_item);
 
@@ -325,7 +323,6 @@ function showList() {
     <td>${member.bonus}</td>
     <td>${member.member_ver_state}</td>
     <td>${member.suspend_deadline}</td>
-    <td>${member.violation}</td>
     <td>
         <a class="btn btn-primary btn-sm d-none d-sm-inline-block custom-member-button toggle-button"
             role="button" >
@@ -350,14 +347,13 @@ function showList() {
     <td colspan="6">
         <div style="display: flex; flex-wrap: wrap;">
             <div style="width: 50%;">
-                <span class="pwd-span">密碼：****</span>
+                <span class="pwd-span">身分證字號：****</span>
                 <button class="btn btn-primary btn-sm d-none d-sm-inline-block show-password"
-                    data-password="${member.password}">顯示</button>
+                    data-password="${member.id_number}">顯示</button>
             </div>
             <div style="width: 50%;">電話：${member.phone}</div>
             <div style="width: 50%;">信箱：${member.email}</div>
             <div style="width: 50%;">生日：${member.birth}</div>
-            <div style="width: 50%;">身分證字號：${member.id_number}</div>
             <div style="width: 100%;">地址：${member.address}</div>
         </div>
     </td>
@@ -387,12 +383,12 @@ function showList() {
         var password = showButton.data("password")
 
         // 切换按钮文字和密码显示
-        if (passwordSpan.text().trim() === "密碼：****") {
+        if (passwordSpan.text().trim() === "身分證字號：****") {
             showButton.text("隱藏");
-            passwordSpan.text("密碼：" + password);
+            passwordSpan.text("身分證字號：" + password);
         } else {
             showButton.text("顯示");
-            passwordSpan.text("密碼：****");
+            passwordSpan.text("身分證字號：****");
         }
 
         return false;

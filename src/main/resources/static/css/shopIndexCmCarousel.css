@@ -16,6 +16,10 @@ main .CM {
     margin: auto;
 }
 
+.slideshow-container .mySlides:first-child {
+    display: block;
+}
+
 /* Hide the images by default */
 .mySlides {
     display: none;

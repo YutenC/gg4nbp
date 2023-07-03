@@ -440,7 +440,7 @@
           <div class="mb-3">
             <label for="reportContent" class="form-label">檢舉內容</label>
             <textarea class="form-control" id="reportContent" placeholder="你檢舉人我就浪費你時間"></textarea>
-            <div class="form-text">請不要填空白至少500字</div>
+            <div class="form-text">請不要空白</div>
           </div>
           <div class="mb-3 form-check">
             <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked">
@@ -577,7 +577,7 @@
             }
 
             const report = {
-              reportPerson: reportPerson,
+              // reportPerson: reportPerson,
               reportedName: reportedName,
               reportTime: reportTime,
               reportContent: reportContent,
@@ -585,7 +585,7 @@
             };
 
             // 提交表单数据
-            axios.post("http://localhost:8080/gg4nbp/actReportList", report).then((response) => {
+            axios.post("/gg4nbp/actReportList", report).then((response) => {
               console.log(response.data);
 
 
@@ -602,12 +602,12 @@
               document.getElementById("reportTime").value = "";
               document.getElementById("reportContent").value = "";
               document.getElementById("reportImage").value = "";
-              document.getElementById("imagePreview").innerHTML = ""; // 清空图片预览
+              document.getElementById("imagePreview").innerHTML = ""; // 清空圖片瀏覽
 
               // 设置提交成功标志
               isSuccess = true;
             }).catch((error) => {
-              console.error(error);
+              console.log(error);
               // 提交失败后显示警示框
               Swal.fire({
                 icon: 'error',

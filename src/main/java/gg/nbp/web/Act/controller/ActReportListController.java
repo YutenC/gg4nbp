@@ -4,12 +4,15 @@ package gg.nbp.web.Act.controller;
 
 import gg.nbp.web.Act.model.ActReportList;
 import gg.nbp.web.Act.service.ActReportListService;
+import gg.nbp.web.Member.entity.Member;
+import gg.nbp.web.Member.util.MemberCommonUitl;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/actReportList")
+@RestController
 public class ActReportListController {
 
     @Autowired
@@ -21,14 +24,27 @@ public class ActReportListController {
     public List<ActReportList> getActReportList() {
 
         List<ActReportList> actReportLists = actReportListService.getAllActReportLists();
+
+
+
+
         return actReportLists;
     }
 
     // 新增
     @PostMapping("/actReportList")
     @CrossOrigin
-    public ActReportList processAct(@RequestBody ActReportList actReportList) {
+    public ActReportList processAct(@RequestBody ActReportList actReportList, HttpServletRequest request) {
+        Member member = MemberCommonUitl.getMemberSession(request ,"member");
+        if(member!=null){
+            System.out.println(member.getMember_id());
+            System.out.println(actReportList);
+            actReportList.setReportPerson(member.getMember_id());
+        }
+
+
         return actReportListService.createActReportList(actReportList);
+
     }
 
 //    // 更改

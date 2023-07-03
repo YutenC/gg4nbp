@@ -116,3 +116,4 @@ ScrollTrigger.addEventListener('refreshInit', () => {
 ScrollTrigger.addEventListener('refresh', () => {
     progressST.scroll(oldProgress * 2550)
 })
+

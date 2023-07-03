@@ -35,6 +35,7 @@ public class MemberSetPictureServlet extends HttpServlet {
         Part imgPart = request.getPart("image");
         // 獲取圖片 Part
 
+//        String storageFolder = "src/main/resources/static/img/member/member_pic";
         String storageFolder = "src/main/resources/static/img/member/member_pic";
 //      定義圖片存儲的資料夾路徑（相對於專案的位置）
 
