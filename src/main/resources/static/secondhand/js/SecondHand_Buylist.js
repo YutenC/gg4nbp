@@ -1,4 +1,7 @@
 let reqaa = null;
+let id = null ;
+let del = [];
+
 changeTitle('二手回收申請');
 $('.div_search').remove();
 
@@ -23,7 +26,6 @@ $('#getshot').on('click', function (e) {
     $(this).next().click();
 })
 
-let del = [];
 
 $('#getshot').next().on('change', function (e) {
     del = [];
@@ -73,6 +75,7 @@ $('#commit').on('click', function (e) {
     let s_estimate = estimate.value || 0;
     let img_list = [];
     const file = $('#getshot').next()[0].files;
+    id =  sessionStorage.getItem('EventId') ?? null;
 
     filter:
     for (let i = 0; i < file.length; i++) {
@@ -82,7 +85,7 @@ $('#commit').on('click', function (e) {
                 continue filter;
             }
         }
-        formData.append(file[i].name, file[i]);
+        formData.append(id+"/"+file[i].name, file[i]);
         img_list.push({ image: file[i].name });
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'upFile', true);
@@ -90,16 +93,17 @@ $('#commit').on('click', function (e) {
     }
     del = [];
 
-    fetch('addEvent', {
+    fetch('../member/update4Member', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+            eventId: sessionStorage.getItem('EventId'),
             productName: productName.value,
-            type: type,
             content: content.value,
+            type: type,
             estimate: s_estimate,
             applicantBankNumber: applicantBankNumber.value,
-            image: img_list
+            image : img_list,
         })
     })
         .then(resp => {
@@ -131,7 +135,9 @@ $('#commit').on('click', function (e) {
             }
         })
         .then(obj => {
-            checkpage(obj);
+            reqaa = obj ;
+            checkpage(obj[0]);
+            sessionStorage.removeItem('EventId');
         })
 
 
@@ -176,6 +182,7 @@ function checkpage(obj) {
 
     }
     document.documentElement.scrollTop = 0;
+
 }
 
 
@@ -193,6 +200,76 @@ function goback() {
 function gohome(e) {
     e.preventDefault;
     location.href = "SecondHand_MainView.html";
+    
 
 }
+
+
+
+function testBlock(){
+    let type = $('#type_1').val() + $('#type_2').val();
+    let s_estimate = estimate.value || 0;
+    let img_list = [];
+    const file = $('#getshot').next()[0].files;
+
+    filter:
+    for (let i = 0; i < file.length; i++) {
+        const formData = new FormData();
+        for (let j = 0; j < del.length; j++) {
+            if (i === del[j]) {
+                continue filter;
+            }
+        }
+        formData.append(file[i].name, file[i]);
+        img_list.push({ image: file[i].name });
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'upFile', true);
+        xhr.send(formData);
+    }
+    del = [];
+
+    fetch('addEvent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            productName: productName.value,
+            type: type,
+            content: content.value,
+            estimate: s_estimate,
+            applicantBankNumber: applicantBankNumber.value,
+            image: img_list
+        })
+    }).then(resp => resp.json())
+        .then(obj => {
+            Swal.fire({
+                icon: 'error',
+                text: obj.str ?? obj.message,
+              })
+        })
+
+}
+
+
+document.addEventListener('DOMContentLoaded',function(){
+id =  sessionStorage.getItem('EventId') ?? null;
+if (id) 
+    return;
+
+    fetch('addEvent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            productName: "productName",
+            type: "00",
+            content: "content",
+            applicantBankNumber: "0",
+        })
+    })
+        .then(resp => resp.json())
+        .then(obj => {
+            reqaa = obj ;
+            sessionStorage.setItem('EventId',obj.eventId);
+        })
+
+})
 

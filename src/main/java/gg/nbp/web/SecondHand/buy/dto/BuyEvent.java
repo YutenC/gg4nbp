@@ -90,7 +90,7 @@ public class BuyEvent extends Core {
 		case 6:
 			return "已完成";
 		default:
-			return "錯誤";
+			return "未完成";
 		}
 	}
 
@@ -172,6 +172,12 @@ public class BuyEvent extends Core {
 	public static SecondhandBuylist trans4Mem(BuyEvent be, SecondHandBuylistDao dao) throws SQLException,NullPointerException {
 
 		SecondhandBuylist sl = dao.selectById(be.eventId);
+		if(sl.getApprovalState().equals("7")) 
+			sl.setApprovalState("0");
+		
+		
+		
+		
 		be.setApprovalState(getApprovalState(Integer.parseInt(sl.getApprovalState())))
 		  .setPayState(getPayState(sl.getPayState()));
 
@@ -197,7 +203,7 @@ public class BuyEvent extends Core {
 			throw new NullPointerException();
 
 		/* 如果賣家同意收購價，則將付款狀態改為待付款 */
-		if (be.agree)
+		if (be.progress == 2 && be.agree)
 			sl.setPayState(1);
 		else
 			sl.setPrice(null);

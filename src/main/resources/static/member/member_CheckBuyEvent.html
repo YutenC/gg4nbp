@@ -940,7 +940,6 @@
             $('#getshot').on('click', function(e){
                 $(this).next().click();
             })
-
             $('#getshot').next().on('change',function(e){
                 let uploadImg = e.target.files || e.dataTransfer.files;
 
@@ -979,7 +978,6 @@
                     div.remove();
                 })
             })
-
         }
 
         if (obj.progress == 2) {
@@ -1017,7 +1015,7 @@
             const img = document.createElement('img');
             const btn = document.createElement('button');
             $(btn).attr('class', 'del_btn').text('✖');
-            img.src = 'select?imgname='  + obj.image[i].image;
+            img.src = 'select?imgname='  + obj.image[i].image +'&eventId='+obj.eventId;
             div.append(img);  
             if(obj.progress<3)
                 div.append(btn);
@@ -1051,8 +1049,8 @@
                 for (let j = 0; j < upfiledel.length; j++) 
                     if (upfile[i][0].name == upfiledel[j])
                         continue filter;
-              
-                formData.append(upfile[i][0].name, upfile[i][0]);
+
+                formData.append(obj.eventId+"/"+upfile[i][0].name, upfile[i][0]);
                 img_list.push({ image: upfile[i][0].name });
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', '../secondhand/upFile', true);
@@ -1093,7 +1091,10 @@
             })
         } else {
             sessionStorage.setItem('ButEventResult', JSON.stringify(obj));
-            $('.swal2-container').remove();
+            Swal.fire({
+            icon: 'success',
+            title: '更新成功'
+            })
             itemDisplay();
         }
 

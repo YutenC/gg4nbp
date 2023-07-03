@@ -28,11 +28,11 @@ public class UpFile extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Collection<Part> parts = req.getParts();
 		try {
-			File file = new File(Constant.SAVE_URL);
-			if (!file.exists()) {
-				file.mkdirs();
-			}
 			for (Part part : parts) {
+				File file = new File(Constant.SAVE_URL+part.getName().split("/")[0]);
+				if (!file.exists()) {
+					file.mkdirs();
+				}
 				String url = Constant.SAVE_URL + part.getName();
 				File upfile = new File(url);
 				try (InputStream reader = part.getInputStream();
@@ -44,7 +44,6 @@ public class UpFile extends HttpServlet {
 						bos.write(buffer, 0, s);
 						
 					}
-					System.out.println("上傳完成");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

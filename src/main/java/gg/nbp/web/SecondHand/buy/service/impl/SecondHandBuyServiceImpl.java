@@ -3,6 +3,7 @@ package gg.nbp.web.SecondHand.buy.service.impl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistPictureDao;
 import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
+import redis.clients.jedis.Jedis;
 
 @Service
 public class SecondHandBuyServiceImpl implements SecondHandBuyService {
@@ -24,15 +26,28 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	private SecondHandBuylistDao dao;
 	@Autowired
 	private SecondHandBuylistPictureDao daoPic;
-	
 	@Autowired
 	private MemberDao daoMember;
+	@Autowired
+	private Jedis jedis;
 
 	/* 交易控制 : 新增事件 */
 	@Transactional
 	@Override
-	public BuyEvent submit(SecondhandBuylist sl, Integer id) {
-
+	public BuyEvent submit(SecondhandBuylist sl, Integer id) throws SQLException {
+		String key = "event" + sl.getBuylistId() ;
+		
+		jedis.select(9);
+		if( jedis.get(key) == null) {
+			jedis.set(key, "1");
+			jedis.expire(key,(long) 30);
+		}else if(Integer.parseInt(jedis.get(key)) >= 5) {
+			throw new SQLException();
+		}else {
+			jedis.incrBy(key, 1);
+		}
+		
+		
 		/* 將文字資料放入資料庫 */
 		sl.setSuccessful(insert(sl,id));
 
@@ -45,6 +60,8 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		} catch (Exception e) {
 			sl.setMessage("沒有圖片");
 		}	
+		
+		
 		return new BuyEvent(sl,daoMember);
 	};
 
@@ -54,7 +71,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	public boolean delete(Integer memberId, Integer eventId) throws SQLException {
 
 		/* 找到要刪除的事件 */
-		SecondhandBuylist sl = dao.selectById(eventId);
+		var sl = dao.selectById(eventId);
 
 		/* 驗證發出刪除請求的人是否為事件的所有人，若請求人非所有人則丟出例外 */
 		if (memberId != sl.getMemberId())
@@ -69,24 +86,17 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	@Override
 	public List<BuyEvent> searchAll() throws SQLException {
 
-		/* 建立回傳用的List */
-		List<BuyEvent> listDTO = new ArrayList<>();
 
 		/**************************************************************************************
 		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
 		// 有辦法優化 ?
-		dao.selectAll().stream()
-					   .filter(p -> p.getPayState() != 2)  //篩選掉已經完成的案件
-					   .filter(p -> !(p.getApprovalState().equals("3") || p.getApprovalState().equals("4")))  //篩選掉不成立的案件
-					   .forEach(sl -> {
-						   listDTO.add(new BuyEvent(sl,daoMember));
-					   });
-		
-		
-		
-		
+		List<BuyEvent> listDTO = dao.selectAll().stream()
+					   				.filter(p -> p.getPayState() != 2)  //篩選掉已經完成的案件
+					   				.filter(p -> !(p.getApprovalState().equals("3") || p.getApprovalState().equals("4")))  //篩選掉不成立的案件
+					   				.map(sl -> new BuyEvent(sl,daoMember))
+					   				.collect(Collectors.toList());
 
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)
@@ -99,18 +109,17 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	/* 用會員搜尋全部 */
 	@Override
 	public List<BuyEvent> searchAll(Member member) throws SQLException {
-		/* 建立回傳用的List */
-		List<BuyEvent> listDTO = new ArrayList<>();
 		
 		/**************************************************************************************
 		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
 		// 有辦法優化 ?		
-		dao.selectByMemberId(member.getMember_id()).stream()
-												   .forEach(sl -> {
-													   listDTO.add(new BuyEvent(sl,daoMember));
-												   });
+		List<BuyEvent> listDTO = dao.selectByMemberId(member.getMember_id())
+									.stream()
+									.filter(sl -> !sl.getApprovalState().equals("7"))
+									.map(sl -> new BuyEvent(sl,daoMember))
+									.collect(Collectors.toList());
 
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)
@@ -220,7 +229,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 
 		s.setMemberId(id);
 		s.setPayState(0); // 預設為 0
-		s.setApprovalState("0"); // 預設為 0
+		s.setApprovalState("7"); // 預設為 0
 		dao.insert(s);
 		return true;
 	}

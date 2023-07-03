@@ -207,7 +207,7 @@
 
         div.swal2-html-container>div {
             margin: 10px;
-            height:600px;
+            height:610px;
             border-radius: 3px;
 
         }
@@ -293,7 +293,7 @@
             border: 2px solid black;
             background-color: #ffffffc6;
             border-radius: 2px;
-            height: 110px;
+            height: 140px;
             width: calc(100% - 20px);
             padding: 10px;
         }
@@ -459,7 +459,7 @@
             height: 1px;
             border: 3px solid rgb(185, 185, 185);
             position: absolute;
-            top: 14px;
+            top: 13px;
             border-radius: 2px;
             margin : 0px  10px;
             z-index: 0;
@@ -591,7 +591,8 @@
                     <div class="Change">
                         <div><span>收購價 :</span><input id="price" type="number" max="1000000"  value="${obj.price || ''}"></div>
                         <div><span>審核時間 :</span><input id="confirmTime" type="datetime-local" value="${obj.confirmDate || ''}" disabled></div>
-                    </div>
+                        <div><span>審核狀態 :</span><input id="approvalState" type="text" value="${obj.approvalState || ''}" disabled></div>
+                        </div>
                 </div>
                 <div>
                     <button id="cancel">取消</button>
@@ -654,7 +655,7 @@
 
         for (let i = 0; i < obj.image.length; i++) {
             const img = document.createElement('img');
-            img.src = 'select?imgname=' + obj.image[i].image;
+            img.src = 'select?imgname='  + obj.image[i].image +'&eventId='+obj.eventId;
             $('.imgArea').append(img);
         }
 
@@ -703,6 +704,8 @@
         $('#approvalState').val(obj.approvalState);
 
         $('.barLine').attr("style",`width : calc( 6% + ( 23.5% * ${obj.progress} ))`);
+
+        $(`.circle:eq(${obj.progress})`).addClass('-now');
 
     }
 
