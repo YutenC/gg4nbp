@@ -34,6 +34,8 @@ public class SelectshpServlet extends HttpServlet {
         SecondhandProduct sp = CommonUtil.json2pojo(req, SecondhandProduct.class);
         sp = SERVICE.selectOne(sp.getProductId());
 
+        // 轉換content的換行標籤
+        sp.setContent(sp.getContent().replace("<br>", "\n"));
 
         List<SecondhandProductImage> imgs = SERVICE.selectimg(sp);
         sp.setImage(imgs);

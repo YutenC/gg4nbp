@@ -68,7 +68,10 @@ public class EditshpServlet extends HttpServlet {
         shp.setType(type);
         System.out.println("type=" + type);
         shp.setPrice(price);
-        shp.setContent(content);
+
+        // 存入資料庫內容自動換行
+        shp.setContent(content.replace("\n", "<br>"));
+
         SERVICE.editshp(shp);
 
         // 讀取 image 陣列
