@@ -25,8 +25,8 @@ public class MailService extends Thread{
 			props.put("mail.smtp.auth", "true");
 			props.put("mail.smtp.port", "465");
 
-			final String myGmail = "max875e6@gmail.com";
-			final String myGmail_password = "betttrnyeufjzrxt";
+			final String myGmail = "nbpgggamer@gmail.com";
+			final String myGmail_password = "cfekxjrvxojsnwah";
 			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(myGmail, myGmail_password);
