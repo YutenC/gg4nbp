@@ -18,18 +18,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.MultipartConfig;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
@@ -89,28 +82,6 @@ public class ShopDispatcherServlet extends HttpServlet {
         DaoConditionSelect daoConditionSelect=null;
         Member member = (Member) session.getAttribute("member");
         switch (path) {
-//            case  "/exPay":
-//                StringBuilder requestData_ = new StringBuilder();
-//                try (BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
-//                    String line;
-//                    while ((line = reader.readLine()) != null) {
-//                        requestData_.append(line);
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                String payloadData_ = requestData_.toString();
-//                System.out.println(payloadData_);
-//
-//                Member member_=testMemberController.getDefaultMember();
-//                Gson gson__ = new Gson();
-//                strOut = gson__.toJson(member_);
-//
-//
-//
-//                break;
-
-
             case "/ecPay":
                 StringBuilder requestData_ = new StringBuilder();
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
@@ -140,14 +111,11 @@ public class ShopDispatcherServlet extends HttpServlet {
                     e.printStackTrace();
                 }
                 String payloadData = requestData.toString();
-                System.out.println(payloadData);
+//                System.out.println(payloadData);
 
                 Gson gson_ = new Gson();
                 ProductPojo productPojo = gson_.fromJson(payloadData, ProductPojo.class);
-
                 productManagerController.addProduct(productPojo);
-
-
                 break;
 //            case "/uploadProduct":
 //                /* Receive file uploaded to the Servlet from the HTML5 form */
@@ -188,9 +156,7 @@ public class ShopDispatcherServlet extends HttpServlet {
                 map.put("limit", Integer.valueOf(amount_));
 
                 strOut = productController.getProductByBuyTimes(map, Integer.valueOf(type_));
-
                 break;
-
 
             case "/searchProducts":
                 String search = req.getParameter("search");
@@ -203,17 +169,11 @@ public class ShopDispatcherServlet extends HttpServlet {
 
 
             case "/getSomeProduct":
-
                 break;
 
             case "/updateProductInfo":
-                ;
-//                getParameter(req,"product",Product.class);
-
-
-                JsonElement ss=(JsonElement) ConvertJson.getJsonDataMap(getPostData(req)).get("product");
-
-                Product p=new Gson().fromJson(ss,Product.class);
+                JsonElement jsonElement=(JsonElement) ConvertJson.getJsonDataMap(getPostData(req)).get("product");
+                Product p=new Gson().fromJson(jsonElement,Product.class);
                 strOut = productController.updateProductInfo(p);
                 break;
 
@@ -221,8 +181,6 @@ public class ShopDispatcherServlet extends HttpServlet {
                 String id_str = req.getParameter("id");
                 Integer productId_ = Integer.valueOf(id_str);
                 productController.addCart(productId_, member.getMember_id());
-
-
                 break;
             case "/getCartNum":
 
@@ -252,16 +210,10 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
             case "/getAllProductWithIndexImg":
-
-
                 strOut = productController.getAllProductWithIndexImg(member.getMember_id());
                 break;
 
             case "/getProductsWithRequired":
-
-
-//                ConvertJson.getJsonDataUnFixed();
-
                 String obj_=req.getParameter("limit");
                 Integer limit_=-1;
                 if(obj_!=null){
@@ -276,8 +228,6 @@ public class ShopDispatcherServlet extends HttpServlet {
                 Gson gson = new Gson();
                 Integer productId = gson.fromJson(productId_json, Integer.class);
                 strOut = productController.getProductDetail(member.getMember_id(), productId);
-
-//                strOut = productController.getProductDetail(member.getMember_id(),(Integer)getParameter(req,"id"));
                 break;
 
             case "/getProductHistory":
@@ -358,22 +308,16 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
             case "/sendEmail":
-//                Map<String,JsonElement> params_= ConvertJson.getJsonDataMap("params");
                 String params__ =getParameter(req,"params");
-
                 String params_= URLDecoder.decode(params__,StandardCharsets.UTF_8);
                 if(params_!=null){
                     Map<String,JsonElement> map_= ConvertJson.getJsonDataMap(params_);
                     int action= map_.get("action").getAsInt();
-//                    CouponMember couponMember= new Gson().fromJson(map_.get("couponMembers"), CouponMember.class);
                     List<CouponMember> couponMembers=ConvertJson.getFromArray(map_.get("couponMembers"), CouponMember.class);
 
                     strOut= couponManagerController.sendEmail(action,couponMembers);
                 }
-
-
                 break;
-
 
             case "/longTimeProcess":
                 strOut = productManagerController.longTimeProcess();

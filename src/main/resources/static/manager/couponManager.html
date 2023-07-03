@@ -274,7 +274,10 @@
                         <button @click="getCouponMemberInfo()">取得會員資訊</button>
                         <button @click="sendEmail(0)">立即傳送郵件</button>
                         <button @click="sendEmail(1)">根據時間傳送郵件</button>
+
                         <div>操作結果:{{sendEmailState}}</div>
+
+                        <br>
                         <div>設定傳送郵件時間:</div>
                         <div>
                             <input type="datetime-local" v-model="sendEmailTime" class="form-control form-control-sm">
@@ -282,6 +285,8 @@
 
 
                         <div>
+                            <br>
+                            <div>選擇折價券</div>
                             <select class="d-inline-block form-select form-select-sm"
                                 @change="discountCodeSelectChange($event.target.value)">
                                 <option v-for="(item,index) in couponActivity" :value="item.coupon.discountCode"

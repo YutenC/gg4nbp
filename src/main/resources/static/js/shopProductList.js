@@ -33,51 +33,19 @@ const vm = Vue.createApp({
         getAllProduct: function () {
             getAllProduct();
         },
-        // addCart: function (id) {
-        //     axios.post(host_context + "shopDispatcher/addCart")
-        //         .then(response => {
-        //             // Check if the response status is a redirect (3xx)
-        //             if (response.status >= 300 && response.status < 400) {
-        //                 const redirectUrl = response.headers.location;
-        //                 // Perform your desired action with the redirect URL
-        //                 console.log('Redirect URL:', redirectUrl);
-        //             } else {
-        //                 // Handle the non-redirect response
-        //                 console.log('Response:', response.data);
-        //             }
-        //         })
-        //         .catch(error => {
-        //             // Handle errors
-        //             console.error('Error:', error);
-        //         });
-        // },
         addCart: function (id) {
+            let transObj = { productId: id, buyAmount: 1 };
             axios({
-                method: "Get",
-                url: host_context + "shopDispatcher/addCart",
+                method: "Post",
+                url: host_context + "ShoppingList",
                 // withCredentials: true,
                 // crossDomain: true,
                 params: {
-                    id: id
+                    demand: "addOneShoppingList",
+                    transObj: JSON.stringify(transObj),
                 }
             })
                 .then(function (response) {
-
-                    if (response.data.state === "redirect") {
-                        console.log(response.data.msg);
-                        window.location.href = response.data.msg;
-                    }
-
-                    // // Check if the response status is a redirect (3xx)
-                    // if (response.status >= 300 && response.status < 400) {
-                    //     const redirectUrl = response.headers.location;
-                    //     // Perform your desired action with the redirect URL
-                    //     console.log('Redirect URL:', redirectUrl);
-                    // } else {
-                    //     // Handle the non-redirect response
-                    //     console.log('Response:', response.data);
-                    // }
-
                     console.log("addCart then");
 
                 })
@@ -87,6 +55,43 @@ const vm = Vue.createApp({
 
 
         },
+        // addCart: function (id) {
+        //     axios({
+        //         method: "Get",
+        //         url: host_context + "shopDispatcher/addCart",
+        //         // withCredentials: true,
+        //         // crossDomain: true,
+        //         params: {
+        //             id: id,
+        //             redirectUrl: "http://localhost:8080/gg4nbp/shop/shopProductList.html"
+        //         }
+        //     })
+        //         .then(function (response) {
+
+        //             if (response.data.state === "redirect") {
+        //                 console.log(response.data.msg);
+        //                 window.location.href = response.data.msg;
+        //             }
+
+        //             // // Check if the response status is a redirect (3xx)
+        //             // if (response.status >= 300 && response.status < 400) {
+        //             //     const redirectUrl = response.headers.location;
+        //             //     // Perform your desired action with the redirect URL
+        //             //     console.log('Redirect URL:', redirectUrl);
+        //             // } else {
+        //             //     // Handle the non-redirect response
+        //             //     console.log('Response:', response.data);
+        //             // }
+
+        //             console.log("addCart then");
+
+        //         })
+        //         .catch(function (e) {
+        //             console.log("addCart error " + e);
+        //         });
+
+
+        // },
         addFollow: function (index, id) {
             axios({
                 method: "Get",
@@ -94,7 +99,8 @@ const vm = Vue.createApp({
                 // withCredentials: true,
                 // crossDomain: true,
                 params: {
-                    id: id
+                    id: id,
+                    redirectUrl: "http://localhost:8080/gg4nbp/shop/shopProductList.html"
                 }
             })
                 .then(function (value) {
@@ -295,25 +301,25 @@ function getAllProduct() {
 
 }
 
-function getFollows() {
-    console.log(getFollows)
-    axios({
-        method: "Get",
-        url: host_context + "shopDispatcher/getFollowByMemberId",
-        // withCredentials: true,
-        // crossDomain: true,
-        params: { memberId: vm2.searchText }
-    },)
-        .then(function (value) {
-            vm.followLists = value.data;
+// function getFollows() {
+//     console.log(getFollows)
+//     axios({
+//         method: "Get",
+//         url: host_context + "shopDispatcher/getFollowByMemberId",
+//         // withCredentials: true,
+//         // crossDomain: true,
+//         params: { memberId: vm2.searchText }
+//     },)
+//         .then(function (value) {
+//             vm.followLists = value.data;
 
-            console.log("searchProducts then");
+//             console.log("searchProducts then");
 
-        })
-        .catch(function (e) {
-            console.log("searchProducts error " + e);
-        });
-}
+//         })
+//         .catch(function (e) {
+//             console.log("searchProducts error " + e);
+//         });
+// }
 
 function getProductHistory() {
     axios({

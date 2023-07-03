@@ -317,11 +317,17 @@
                                 <div class="amount">
                                     <label for="amount">數量：</label> <!--動態產生數量選項：依目前庫存判斷最大數量(是否要設定最大可購買量?)-->
                                     <select name="amount" id="amount" @change="changeAmount($event.target.value)">
+                                        <option v-for="(item,index) in amountArray" :value="item"
+                                            :selected="index==(buyAmount -1)">
+                                            {{item}}
+                                        </option>
+                                        <!-- initSelectedAmountIndex -->
+                                        <!-- <option value="2">2</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
-                                        <option value="5">5</option>
+                                        <option value="5">5</option> -->
                                     </select>
                                 </div>
                                 <button @click="addCart(1,product.id)">直接購買</button>
@@ -531,6 +537,7 @@
             method: "Get",
             // url: "http://localhost:8080/shop/shopDispatcher/login",
             url: "http://localhost:8080/gg4nbp/shopDispatcher/login",
+            params: { redirectUrl: "http://localhost:8080/gg4nbp/shop/shopProductList.html" }
             // withCredentials: true,
             // crossDomain: true,
         },)

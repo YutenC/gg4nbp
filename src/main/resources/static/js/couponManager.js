@@ -10,7 +10,7 @@ const vm = Vue.createApp({
             currentMainguideContent: 1,
             mainguideContent: [{ id: 1, text: "折價券管理", action: "manageCoupon" },
             { id: 2, text: "折價券新增", action: "addCoupon" },
-            { id: 3, text: "其他", action: "otherSetting" }],
+            { id: 3, text: "發送折價券", action: "otherSetting" }],
             nowDate: '',
             minDate: '',
             newCouponActivity: {},

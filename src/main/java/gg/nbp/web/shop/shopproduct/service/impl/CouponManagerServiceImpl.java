@@ -1,6 +1,5 @@
 package gg.nbp.web.shop.shopproduct.service.impl;
 
-
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.entity.Notice;
 import gg.nbp.web.Member.service.MemberService;
@@ -192,7 +191,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
                     public Object call() throws Exception {
                         List<CouponMember> couponMembers_ = couponMembers;
 
-                        String result=processMail(couponMembers_);
+                        String result = processNotify(couponMembers_);
 
                         Thread.sleep(3000);
 
@@ -227,13 +226,8 @@ public class CouponManagerServiceImpl implements CouponManagerService {
                         GregorianCalendar cal = new GregorianCalendar();
                         String date = simpleDateFormat.format(cal.getTime());
 
-                        System.out.println("時間: "+cal.getTime().toString());
-                        String result=processMail(couponMembers_);
-//                        for (int i = 0; i < couponMembers_.size(); i++) {
-//                            if (couponMembers_.get(i).isCheck()) {
-//                                System.out.println("send email" + couponMembers_.get(i).getEmail());
-//                            }
-//                        }
+                        System.out.println("時間: " + cal.getTime().toString());
+                        String result = processNotify(couponMembers_);
 
                         cancel();
                         SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("sendEmail");
@@ -253,7 +247,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         return new ResponseMsg("error", "", "");
     }
 
-    private String processMail(List<CouponMember> couponMembers_) {
+    private String processNotify(List<CouponMember> couponMembers_) {
         if (couponMembers_.size() < 0) {
             return "NoRun";
         }
@@ -261,19 +255,20 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         String discountCode = couponMembers_.get(0).getDiscountCode();
 
         Coupon coupon = couponDao.selectByDiscountCode(discountCode);
-        String deadLine = coupon.getDeadline().toString();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String deadLine = simpleDateFormat.format(coupon.getDeadline().getTime());
         String msg = "有折價券 '" + discountCode + "' 可以使用";
         msg += ", " + "使用期限: " + deadLine;
         for (int i = 0; i < couponMembers_.size(); i++) {
             Notice notice = new Notice();
             notice.setMember_id(couponMembers_.get(i).getMember_id());
-            notice.setMessage(msg);
-//                            noticeService.addNotice(notice);
+            notice.setNotice_value(msg);
+            noticeService.addNotice(notice);
 
             System.out.println("send email" + couponMembers_.get(i).getEmail() + ", " + msg);
         }
 
-//                        emailService.sendMessage("labdesos@gmail.com","折價券通知",msg);
+//        emailService.sendMessage("labdesos@gmail.com", "折價券通知", msg);
 
         return "ok";
     }

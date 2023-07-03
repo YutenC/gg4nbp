@@ -83,11 +83,14 @@ public class ProductManagerServiceImpl implements ProductManagerService {
     @Override
     public void addProduct(ProductPojo productPojo) {
         Product product=productPojo.getNewProduct();
+        product.setBuyTimes(0);
+        product.setRate(0);
+        product.setRevieweCount(0);
+
         Integer productId= productDao.insert(product);
         product.setId(productId);
 
         List<ProductImage> productImages= productPojo.getNewProduct().getProductImages();
-
 
         for (int i=0;i<productImages.size();i++) {
             ProductImage productImage= productImages.get(i);

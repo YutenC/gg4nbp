@@ -24,8 +24,8 @@ public class BshopLoginFilter extends HttpFilter implements Filter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) {
 
         HttpSession session= req.getSession();
-        Object isLogin__ = session.getAttribute("isLogin");
-        if (isLogin__ == null) {
+        Object isLogin = session.getAttribute("isLogin");
+        if (isLogin == null) {
             loginMember(req,res,chain);
         } else {
 
@@ -62,7 +62,7 @@ public class BshopLoginFilter extends HttpFilter implements Filter {
         res.setCharacterEncoding("UTF-8");
         // 設定回應的格式及字碼
         res.setContentType("application/json;charset=UTF-8");
-//            res.setStatus(HttpServletResponse.SC_TEMPORARY_REDIRECT);
+        req.getSession().setAttribute("memberLocation", req.getParameter("redirectUrl"));
         PrintWriter out = null;
         try {
             String url="http://localhost:8080/gg4nbp/member_login.html";

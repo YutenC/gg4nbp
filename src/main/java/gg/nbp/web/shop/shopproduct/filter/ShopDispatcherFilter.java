@@ -12,8 +12,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter("/shopDispatcher/*")//,/ShoppingList/*
-public class HibernateFilterShopProduct extends HttpFilter {
+@WebFilter("/shopDispatcher/*")
+//@WebFilter("/*")
+public class ShopDispatcherFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) {

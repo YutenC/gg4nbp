@@ -5,7 +5,8 @@ import { saveDataToSessionStorage, getDataFromSessionStorage } from './shopprodu
 const vm = Vue.createApp({
     data() {
         return {
-
+            amountArray: [1, 2, 3, 4, 5],
+            initSelectedAmountIndex: 0,
             ProductDetail_id: 0,
             currentMainguideContent: 1,
             mainguideContent: [{ id: 1, text: "商品特色", action: "1", flag: true },
@@ -57,7 +58,7 @@ const vm = Vue.createApp({
                 // crossDomain: true,
                 params: {
                     demand: "addOneShoppingList",
-                    transObj: JSON.stringify(transObj)
+                    transObj: JSON.stringify(transObj),
                 }
             })
                 .then(function (response) {
@@ -69,10 +70,10 @@ const vm = Vue.createApp({
                         window.location.href = "../member/shoppingCart(Vue).html";
                     }
                     else {
-                        if (response.data.state === "redirect") {
-                            console.log(response.data.msg);
-                            window.location.href = response.data.msg;
-                        }
+                        // if (response.data.state === "redirect") {
+                        //     console.log(response.data.msg);
+                        //     window.location.href = response.data.msg;
+                        // }
                     }
 
                     console.log("addCart then");
@@ -91,7 +92,8 @@ const vm = Vue.createApp({
                 // withCredentials: true,
                 // crossDomain: true,
                 params: {
-                    id: id
+                    id: id,
+                    redirectUrl: "http://localhost:8080/gg4nbp/shop/shopProductDetail.html"
                 }
             })
                 .then(function (value) {
@@ -151,7 +153,7 @@ const vm = Vue.createApp({
                 });
         },
         changeAmount(buyAmount) {
-            vm.buyAmount = buyAmount;
+            vm.buyAmount = parseInt(buyAmount);
         },
         clickPrevNext(e) {
             if (e.classList.contains('prev')) {
@@ -170,6 +172,7 @@ const vm = Vue.createApp({
     },
 }).mount(".shopmain");
 
+vm.initSelectedAmountIndex = 0;
 // getProductDetail();
 
 
