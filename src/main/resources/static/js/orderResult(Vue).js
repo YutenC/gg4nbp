@@ -31,13 +31,12 @@ const shoppingContent = Vue.createApp({
     computed: {
         productSubtotal: function () {
             let productSub = 0;
-            let couponDiscount = 0;
-            let bonus = 0;
+            let discount = this.checkCoupon === null ? 0 : this.checkCoupon.discount;
             for (pic of this.odProducts) {
                 productSub += pic.buyAmount * pic.price;
             }
 
-            let finalPrice = productSub - couponDiscount - bonus;
+            let finalPrice = productSub - discount - this.usedBonus;
 
             return finalPrice;
         },

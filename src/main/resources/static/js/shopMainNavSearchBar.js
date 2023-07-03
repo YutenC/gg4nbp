@@ -3,8 +3,7 @@ $('.searchinput').on('keydown', function (e) {
     if (e.keyCode === 13 || e.keyCode === 108) {
         e.preventDefault();
         sessionStorage.setItem('searchKeyword', this.value);
-        // window.location.href = projectFolder + '/shop/shopIndexSearchResult(Vue).html'
-        window.location.href = '/src/main/resources/static/shop/shopIndexSearchResult(Vue).html'
+        window.location.href = projectFolder + '/shop/shopIndexSearchResult(Vue).html'
     }
 });
 
@@ -20,8 +19,7 @@ $('button.searchicon').on('click', function (e) {
         $('.productline').toggleClass('onsearch');
     } else {
         sessionStorage.setItem('searchKeyword', $('.searchinput').val());
-        // window.location.href = projectFolder + '/shop/shopIndexSearchResult(Vue).html'
-        window.location.href = '/src/main/resources/static/shop/shopIndexSearchResult(Vue).html'
+        window.location.href = projectFolder + '/shop/shopIndexSearchResult(Vue).html'
     }
 });
 

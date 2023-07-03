@@ -34,17 +34,12 @@ public class ShoppingListController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession httpSession = req.getSession();
-		Member login = new Member();
-		login.setAccount("Black");
-		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
-		Member member = memberService.login(login);	
 		
 		Gson gson = new Gson();
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json");
 		PrintWriter pw = res.getWriter();
 		
-		httpSession.setAttribute("member", member);
 		Member getmember = (Member)httpSession.getAttribute("member");
 		Integer memberId = null;
 		
@@ -83,12 +78,6 @@ public class ShoppingListController extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 		
 		HttpSession httpSession = req.getSession();
-		
-		Member login = new Member();
-		login.setAccount("Black");
-		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
-		Member mber = memberService.login(login);
-		httpSession.setAttribute("member", mber);
 		
 		if (httpSession.getAttribute("member") == null) {
 			res.sendRedirect("/Five_NBP.gg");

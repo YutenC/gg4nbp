@@ -45,21 +45,13 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 
     @Override
     public void createProductFromcsv(){
-
-        //CreateProductDB<Product, ProductImage> createProductDB= new CreateProductDB<Product,ProductImage>(Product.class, ProductImage.class);
         try {
             List<Product> products= createProductDB.readCSV();
             for (Product value : products) {
                 productDao.insert(value);
             }
-//            Session session= HibernateUtil.getSessionFactory().getCurrentSession();
-//            session.getTransaction().commit();
 
-//            session= HibernateUtil.getSessionFactory().getCurrentSession();
-//            session.beginTransaction();
             createProductDB.createImgEntity();
-//            session.getTransaction().commit();
-
 
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
@@ -139,9 +131,11 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 //                HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
                 Product product= productDao.selectById(productId);
 //                HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
-                System.out.println("take On" +product.getProductName());
-                product.setState(ProductState.TakeOn.getValue());
 
+                product.setState(ProductState.TakeOn.getValue());
+                productDao.updateProductState(product);
+
+                System.out.println("take On" +product.getProductName());
                 cancel();
                 SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
                 schedulerTasks.removeTimerTask(productId+"takeOn");
@@ -178,9 +172,11 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 //                HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
                 Product product= productDao.selectById(productId);
 //                HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
-                System.out.println("take Off" +product.getProductName());
-                product.setState(ProductState.TakeOff.getValue());
 
+                product.setState(ProductState.TakeOff.getValue());
+                productDao.updateProductState(product);
+
+                System.out.println("take Off" +product.getProductName());
                 cancel();
                 SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
                 schedulerTasks.removeTimerTask(productId+"takeOff");
@@ -205,7 +201,6 @@ public class ProductManagerServiceImpl implements ProductManagerService {
             schedulerTasks.removeTimerTask(id+"takeOn");
             schedulerTasks.clear();
         }
-
 
     }
 
