@@ -135,6 +135,9 @@
             display: flex;
         }
 
+        div.couponDetail span {
+            margin: 5px;
+        }
 
         div.commentContent>div:first-child {
             width: 40%;
@@ -389,12 +392,15 @@
                                                     使用紅利：{{ item.orderMaster.bonusUse }}
                                                 </span>
                                             </div>
-                                            <div>
+                                            <div class="couponDetail">
+                                                <span v-if="item.coupon === undefined">未使用優惠卷</span>
                                                 <span v-if="item.coupon !== undefined">
                                                     使用優惠卷：
-                                                    {{ item.coupon.discountCode + ' : ' + item.coupon.discount +
-                                                    ':' + item.coupon.conditionPrice}}
                                                 </span>
+                                                <span v-if="item.coupon !== undefined">優惠券代碼：{{ item.coupon.discountCode
+                                                    }}</span>
+                                                <span v-if="item.coupon !== undefined">優惠券折抵額度：{{ item.coupon.discount
+                                                    }}</span>
                                             </div>
                                             <div>
                                                 <span>本訂單獲得紅利：{{ item.getBonus }}</span>

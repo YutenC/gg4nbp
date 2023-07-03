@@ -3,7 +3,7 @@
 
 // 網頁下滑超過150px顯示控制區
 $(window).on('scroll', () => {
-    if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
         $('main .miniMenu').css('display', 'block');
     } else {
         $('main .miniMenu').css('display', 'none');
@@ -36,4 +36,31 @@ for (let but of miniButs) {
 // 移開瀏覽檢視區檢視區消失
 $('div.miniMenuContent div.viewRecord').on('mouseleave', (e) => {
     $('div.miniMenu div.viewRecord').css('display', 'none');
+});
+
+// 購物車按鈕被點選時檢核登入並轉導
+$('div.miniMenuBut').on('click', 'a.shoppingCart', (event) => {
+    event.preventDefault();
+    const loginStatus = sessionStorage.getItem('id');
+    if (loginStatus === null) {
+        Swal.fire({
+            title: '請先登入會員',
+            showDenyButton: true,
+            confirmButtonText: '登入',
+            denyButtonText: `退出`,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/gg4nbp/member_login.html';
+            } else if (result.isDenied) {
+            }
+        });
+    } else {
+        window.location.href = '/gg4nbp/member/shoppingCart(Vue).html';
+    }
 });

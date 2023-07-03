@@ -115,7 +115,7 @@ const memberOrder = Vue.createApp({
             $(event.target).closest('.rankDetail').find('textarea.commentContent').prop('disabled', true);
             $(event.target).prop('disabled', true);
 
-            for (let i = 0; i < this.ordes.length; i++) {
+            for (let i = 0; i < this.orders.length; i++) {
                 if (this.orders[i].orderMaster.orderId === orderId) {
                     this.orders[i].trList.comment = comment;
                 }
