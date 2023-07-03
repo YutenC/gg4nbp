@@ -30,6 +30,7 @@ public class Update4Member extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		
+		
 		HttpSession session = req.getSession();
 		Boolean isLogin = (Boolean)session.getAttribute("isLogin");
 		Member member = (Member)session.getAttribute("member");
@@ -51,6 +52,9 @@ public class Update4Member extends HttpServlet {
 				e.printStackTrace();
 				CommonUtil.writepojo2Json(resp, new OneString("更新失敗"));
 			}
+		}else {
+			resp.sendRedirect(req.getContextPath()+"/member_login.html");
+			session.setAttribute("memberLocation", req.getHeader("referer"));
 		}
 	}
 }
