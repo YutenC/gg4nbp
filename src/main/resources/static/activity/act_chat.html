@@ -254,7 +254,11 @@
         let roomId = params.get('no'); // 從URL查詢參數獲取ID
 
         // 建立WebSocket連接時，將聊天室ID傳遞給伺服器
-        var socket = new WebSocket("ws://localhost:8080/gg4nbp/socket/" + roomId + "/" + username);
+        var host = window.location.host;
+        var protocol = window.location.protocol.replace("http", "ws"); // 如果是https协议，替换为wss
+        var socketUrl = protocol + "//" + host + "/gg4nbp/socket/" + roomId + "/" + username;
+
+        var socket = new WebSocket(socketUrl);
 
         var chat = document.getElementById('chat');
         var onlineUsers = document.getElementById('onlineUsers');
