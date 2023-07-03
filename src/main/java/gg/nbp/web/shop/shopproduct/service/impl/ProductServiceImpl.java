@@ -76,7 +76,6 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-
         return products;
     }
 
@@ -244,7 +243,9 @@ public class ProductServiceImpl implements ProductService {
 
         for(int i=0;i<followLists.size();i++){
             Product product= map.get(followLists.get(i).getId().getProductId());
-            product.setFollow(1);
+            if(product!=null){
+                product.setFollow(1);
+            }
         }
 
 

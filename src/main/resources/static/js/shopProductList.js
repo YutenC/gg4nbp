@@ -50,8 +50,6 @@ const vm = Vue.createApp({
         //             // Handle errors
         //             console.error('Error:', error);
         //         });
-
-
         // },
         addCart: function (id) {
             axios({
@@ -69,8 +67,6 @@ const vm = Vue.createApp({
                         console.log(response.data.msg);
                         window.location.href = response.data.msg;
                     }
-
-
 
                     // // Check if the response status is a redirect (3xx)
                     // if (response.status >= 300 && response.status < 400) {

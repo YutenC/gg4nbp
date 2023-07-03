@@ -7,7 +7,6 @@ import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.Member.service.NoticeService;
 import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundFactory;
 import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundHandler;
-import gg.nbp.web.shop.shopproduct.common.ecPay.ecpppppay;
 import gg.nbp.web.shop.shopproduct.common.schedulertask.SchedulerEntity;
 import gg.nbp.web.shop.shopproduct.common.schedulertask.SchedulerFactory;
 import gg.nbp.web.shop.shopproduct.common.schedulertask.SchedulerTasks;
@@ -247,7 +246,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
                 SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("sendEmail");
                 schedulerTasks.addTimerTask("coupon" + "sendEmail", new SchedulerEntity(time, timerTask));
 
-               new ecpppppay();
+
                 return new ResponseMsg("ok", "", "");
 
         }
