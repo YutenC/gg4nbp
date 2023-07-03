@@ -118,28 +118,51 @@
                                                         <Child v-model="item.productName" />
                                                     </td> -->
                                                     <!-- <td @click="editText($event)">{{item.type}}</td> -->
-                                                    <td><input :value="item.productName" v-model="item.productName">
+                                                    <td><input :value="item.productName" v-model="item.productName"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
-                                                    <td><input :value="item.type" v-model="item.type"></td>
-                                                    <td><input :value="item.price" v-model="item.price"></td>
-                                                    <td><input :value="item.amount" v-model="item.amount"></td>
-                                                    <td><input :value="item.buyTimes" v-model="item.buyTimes"></td>
-                                                    <td><input :value="item.brand" v-model="item.brand"></td>
-                                                    <td><input :value="item.rate" v-model="item.rate"></td>
-                                                    <td><input :value="item.revieweCount" v-model="item.revieweCount">
+                                                    <td><input :value="item.type" v-model="item.type"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                    </td>
+                                                    <td><input :value="item.price" v-model="item.price"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                    </td>
+                                                    <td><input :value="item.amount" v-model="item.amount"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                    </td>
+                                                    <td><input :value="item.buyTimes" v-model="item.buyTimes"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                    </td>
+                                                    <td><input :value="item.brand" v-model="item.brand"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                    </td>
+                                                    <td><input :value="item.rate" v-model="item.rate"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                    </td>
+                                                    <td><input :value="item.revieweCount" v-model="item.revieweCount"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
                                                     <td>
-                                                        <div style="width: 100px;">{{item.showLaunchTime}}</div>
+                                                        <!-- <div style="width: 100px;">{{item.showLaunchTime}}</div> -->
+                                                        <input type="datetime-local" v-bind:value="item.launchTime"
+                                                            @input="updatetakeOffTime(item, $event.target.value)"
+                                                            class="form-control form-control-sm"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+
                                                     </td>
                                                     <td>
-                                                        <div style="width: 100px;">{{item.showTakeoffTime}}</div>
+                                                        <!-- <div style="width: 100px;">{{item.showTakeoffTime}}</div> -->
+
+                                                        <input type="datetime-local" v-bind:value="item.takeoffTime"
+                                                            v-bind:min="minDate"
+                                                            @input="updatetakeOffTime(item, $event.target.value)"
+                                                            class="form-control form-control-sm">
                                                     </td>
 
 
                                                     <td>
                                                         <select
                                                             @change="productSelectActionchange(index,$event.target.value)">
-                                                            <!-- <option selected disabled>--請選擇縣市--</option> -->
                                                             <option v-for="action in productSelectAction"
                                                                 :value="action">
                                                                 {{action}}
@@ -148,22 +171,21 @@
                                                         </select>
 
                                                         <div v-if="item.currentProductSelectAction== '排定上架'">
-                                                            <input type="datetime-local" :value="item.launchTime"
+                                                            <!-- <input type="datetime-local" :value="item.launchTime"
                                                                 @input="updateLaunchTime(item, $event.target.value)"
-                                                                class="form-control form-control-sm">
+                                                                class="form-control form-control-sm"> -->
                                                         </div>
                                                         <div v-else-if="item.currentProductSelectAction=='排定下架'">
-                                                            <input type="datetime-local" v-bind:value="item.takeoffTime"
+                                                            <!-- <input type="datetime-local" v-bind:value="item.takeoffTime"
                                                                 v-bind:min="minDate"
                                                                 @input="updatetakeOffTime(item, $event.target.value)"
-                                                                class="form-control form-control-sm">
+                                                                class="form-control form-control-sm"> -->
                                                         </div>
                                                         <div v-else>
-                                                            xxx
+
                                                         </div>
 
-                                                        <button style="width: 40px; height: 20px;"
-                                                            @click="btnAction(index)"></button>
+                                                        <button @click="btnAction(index)">操作</button>
                                                     </td>
                                                     <td>
                                                         <div style="width: 80px;">{{item.currentProductState}}</div>
@@ -330,7 +352,7 @@
                         </div>
                     </div>
                     <div v-else="currentMainguideContent==3">
-                        vv
+
                     </div>
 
 

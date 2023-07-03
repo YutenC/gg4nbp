@@ -25,7 +25,9 @@ const vm = Vue.createApp({
             sendEmailTime: '',
             sendEmailState: "",
             limitNumOfSelect: [5, 10, 15, 20],
-            limitNum: "20"
+            limitNum: "20",
+            selectedCoupon: '',
+            initSelectedCoupon: ''
         };
     },
     methods: {
@@ -124,6 +126,19 @@ const vm = Vue.createApp({
         },
         changeMainContent(action) {
             vm.currentMainguideContent = action;
+
+
+            if (vm.currentMainguideContent == 3) {
+                for (let i = 0; i < vm.couponActivity.length; i++) {
+                    if (vm.couponActivity[i].coupon.state == vm.enumCouponState.publish) {
+                        vm.initSelectedCouponIndex = i;
+                        vm.selectedCoupon = vm.couponActivity[i].coupon.discountCode;
+                        break;
+                    }
+                }
+
+            }
+
             console.log("action " + action);
         },
         getCouponMemberInfo() {
@@ -149,12 +164,21 @@ const vm = Vue.createApp({
         },
         sendEmail(action) {
             console.log(vm.couponMembers)
+
+
+
+
             switch (action) {
                 case 0://立即發送
                     vm.sendEmailState = "傳送中";
                     break;
                 case 1://根據時間
                     //
+                    if (vm.sendEmailTime === "") {
+                        vm.sendEmailState = "時間格式錯誤";
+                        return;
+                    }
+
                     const dateObject = new Date(vm.sendEmailTime);
                     const formattedDateTime = dateObject.toLocaleString('en-us', {
                         timeZone: 'Asia/Taipei',
@@ -177,6 +201,17 @@ const vm = Vue.createApp({
                     vm.sendEmailState = "時間已設定";
                     break;
             }
+
+            if (vm.selectedCoupon === "") {
+
+                vm.selectedCoupon
+                vm.sendEmailState = "沒有選擇折價券";
+            }
+
+            vm.couponMembers.forEach(element => {
+                element.discountCode = vm.selectedCoupon;
+            });
+
 
             let object = { "action": action, "couponMembers": vm.couponMembers };
             const jsonObject = JSON.stringify(object);
@@ -250,6 +285,10 @@ const vm = Vue.createApp({
         numSelectChange(num) {
             vm.limitNum = num;
             getAllCouponActivity()
+        },
+        discountCodeSelectChange(value) {
+            // vm.selectedCoupon = vm.couponActivity[value].coupon;
+            vm.selectedCoupon = value;
         }
     },
 }).mount("#vue-body");

@@ -52,13 +52,6 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
 
     @Override
     public Coupon selectByDiscountCode(String discountCode) {
-//        Session session = session;//getSession();
-//        Coupon coupon = session.get(Coupon.class, discountCode);
-//        String hql = "from Coupon  where discountCode = "+discountCode;
-//        System.out.println("hql: "+hql);
-//        return getSession().createQuery(hql,Coupon.class).getSingleResult();
-
-
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Coupon> criteriaQuery = criteriaBuilder.createQuery(Coupon.class);
         Root<Coupon> root = criteriaQuery.from(Coupon.class);
@@ -139,10 +132,5 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
         }
         return query.getResultList();
     }
-
-//    public TransactionStatus getTransactionState() {
-//
-//        return session.getTransaction().getStatus();
-//    }
 
 }

@@ -19,6 +19,4 @@ public class ProductDetail {
     @Expose
     List<ProductImage> productImages;
 
-
-
 }

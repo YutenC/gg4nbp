@@ -1,8 +1,7 @@
 import { host_context, nowDate } from './shopproductCommon.js';
 import { saveDataToSessionStorage, getDataFromSessionStorage } from './shopproductCommon.js';
 
-
-
+// { id: 3, text: "注意事項", action: "3", flag: false }
 const vm = Vue.createApp({
     data() {
         return {
@@ -10,8 +9,8 @@ const vm = Vue.createApp({
             ProductDetail_id: 0,
             currentMainguideContent: 1,
             mainguideContent: [{ id: 1, text: "商品特色", action: "1", flag: true },
-            { id: 2, text: "商品評論", action: "2", flag: false },
-            { id: 3, text: "注意事項", action: "3", flag: false }],
+            { id: 2, text: "商品評論", action: "2", flag: false }
+            ],
             nowDate: '',
             minDate: '',
             product: {},
@@ -24,29 +23,9 @@ const vm = Vue.createApp({
         };
     },
     created() {
-
-
-
-
         console.log('created');
     },
     mounted() {
-        // const ProductDetail_id = getDataFromSessionStorage("currentShopProductDetail_id");
-        // axios({
-        //     method: "GET",
-        //     url: host_context + "shopDispatcher/getProductDetail",
-        //     params: { id: ProductDetail_id }
-        // })
-        //     .then(function (value) {
-        //         vm.productDetail = value.data;
-        //         vm.product = vm.productDetail.product;
-        //         console.log("getProductById then");
-
-        //     })
-        //     .catch(function (e) {
-        //         console.log("getProductById error " + e);
-        //     });
-
         getProductDetail();
         getProductHistory();
     },
@@ -70,12 +49,7 @@ const vm = Vue.createApp({
         },
 
         addCart: function (action, id) {
-            // productId
-            //buyAmount
-
-
             let transObj = { productId: id, buyAmount: vm.buyAmount };
-
             axios({
                 method: "Post",
                 url: host_context + "ShoppingList",
@@ -86,10 +60,19 @@ const vm = Vue.createApp({
                     transObj: JSON.stringify(transObj)
                 }
             })
-                .then(function (value) {
+                .then(function (response) {
+
+                    // <button @click="addCart(1,product.id)">直接購買</button>
+                    // <button @click="addCart(0,product.id)">加入購物車</button>
 
                     if (action == 1) {
-                        window.location.href = "./shoppingCart(Vue).html";
+                        window.location.href = "../member/shoppingCart(Vue).html";
+                    }
+                    else {
+                        if (response.data.state === "redirect") {
+                            console.log(response.data.msg);
+                            window.location.href = response.data.msg;
+                        }
                     }
 
                     console.log("addCart then");
@@ -113,7 +96,12 @@ const vm = Vue.createApp({
             })
                 .then(function (value) {
                     let result = value.data;
-                    if (result.state.toLowerCase() === "ok") {
+
+                    if (result.state === "redirect") {
+                        console.log(result.msg);
+                        window.location.href = result.msg;
+                    }
+                    else if (result.state.toLowerCase() === "ok") {
                         vm.product.follow = result.content;
                     }
 
@@ -133,14 +121,10 @@ const vm = Vue.createApp({
             vm.mainguideContent[vm.currentMainguideContent - 1].flag = false;
             vm.mainguideContent[state - 1].flag = true;
             vm.currentMainguideContent = state;
-
             if (state == 2) {
                 vm.getProductCommen();
             }
 
-
-            // event.target.classList.add("-on");
-            // last_currentMainguideContent
         },
         getProductCommen() {
             axios({

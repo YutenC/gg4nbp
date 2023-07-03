@@ -10,9 +10,6 @@ import java.util.List;
 public interface FollowService {
 
     FollowList getFollowById(FollowListId followListId);
-
-
-
     FollowListId addFollowById(FollowList followList);
     int addFollow(Integer id, Integer memId);
     int deleteFollowById(FollowListId followListId);

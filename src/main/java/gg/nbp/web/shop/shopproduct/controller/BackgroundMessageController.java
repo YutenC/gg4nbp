@@ -15,7 +15,7 @@ public class BackgroundMessageController {
         BackgroundHandler backgroundHandler = BackgroundFactory.getBackgroundHandler("shopProductBackground");
         String str = backgroundHandler.getTaskResult(taskName);
         System.out.println("str: " + str);
-//        Gson gson = new Gson();
+
         ResponseMsg requestMsg ;
 
         if("ok".equals(str)){

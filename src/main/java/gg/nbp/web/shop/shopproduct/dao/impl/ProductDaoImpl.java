@@ -247,7 +247,6 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
         final StringBuilder hql = new StringBuilder()
                 .append("UPDATE Product SET ");
 
-
         hql.append("state = :state ")
                 .append("WHERE id = :id");
 
