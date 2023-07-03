@@ -10,7 +10,9 @@ const vm = Vue.createApp({
             nowDate: '',
             minDate: '',
             products: [],
-            followLists: []
+            followLists: [],
+            productHistory: [],
+            isHistoryAreaHidden: true
         };
     },
     created() {
@@ -133,9 +135,15 @@ const vm = Vue.createApp({
                 .catch(function (e) {
                     console.log("salseNumberBtn error " + e);
                 });
+        },
+        historymouseenter: function () {
+            vm.isHistoryAreaHidden = false;
+        },
+        historymouseleave() {
+            vm.isHistoryAreaHidden = true;
         }
 
-    },
+    }
 }).mount(".shopmain");
 
 
@@ -220,7 +228,7 @@ function getAllProduct() {
     })
         .then(function (value) {
             vm.products = value.data;
-
+            getProductHistory()
             // getFollows();
             console.log("getAllProduct then");
 
@@ -251,4 +259,18 @@ function getFollows() {
         });
 }
 
+function getProductHistory() {
+    axios({
+        method: "GET",
+        url: host_context + "shopDispatcher/getProductHistory",
+        // withCredentials: true,
+    })
+        .then(function (value) {
+            vm.productHistory = value.data;
+            console.log("getProductHistory then");
 
+        })
+        .catch(function (e) {
+            console.log("getProductHistory error " + e);
+        });
+}

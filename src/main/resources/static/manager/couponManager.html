@@ -34,9 +34,9 @@
                     <div v-if="currentMainguideContent==1">
 
                         <div class="card shadow">
-                            <div class="card-header py-3">
+                            <!-- <div class="card-header py-3">
                                 <p class="text-primary m-0 fw-bold">優惠券</p>
-                            </div>
+                            </div> -->
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 text-nowrap">
@@ -44,7 +44,8 @@
                                             <label class="form-label">Show&nbsp;
                                                 <select class="d-inline-block form-select form-select-sm"
                                                     @change="numSelectChange($event.target.value)">
-                                                    <option v-for="item in limitNumOfSelect" :value="item">{{item}}
+                                                    <option v-for="item in limitNumOfSelect" :value="item"
+                                                        :selected="item==limitNum">{{item}}
                                                     </option>
                                                     <!-- <option value=5>5</option>
                                                     <option value=10 selected="">10</option>
@@ -192,7 +193,7 @@
                             <!--                            新增優惠券-->
                             <!--                        </a>-->
                             <button class="btn btn-primary btn-sm d-none d-sm-inline-block"
-                                @click="autoGenerateCouponActivity()">新增優惠券</button>
+                                @click="autoGenerateCouponActivity()">新增折價券</button>
                         </div>
 
                         <!-- card shadow 視窗整體
@@ -270,10 +271,11 @@
 
 
                     <div v-if="currentMainguideContent==3">
-                        <button @click="getCouponMemberInfo()">取得會員</button>
-                        <button @click="sendEmail(0)">立即發送</button>
-                        <button @click="sendEmail(1)">根據時間發送</button>
-                        <div>{{sendEmailState}}</div>
+                        <button @click="getCouponMemberInfo()">取得會員資訊</button>
+                        <button @click="sendEmail(0)">立即傳送郵件</button>
+                        <button @click="sendEmail(1)">根據時間傳送郵件</button>
+                        <div>操作結果:{{sendEmailState}}</div>
+                        <div>設定傳送郵件時間:</div>
                         <input type="datetime-local" v-model="sendEmailTime" class="form-control form-control-sm">
 
                         <!-- @input="updateLaunchTime(item, $event.target.value)" -->

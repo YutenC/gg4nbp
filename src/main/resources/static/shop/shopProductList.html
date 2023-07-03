@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>shopProductList</title>
+    <title>一般商城</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -246,6 +246,22 @@
             text-align: center;
             font-size: 16px;
         }
+
+        .expend_outline {
+            width: 100px;
+            height: 300px;
+            background: rgb(213, 213, 213);
+            /* position: relative; */
+            /* display: flex; */
+
+            position: absolute;
+            top: 60px;
+            right: 30px;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -420,9 +436,18 @@
                 </div>
                 <div class="miniMenuBut">
                     <a href="" class="goTop"><img src="../img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
-                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
+                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
+                            @mouseenter="historymouseenter($event.targer)"
+                            @mouseleave="historymouseleave($event.targer)"></a>
                     <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a>
                 </div>
+
+                <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}">
+                    <div v-for="item in productHistory">
+                        <button style="font-size: 0.75rem; ">{{item.productName}}</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
