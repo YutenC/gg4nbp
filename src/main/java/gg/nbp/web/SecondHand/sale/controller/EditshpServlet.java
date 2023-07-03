@@ -44,7 +44,7 @@ public class EditshpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         boolean state = true;
-        resp.setContentType("image/*");
+        resp.setContentType("image/gif");
 
         BufferedReader reader = req.getReader();
         StringBuilder jsonBody = new StringBuilder();
@@ -107,7 +107,7 @@ public class EditshpServlet extends HttpServlet {
         }
 
 
-        shp.setSuccessful(state);
+        shp.setSuccessful(true);
 
         CommonUtil.writepojo2Json(resp, shp);
 

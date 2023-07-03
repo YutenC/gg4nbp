@@ -247,7 +247,20 @@ let imd = [];
 
     function saveSubmit() {
         console.log("更新成功，跳轉頁面");
-        window.location.href = "../manager/sh_productmanage.html";
+
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '商品修改完成',
+            showConfirmButton: false,
+            timer: 1500
+        })
+
+        setTimeout(function() {
+            window.location.href = "../manager/sh_productmanage.html";
+        }, 1800);
+
+        // window.location.href = "../manager/sh_productmanage.html";
     }
 
 
