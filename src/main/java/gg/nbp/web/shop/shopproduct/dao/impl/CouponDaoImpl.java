@@ -9,18 +9,22 @@ import gg.nbp.web.shop.shopproduct.pojo.ProductSelect;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import jakarta.transaction.Transactional;
+
+//import org.hibernate.query.Query;
+//import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
 
 @Repository
-@Transactional
 public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements CouponDao {
 
     @Override
+    @Transactional
     public int update(Coupon coupon) {
         final StringBuilder hql = new StringBuilder()
                 .append("UPDATE Coupon SET ");
@@ -28,17 +32,20 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
         hql.append("discount = :discount,")
                 .append("conditionPrice = :conditionPrice,")
                 .append("deadline = :deadline,")
-                .append("discountCode = :discountCode ")
+                .append("discountCode = :discountCode, ")
+                .append("state = :state ")
                 .append("WHERE id = :id");
 
-        Query<?> query=session.createQuery(hql.toString());
+        Query<?> query = session.createQuery(hql.toString());
+
 
         return query
-                .setParameter("discount",coupon.getDiscount())
-                .setParameter("conditionPrice",coupon.getConditionPrice())
-                .setParameter("deadline",coupon.getDeadline())
-                .setParameter("discountCode",coupon.getDiscountCode())
-                .setParameter("id",coupon.getId())
+                .setParameter("discount", coupon.getDiscount())
+                .setParameter("conditionPrice", coupon.getConditionPrice())
+                .setParameter("deadline", coupon.getDeadline())
+                .setParameter("discountCode", coupon.getDiscountCode())
+                .setParameter("state", coupon.getState())
+                .setParameter("id", coupon.getId())
                 .executeUpdate();
     }
 
@@ -55,7 +62,7 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Coupon> criteriaQuery = criteriaBuilder.createQuery(Coupon.class);
         Root<Coupon> root = criteriaQuery.from(Coupon.class);
-        criteriaQuery.where(criteriaBuilder.equal(root.get("discountCode"),discountCode));
+        criteriaQuery.where(criteriaBuilder.equal(root.get("discountCode"), discountCode));
         Query<Coupon> query = session.createQuery(criteriaQuery);
         query.setMaxResults(1);
         return query.getSingleResult();
@@ -94,7 +101,7 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
                 ProductSelect.Condition condition = daoSelect.getSqlConditions().get(i);
                 if ("limit".equals(condition.getKey())) {
                     Object oValue = condition.getValue();
-                    limit=Integer.valueOf((String)oValue);
+                    limit = Integer.valueOf((String) oValue);
 //                    limit = ((Double) oValue).intValue();
                 } else if ("offset".equals(condition.getKey())) {
                     Object oValue = condition.getValue();
@@ -118,7 +125,7 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
 
         }
 
-        hql = hql + hql2+hql3;
+        hql = hql + hql2 + hql3;
         System.out.println(hql);
         Query<Coupon> query;
         if (limit == -1) {
@@ -132,4 +139,10 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
         }
         return query.getResultList();
     }
+
+//    public TransactionStatus getTransactionState() {
+//
+//        return session.getTransaction().getStatus();
+//    }
+
 }

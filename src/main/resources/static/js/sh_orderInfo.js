@@ -211,7 +211,12 @@ fetch('sh_orderInfo', {
     )
 
 
-
+$('#goBackMem').on("click", function (){
+    window.location.href="../member/member_shordersearch.html"
+})
+$('#goBackMan').on("click", function (){
+    window.location.href="../manager/sh_ordermanage.html"
+})
 
 
 //

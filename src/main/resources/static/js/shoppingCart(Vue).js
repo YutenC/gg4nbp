@@ -1,8 +1,5 @@
 // 常數參數
-const href = window.location.href;
-const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 11);
-const projectFolder = 'http://localhost:8080/gg4nbp';
+const projectFolder = '/gg4nbp';
 
 // 增添商品到購物車內按鈕變化
 
@@ -116,10 +113,31 @@ $('div.addDetail').on('click', 'button', function (e) {
 const byPurchaseLog = Vue.createApp({
     data() {
         return {
-            byPurchaseLog: ''
+            byPurchaseLog: '',
+            month: {
+                Jan: 1,
+                Feb: 2,
+                Mar: 3,
+                Apr: 4,
+                May: 5,
+                Jun: 6,
+                Jul: 7,
+                Aug: 8,
+                Sep: 9,
+                Oct: 10,
+                Nov: 11,
+                Dec: 12
+            }
         }
     },
     methods: {
+        dateFormat: function (dateStr) {
+            let elmArr = dateStr.split(',');
+            let monthKey = elmArr[0].split(' ')[0];
+            let dayKey = elmArr[0].split(' ')[1];
+            let formated = elmArr[1] + ' ' + this.month[monthKey] + '月 ' + dayKey + '日 ' + elmArr[2]
+            return formated;
+        },
         addToCart: function (productId) {
             // 提取商品資訊
             axios.get(projectFolder + '/OrderMaster?getOneProduct=' + productId)
@@ -233,7 +251,7 @@ const shoppingContent = Vue.createApp({
             });
             if (this.shoppingList.length === 0) {
                 Swal.fire('購物車內已無商品，快去逛逛吧!');
-                let newHref = projectHref + '/shopIndex3.html';
+                let newHref = projectFolder + '/shop/shopIndex.html';
                 window.location.replace(newHref);
             }
         },
@@ -263,6 +281,18 @@ const shoppingContent = Vue.createApp({
         couponCondition: function () {
             if (this.resCoupon === '') {
                 return;
+            }
+            if (this.resCoupon.state !== 1) {
+                this.resCoupon = '';
+                this.couponCode = '';
+                Swal.fire('此優惠卷不可使用');
+                return;
+            }
+            let now = new Date();
+            if (now > Date(this.resCoupon.deadline)) {
+                this.resCoupon = '';
+                this.couponCode = '';
+                Swal.fire('此優惠卷代碼已到期');
             }
             if (this.shopTotal < this.resCoupon.conditionPrice) {
                 let conditionPrice = this.resCoupon.conditionPrice;
@@ -348,7 +378,7 @@ const shoppingContent = Vue.createApp({
                 this.orderId = resJson.orderId;
 
                 sessionStorage.setItem("odProducts", JSON.stringify(odProducts));
-                if (res.checkCoupon !== undefined) {
+                if (checkCoupon !== undefined) {
                     sessionStorage.setItem("checkCoupon", JSON.stringify(checkCoupon));
                 }
                 sessionStorage.setItem("usedBonus", usedBonus);
@@ -363,7 +393,7 @@ const shoppingContent = Vue.createApp({
                         event.target.submit();
                     });
                 } else {
-                    window.location.replace(projectHref + '/manager/orderResult(Vue).html')
+                    window.location.replace(projectFolder + '/member/orderResult(Vue).html')
                 }
             }).catch(err => console.log(err))
 
@@ -427,20 +457,22 @@ const promoProduct = Vue.createApp({
     },
     methods: {
         leave: function (location, otherDetail) {
-            sessionStorage.setItem('productId', otherDetail);
-            window.location.replace(projectHref + '/' + location);
+            sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
+            window.location.replace(projectFolder + '/' + location);
         }
     },
     created() {
         const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
         const require = ['productIndexImage'];
-        const req = { sort: sort, required: require };
+        const sqlConditions = [{ key: 'limit', value: this.recomendAmount }];
+        const req = { sort: sort, required: require, sqlConditions: sqlConditions };
         axios({
             method: 'get',
             url: projectFolder + '/shopDispatcher/getAllProductByCondition',
             params: {
                 params: encodeURIComponent(JSON.stringify(req))
             }
-        });
+        }).then(res => this.promoProduct = res.data)
+            .catch(err => console.log(err));
     }
 }).mount('#promoProduct');

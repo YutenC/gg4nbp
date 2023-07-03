@@ -19,6 +19,7 @@ public class Coupon {
 
     @Column(name = "condition_price")
     Integer conditionPrice;
+
     java.util.Date deadline;
 
     @Column(name = "discount_code")

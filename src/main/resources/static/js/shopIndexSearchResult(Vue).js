@@ -1,4 +1,4 @@
-const projectFolder = 'http://localhost:8080/gg4nbp';
+const projectFolder = '/gg4nbp';
 
 const productResults = Vue.createApp({
     data() {
@@ -7,9 +7,10 @@ const productResults = Vue.createApp({
         }
     },
     methods: {
-        leave: function (location, otherDetail) {
-            sessionStorage.setItem('productId', otherDetail);
-            window.location.href = projectHref + '/' + location;
+        leave: function (location, otherDetail, event) {
+            event.preventDefault();
+            sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
+            window.location.href = projectFolder + '/' + location;
         }
     },
     created() {
@@ -27,9 +28,10 @@ const secondProductResults = Vue.createApp({
         }
     },
     methods: {
-        leave: function (location, otherDetail) {
-            sessionStorage.setItem('productId', otherDetail);
-            window.location.href = projectHref + '/' + location;
+        leave: function (location, otherDetail, event) {
+            event.preventDefault();
+            sessionStorage.setItem('prodcutId', otherDetail);
+            window.location.href = projectFolder + '/' + location;
         }
     },
     created() {

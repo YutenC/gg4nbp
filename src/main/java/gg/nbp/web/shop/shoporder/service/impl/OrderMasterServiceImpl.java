@@ -149,15 +149,15 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			switch (commitType) {
 			case "credit":
 				commitTypeSetting = 1;
-				om.setPayStatus(2);
+				om.setPayStatus(1);		// 信用卡預設未付款
 				break;
 			case "transfer":
 				commitTypeSetting = 2;
-				om.setPayStatus(1);
+				om.setPayStatus(1);		// 轉帳預設未付款
 				break;
 			case "onDeliver":
 				commitTypeSetting = 3;
-				om.setPayStatus(3);
+				om.setPayStatus(3);		// 貨到付款預設為貨到付款
 				break;
 			}
 			om.setCommitType(commitTypeSetting);
@@ -174,7 +174,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			
 			om.setDeliverLocation(addressDetail.get("county").toString().replace("\"", "") + addressDetail.get("address").toString().replace("\"", ""));
 
-			Integer productPrice = 0;	// 檢核消費是否達優惠券門檻
+			Integer productPrice = 0;	// 檢核消費是否達優惠券門檻，先計算消費金額
 			for (TransOrderProduct trObj : trObjList) {
 				if (trObj.isChecked() == true) {
 					TransOrderProduct checkProduct = getOneProduct(trObj.getProductId());
@@ -187,16 +187,22 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				checkCoupon = cService.getCouponByDiscountCode(couponCode);  // 根據優惠卷代碼取得優惠卷物件
 			} 
 			
-			Integer couponDiscount = 0;	// 有取得符合條件的優惠券物件，且消費額度大於門檻
-			if (checkCoupon != null && checkCoupon.getConditionPrice() < productPrice) {
-				couponDiscount = checkCoupon.getDiscount();
+			Integer couponDiscount = 0;	
+			if (checkCoupon != null && checkCoupon.getState() == 1) {  // 有取得符合條件的優惠券物件，且消費額度大於門檻
+				Date now = new Date();
+				if (now.getTime() < checkCoupon.getDeadline().getTime() &&
+						checkCoupon.getConditionPrice() < productPrice) {  // 優惠券未到期且達門檻
+					couponDiscount = checkCoupon.getDiscount();
+				}
 			}
+			
+				
 			
 			Integer usedbonus = 0;	// 確保所輸入的紅利點數未超過會員所持有量
 			if (bonus != null && bonus.trim().length() != 0) {
 				usedbonus = Integer.valueOf(bonus.trim());
-				if (usedbonus < (member.getBonus() == null? 0: member.getBonus())) {
-					usedbonus = 0;
+				if (usedbonus > (member.getBonus() == null? 0: member.getBonus())) {
+					usedbonus = Integer.parseInt(member.getBonus().toString());
 				}
 			}
 			
@@ -206,12 +212,12 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				om.setCouponId(checkCoupon.getId());
 			} else {							// 會員選擇使用紅利折抵
 				totalPrice = productPrice - usedbonus;
-				om.setBonusUse(usedbonus);
 			}
+			om.setBonusUse(usedbonus);
 			
 			om.setTotalPrice(totalPrice);
 			
-			om.setOrderStatus(1);  // 預設固定為未付款
+			om.setOrderStatus(1);  // 預設訂單狀態為已成立
 
 			return om;
 		} catch (Exception e) {

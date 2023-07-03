@@ -67,15 +67,8 @@ public class OrderMasterController extends HttpServlet {
     	res.setCharacterEncoding("UTF-8");
     	res.setContentType("application/json");
     	PrintWriter pw = res.getWriter();
-
-    	Member login = new Member();
-		login.setAccount("Black");
-		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
-		
-		Member mber = memberService.login(login);
 		
 		HttpSession httpSession = req.getSession();
-		httpSession.setAttribute("member", mber);
 		
 		if (httpSession.getAttribute("member") == null) {
 			res.sendRedirect("/gg4nbp");
@@ -307,12 +300,6 @@ public class OrderMasterController extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 		
 		HttpSession httpSession = req.getSession();
-		
-		Member login = new Member();
-		login.setAccount("Black");
-		login.setPassword("fcea920f7412b5da7be0cf42b8c93759");
-		Member mber = memberService.login(login);
-		httpSession.setAttribute("member", mber);
 		
 		if (httpSession.getAttribute("member") == null) {
 			res.sendRedirect("/gg4nbp");

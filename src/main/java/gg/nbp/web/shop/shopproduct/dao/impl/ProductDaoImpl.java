@@ -8,6 +8,7 @@ import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     @PersistenceContext
     private Session session;
 
+    @Transactional
     @Override
     public int update(Product product) {
         final StringBuilder hql = new StringBuilder()
@@ -33,6 +35,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .append("rate = :rate,")
                 .append("revieweCount = :revieweCount,")
                 .append("content = :content,")
+                .append("state = :state, ")
                 .append("launchTime = :launchTime ");
 
         if (product.getTakeoffTime() != null) {
@@ -52,6 +55,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .setParameter("rate", product.getRate())
                 .setParameter("revieweCount", product.getRevieweCount())
                 .setParameter("content", product.getContent())
+                .setParameter("state", product.getState())
                 .setParameter("launchTime", product.getLaunchTime())
                 .setParameter("id", product.getId());
 
@@ -237,6 +241,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .executeUpdate();
     }
 
+    @Transactional
     @Override
     public int updateProductState(Product product) {
         final StringBuilder hql = new StringBuilder()

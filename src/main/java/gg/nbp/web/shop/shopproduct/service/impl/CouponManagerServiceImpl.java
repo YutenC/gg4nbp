@@ -17,10 +17,15 @@ import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.redisdao.CouponActivityRedisDao;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
+import gg.nbp.web.shop.shopproduct.service.EmailService;
 import gg.nbp.web.shop.shopproduct.util.*;
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -41,17 +46,60 @@ public class CouponManagerServiceImpl implements CouponManagerService {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    EmailService emailService;
     public CouponManagerServiceImpl() {
     }
 
+
+
     @Override
-//    @Transactional
+    public List<CouponActivity> getAllCouponActivity() throws RuntimeException {
+        return  couponActivityRedisDao.getAllCouponActivity();
+    }
+
+    @Override
+    public List<CouponActivity> getCouponActivityByCondition(DaoConditionSelect daoConditionSelect) throws RuntimeException {
+        List<Coupon> coupons= couponDao.selectByCondition(daoConditionSelect);
+        List<CouponActivity> couponActivities= couponActivityRedisDao.getCouponActivitiesByCoupons(coupons);
+        return couponActivities;
+    }
+
+
+
+    @Override
+    public CouponActivity getCouponActivityByCouponId(Integer couponId) {
+        return couponActivityRedisDao.getCouponActivityByCouponId(couponId);
+    }
+
+    @Override
+    public List<CouponMember> getCouponMemberInfo() {
+        List<Member> members= memberService.findAll();
+
+        List<CouponMember> couponMembers=new ArrayList<>();
+
+        for(Member member : members){
+            couponMembers.add(new CouponMember(member.getAccount(),member.getEmail()));
+        }
+
+        return couponMembers;
+    }
+
+
+    @Override
+    public List<CouponActivity> searchCouponActivity() {
+        return null;
+    }
+
+
+    @Override
     public void generateCouponActivity() {
         for (int i = 0; i < 10; i++) {
             CouponActivity couponActivity = new CouponActivity("Activity " + i, "MF");
             couponActivity.setCoupon(genFixCouponData(i));//genCouponData()
             addCouponActivity(couponActivity);
-            setAutoCouponState(couponActivity.getCoupon());
+//            setAutoCouponState(couponActivity.getCoupon());
         }
     }
 
@@ -74,35 +122,13 @@ public class CouponManagerServiceImpl implements CouponManagerService {
     }
 
     @Override
-//    @Transactional
-    public List<CouponActivity> getAllCouponActivity() throws RuntimeException {
-        return  couponActivityRedisDao.getAllCouponActivity();
-    }
-
-    @Override
-    public List<CouponActivity> getCouponActivityByCondition(DaoConditionSelect daoConditionSelect) throws RuntimeException {
-        List<Coupon> coupons= couponDao.selectByCondition(daoConditionSelect);
-        List<CouponActivity> couponActivities= couponActivityRedisDao.getCouponActivitiesByCoupons(coupons);
-        return couponActivities;
-    }
-
-
-
-    @Override
-//    @Transactional
-    public CouponActivity getCouponActivityByCouponId(Integer couponId) {
-        return couponActivityRedisDao.getCouponActivityByCouponId(couponId);
-    }
-
-    @Override
-    public List<CouponActivity> searchCouponActivity() {
-        return null;
-    }
-
-    @Override
-//    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateCouponActivity(CouponActivity couponActivity) {
         Coupon coupon = couponActivity.getCoupon();
+
+//        System.out.println("TransactionState: "+couponDao.getTransactionState());
+
+
         couponDao.update(coupon);
 
         RedisContent redisService = new RedisContent() {
@@ -116,6 +142,26 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         };
         RedisFactory.getRedisServiceInstance().registerRedisService(redisService);
     }
+
+
+    @Override
+    @Transactional
+    public void publishCouponActivity(Integer couponId) {
+
+        Coupon coupon=  publishCouponActivity_1(couponId);
+        setAutoCouponState(coupon);
+    }
+
+    public Coupon publishCouponActivity_1(Integer couponId){
+        Coupon coupon= couponService.getCouponById(couponId);
+        CouponActivity couponActivity=couponActivityRedisDao.getCouponActivityByCouponId(couponId);
+        coupon.setState(CouponState.publish.getValue());
+        couponActivity.setCoupon(coupon);
+        updateCouponActivity(couponActivity);
+
+        return coupon;
+    }
+
 
     @Override
     public boolean deleteCoupon(Integer couponId) {
@@ -135,30 +181,6 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         return true;
     }
 
-    @Override
-    public List<CouponMember> getCouponMemberInfo() {
-        List<Member> members= memberService.findAll();
-
-        List<CouponMember> couponMembers=new ArrayList<>();
-
-        for(Member member : members){
-            couponMembers.add(new CouponMember(member.getAccount(),member.getEmail()));
-        }
-
-        return couponMembers;
-    }
-
-    @Override
-//    @Transactional
-    public void publishCouponActivity(Integer couponId) {
-        Coupon coupon= couponService.getCouponById(couponId);
-        CouponActivity couponActivity=couponActivityRedisDao.getCouponActivityByCouponId(couponId);
-        coupon.setState(CouponState.publish.getValue());
-        couponActivity.setCoupon(coupon);
-        updateCouponActivity(couponActivity);
-
-        setAutoCouponState(coupon);
-    }
 
     @Override
     public ResponseMsg sendEmail(int action, List<CouponMember> couponMembers) {
@@ -174,7 +196,8 @@ public class CouponManagerServiceImpl implements CouponManagerService {
                             System.out.println("send email"+couponMembers_.get(i).getEmail());
                         }
 
-                        Thread.sleep(5000);
+//                        emailService.sendMessage("labdesos@gmail.com","test","testtest");
+                        Thread.sleep(3000);
 
                         return "ok";
                     }
@@ -229,20 +252,23 @@ public class CouponManagerServiceImpl implements CouponManagerService {
 
 
     public void setAutoCouponState(Coupon coupon){
-        List<Coupon> coupons= couponDao.selectAll();
-
         SchedulerTasks schedulerTasks=  SchedulerFactory.getSchedulerTasks("autoCouponState");
 
+
         TimerTask timerTask= new TimerTask() {
+
             @Override
-//            @Transactional
             public void run() {
                 Coupon coupon_=coupon;
+
                 CouponActivity couponActivity=couponActivityRedisDao.getCouponActivityByCouponId(coupon_.getId());
                 coupon_.setState(CouponState.inValid.getValue());
                 couponActivity.setCoupon(coupon_);
                 updateCouponActivity(couponActivity);
-                System.out.println("setAutoCouponState: "+coupon_.getId()+"failed");
+                System.out.println("setAutoCouponState: "+coupon_.getId()+" failed");
+
+                RedisFactory.getRedisServiceInstance().process();
+                RedisFactory.clear();
 
                 cancel();
                 SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("autoCouponState");
@@ -255,6 +281,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         schedulerTasks.addTimerTask("coupon"+coupon.getId(),schedulerEntity);
     }
 
+
     private Coupon genFixCouponData(Integer index){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar cal = new GregorianCalendar();
@@ -262,7 +289,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         String date = simpleDateFormat.format(cal.getTime());
         java.sql.Date deadline = java.sql.Date.valueOf(date);
 
-        cal.setTimeInMillis(cal.getTimeInMillis() - 10 * 24 * 60 * 60 * 1000);
+        cal.setTimeInMillis(cal.getTimeInMillis() - 50L * 24 * 60 * 60 * 1000);
         date = simpleDateFormat.format(cal.getTime());
         java.sql.Date failedDeadline=java.sql.Date.valueOf(date);
         Coupon coupon;
@@ -280,16 +307,16 @@ public class CouponManagerServiceImpl implements CouponManagerService {
                 coupon = new Coupon(150, 2000, failedDeadline, "Qb56BGFO90",0);
                 break;
             case 4:
-                coupon = new Coupon(100, 500, deadline, "Qb77XCVO22",0);
+                coupon = new Coupon(100, 500, failedDeadline, "Qb77XCVO22",0);
                 break;
             case 5:
-                coupon = new Coupon(100, 1000, deadline, "Qb345XZO67",0);
+                coupon = new Coupon(100, 1000, failedDeadline, "Qb345XZO67",0);
                 break;
             case 6:
-                coupon = new Coupon(200, 1500, deadline, "Qb875IRO93",0);
+                coupon = new Coupon(200, 1500, failedDeadline, "Qb875IRO93",0);
                 break;
             case 7:
-                coupon = new Coupon(300, 3000, deadline, "Qb345VBO67",0);
+                coupon = new Coupon(300, 3000, failedDeadline, "Qb345VBO67",0);
                 break;
             case 8:
                 coupon = new Coupon(100, 600, deadline, "Qb245DYO88",0);

@@ -16,7 +16,20 @@ const memberOrder = Vue.createApp({
             filterSelect: '1',
             offset: 0,
             listLength: 0,
-
+            month: {
+                Jan: 1,
+                Feb: 2,
+                Mar: 3,
+                Apr: 4,
+                May: 5,
+                Jun: 6,
+                Jul: 7,
+                Aug: 8,
+                Sep: 9,
+                Oct: 10,
+                Nov: 11,
+                Dec: 12
+            }
         }
     },
     methods: {
@@ -64,6 +77,13 @@ const memberOrder = Vue.createApp({
             }
             Swal.fire(msg);
         },
+        dateFormat: function (dateStr) {
+            let elmArr = dateStr.split(',');
+            let monthKey = elmArr[0].split(' ')[0];
+            let dayKey = elmArr[0].split(' ')[1];
+            let formated = elmArr[1] + ' ' + this.month[monthKey] + '月 ' + dayKey + '日 ' + elmArr[2]
+            return formated;
+        },
         renewListWithSelect: function () {
             this.offset = 0;
             axios.get(projectFolder + '/OrderMaster?memberAll=0&criteria=' + this.filterSelect)
@@ -94,6 +114,12 @@ const memberOrder = Vue.createApp({
             $(event.target).closest('.rankDetail').find('input').prop('disabled', true);
             $(event.target).closest('.rankDetail').find('textarea.commentContent').prop('disabled', true);
             $(event.target).prop('disabled', true);
+
+            for (let i = 0; i < this.orders.length; i++) {
+                if (this.orders[i].orderMaster.orderId === orderId) {
+                    this.orders[i].trList.comment = comment;
+                }
+            }
         },
     },
     created() {

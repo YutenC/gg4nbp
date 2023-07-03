@@ -65,7 +65,7 @@ public class OrderMaster implements java.io.Serializable{
 	private Integer couponId;
 	
 	@Column(name = "ORDER_STATUS")
-	private Integer orderStatus;	// 訂單狀態：1成立 2取消
+	private Integer orderStatus;	// 訂單狀態：1成立 2取消 3申請取消 4申請退貨
 	
 	@Column(name = "PAY_STATUS")
 	private Integer payStatus;		// 付款狀態：1待付款 2已付款 3貨到付款

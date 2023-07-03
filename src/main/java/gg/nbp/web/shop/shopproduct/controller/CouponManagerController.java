@@ -12,6 +12,8 @@ import gg.nbp.web.shop.shopproduct.util.ConvertJson;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 //import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -70,6 +72,7 @@ public class CouponManagerController {
         return "";
     }
 
+    @Transactional
     public String updateCouponActivity(String newCouponActivity) {
         Gson gson = new Gson();
         CouponActivity couponActivity = gson.fromJson(newCouponActivity, CouponActivity.class);
@@ -100,6 +103,8 @@ public class CouponManagerController {
         return ConvertJson.toJson(responseMsg);
     }
 
+//    @Transactional
+//@Transactional(propagation = Propagation.NESTED)
     public String publishCouponActivity(Integer couponId) {
         couponManagerService.publishCouponActivity(couponId);
         ResponseMsg responseMsg=new ResponseMsg.Builder().setState("ok").build();
