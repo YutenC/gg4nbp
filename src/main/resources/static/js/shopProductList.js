@@ -93,6 +93,7 @@ const vm = Vue.createApp({
 
         // },
         addFollow: function (index, id) {
+
             axios({
                 method: "Get",
                 url: host_context + "shopDispatcher/addFollow",

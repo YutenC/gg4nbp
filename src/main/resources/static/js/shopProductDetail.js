@@ -20,7 +20,8 @@ const vm = Vue.createApp({
             buyAmount: 1,
             comments: '',
             smallImageIndex: 0,
-            isHistoryAreaHidden: true
+            isHistoryAreaHidden: true,
+            productScore: ""
         };
     },
     created() {
@@ -189,6 +190,17 @@ function getProductDetail() {
             vm.productDetail = value.data;
             vm.product = vm.productDetail.product;
             vm.ProductDetail_id = ProductDetail_id;
+
+            if (vm.product.revieweCount != 0) {
+                let score = vm.product.rate / (vm.product.revieweCount * 5.0);
+                score = score * 5;
+                // score = Math.round10(score, -2);
+                vm.productScore = score + "/5";
+            }
+            else {
+                vm.productScore = "尚無評價分數"
+            }
+
             getProductHistory();
             console.log("getProductById then");
 

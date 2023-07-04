@@ -344,12 +344,10 @@
                         <ul class="contentTab">
 
                             <li v-for="(item,index) in mainguideContent" :key="index">
-
                                 <a v-if="item.flag" href="" :data-target="'tab' + (index+1) " class="tab -on"
                                     @click="changeMainContent((index+1),$event)">{{item.text}}</a>
                                 <a v-else href="" :data-target="'tab' + (index+1) " class="tab"
                                     @click="changeMainContent((index+1),$event)">{{item.text}}</a>
-
                             </li>
 
                             <!-- <li><a href="#" data-target="tab1" class="tab -on"
@@ -408,8 +406,10 @@
                     </div>
 
                     <div class="contentPage" v-else-if="currentMainguideContent==2">
-                        <ul>
 
+                        <div>商品評價分數: {{productScore}}</div>
+                        <div>商品評價: </div>
+                        <ul>
                             <li v-for="(item,index) in comments" :key="index">
                                 <div>{{item.commentContent}}</div>
                             </li>
