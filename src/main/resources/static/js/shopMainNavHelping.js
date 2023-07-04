@@ -16,7 +16,7 @@ if (loginStatus === null) {
 // 點選購物車時進行檢核
 $('.helping').on('click', 'a#goCart', function (event) {
     event.preventDefault();
-    axios.post(projectFolder + '/memberGetPictureServlet')
+    axios.post(projectFolder + '/ShoppingList')
         .then(res => {
             if (!res.data.successful) {
                 let timerInterval
@@ -55,6 +55,7 @@ $('.gobuylist').on('click', e => {
         headers: { 'Content-Type': 'application/json' }
     })
         .then(resp => {
+            console.log(resp);
             if (resp.redirected == true) {
                 let timerInterval
                 Swal.fire({

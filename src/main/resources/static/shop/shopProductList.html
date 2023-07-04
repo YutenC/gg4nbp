@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="../css/shopLeftAsideBar.css">
     <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
     <link rel="stylesheet" href="../fonts/font-awesome.min.css">
+    <script src="../js/projectFolder.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -158,6 +161,19 @@
             font-weight: bold;
         }
 
+        .innerFunc {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .innerFunc button {
+            border-radius: 5px;
+        }
+
+        .innerFunc input {
+            border-radius: 5px;
+        }
+
         main {
             width: 80%;
             font-size: 16px;
@@ -268,67 +284,68 @@
 <body>
     <header id="header_el">
         <nav class="subNav">
-            <div class="contact"><a href=""><img class="icons" src="../img/icon/square-envelope-solid.svg" alt=""></a><a
-                    href=""><img class="icons" src="../img/icon/square-facebook.svg" alt=""></a><a href=""><img
-                        class="icons" src="../img/icon/square-instagram.svg" alt=""></a></div>
+            <div class="contact">
+                <!-- <a href=""><img class="icons" src="../img/icon/square-envelope-solid.svg" alt=""></a>
+                <a href=""><img class="icons" src="../img/icon/square-facebook.svg" alt=""></a>
+                <a href=""><img class="icons" src="../img/icon/square-instagram.svg" alt=""></a> -->
+            </div>
         </nav>
         <nav class="mainNav">
-            <a href="./shopProductList.html" class="logo"><img src="../img/Logo-removebg.png" alt=""></a>
+            <a href="/gg4nbp/index.html" class="logo"><img src="../img/Logo-removebg.png" alt=""></a>
             <ul class="productline">
                 <li>
                     <div class="dropdown">
-                        <a href="./shopProductList.html?type=NS" class="dropbtn">NS</a>
+                        <a href="shopProductList.html?type=NS" class="dropbtn">NS</a>
                     </div>
                 </li>
                 <li>
                     <div class="dropdown">
-                        <a href="./shopProductList.html?type=PS" class="dropbtn">PS</a>
+                        <a href="shopProductList.html?type=PS" class="dropbtn">PS</a>
                     </div>
                 </li>
                 <li>
                     <div class="dropdown">
-                        <a href="./shopProductList.html?type=XBOX" class="dropbtn">XBOX</a>
+                        <a href="shopProductList.html?type=XBOX" class="dropbtn">XBOX</a>
                     </div>
                 </li>
                 <li>
                     <div class="dropdown">
-                        <a href="../secondhand/SecondHand_MainView.html" class="dropbtn">二手交易</a>
+                        <a href="" class="dropbtn">二手交易</a>
+                        <div class="dropdown-content">
+                            <a href="/gg4nbp/secondhand/SecondHand_MainView.html">購買二手商品</a>
+                            <a href="" class="gobuylist">我要販售二手商品</a>
+                        </div>
                     </div>
                 </li>
                 <li>
-                    <!-- <form action="#" class="search">
-                        <select name="productCondition" class="productCondition">
-                            <option value="new">新品</option>
-                            <option value="secondhand">二手商品</option>
-                        </select>
-                        <input type="text" v-model.lazy="searchText" placeholder="請輸入商品名稱或關鍵字">
-                        <button class="searchicon" @click="searchProducts()">
+                    <form action="" class="search">
+                        <input name="keyword" class="searchinput" type="text" placeholder="請輸入商品名稱或關鍵字">
+                        <button type="submit" class="searchicon">
                             <img class="icons" src="../img/icon/magnifying-glass-solid.svg" alt=""></button>
-                    </form> -->
-                    <div class="search">
-                        <input type="text" v-model.lazy="searchText" placeholder="請輸入商品名稱或關鍵字">
-                        <button class="searchicon" @click="searchProducts()">
-                            <img class="icons" src="../img/icon/magnifying-glass-solid.svg" alt=""></button>
-                    </div>
+                    </form>
                 </li>
             </ul>
             <div class="helping">
                 <div>
                     <div class="centerFunc">
-                        <a href="">
+                        <a href="/gg4nbp/article/article_main.html">
                             <img class="bigicon" src="../img/icon/newspaper-regular.svg" alt="">
                             <span>論壇社群</span>
                         </a>
-                        <a href="../activity/act_finder.html">
+                        <a href="/gg4nbp/activity/act_finder2.html">
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
-                        <a href="" onClick="testLong(event)">
+                        <a href="/gg4nbp/member_login.html" id="login">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
                             <span>會員登入</span>
                         </a>
+                        <a href="/gg4nbp/member/member_home.html" id="memberCenter">
+                            <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
+                            <span>會員中心</span>
+                        </a>
                     </div>
-                    <a href="../member/shoppingCart(Vue).html">
+                    <a href="" id="goCart">
                         <img class="bigicon" src="../img/icon/cart-shopping-solid.svg" alt="">
                         <span>購物車</span>
                     </a>
@@ -342,44 +359,51 @@
         </nav>
     </header>
     <div class="shopmain">
+        <div class="miniMenu">
+            <div class="miniMenuContent">
+                <div class="miniMenuBut">
+                    <a href="" class="goTop" @click="goTop"><img src="../img/icon/square-caret-up-regular.svg"
+                            alt="回到頂端"></a>
+                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
+                            @mouseenter="historymouseenter($event.targer)"></a>
+                    <a href="" class="shoppingCart" @click="goCart"><img src="../img/icon/cart-shopping-solid.svg"
+                            alt="購物車"></a>
+                </div>
+                <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
+                    @mouseleave="historymouseleave($event.targer)">
+                    <div v-for="item in productHistory">
+                        <button style="font-size: 0.75rem;"
+                            @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <aside class="sidebar">
             <div class="brandlist" @click="getProductByType(enumPageCurrentType.NS)">
                 <span class="N_brand">
                     Nitendo
                 </span>
-                <div class="brandItem">
-                    <div class="listtype"><span>主機</span></div>
-                    <div class="listtype"><span>手把</span></div>
-                    <div class="listtype"><span>卡帶</span></div>
-                    <div class="listtype"><span>周邊</span></div>
-                </div>
             </div>
-
             <div class="brandlist" @click="getProductByType(enumPageCurrentType.XBOX)">
                 <span class="B_brand">
                     XBOX
                 </span>
-                <div class="brandItem">
-                    <div class="listtype"><span>主機</span></div>
-                    <div class="listtype"><span>手把</span></div>
-                    <div class="listtype"><span>遊戲片</span></div>
-                    <div class="listtype"><span>周邊</span></div>
-                </div>
             </div>
             <div class="brandlist" @click="getProductByType(enumPageCurrentType.PS)">
                 <span class="P_brand">
                     PlayStation
                 </span>
-                <div class="brandItem">
-                    <div class="listtype"><span>主機</span></div>
-                    <div class="listtype"><span>手把</span></div>
-                    <div class="listtype"><span>遊戲片</span></div>
-                    <div class="listtype"><span>周邊</span></div>
-                </div>
             </div>
         </aside>
         <main>
-            <button @click="salseNumberBtn()">銷售量</button>
+            <div class="innerFunc">
+                <button @click="salseNumberBtn()">依銷售量排序</button>
+                <div class="search">
+                    <input type="text" v-model.lazy="searchText" placeholder="搜尋一般商城商品">
+                    <button class="searchicon" @click="searchProducts()">
+                        <img class="icons" src="../img/icon/magnifying-glass-solid.svg" alt=""></button>
+                </div>
+            </div>
             <div class="productShowcase">
                 <ul>
                     <template v-for="(item,index) in products">
@@ -401,51 +425,10 @@
                             </div>
                         </li>
                     </template>
-                    <!-- <li v-for="item in products">
-                        <a href="">
-                            <img src="../img/gameSoftware/Nitendo/Zelda/81e40b6f7d7f88d24e680c7ddc1kz8f5.jpg"
-                                alt="商品圖片">
-                        </a>
-                        <a href="" class="productname">
-                            商品名稱：薩爾達傳說df ddsfdfdsfsfdfssssssssssssssssssssss
-                        </a>
-                        <div>
-                            <button>直接購買</button>
-                            <button><img src="../img/icon/cart-shopping-solid.svg" alt=""></button>
-                            <button><img src="../img/icon/heart-regular.svg" alt=""></button>
-                        </div>
-                    </li> -->
-
                 </ul>
             </div>
         </main>
-        <div class="miniMenu">
-            <div class="miniMenuContent">
-                <!-- <div class="viewRecord">
-                    <a href=""><img
-                            src="../img/gameSoftware/Nitendo/NoPlaceLikeHome/8d49654f86cee337e2a7317d031l9ro5.jpg"
-                            alt=""></a>
-                    <a href=""><img src="../img/peripherals/Nintendo/Zelda/335ced22c1dbccd628a4001e9a1l4xo5.jpg"
-                            alt=""></a>
-                    <a href=""><img src="../img/peripherals/Nintendo/Zelda/4262aa92a53a61f67e57e46e0b1l4tv5.jpg"
-                            alt=""></a>
-                </div> -->
-                <div class="miniMenuBut">
-                    <a href="" class="goTop"><img src="../img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
-                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
-                            @mouseenter="historymouseenter($event.targer)"
-                            @mouseleave="historymouseleave($event.targer)"></a>
-                    <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a>
-                </div>
 
-                <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}">
-                    <div v-for="item in productHistory">
-                        <button style="font-size: 0.75rem; ">{{item.productName}}</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </div>
     <footer id="footerpad">
         <div class="container">
@@ -504,8 +487,6 @@
         })
     </script>
 
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="../js/shopProductList.js"></script>
     <!-- <script type="module" src="../js/shopProductList2.js"></script> -->
 </body>

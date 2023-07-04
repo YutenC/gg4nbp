@@ -48,6 +48,7 @@ public class ShoppingListController extends HttpServlet {
 		} else {
 			Member failLogin = new Member();
 			failLogin.setSuccessful(false);
+			failLogin.setMessage("/gg4nbp/member_login.html");
 			pw.println(gson.toJson(failLogin));
 			return;
 		}
@@ -84,6 +85,7 @@ public class ShoppingListController extends HttpServlet {
 		if (httpSession.getAttribute("member") == null) {
 			Member failLogin = new Member();
 			failLogin.setSuccessful(false);
+			failLogin.setMessage("/gg4nbp/member_login.html");
 			pw.println(gson.toJson(failLogin));
 			return;
 		}

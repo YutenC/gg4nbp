@@ -213,6 +213,11 @@
             margin: 5px;
         }
 
+        span.tks {
+            background-color: #FFED85;
+            color: blue;
+        }
+
         /* --------------------------------------------------------------------------------------------- */
     </style>
 </head>
@@ -482,7 +487,7 @@
                                                                 :disabled="od.comment > 0" v-if="!od.comment">
                                                                 送出評價
                                                             </button>
-                                                            <span v-if="od.comment > 0">
+                                                            <span v-if="od.comment > 0" class="tks">
                                                                 感謝您的寶貴意見
                                                             </span>
                                                         </div>

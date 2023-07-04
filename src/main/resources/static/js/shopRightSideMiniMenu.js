@@ -37,7 +37,7 @@ const miniMenuContent = Vue.createApp({
         },
         goCart(event) {
             event.preventDefault();
-            axios.post(projectFolder + '/memberGetPictureServlet')
+            axios.post(projectFolder + '/ShoppingList')
                 .then(res => {
                     if (!res.data.successful) {
                         let timerInterval
