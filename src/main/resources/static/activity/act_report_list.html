@@ -205,7 +205,7 @@
   <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center"></a>
-      <a href="#" style="width: 180px;height: 103.19px;">
+      <a href="../index.html" style="width: 180px;height: 103.19px;">
         <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
       </a>
       <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
@@ -213,53 +213,44 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto" id="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" data-bss-hover-animate="pulse" href="#"
+            <a class="nav-link active" data-bss-hover-animate="pulse" href="../shop/shopIndex(Vue).html"
                style="border-width: 20px;margin-top: 10px;">
               <img src="../img/gamepad-solid.svg">商城中心
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+            <a class="nav-link" data-bss-hover-animate="pulse" href="../sh_shop/sh_MainView.html"
                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
               <img src="../img/dice-solid.svg">二手商城
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
-               style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="#">
-              <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
-                   style="height: 50px;">論壇社群
+               style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);"
+               href="../acticle/article_main.html">
+              <img class="d-flex mx-auto" src="../img/newspaper-regular.svg" style="height: 50px;">論壇社群
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bss-hover-animate="pulse" href="#"
+            <a class="nav-link" data-bss-hover-animate="pulse" href="../activity/act_finder.html"
                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
               <img src="../img/champagne-glasses-solid.svg">活動專區
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" data-bss-hover-animate="pulse" href="./member_home.html"
+            <a class="nav-link active" data-bss-hover-animate="pulse" href="../member/member_home.html"
                style="margin-top: 10px;">
               <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
                    style="height: 50px;">會員中心
             </a>
           </li>
-          <li class="nav-item" style="height: 80px;">
-            <a class="nav-link" data-bss-hover-animate="pulse" href="#service_center"
-               style="margin-top: 20px;color: var(--bs-dark);">
-              <img class="d-xl-flex mx-auto" src="../img/handshake-simple-solid.svg"
-                   style="height: 40px;">客服中心
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
-               href="#service_center"
-               style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
-              <div id="member_pic-1" class="avatar-bg center"
-                   style="width: 60px;height: 60px;margin-left: 0px;"></div>登出
-            </a>
+          <li class="nav-item login">
+            <a class="nav-link active" data-bss-hover-animate="pulse" href="../member_login.html"
+               style="margin-top: 10px;">
+              <img class="d-flex mx-auto align-items-xl-center" src="../img/user-regular.svg"
+                   style="height: 50px;">會員登入</a>
           </li>
         </ul>
         <footer id="footerpad-1"></footer>
@@ -267,6 +258,7 @@
     </div>
   </nav>
 </header>
+
 
     <script>// 假設您使用的是瀏覽器的開發者工具的 JavaScript 控制台
 
