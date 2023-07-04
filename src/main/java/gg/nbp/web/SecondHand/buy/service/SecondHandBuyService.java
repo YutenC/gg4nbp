@@ -29,6 +29,6 @@ public interface SecondHandBuyService extends CoreService {
 	
 	public List<BuyEvent>  update4Mem(BuyEvent be, Member member) throws SQLException;
 	
-	
+	public void clearEvent();
 	
 }

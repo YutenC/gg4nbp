@@ -44,7 +44,9 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 	public SecondhandBuylist selectById(Integer id) {
 		final String sql = "SELECT * FROM secondhand_buylist where buylist_id = :id  ";
 		return selectImage(
-				session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("id", id).getSingleResult());
+				session.createNativeQuery(sql, SecondhandBuylist.class)
+					   .setParameter("id", id)
+					   .getSingleResult());
 	}
 
 	@Override
@@ -89,7 +91,8 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 	}
 
 	private List<SecondhandBuylist> selectImages(List<SecondhandBuylist> list) {
-		list.stream().forEach(el -> el.setImage(daoPic.selectBylistId(el.getBuylistId())));
+		list.stream()
+			.forEach(el -> el.setImage(daoPic.selectBylistId(el.getBuylistId())));
 		return list;
 	}
 }

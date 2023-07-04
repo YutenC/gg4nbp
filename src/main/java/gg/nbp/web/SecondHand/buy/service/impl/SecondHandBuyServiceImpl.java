@@ -119,7 +119,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)
-			throw new SQLException();
+			throw new NullPointerException();
 
 		/* 回傳 */
 		return listDTO;
@@ -150,13 +150,12 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
-		for (SecondhandBuylist sl : dao.selectByName(name)) {
-			listDTO.add(new BuyEvent(sl,daoMember));
-		}
+		dao.selectByName(name).stream()
+							  .forEach(sl -> listDTO.add(new BuyEvent(sl,daoMember)));
 		
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)
-			throw new SQLException();
+			throw new NullPointerException();
 		
 		/* 回傳 */
 		return listDTO;
@@ -177,13 +176,13 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
-		for (SecondhandBuylist sl : dao.selectByName4Member(name,member.getMember_id())) {
-			listDTO.add(new BuyEvent(sl,daoMember));
-		}
+		dao.selectByName4Member(name,member.getMember_id()).stream()
+														   .forEach(sl -> listDTO.add(new BuyEvent(sl,daoMember)));
+		
 		
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)
-			throw new SQLException();
+			throw new NullPointerException();
 		
 		/* 回傳 */
 		return listDTO;
@@ -211,6 +210,17 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 			throw new SQLException();
 		dao.update(BuyEvent.trans4Mem(be, dao));
 		return searchById(be.getEventId());
+	}
+	
+	
+	
+	@Transactional
+	@Override
+	public void clearEvent(){
+		System.out.println("即將執行每日清掃工作 : 清除未完成二手收購申請");
+		dao.selectAll().stream()
+					   .filter(p -> p.getApprovalState().equals("7"))
+					   .forEach(el -> dao.deleteById(el.getBuylistId()));
 	}
 	
 	

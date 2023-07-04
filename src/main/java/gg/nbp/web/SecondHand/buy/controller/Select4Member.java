@@ -74,7 +74,9 @@ public class Select4Member extends HttpServlet {
 		}
 		
 		File src = new File(Constant.SAVE_URL + eventId + "/" + imgName);
-		
+		if(!src.exists()) {
+			src = new File(Constant.SAVE_URL + "/Nofound.png");
+		}
 		
 		
 		try (ServletOutputStream out = resp.getOutputStream();BufferedInputStream bis = new BufferedInputStream(new FileInputStream(src))){
