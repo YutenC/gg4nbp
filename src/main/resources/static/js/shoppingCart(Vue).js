@@ -286,12 +286,12 @@ const shoppingContent = Vue.createApp({
                 return;
             }
             let now = new Date();
-            if (now > new Date(this.resCoupon.deadline)) {
+            if (now > new Date(this.resCoupon.deadline)) {  // 確認到期
                 this.resCoupon = '';
                 this.couponCode = '';
                 Swal.fire('此優惠卷代碼已到期');
             }
-            if (this.shopTotal < this.resCoupon.conditionPrice) {
+            if (this.shopTotal < this.resCoupon.conditionPrice) {  // 確認消費門檻
                 let conditionPrice = this.resCoupon.conditionPrice;
                 this.resCoupon = '';
                 this.couponCode = '';
