@@ -463,7 +463,8 @@ const promoProduct = Vue.createApp({
         const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
         const require = ['productIndexImage'];
         const sqlConditions = [{ key: 'limit', value: this.recomendAmount }];
-        const req = { sort: sort, required: require, sqlConditions: sqlConditions };
+        const conditions = [{ key: "state", value: 1 }];
+        const req = { sort: sort, required: require, sqlConditions: sqlConditions, conditions: conditions };
         axios({
             method: 'get',
             url: projectFolder + '/shopDispatcher/getAllProductByCondition',
