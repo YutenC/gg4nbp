@@ -13,7 +13,7 @@ public interface SecondHandBuyService extends CoreService {
 	
 	public boolean delete(Integer memberId , Integer eventId) throws SQLException;
 	
-	public BuyEvent submit(SecondhandBuylist sl, Integer id);
+	public BuyEvent submit(SecondhandBuylist sl, Integer id) throws SQLException;
 	
 	public List<BuyEvent> searchById(Integer id);
 	
@@ -29,6 +29,6 @@ public interface SecondHandBuyService extends CoreService {
 	
 	public List<BuyEvent>  update4Mem(BuyEvent be, Member member) throws SQLException;
 	
-	
+	public void clearEvent();
 	
 }

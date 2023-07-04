@@ -3,19 +3,6 @@ changeTitle('二手回收申請查詢');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", e => {
     $('#end_input').val(getNow());
     $('#start_input').val(getNow(0));

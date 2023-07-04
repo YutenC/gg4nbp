@@ -62,6 +62,7 @@ public class Select4Member extends HttpServlet {
 		
 			/* 主檔名 */
 		String imgName = req.getParameter("imgname");
+		String eventId = req.getParameter("eventId");
 		
 		try {
 			/* 副檔名 */
@@ -72,8 +73,10 @@ public class Select4Member extends HttpServlet {
 			CommonUtil.writepojo2Json(resp, new OneString("無效檔案"));
 		}
 		
-		File src = new File(Constant.SAVE_URL + imgName);
-		
+		File src = new File(Constant.SAVE_URL + eventId + "/" + imgName);
+		if(!src.exists()) {
+			src = new File(Constant.SAVE_URL + "/Nofound.png");
+		}
 		
 		
 		try (ServletOutputStream out = resp.getOutputStream();BufferedInputStream bis = new BufferedInputStream(new FileInputStream(src))){

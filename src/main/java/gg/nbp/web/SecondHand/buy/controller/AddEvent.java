@@ -5,6 +5,9 @@ import static gg.nbp.core.util.CommonUtil.json2pojo;
 import static gg.nbp.core.util.CommonUtil.writepojo2Json;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,10 +26,37 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/secondhand/addEvent")
 public class AddEvent extends HttpServlet  {
 	private static final long serialVersionUID = -4669764916210514485L;
+	Timer timer;
+	TimerTask task;
 
 	@Autowired
 	private SecondHandBuyService service ;
 	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		
+		timer = new Timer();
+        task = new TimerTask() {
+            @Override
+            public void run() {
+            	service.clearEvent();
+            }
+        };
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 4);
+        calendar.set(Calendar.MINUTE, 0); 
+        timer.schedule(task, calendar.getTime(), 24 * 60 * 60 * 1000);
+	}
+	
+	
+	@Override
+	public void destroy() {
+		super.destroy();
+		task.cancel();
+		timer.cancel();
+		
+	}
 	
 	
 	@Override

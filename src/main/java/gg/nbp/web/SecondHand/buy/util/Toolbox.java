@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import gg.nbp.web.Member.dao.MemberDao;
+import gg.nbp.web.Member.entity.Notice;
+import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 
 
 public class Toolbox {
@@ -33,6 +35,14 @@ public class Toolbox {
 	
 	public static Timestamp getNow() {
 		return new Timestamp(new Date().getTime());
+	}
+	
+	
+	public static Notice sendNotice(SecondhandBuylist sl) {
+		Notice nt = new Notice();
+		nt.setMember_id(sl.getMemberId());
+		nt.setNotice_value(sl.getMessage());
+		return nt ;
 	}
 	
 	
