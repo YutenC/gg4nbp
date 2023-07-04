@@ -1,5 +1,3 @@
-const projectFolder = '/gg4nbp';
-
 // cm輪播圖商品
 let enumPageCurrentType = { NS: 2, PS: 22, XBOX: 12 };
 const cm = Vue.createApp({
@@ -10,8 +8,7 @@ const cm = Vue.createApp({
         }
     },
     methods: {
-        leave: function (location, otherDetail, event) {
-            event.preventDefault();
+        goProduct: function (location, otherDetail) {
             sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.href = projectFolder + '/' + location;
         },
@@ -73,9 +70,8 @@ const popularPicks = Vue.createApp({
         }
     },
     methods: {
-        leave: function (location, otherDetail, event) {
-            event.preventDefault();
-            sessionStorage.setItem('productId', otherDetail);
+        goProduct: function (location, otherDetail) {
+            sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.href = projectFolder + '/' + location;
         }
     },
@@ -103,9 +99,8 @@ const newProdcut = Vue.createApp({
         }
     },
     method: {
-        leave: function (location, otherDetail, event) {
-            event.preventDefault();
-            sessionStorage.setItem('productId', otherDetail);
+        goProduct: function (location, otherDetail) {
+            sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.href = projectFolder + '/' + location;
         }
     },
@@ -133,8 +128,7 @@ const secondSP = Vue.createApp({
         }
     },
     methods: {
-        leave: function (location, otherDetail, event) {
-            event.preventDefault();
+        goProduct: function (location, otherDetail) {
             sessionStorage.setItem('productId', otherDetail);
             window.location.href = projectFolder + '/' + location;
         }

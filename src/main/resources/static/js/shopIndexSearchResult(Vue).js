@@ -1,5 +1,3 @@
-const projectFolder = '/gg4nbp';
-
 const productResults = Vue.createApp({
     data() {
         return {

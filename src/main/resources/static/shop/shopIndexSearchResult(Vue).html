@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../css/shopMainNav.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../js/projectFolder.js"></script>
 
     <style>
         * {
@@ -183,7 +184,7 @@
             <div class="helping">
                 <div>
                     <div class="centerFunc">
-                        <a href="/gg4nbp/article/article_main">
+                        <a href="/gg4nbp/article/article_main.html">
                             <img class="bigicon" src="../img/icon/newspaper-regular.svg" alt="">
                             <span>論壇社群</span>
                         </a>
@@ -215,24 +216,6 @@
     </header>
     <main>
         <div class="shopmain">
-            <div class="miniMenu">
-                <div class="miniMenuContent">
-                    <div class="viewRecord">
-                        <a href=""><img
-                                src="../img/gameSoftware/Nitendo/NoPlaceLikeHome/8d49654f86cee337e2a7317d031l9ro5.jpg"
-                                alt=""></a>
-                        <a href=""><img src="../img/peripherals/Nintendo/Zelda/335ced22c1dbccd628a4001e9a1l4xo5.jpg"
-                                alt=""></a>
-                        <a href=""><img src="../img/peripherals/Nintendo/Zelda/4262aa92a53a61f67e57e46e0b1l4tv5.jpg"
-                                alt=""></a>
-                    </div>
-                    <div class="miniMenuBut">
-                        <a href="" class="goTop"><img src="../img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
-                        <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
-                        <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a>
-                    </div>
-                </div>
-            </div>
             <div class="mainlist" id="productResults">
                 <span>一般商品搜尋結果</span>
                 <div class="product">
@@ -269,6 +252,24 @@
                     <h2 v-if="secondProductResults.length === 0">
                         二手商城無搜尋到符合項目
                     </h2>
+                </div>
+            </div>
+            <div class="miniMenu">
+                <div class="miniMenuContent">
+                    <div class="miniMenuBut">
+                        <a href="" class="goTop" @click="goTop"><img src="../img/icon/square-caret-up-regular.svg"
+                                alt="回到頂端"></a>
+                        <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
+                                @mouseenter="historymouseenter($event.targer)"
+                                @mouseleave="historymouseleave($event.targer)"></a>
+                        <a href="" class="shoppingCart" @click="goCart"><img src="../img/icon/cart-shopping-solid.svg"
+                                alt="購物車"></a>
+                    </div>
+                    <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}">
+                        <div v-for="item in productHistory">
+                            <button style="font-size: 0.75rem; ">{{item.productName}}</button>
+                        </div>
+                    </div>
                 </div>
             </div>
     </main>
@@ -311,11 +312,11 @@
         </div>
     </footer>
     <script src="../jquery/jquery-3.4.1.min.js"></script>
+    <script src="../js/shopIndexSearchResult(Vue).js"></script>
     <script src="../js/shopRightSideMiniMenu.js"></script>
     <script src="../js/shopNavBarShowup.js"></script>
     <script src="../js/shopMainNavHelping.js"></script>
     <script src="../js/shopMainNavSearchBar.js"></script>
-    <script src="../js/shopIndexSearchResult(Vue).js"></script>
 </body>
 
 </html>

@@ -19,6 +19,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/projectFolder.js"></script>
 
     <style>
         * {
@@ -235,7 +236,7 @@
             <div class="helping">
                 <div>
                     <div class="centerFunc">
-                        <a href="/gg4nbp/article/article_main">
+                        <a href="/gg4nbp/article/article_main.html">
                             <img class="bigicon" src="../img/icon/newspaper-regular.svg" alt="">
                             <span>論壇社群</span>
                         </a>
@@ -243,7 +244,7 @@
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
-                        <a href="/gg4npb/member_login.html" id="login">
+                        <a href="/gg4nbp/member_login.html" id="login">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
                             <span>會員登入</span>
                         </a>
@@ -270,7 +271,7 @@
             <div class="slideshow-container">
                 <div class="mySlides fade" v-for="item in cmProduct" ref="mySlides">
                     <div class="numbertext"></div>
-                    <a href="" @click="leave('shop/shopProductDetail.html', item.id, $event)">
+                    <a href="" @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">
                         <img :src="item.productIndexImage.image"></a>
                     <div class="text">{{ item.productName }}</div>
                 </div>
@@ -289,9 +290,19 @@
             <div class="miniMenu">
                 <div class="miniMenuContent">
                     <div class="miniMenuBut">
-                        <a href="" class="goTop"><img src="../img/icon/square-caret-up-regular.svg" alt="回到頂端"></a>
-                        <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"></a>
-                        <a href="" class="shoppingCart"><img src="../img/icon/cart-shopping-solid.svg" alt="購物車"></a>
+                        <a href="" class="goTop" @click="goTop"><img src="../img/icon/square-caret-up-regular.svg"
+                                alt="回到頂端"></a>
+                        <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
+                                @mouseenter="historymouseenter($event.targer)"></a>
+                        <a href="" class="shoppingCart" @click="goCart"><img src="../img/icon/cart-shopping-solid.svg"
+                                alt="購物車"></a>
+                    </div>
+                    <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
+                        @mouseleave="historymouseleave($event.targer)">
+                        <div v-for="item in productHistory">
+                            <button style="font-size: 0.75rem;"
+                                @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -308,11 +319,11 @@
                 <div class="product" id="popularPicks">
                     <ul>
                         <li v-for="item in popularPicks">
-                            <a href="" @click="leave('shop/shopProductDetail.html', item.id, $event)">
+                            <a href="" @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">
                                 <img :src="item.productIndexImage.image" :alt="item.productName">
                             </a>
                             <a href="" class="productname"
-                                @click="leave('shop/shopProductDetail.html', item.id, $event)">
+                                @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">
                                 商品名稱：{{ item.productName }}
                             </a>
                         </li>
@@ -324,11 +335,11 @@
                 <div class="product" id="newProdcut">
                     <ul>
                         <li v-for="item in newProdcut">
-                            <a href="" @click="leave('shop/shopProductDetail.html', item.id, $event)">
+                            <a href="" @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">
                                 <img :src="item.productIndexImage.image" :alt="item.productName">
                             </a>
                             <a href="" class="productname"
-                                @click="leave('shop/shopProductDetail.html', item.id, $event)">
+                                @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">
                                 商品名稱：{{ item.productName }}
                             </a>
                         </li>
@@ -340,17 +351,18 @@
                 <div class="product">
                     <ul>
                         <li v-for="item in secondhandproduct">
-                            <a href="" @click="leave('secondhand/sh_Mall.html', item.productId, $event)">
+                            <a href="" @click.prevent="goProduct('secondhand/sh_Mall.html', item.productId)">
                                 <img :src="'..' + item.image[0].image" :alt="item.name">
                             </a>
                             <a href="" class="productname"
-                                @click="leave('secondhand/sh_Mall.html', item.productId, $event)">
+                                @click.prevent="goProduct('secondhand/sh_Mall.html', item.productId)">
                                 商品名稱：{{ item.name }}
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
+
         </div>
     </main>
     <footer id="footerpad">
@@ -392,7 +404,6 @@
         </div>
     </footer>
     <script src="../jquery/jquery-3.4.1.min.js"></script>
-    <script src="../js/shopIndexCmCarousel.js"></script>
     <script src="../js/shopIndex(Vue).js"></script>
     <script src="../js/shopRightSideMiniMenu.js"></script>
     <script src="../js/shopNavBarShowup.js"></script>
