@@ -6,25 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import gg.nbp.core.pojo.OneString;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
+import jakarta.servlet.http.HttpServletRequest;
 
-@RestController("/secondhand")
+@RestController
+@RequestMapping("/member")
 @CrossOrigin
 public class EventController {
 	@Autowired
 	private SecondHandBuyService service ;
 
 	
-	@GetMapping("/delete/{id}")
-    public OneString delete(@PathVariable("id") int EventId, @RequestParam("member") Member member) {
+	@GetMapping("/deleteBuyEvent/{id}")
+    public Object delete(@PathVariable("id") int EventId,HttpServletRequest req) {
 		try {
+			Member member = (Member) req.getSession().getAttribute("member");
 			service.delete(member.getMember_id(), EventId);
-			return new OneString("刪除完成");
+			return service.searchAll(member);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return new OneString("刪除失敗");

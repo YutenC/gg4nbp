@@ -63,9 +63,13 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 
 		/* 找到要刪除的事件 */
 		var sl = dao.selectById(eventId);
+		
+		/* 確認案件進度 : 已完成議價的案件不允許刪除 */
+		if(BuyEvent.getProgress(sl) >= 3 && BuyEvent.getProgress(sl) < 100) 
+			throw new SQLException();
 
 		/* 驗證發出刪除請求的人是否為事件的所有人，若請求人非所有人則丟出例外 */
-		if (memberId != sl.getMemberId())
+		if (!memberId.equals(sl.getMemberId()))
 			throw new SQLException();
 
 		/* 再刪除事件 */
@@ -86,7 +90,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		// 有辦法優化 ?
 		List<BuyEvent> listDTO = dao.selectAll().stream()
 					   				.filter(p -> p.getPayState() != 2)  //篩選掉已經完成的案件
-					   				.filter(p -> !(p.getApprovalState().equals("3") || p.getApprovalState().equals("4")))  //篩選掉不成立的案件
+					   				.filter(p -> !(p.getApprovalState().equals("7") || p.getApprovalState().equals("3") || p.getApprovalState().equals("4")))  //篩選掉不成立的案件
 					   				.map(sl -> new BuyEvent(sl,daoMember))
 					   				.collect(Collectors.toList());
 

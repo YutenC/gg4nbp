@@ -167,7 +167,7 @@
 
         div.toShow article.ItemList>div>span {
             display: inline-block;
-            width: 120px;
+            width: 140px;
             white-space: pre;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -183,11 +183,11 @@
         }
 
         div.toShow article.ItemList>div>span>button {
-            margin-right: 15px;
+            margin-right: 0px;
             padding: 0px;
             text-align: center;
             border-radius: 25px;
-            width: 90px;
+            width: 100px;
             height: 30px;
             font-size: .6em;
             font-weight: bold;
@@ -197,6 +197,23 @@
             box-shadow: 0px 0px 3px gray;
         }
 
+        div.toShow article.ItemList>div>span>button:first-child {
+            margin-right: 15px;
+            padding: 0px;
+            text-align: center;
+            border-radius: 25px;
+            width: 80px;
+            height: 30px;
+            font-size: .6em;
+            font-weight: bold;
+            background-color: rgb(151, 50, 50);
+            border: none;
+            color: aliceblue;
+            box-shadow: 0px 0px 3px gray;
+        }
+        div.toShow article.ItemList>div>span>button.cannotDel{
+            background-color: rgb(77, 51, 51);
+        }
 
         div.toShow div.hrLine {
             height: 1px;
@@ -1168,6 +1185,7 @@
                     <span>${obj[i].price ?? ''}</span>
                     <span>${getProgress(obj[i].progress)}</span>
                     <span>
+                        <button id="delEvent_${obj[i].eventId}" onclick="delEvent(${obj[i].eventId})">刪除</button>
                         <button class="Review_${i}" onclick="ReviewBox(${i})">查看詳情</button>
                     </span>
                 </div>
@@ -1175,11 +1193,18 @@
 
                 `;
             div.append(article);
+
         }
         $('.toItem').remove();
         $('.pageBar').remove();
         $('.toShow')[0].append(div);
         $('.toShow')[0].append(pageBar);
+
+        for (let i = (page - 1) * onePage; i < lastNum; i++){
+            if(obj[i].progress >= 3){
+                $(`#delEvent_${obj[i].eventId}`).addClass('cannotDel');
+            }
+        }
     }
 
     $('.searchBar>span>button').on('click', () => {
@@ -1255,6 +1280,35 @@
             default:
                 return "未通過";
         }
+    }
+
+
+
+
+    function delEvent(id){
+        if($(`#delEvent_${id}`).hasClass('cannotDel'))
+            return;
+
+
+        fetch(`deleteBuyEvent/${id}`,{
+            method: "GET"
+        })
+        .then(res => res.json())
+        .then( body => {
+            let str = body.str ?? '刪除成功';
+            let icon = "success"
+            if( str == '刪除失敗')
+                icon = "error";
+                else{
+                    sessionStorage.setItem('ButEventResult', JSON.stringify(body));
+                    itemDisplay();
+                }
+                Swal.fire({
+                        icon: icon,
+                        title: str
+                    })
+        } );
+
     }
 
 </script>

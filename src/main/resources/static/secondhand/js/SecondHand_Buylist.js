@@ -148,7 +148,6 @@ if($('img').hasClass('-warning')){
                     }
                 }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        sessionStorage.setItem('backTo',location.href);
                         location.href = resp.url;
                     }
                 })
@@ -196,7 +195,7 @@ function checkpage(obj) {
     <button onclick="gohome(event || window.event)">回首頁</button>
     </div>
     `;
-        div.setAttribute('class', 'return_box');
+        div.setAttribute('class', 'return');
         $('.showArea').append(div);
         $('.content').attr('style', 'width : 40%');
     } else {

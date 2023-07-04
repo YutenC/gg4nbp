@@ -204,8 +204,7 @@ public class BuyEvent extends Core {
 		System.out.println(be.type);
 		sl.setEstimate(be.estimate < 0 ? null : be.estimate);
 		sl.setApplicantBankNumber(be.applicantBankNumber);
-		
-		
+		sl.setImage(be.getImage());	
 		
 		if(sl.getPrice() == null && be.progress == 2)
 			throw new NullPointerException();
@@ -322,6 +321,13 @@ public class BuyEvent extends Core {
 	private BuyEvent setProgress(Integer progress) {
 		this.progress = progress;
 		return this;
+	}
+	
+	public static int getProgress(SecondhandBuylist sl) {
+		return new BuyEvent()
+					.setApprovalState(getApprovalState(Integer.parseInt(sl.getApprovalState())))
+					.setPayState(getPayState(sl.getPayState()))
+					.getProgress();
 	}
 
 }

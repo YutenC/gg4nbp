@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistPictureDao;
@@ -22,10 +21,7 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 
 	@Override
 	public int insert(SecondhandBuylist buylist) {
-		session.persist(buylist);	
-		buylist.getImage().stream()
-						  .forEach(img -> daoPic.insert(new SecondhandBuyPicture(buylist.getBuylistId(), img.getImage())));
-		
+		session.persist(buylist);
 		return 1;
 	}
 
@@ -39,8 +35,8 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 
 	@Override
 	public int update(SecondhandBuylist buylist) {
-		session.merge("SecondhandBuylist", buylist);
 		daoPic.update(buylist);
+		session.merge("SecondhandBuylist", buylist);
 		return 1;
 	}
 
