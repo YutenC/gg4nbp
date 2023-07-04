@@ -63,21 +63,28 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (response) {
-
-                    // <button @click="addCart(1,product.id)">直接購買</button>
-                    // <button @click="addCart(0,product.id)">加入購物車</button>
-
-                    if (action == 1) {
-                        window.location.href = "../member/shoppingCart(Vue).html";
+                    let result = response.value;
+                    if (!result.successful) {
+                        window.location.href = "./member_login.html";
                     }
                     else {
-                        // if (response.data.state === "redirect") {
-                        //     console.log(response.data.msg);
-                        //     window.location.href = response.data.msg;
-                        // }
+
                     }
 
-                    console.log("addCart then");
+                    // // <button @click="addCart(1,product.id)">直接購買</button>
+                    // // <button @click="addCart(0,product.id)">加入購物車</button>
+
+                    // if (action == 1) {
+                    //     window.location.href = "../member/shoppingCart(Vue).html";
+                    // }
+                    // else {
+                    //     // if (response.data.state === "redirect") {
+                    //     //     console.log(response.data.msg);
+                    //     //     window.location.href = response.data.msg;
+                    //     // }
+                    // }
+
+                    // console.log("addCart then");
 
                 })
                 .catch(function (e) {

@@ -46,6 +46,14 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (response) {
+                    let result = response.value;
+                    if (!result.successful) {
+                        window.location.href = "./member_login.html";
+                    }
+                    else {
+
+                    }
+
                     console.log("addCart then");
 
                 })
