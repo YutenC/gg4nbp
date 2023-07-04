@@ -12,10 +12,9 @@ import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistPictureDao;
 import jakarta.persistence.PersistenceContext;
 
-
 @Repository
 public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
-	
+
 	@PersistenceContext
 	private Session session;
 	@Autowired
@@ -23,68 +22,78 @@ public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 
 	@Override
 	public int insert(SecondhandBuylist buylist) {
-		session.persist(buylist);
+		session.persist(buylist);	
+		buylist.getImage().stream()
+						  .forEach(img -> daoPic.insert(new SecondhandBuyPicture(buylist.getBuylistId(), img.getImage())));
+		
 		return 1;
 	}
 
 	@Override
 	public int deleteById(Integer id) {
-		List<SecondhandBuyPicture> imglist = daoPic.selectBylistId(id);
-		imglist.stream().forEach(el -> daoPic.deleteById(el.getImageId()));
-		SecondhandBuylist buylist = session.get(SecondhandBuylist.class, id);
-		session.remove(buylist);
+		daoPic.selectBylistId(id).stream()
+								 .forEach(el -> daoPic.deleteById(el.getImageId()));
+		session.remove(session.get(SecondhandBuylist.class, id));
 		return 1;
 	}
 
 	@Override
 	public int update(SecondhandBuylist buylist) {
-		session.merge("SecondhandBuylist",buylist);
+		session.merge("SecondhandBuylist", buylist);
+		daoPic.update(buylist);
 		return 1;
 	}
 
 	@Override
 	public SecondhandBuylist selectById(Integer id) {
 		final String sql = "SELECT * FROM secondhand_buylist where buylist_id = :id  ";
-		return selectImage(session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("id", id).getSingleResult());
+		return selectImage(
+				session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("id", id).getSingleResult());
 	}
-	
+
 	@Override
 	public List<SecondhandBuylist> selectByMemberId(Integer id) {
 		final String sql = "SELECT * FROM secondhand_buylist where Member_id = :id  ";
-		return selectImages(session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("id", id).getResultList());
+		return selectImages(
+				session.createNativeQuery(sql, SecondhandBuylist.class)
+					   .setParameter("id", id)
+					   .getResultList());
 	}
-	
-	
+
 	@Override
-	public List<SecondhandBuylist> selectByName4Member(String Name , Integer id){
-		final String sql = "SELECT * FROM ( SELECT * FROM secondhand_buylist where Member_id = :id ) ssid WHERE Product_name LIKE '%" +Name+ "%'";
-		return selectImages(session.createNativeQuery(sql, SecondhandBuylist.class).setParameter("id", id).getResultList());
+	public List<SecondhandBuylist> selectByName4Member(String Name, Integer id) {
+		final String sql = "SELECT * FROM ( SELECT * FROM secondhand_buylist where Member_id = :id ) ssid WHERE Product_name LIKE '%"
+				+ Name + "%'";
+		return selectImages(
+				session.createNativeQuery(sql, SecondhandBuylist.class)
+					   .setParameter("id", id)
+					   .getResultList());
 	}
-	
-	
 
 	@Override
 	public List<SecondhandBuylist> selectAll() {
 		final String sql = "SELECT * FROM secondhand_buylist ";
-		return selectImages(session.createNativeQuery(sql, SecondhandBuylist.class).getResultList());
+		return selectImages(
+				session.createNativeQuery(sql, SecondhandBuylist.class)
+					   .getResultList());
 	}
 
 	@Override
 	public List<SecondhandBuylist> selectByName(String name) {
-
-		final String sql = "SELECT * FROM secondhand_buylist WHERE Product_name LIKE '%"+name+"%'";
-		return selectImages(session.createNativeQuery(sql, SecondhandBuylist.class).getResultList());
+		final String sql = "SELECT * FROM secondhand_buylist WHERE Product_name LIKE '%" + name + "%'";
+		return selectImages(
+				session.createNativeQuery(sql, SecondhandBuylist.class)
+					   .getResultList());
 	}
 
 	
 	private SecondhandBuylist selectImage(SecondhandBuylist sl) {
 		sl.setImage(daoPic.selectBylistId(sl.getBuylistId()));
-		return sl ;
+		return sl;
 	}
-	
+
 	private List<SecondhandBuylist> selectImages(List<SecondhandBuylist> list) {
-		list.stream()
-		.forEach( el -> el.setImage(daoPic.selectBylistId(el.getBuylistId())));
-		return list ;
+		list.stream().forEach(el -> el.setImage(daoPic.selectBylistId(el.getBuylistId())));
+		return list;
 	}
 }

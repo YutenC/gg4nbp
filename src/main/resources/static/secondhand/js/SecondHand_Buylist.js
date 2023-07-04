@@ -63,6 +63,17 @@ $('#getshot').next().on('change', function (e) {
             div.remove();
         })
 
+        img.addEventListener('click',()=>{
+            Swal.fire({
+                html: `<img id="fullImage" src="${img.src}">`,
+                background: 'rgba(255, 255, 255, 0)',
+                padding: 0,
+                width: 900,
+                boxShadow : 'none',
+                showConfirmButton: false,
+            })
+        })
+
     }
 
 

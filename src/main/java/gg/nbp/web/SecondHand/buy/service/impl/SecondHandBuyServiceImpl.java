@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import gg.nbp.web.Member.dao.MemberDao;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.NoticeService;
-import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
-import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistPictureDao;
 import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
 import gg.nbp.web.SecondHand.buy.util.Toolbox;
@@ -26,8 +24,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 
 	@Autowired
 	private SecondHandBuylistDao dao;
-	@Autowired
-	private SecondHandBuylistPictureDao daoPic;
 	@Autowired
 	private MemberDao daoMember;
 	@Autowired
@@ -42,29 +38,20 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		String key = "event" + sl.getBuylistId() ;
 		
 		jedis.select(9);
-		if( jedis.get(key) == null) {
-			jedis.set(key, "1");
-			jedis.expire(key,(long) 30);
-		}else if(Integer.parseInt(jedis.get(key)) >= 5) {
-			throw new SQLException();
-		}else {
-			jedis.incrBy(key, 1);
+		String check = jedis.get(key) == null ? "-1" : jedis.get(key);
+		switch (check) {
+			case "5" -> throw new SQLException();
+			case "1","2","3","4" -> jedis.incrBy(key, 1);
+			default ->{
+				jedis.set(key, "1");
+				jedis.expire(key,(long) 30);
+			}
 		}
 		
 		
-		/* 將文字資料放入資料庫 */
+		/* 將資料放入資料庫 */
 		sl.setSuccessful(insert(sl,id));
 
-		/* 將圖片資料放入資料庫 */
-		try {
-
-			for (SecondhandBuyPicture img : sl.getImage())
-				insertimg(img, sl.getBuylistId());
-			
-		} catch (Exception e) {
-			sl.setMessage("沒有圖片");
-		}	
-		
 		
 		return new BuyEvent(sl,daoMember);
 	};
@@ -82,7 +69,8 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 			throw new SQLException();
 
 		/* 再刪除事件 */
-		return delbuyList(sl);
+		dao.deleteById(sl.getBuylistId());
+		return true;
 
 	}
 
@@ -104,7 +92,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)
-			throw new SQLException();
+			throw new NullPointerException();
 
 		/* 回傳 */
 		return listDTO;
@@ -217,37 +205,23 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		/* 如果訂單不屬於該會員則丟出例外 */
 		if(!searchById(be.getEventId()).get(0).getMemberId().equals(member.getMember_id()))
 			throw new SQLException();
-		
 		dao.update(BuyEvent.trans4Mem(be, dao));
-		daoPic.update(be);
 		return searchById(be.getEventId());
 	}
 	
 	
-
 	
-	
-	
-	
-	
-	public void insertimg(SecondhandBuyPicture img, Integer id) {
-		daoPic.insert(new SecondhandBuyPicture(id, img.getImage()));
-	}
 	
 	public boolean insert(SecondhandBuylist s , Integer id) {
 
 		s.setMemberId(id);
 		s.setPayState(0); // 預設為 0
-		s.setApprovalState("7"); // 預設為 0
+		s.setApprovalState("7"); // 預設為 7
 		dao.insert(s);
 		return true;
 	}
 
 
-	public boolean delbuyList(SecondhandBuylist sl) {
-		dao.deleteById(sl.getBuylistId());
-		return true;
-	}
 
 	
 
