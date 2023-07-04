@@ -2,6 +2,8 @@ package gg.nbp.web.SecondHand.buy.service.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -177,6 +179,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
 		dao.selectByName4Member(name,member.getMember_id()).stream()
+														   .filter(sl -> !sl.getApprovalState().equals("7"))
 														   .forEach(sl -> listDTO.add(new BuyEvent(sl,daoMember)));
 		
 		
@@ -204,7 +207,7 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	/* 交易控制 : 修改資料 */
 	@Transactional
 	@Override
-	public List<BuyEvent>  update4Mem(BuyEvent be, Member member) throws SQLException,NullPointerException{
+	public List<BuyEvent> update4Mem(BuyEvent be, Member member) throws SQLException,NullPointerException{
 		/* 如果訂單不屬於該會員則丟出例外 */
 		if(!searchById(be.getEventId()).get(0).getMemberId().equals(member.getMember_id()))
 			throw new SQLException();
@@ -218,8 +221,16 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	@Override
 	public void clearEvent(){
 		System.out.println("即將執行每日清掃工作 : 清除未完成二手收購申請");
+		System.out.println("現在時間 : "+Toolbox.getNow());
+		Calendar k = Calendar.getInstance();
+		k.setTime(new Date());
 		dao.selectAll().stream()
 					   .filter(p -> p.getApprovalState().equals("7"))
+					   .filter(p -> {
+						   Calendar c = Calendar.getInstance();
+						   c.setTime(p.getApplyTime());
+						   return c.get(Calendar.DATE) != k.get(Calendar.DATE) ;
+					   })
 					   .forEach(el -> dao.deleteById(el.getBuylistId()));
 	}
 	
