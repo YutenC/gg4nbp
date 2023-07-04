@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gg.nbp.web.Member.dao.MemberDao;
 import gg.nbp.web.Member.entity.Member;
+import gg.nbp.web.Member.service.NoticeService;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistPictureDao;
 import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import gg.nbp.web.SecondHand.buy.service.SecondHandBuyService;
+import gg.nbp.web.SecondHand.buy.util.Toolbox;
 import redis.clients.jedis.Jedis;
 
 @Service
@@ -30,6 +32,8 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	private MemberDao daoMember;
 	@Autowired
 	private Jedis jedis;
+	@Autowired
+	private NoticeService nsrv ;
 
 	/* 交易控制 : 新增事件 */
 	@Transactional
@@ -197,7 +201,12 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	@Transactional
 	@Override
 	public List<BuyEvent> update4Mana(BuyEvent be) {
-		dao.update(BuyEvent.trans4Mana(be, dao));
+		var sl =  BuyEvent.trans4Mana(be, dao);
+		dao.update(sl);
+		
+		if(sl.getMessage() != null) 
+			nsrv.addNotice(Toolbox.sendNotice(sl));
+			
 		return searchById(be.getEventId());
 	}
 	

@@ -559,6 +559,10 @@
             padding: 0px;
         }
 
+        div.reviewMain div.editMain div.Pic div.imgArea img.-warning {
+            box-shadow: 0px 0px 3px rgb(255, 0, 0);
+        }
+
     </style>
 </head>
 
@@ -960,7 +964,7 @@
                 const btn = document.createElement('button');
                 $(btn).attr('class', 'del_btn').text('✖');
                 const reader = new FileReader();
-                if (uploadImg.size >= 5242880) {
+                if (uploadImg[0].size >= 5242880) {
                     $(img).addClass('-warning');
                 }
                 $('.imgArea').append(div);
@@ -1038,6 +1042,16 @@
             let s_estimate = estimate.value || -1;
             let img_list = [];
    
+
+            if($('img').hasClass('-warning')){
+                Swal.fire({
+                icon: 'error',
+                title: '圖片過大(超過5MB)'
+                })
+                return;
+            }
+
+
 
 
             /* 上傳圖片到本機指定位置 */

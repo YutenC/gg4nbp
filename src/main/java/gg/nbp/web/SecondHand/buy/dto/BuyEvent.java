@@ -146,19 +146,27 @@ public class BuyEvent extends Core {
 				sl.setApprovalState("3");
 			break;
 		case 1:
-			if(be.agree) 
+			if(be.agree) {
 				sl.setApprovalState("2");
+				if(sl.getPrice() != null) 
+					sl.setMessage("二手收購管理員以提供收購價，立即去看看價格滿不滿意吧˙");
+			} 
 			else
 				sl.setApprovalState("4");
 			break;
 		case 2:
+			if(sl.getPrice() != null) 
+				sl.setMessage("二手收購管理員以提供收購價，立即去看看價格滿不滿意吧˙");
+			
 			break;
 		case 3:
-			if(be.agree) 
+			if(be.agree) {
 				sl.setPayState(2);
+				sl.setMessage("您申請的案件已經付款囉，趕快去看看吧˙");				
+			}
 			break;
 		case 4:
-
+			
 			break;
 
 		default:

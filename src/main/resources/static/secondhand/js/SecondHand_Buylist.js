@@ -77,6 +77,17 @@ $('#commit').on('click', function (e) {
     const file = $('#getshot').next()[0].files;
     id =  sessionStorage.getItem('EventId') ?? null;
 
+
+if($('img').hasClass('-warning')){
+    Swal.fire({
+        icon: 'error',
+        title: '圖片過大(超過5MB)'
+    })
+    return;
+}
+
+
+
     filter:
     for (let i = 0; i < file.length; i++) {
         const formData = new FormData();
