@@ -21,10 +21,6 @@ public class ConvertJson {
         return gson.toJson(obj);
     }
 
-//public static<T> T cc(String result,Class<T> ){
-//    Gson gson = new Gson();
-//    T obj = gson.fromJson(result, classOfT);
-//}
 
     public static Map<String, JsonElement> getJsonDataMap(String json) {
         JsonElement jsonElement = JsonParser.parseString(json);
@@ -35,7 +31,6 @@ public class ConvertJson {
             for (String key : jsonObject.keySet()) {
                 JsonElement value = jsonObject.get(key);
                 map.put(key, value);
-//                System.out.println(key + ": " + value);
             }
         }
         return map;

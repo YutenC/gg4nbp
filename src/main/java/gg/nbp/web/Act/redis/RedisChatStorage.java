@@ -12,7 +12,7 @@ public class RedisChatStorage {
     private String chatId;
 
     public void saveChatMessage(String chatId, String username, String message) {
-        try (Jedis jedis = new Jedis("localhost")) {
+        try (Jedis jedis = new Jedis()) {
             Message chatMessage = new Message();
             chatMessage.setUsername(username);
             chatMessage.setMessage(message);
@@ -21,7 +21,7 @@ public class RedisChatStorage {
     }
 
     public List<Message> getChatMessages() {
-        try (Jedis jedis = new Jedis("localhost")) {
+        try (Jedis jedis = new Jedis()) {
             List<String> messages = jedis.lrange("chat_messages:" + chatId, 0, -1);
             return messages.stream().map(msg -> JSON.parseObject(msg, Message.class)).collect(Collectors.toList());
         }

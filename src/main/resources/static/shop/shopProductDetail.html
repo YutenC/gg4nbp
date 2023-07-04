@@ -147,7 +147,7 @@
         .expend_outline {
             width: 100px;
             height: 300px;
-            background: rgb(213, 213, 213);
+            /* background: rgb(213, 213, 213); */
             /* position: relative; */
             /* display: flex; */
 
@@ -214,7 +214,7 @@
                             <img class="bigicon" src="../img/icon/newspaper-regular.svg" alt="">
                             <span>論壇社群</span>
                         </a>
-                        <a href="">
+                        <a href="../activity/act_finder.html">
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
@@ -222,12 +222,8 @@
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
                             <span>會員登入</span>
                         </a>
-                        <a href="">
-                            <img class="bigicon" src="../img/icon/handshake-simple-solid.svg" alt="">
-                            <span>客服中心</span>
-                        </a>
                     </div>
-                    <a href="./shoppingCart(Vue).html">
+                    <a href="../member/shoppingCart(Vue).html">
                         <img class="bigicon" src="../img/icon/cart-shopping-solid.svg" alt="">
                         <span>購物車</span>
                     </a>
@@ -321,11 +317,17 @@
                                 <div class="amount">
                                     <label for="amount">數量：</label> <!--動態產生數量選項：依目前庫存判斷最大數量(是否要設定最大可購買量?)-->
                                     <select name="amount" id="amount" @change="changeAmount($event.target.value)">
+                                        <option v-for="(item,index) in amountArray" :value="item"
+                                            :selected="index==(buyAmount -1)">
+                                            {{item}}
+                                        </option>
+                                        <!-- initSelectedAmountIndex -->
+                                        <!-- <option value="2">2</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
-                                        <option value="5">5</option>
+                                        <option value="5">5</option> -->
                                     </select>
                                 </div>
                                 <button @click="addCart(1,product.id)">直接購買</button>
@@ -533,13 +535,19 @@
 
         axios({
             method: "Get",
-            // url: host_context + "shopDispatcher/login",
             // url: "http://localhost:8080/shop/shopDispatcher/login",
             url: "http://localhost:8080/gg4nbp/shopDispatcher/login",
+            params: { redirectUrl: "http://localhost:8080/gg4nbp/shop/shopProductList.html" }
             // withCredentials: true,
             // crossDomain: true,
         },)
             .then(function (value) {
+                let result = value.data;
+
+                if (result.state.toLowerCase() === "redirect") {
+                    console.log(result.msg);
+                    window.location.href = result.msg;
+                }
                 console.log("login then");
 
             })

@@ -32,7 +32,8 @@
         if (!/^-?\d+$/.test(ban_duration.value)) {
             Swal.fire({
                 title: "天數錯誤！",
-                text: "停權天數只可輸入正負整數"
+                text: "停權天數只可輸入正負整數",
+                icon: "error"
             });
             return;
         }

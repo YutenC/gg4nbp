@@ -83,11 +83,14 @@ public class ProductManagerServiceImpl implements ProductManagerService {
     @Override
     public void addProduct(ProductPojo productPojo) {
         Product product=productPojo.getNewProduct();
+        product.setBuyTimes(0);
+        product.setRate(0);
+        product.setRevieweCount(0);
+
         Integer productId= productDao.insert(product);
         product.setId(productId);
 
         List<ProductImage> productImages= productPojo.getNewProduct().getProductImages();
-
 
         for (int i=0;i<productImages.size();i++) {
             ProductImage productImage= productImages.get(i);
@@ -128,10 +131,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
             @Override
             public void run() {
                 Integer productId=id;
-//                HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
                 Product product= productDao.selectById(productId);
-//                HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
-
                 product.setState(ProductState.TakeOn.getValue());
                 productDao.updateProductState(product);
 
@@ -169,9 +169,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
             @Override
             public void run() {
                 Integer productId=id;
-//                HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
                 Product product= productDao.selectById(productId);
-//                HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
 
                 product.setState(ProductState.TakeOff.getValue());
                 productDao.updateProductState(product);
@@ -185,7 +183,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
         };
 
         SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
-        schedulerTasks.addTimerTask(product.getId()+"takeOff",new SchedulerEntity(product.getLaunchTime(),timerTask));
+        schedulerTasks.addTimerTask(product.getId()+"takeOff",new SchedulerEntity(product.getTakeoffTime(),timerTask));
         product.setState(ProductState.TakeOffing.getValue());
         productDao.updateProductState(product);
     }
@@ -217,8 +215,6 @@ public class ProductManagerServiceImpl implements ProductManagerService {
         }
 
     }
-
-
 
 
     String getSomeProduct(Integer pageIndex){

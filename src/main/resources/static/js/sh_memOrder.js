@@ -70,9 +70,7 @@ function showList() {
                                 <td><span>${dateFormat}</span></td>
 
                                 <td>
-                                    <div class="shorder_number" onclick="getProductId(${secondhandorder.productId}); getOrderId(${secondhandorder.orderId})">
-                                        <a href="#" style="text-decoration:none; color: rgb(64, 61, 61);">${secondhandorder.orderId}</a>
-                                    </div>
+                                    <span>${secondhandorder.orderId}</span>
                                 </td>
 
 <!--                                <td>-->
@@ -90,6 +88,12 @@ function showList() {
                                 <td>
                                     <div class="shorder_status">
                                         <span>${deliverValue}</span>
+                                    </div>
+                                </td>
+                                
+                                <td>
+                                    <div class="orderDetail" onclick="getProductId(${secondhandorder.productId}); getOrderId(${secondhandorder.orderId})">
+                                        <a href="#" style="text-decoration:none; color: rgb(64, 61, 61);">查看詳情</a>
                                     </div>
                                 </td>
 

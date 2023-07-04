@@ -1,5 +1,6 @@
 package gg.nbp.web.shop.shopproduct.pojo;
 
+import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Setter
 public class CouponMember {
 
+    private Integer member_id;
 
     private String account;
 
@@ -20,11 +22,11 @@ public class CouponMember {
 
     private boolean check;
 
-//    private String dis
-//    private java.sql.Date birth;
+    private String discountCode;
 
 
-    public CouponMember(String account, String email) {
+    public CouponMember(Integer member_id,String account, String email) {
+        this.member_id=member_id;
         this.account = account;
         this.email = email;
     }

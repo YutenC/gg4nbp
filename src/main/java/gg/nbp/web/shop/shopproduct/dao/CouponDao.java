@@ -12,5 +12,4 @@ public interface CouponDao extends CoreDao<Coupon,Integer> {
 
     List<Coupon> selectByCondition(DaoConditionSelect daoSelect);
 
-//    TransactionStatus getTransactionState();
 }

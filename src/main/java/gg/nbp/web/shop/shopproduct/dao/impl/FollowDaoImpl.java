@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public class FollowDaoImpl extends CoreDaoImpl<FollowList, FollowListId> implements FollowDao {
 
-
     @Override
     public List<FollowList> selectByMemberId(Integer memberId) {
         String hql = "from FollowList  where id.memberId ="+memberId +"order by id.productId asc";

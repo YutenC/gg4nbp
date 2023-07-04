@@ -5,6 +5,7 @@ const productState = {};
 const vm = Vue.createApp({
     data() {
         return {
+            enumProductState: { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 },
             mainguideContent: [{ id: 1, text: "商品管理", action: "manageProduct" },
             { id: 2, text: "商品新增", action: "addProduct" },
             { id: 3, text: "其他", action: "otherSetting" }],
@@ -258,7 +259,7 @@ const vm = Vue.createApp({
                     productOperate('takeOnProduct', id);
                     break;
                 case '排定下架':
-                    productOperate('TakeOffProduct', id);
+                    productOperate('takeOffProduct', id);
                     break;
                 case '移除排定上架':
                     productOperate('removeTakeOningProduct', id);

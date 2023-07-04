@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productDao.selectAll();
 //        setProductIndexImage(products);
         setFollows(memId,products);
-//        List<Product>  pp= productRepository.selectBySpecified(0,150,"任天堂");
+
         return products;
     }
 
@@ -62,14 +62,19 @@ public class ProductServiceImpl implements ProductService {
         if (required != null) {
             for(String key:required){
                 if(products!=null && products.size()!=0){
-                    Product product= products.get(0);
-                    if(MyUtil.checkNULL(key,product,Product.class)){
-                        MyUtil.runMethod(key,this,ProductServiceImpl.class,List.class,products);
+                    if("follow".equals(key)){
+                        setFollows(memId,products);
                     }
+                    else {
+                        Product product= products.get(0);
+                        if(MyUtil.checkNULL(key,product,Product.class)){
+                            MyUtil.runMethod(key,this,ProductServiceImpl.class,List.class,products);
+                        }
+                    }
+
                 }
             }
         }
-
 
         return products;
     }
@@ -108,7 +113,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDetail getProductDetail(Integer memId,Integer id) {
         Product product = getProductById(id);
-        setFollow(memId,product);
+        setFollow_old(memId,product);
 
         List<ProductImage> productImages = getProductImgs(id);
         ProductDetail productDetail = new ProductDetail(product, productImages);
@@ -238,7 +243,9 @@ public class ProductServiceImpl implements ProductService {
 
         for(int i=0;i<followLists.size();i++){
             Product product= map.get(followLists.get(i).getId().getProductId());
-            product.setFollow(1);
+            if(product!=null){
+                product.setFollow(1);
+            }
         }
 
 
@@ -253,7 +260,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    private void setFollow(Integer memId,Product product){
+    private void setFollow_old(Integer memId,Product product){
         if(memId<0){
             return;
         }
@@ -265,6 +272,24 @@ public class ProductServiceImpl implements ProductService {
                 product.setFollow(1);
             }
 
+        }
+    }
+
+    private void setFollow(Integer memId,List<Product> products){
+        if(memId<0){
+            return;
+        }
+
+        List<FollowList> followLists= followService.getFollowByMemberId(memId);
+        HashMap<Integer,Product> map=new HashMap<>();
+
+        for(int i=0;i<products.size();i++){
+            map.put(products.get(i).getId(),products.get(i));
+        }
+
+        for(int i=0;i<followLists.size();i++){
+            Product product= map.get(followLists.get(i).getId().getProductId());
+            product.setFollow(1);
         }
     }
 

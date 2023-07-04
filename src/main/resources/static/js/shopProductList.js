@@ -3,9 +3,11 @@ import { saveDataToSessionStorage, getURLSearch } from './shopproductCommon.js';
 
 let pageCurrentType = -1;
 let enumPageCurrentType = { NS: 2, PS: 22, XBOX: 12 };
+let enumProductState = { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 }
 const vm = Vue.createApp({
     data() {
         return {
+            enumProductState: { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 },
             enumPageCurrentType: enumPageCurrentType,
             nowDate: '',
             minDate: '',
@@ -31,18 +33,19 @@ const vm = Vue.createApp({
         getAllProduct: function () {
             getAllProduct();
         },
-
         addCart: function (id) {
+            let transObj = { productId: id, buyAmount: 1 };
             axios({
-                method: "Get",
-                url: host_context + "shopDispatcher/addCart",
+                method: "Post",
+                url: host_context + "ShoppingList",
                 // withCredentials: true,
                 // crossDomain: true,
                 params: {
-                    id: id
+                    demand: "addOneShoppingList",
+                    transObj: JSON.stringify(transObj),
                 }
             })
-                .then(function (value) {
+                .then(function (response) {
                     console.log("addCart then");
 
                 })
@@ -52,6 +55,43 @@ const vm = Vue.createApp({
 
 
         },
+        // addCart: function (id) {
+        //     axios({
+        //         method: "Get",
+        //         url: host_context + "shopDispatcher/addCart",
+        //         // withCredentials: true,
+        //         // crossDomain: true,
+        //         params: {
+        //             id: id,
+        //             redirectUrl: "http://localhost:8080/gg4nbp/shop/shopProductList.html"
+        //         }
+        //     })
+        //         .then(function (response) {
+
+        //             if (response.data.state === "redirect") {
+        //                 console.log(response.data.msg);
+        //                 window.location.href = response.data.msg;
+        //             }
+
+        //             // // Check if the response status is a redirect (3xx)
+        //             // if (response.status >= 300 && response.status < 400) {
+        //             //     const redirectUrl = response.headers.location;
+        //             //     // Perform your desired action with the redirect URL
+        //             //     console.log('Redirect URL:', redirectUrl);
+        //             // } else {
+        //             //     // Handle the non-redirect response
+        //             //     console.log('Response:', response.data);
+        //             // }
+
+        //             console.log("addCart then");
+
+        //         })
+        //         .catch(function (e) {
+        //             console.log("addCart error " + e);
+        //         });
+
+
+        // },
         addFollow: function (index, id) {
             axios({
                 method: "Get",
@@ -59,15 +99,20 @@ const vm = Vue.createApp({
                 // withCredentials: true,
                 // crossDomain: true,
                 params: {
-                    id: id
+                    id: id,
+                    redirectUrl: "http://localhost:8080/gg4nbp/shop/shopProductList.html"
                 }
             })
                 .then(function (value) {
                     let result = value.data;
-                    if (result.state.toLowerCase() === "ok") {
+
+                    if (result.state.toLowerCase() === "redirect") {
+                        console.log(result.msg);
+                        window.location.href = result.msg;
+                    }
+                    else if (result.state.toLowerCase() === "ok") {
                         vm.products[index].follow = result.content;
                     }
-
 
                     console.log("addFollow then");
 
@@ -84,12 +129,29 @@ const vm = Vue.createApp({
         },
         getProductByType(type) {
             pageCurrentType = type;
+
+            let conditions = [];
+            let required = [];
+            if (pageCurrentType != -1) {
+                conditions.push({ key: "type", value: pageCurrentType });
+            }
+            conditions.push({ key: "state", value: enumProductState.takeOn });
+            required.push("productIndexImage", "follow");
+
+            let params = { msg: "getAllProduct", "conditions": conditions, "required": required };
+
+            let jsonObject = JSON.stringify(params);
+            let encodeObject = encodeURIComponent(jsonObject);
+
+
             axios({
                 method: "Get",
-                url: host_context + "shopDispatcher/getProductByType",
+                // url: host_context + "shopDispatcher/getProductByType",
+                url: host_context + "shopDispatcher/getAllProductByCondition",
                 // withCredentials: true,
                 // crossDomain: true,
-                params: { type: type }
+                // params: { type: type }
+                params: { params: encodeObject }
             },)
                 .then(function (value) {
                     vm.products = value.data;
@@ -108,18 +170,18 @@ const vm = Vue.createApp({
             if (pageCurrentType != -1) {
                 conditions.push({ action: "=", key: "type", value: pageCurrentType });
             }
+            conditions.push({ key: "state", value: enumProductState.takeOn });
             conditions.push({ action: "like", key: "productName", value: vm2.searchText });
 
             let sort = { action: "order", key: "", value: "buyTimes" };//DESC
 
-            required.push("productIndexImage");
+            required.push("productIndexImage", "follow");
 
             let params = { msg: "salseNumberBtn", "conditions": conditions, "required": required, "sort": sort };
             let jsonObject = JSON.stringify(params);
             let encodeObject = encodeURIComponent(jsonObject);
             axios({
                 method: "Get",
-                // url: host_context + "shopDispatcher/getProductByBuyTimes",
                 url: host_context + "shopDispatcher/getAllProductByCondition",
                 // withCredentials: true,
                 // crossDomain: true,
@@ -169,9 +231,10 @@ const vm2 = Vue.createApp({
             if (pageCurrentType != -1) {
                 conditions.push({ action: "=", key: "type", value: pageCurrentType });
             }
+            conditions.push({ key: "state", value: enumProductState.takeOn });
             conditions.push({ action: "like", key: "productName", value: vm2.searchText });
 
-            required.push("productIndexImage");
+            required.push("productIndexImage", "follow");
 
             let params = { msg: "searchProducts", "conditions": conditions, "required": required };
             let jsonObject = JSON.stringify(params);
@@ -210,8 +273,8 @@ function getAllProduct() {
     if (pageCurrentType != -1) {
         conditions.push({ key: "type", value: pageCurrentType });
     }
-
-    required.push("productIndexImage");
+    conditions.push({ key: "state", value: enumProductState.takeOn });
+    required.push("productIndexImage", "follow");
 
     let params = { msg: "getAllProduct", "conditions": conditions, "required": required };
 
@@ -220,7 +283,6 @@ function getAllProduct() {
 
     axios({
         method: "GET",
-        // url: "http://localhost:8080/MyShop/demo/getAllCouponActivity_json",
         // url: host_context + "shopDispatcher/getAllProductWithIndexImg",
         url: host_context + "shopDispatcher/getAllProductByCondition",
         // withCredentials: true,
@@ -239,25 +301,25 @@ function getAllProduct() {
 
 }
 
-function getFollows() {
-    console.log(getFollows)
-    axios({
-        method: "Get",
-        url: host_context + "shopDispatcher/getFollowByMemberId",
-        // withCredentials: true,
-        // crossDomain: true,
-        params: { memberId: vm2.searchText }
-    },)
-        .then(function (value) {
-            vm.followLists = value.data;
+// function getFollows() {
+//     console.log(getFollows)
+//     axios({
+//         method: "Get",
+//         url: host_context + "shopDispatcher/getFollowByMemberId",
+//         // withCredentials: true,
+//         // crossDomain: true,
+//         params: { memberId: vm2.searchText }
+//     },)
+//         .then(function (value) {
+//             vm.followLists = value.data;
 
-            console.log("searchProducts then");
+//             console.log("searchProducts then");
 
-        })
-        .catch(function (e) {
-            console.log("searchProducts error " + e);
-        });
-}
+//         })
+//         .catch(function (e) {
+//             console.log("searchProducts error " + e);
+//         });
+// }
 
 function getProductHistory() {
     axios({

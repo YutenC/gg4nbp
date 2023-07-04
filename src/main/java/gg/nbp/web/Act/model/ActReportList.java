@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "Act_report_list", schema = "five2")
+@Table(name = "Act_report_list", schema = "five")
 public class ActReportList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +32,11 @@ public class ActReportList {
     @Column(name = "Review_state", nullable = false)
     private Byte reviewState;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Act_id", referencedColumnName = "Act_id")
     private Act act;
+    @Column(name="Report_Person" , nullable = false)
+    private Integer reportPerson;
 
 }

@@ -51,6 +51,10 @@ public class AddshpServlet extends HttpServlet {
                 state = false;
             }
 
+            // 存入資料庫內容自動換行
+            String content = shp.getContent();
+            shp.setContent(content.replace("\n", "<br>"));
+
             SERVICE.addshp(shp);
             shp.setSuccessful(true);
             shpproductId = shp.getProductId();

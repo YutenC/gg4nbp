@@ -23,7 +23,6 @@ public class ProductManagerController {
     public String longTimeProcess(){
         productManagerService.longTimeProcess();
         ResponseMsg requestMsg=new ResponseMsg("longTime","longTimeProcess","");
-
         return ConvertJson.toJson(requestMsg);
     }
 

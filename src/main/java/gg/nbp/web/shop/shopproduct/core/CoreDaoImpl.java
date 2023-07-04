@@ -53,7 +53,6 @@ public abstract class CoreDaoImpl<P, I> implements CoreDao <P, I>{
 
     @Override
     public P selectById(I id) {
-//        Session session = getSession();
         P coupon = (P) session.get(entityClass, (Serializable)id);
         return coupon;
     }

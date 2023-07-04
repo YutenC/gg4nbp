@@ -70,9 +70,7 @@ public class ProductController {
 
 
     public String getProductHistory() {
-
         List<Product> products = productService.getProductHistory();
-
         return ConvertJson.toJsonExpose(products);
     }
 
