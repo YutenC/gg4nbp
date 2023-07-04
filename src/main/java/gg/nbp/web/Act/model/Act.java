@@ -50,9 +50,6 @@ public class Act {
     @Column(name = "End_time", nullable = false)
     private Date endTime;
 
-    @Column(name = "Join_number", columnDefinition = "int UNSIGNED")
-    private Long joinNumber;
-
     @Column(name = "Act_Image", length = 2048)
     private String actImage;
 
