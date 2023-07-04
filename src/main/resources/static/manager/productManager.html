@@ -98,50 +98,60 @@
 
 
                                                 <tr>
-                                                    <!-- <td><img class="rounded-circle me-2" width="30" height="30"
-                                                        src="images/avatars/avatar1.jpeg">Airi Satou</td> -->
-                                                    <!-- <td @click="editText($event)">
-                                                        {{item.productName}}
-                                                        <Child v-model="item.productName" />
-                                                    </td> -->
-                                                    <!-- <td @click="editText($event)">{{item.type}}</td> -->
                                                     <td><input :value="item.productName" v-model="item.productName"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
-                                                    <td><input :value="item.type" v-model="item.type"
+                                                    <td>
+                                                        <!-- <input :value="item.type" v-model="item.type"
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff"> -->
+
+                                                        <select @change="changeProductType(item,$event.target.value)"
+                                                            style="width: 120px;"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                            <option v-for="itemType in enumProductType"
+                                                                :value="itemType.type"
+                                                                :selected="itemType.type==item.type">
+                                                                {{itemType.content}}
+                                                            </option>
+                                                        </select>
+
                                                     </td>
                                                     <td><input :value="item.price" v-model="item.price"
+                                                            style="width: 80px;"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
                                                     <td><input :value="item.amount" v-model="item.amount"
+                                                            style="width: 80px;"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
                                                     <td><input :value="item.buyTimes" v-model="item.buyTimes"
+                                                            style="width: 80px;"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
                                                     <td><input :value="item.brand" v-model="item.brand"
+                                                            style="width: 80px;"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
                                                     <td><input :value="item.rate" v-model="item.rate"
+                                                            style="width: 60px;"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
                                                     <td><input :value="item.revieweCount" v-model="item.revieweCount"
+                                                            style="width: 60px;"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
                                                     </td>
                                                     <td>
                                                         <!-- <div style="width: 100px;">{{item.showLaunchTime}}</div> -->
                                                         <input type="datetime-local" v-bind:value="item.launchTime"
-                                                            @input="updatetakeOffTime(item, $event.target.value)"
+                                                            @input="updateLaunchTime(item, $event.target.value)"
                                                             class="form-control form-control-sm"
                                                             :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
 
                                                     </td>
                                                     <td>
                                                         <!-- <div style="width: 100px;">{{item.showTakeoffTime}}</div> -->
-
+                                                        <!-- v-bind:min="minDate" -->
                                                         <input type="datetime-local" v-bind:value="item.takeoffTime"
-                                                            v-bind:min="minDate"
                                                             @input="updatetakeOffTime(item, $event.target.value)"
                                                             class="form-control form-control-sm">
                                                     </td>
@@ -277,8 +287,16 @@
 
                                             <td><input v-model.lazy="newProduct.productName"
                                                     class="form-control form-control-sm"></td>
-                                            <td><input v-model.lazy="newProduct.type"
-                                                    class="form-control form-control-sm">
+                                            <td>
+                                                <!-- <input v-model.lazy="newProduct.type"
+                                                    class="form-control form-control-sm"> -->
+                                                <select @change="changeProductType(newProduct,$event.target.value)"
+                                                    style="width: 120px;">
+                                                    <option v-for="(itemType,index) in enumProductType"
+                                                        :value="itemType.type" :selected="index==0">
+                                                        {{itemType.content}}
+                                                    </option>
+                                                </select>
                                             </td>
                                             <td><input v-model.lazy="newProduct.price"
                                                     class="form-control form-control-sm">
@@ -320,6 +338,12 @@
                                         </tr>
                                     </tfoot>
                                 </table>
+                            </div>
+
+                            <div>產品內容</div>
+                            <div>
+                                <!-- <input style="height: 200px; width: 200px;" placeholder="ccc"> -->
+                                <textarea rows="10" cols="30" v-model="newProduct.content"> </textarea>
                             </div>
 
                             <div>產品照片</div>

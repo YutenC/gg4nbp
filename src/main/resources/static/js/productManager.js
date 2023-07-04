@@ -1,10 +1,14 @@
 import { host_context, nowDate } from './shopproductCommon.js';
 
 //    //狀態 {0：新增  ; 1:上架 ; 2 :排定上架; 11 :下架;12 :排定下架}
+// /商品種類 { 0: NS主機; 1: NS手把; 2: NS卡帶; 3: NS周邊;
+//     // 10: XBOX主機; 11: XBOX手把; 12: XBOX遊戲片; 13: XBOX周邊;
+//     // 20: PS主機; 21: PS手把; 22: PS遊戲片; 23: PS周邊 }   { 2: NS遊戲片, 12: XBOX遊戲片, 22: PS遊戲片 },
 const productState = {};
 const vm = Vue.createApp({
     data() {
         return {
+            enumProductType: [{ type: 2, content: "NS遊戲片" }, { type: 12, content: "XBOX遊戲片" }, { type: 22, content: "PS遊戲片" }],
             enumProductState: { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 },
             mainguideContent: [{ id: 1, text: "商品管理", action: "manageProduct" },
             { id: 2, text: "商品新增", action: "addProduct" },
@@ -49,6 +53,11 @@ const vm = Vue.createApp({
             // console.log("newProduct.product_name: " + vm.newProduct.product_name);
             // console.log("newProduct.launch_time: " + vm.newProduct.launch_time);
             vm.newProduct.productImages = vm.newProductImg;
+
+            if (vm.newProduct.type == null) {
+                vm.newProduct.type = vm.enumProductType[0].type;
+            }
+
             let jsonProduct = JSON.stringify(vm.newProduct);
             axios({
                 method: "POST",
@@ -272,6 +281,9 @@ const vm = Vue.createApp({
         limitNumOfSelectChanre(limit) {
             vm.limitNum = parseInt(limit);
             getAllProduct();
+        },
+        changeProductType(product, type) {
+            product.type = type;
         }
 
     },
@@ -351,6 +363,7 @@ function getAllProduct() {
                         break;
                 }
 
+                //enumProductType
 
 
             });

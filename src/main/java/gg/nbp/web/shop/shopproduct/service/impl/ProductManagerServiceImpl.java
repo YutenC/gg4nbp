@@ -195,9 +195,19 @@ public class ProductManagerServiceImpl implements ProductManagerService {
         if(product.getState()==ProductState.TakeOning.getValue()){
             String key=id+"takeOn";
             SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
-            schedulerTasks.getTimerTask(key).getTimerTask().cancel();
-            schedulerTasks.removeTimerTask(id+"takeOn");
-            schedulerTasks.clear();
+
+            try{
+                schedulerTasks.getTimerTask(key).getTimerTask().cancel();
+                schedulerTasks.removeTimerTask(key);
+                schedulerTasks.clear();
+            }
+            catch (RuntimeException e){
+                e.printStackTrace();
+            }
+
+
+            product.setState(ProductState.NewAdd.getValue());
+            productDao.updateProductState(product);
         }
 
     }
@@ -209,9 +219,18 @@ public class ProductManagerServiceImpl implements ProductManagerService {
         if(product.getState()==ProductState.TakeOffing.getValue()){
             String key=id+"takeOff";
             SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
-            schedulerTasks.getTimerTask(key).getTimerTask().cancel();
-            schedulerTasks.removeTimerTask(key);
-            schedulerTasks.clear();
+            try{
+                schedulerTasks.getTimerTask(key).getTimerTask().cancel();
+                schedulerTasks.removeTimerTask(key);
+                schedulerTasks.clear();
+            }
+            catch (RuntimeException e){
+                e.printStackTrace();
+            }
+
+
+            product.setState(ProductState.TakeOn.getValue());
+            productDao.updateProductState(product);
         }
 
     }
