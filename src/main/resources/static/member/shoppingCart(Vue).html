@@ -14,13 +14,14 @@
         href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <title>shoppingCart</title>
+    <script src="../js/projectFolder.js"></script>
 
 </head>
 
 <body>
     <header class="cartHeader">
         <div class="ctHeaderUp">
-            <a href="shopIndex.html" class="logo">
+            <a href="/gg4nbp/shop/shopIndex(Vue).html" class="logo">
                 <img src="../img/Logo-removebg.png" alt="">
             </a>
             <span>
@@ -271,10 +272,10 @@
         <ul>
             <template v-for="item in promoProduct">
                 <li>
-                    <a href="" @click="leave('/shop/shopProductDetail.html', item.productId)">
+                    <a href="" @click="goProduct('/shop/shopProductDetail.html', item.productId, $event)">
                         <img :src="item.productIndexImage.image" :alt="item.productName">
                     </a>
-                    <a href="" @click="leave('/shop/shopProductDetail.html', item.productId)">
+                    <a href="" @click="goProduct('/shop/shopProductDetail.html', item.productId, $event)">
                         <span>{{ item.productName }}</span>
                     </a>
                     <span>${{ item.price }}</span>

@@ -46,7 +46,9 @@ public class ShoppingListController extends HttpServlet {
 		if (getmember != null) {
 			memberId = getmember.getMember_id();
 		} else {
-			res.sendRedirect("/Five_NBP.gg");
+			Member failLogin = new Member();
+			failLogin.setSuccessful(false);
+			pw.println(gson.toJson(failLogin));
 			return;
 		}
 		
@@ -80,7 +82,9 @@ public class ShoppingListController extends HttpServlet {
 		HttpSession httpSession = req.getSession();
 		
 		if (httpSession.getAttribute("member") == null) {
-			res.sendRedirect("/Five_NBP.gg");
+			Member failLogin = new Member();
+			failLogin.setSuccessful(false);
+			pw.println(gson.toJson(failLogin));
 			return;
 		}
 		

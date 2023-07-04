@@ -1,7 +1,3 @@
-const href = window.location.href;
-const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 11);
-const projectFolder = '/gg4nbp';
 
 // 購物明細
 const shoppingContent = Vue.createApp({
@@ -23,9 +19,8 @@ const shoppingContent = Vue.createApp({
     },
     methods: {
         leave: function (location, otherDetail) {
-            // sessionStorage.clear();
-            // sessionStorage.setItem('productId', otherDetail);
-            window.location.replace(projectHref + '/' + location + '#' + otherDetail);
+            sessionStorage.setItem('productId', otherDetail);
+            window.location.replace(projectHref + '/' + location);
         }
     },
     computed: {

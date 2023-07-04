@@ -1,6 +1,3 @@
-// 常數參數
-const projectFolder = '/gg4nbp';
-
 // 增添商品到購物車內按鈕變化
 
 // '+' 號按鈕預設展開
@@ -277,19 +274,19 @@ const shoppingContent = Vue.createApp({
                 .then(res => this.shoppingList = res.data)
                 .catch(err => console.log(err))
         },
-        // 判斷優惠碼是否達消費門檻
+        // 判斷優惠券條件
         couponCondition: function () {
             if (this.resCoupon === '') {
                 return;
             }
-            if (this.resCoupon.state !== 1) {
+            if (this.resCoupon.state !== 1) {  // 確認狀態
                 this.resCoupon = '';
                 this.couponCode = '';
                 Swal.fire('此優惠卷不可使用');
                 return;
             }
             let now = new Date();
-            if (now > Date(this.resCoupon.deadline)) {
+            if (now > new Date(this.resCoupon.deadline)) {
                 this.resCoupon = '';
                 this.couponCode = '';
                 Swal.fire('此優惠卷代碼已到期');
@@ -456,7 +453,8 @@ const promoProduct = Vue.createApp({
         }
     },
     methods: {
-        leave: function (location, otherDetail) {
+        goProduct: function (location, otherDetail, event) {
+            event.preventDefault();
             sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.replace(projectFolder + '/' + location);
         }

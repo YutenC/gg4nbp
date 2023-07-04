@@ -126,8 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const { successful } = body;
 
                 if (successful) {
-
-                    alert("登出成功");
                     location.reload();
                 }
             });

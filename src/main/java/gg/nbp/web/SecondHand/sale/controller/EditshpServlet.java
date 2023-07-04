@@ -44,7 +44,7 @@ public class EditshpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         boolean state = true;
-        resp.setContentType("image/*");
+        resp.setContentType("image/gif");
 
         BufferedReader reader = req.getReader();
         StringBuilder jsonBody = new StringBuilder();
@@ -68,7 +68,10 @@ public class EditshpServlet extends HttpServlet {
         shp.setType(type);
         System.out.println("type=" + type);
         shp.setPrice(price);
-        shp.setContent(content);
+
+        // 存入資料庫內容自動換行
+        shp.setContent(content.replace("\n", "<br>"));
+
         SERVICE.editshp(shp);
 
         // 讀取 image 陣列
@@ -104,7 +107,7 @@ public class EditshpServlet extends HttpServlet {
         }
 
 
-        shp.setSuccessful(state);
+        shp.setSuccessful(true);
 
         CommonUtil.writepojo2Json(resp, shp);
 

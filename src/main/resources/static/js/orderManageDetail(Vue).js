@@ -1,6 +1,3 @@
-// 路徑常數
-const projectFolder = '/gg4nbp';
-
 const orderContent = Vue.createApp({
     data() {
         return {
@@ -54,8 +51,7 @@ const orderContent = Vue.createApp({
                 }
             });
         },
-        leave: function (location, otherDetail, event) {
-            event.preventDefault();
+        goProduct: function (location, otherDetail) {
             sessionStorage.setItem('productId', otherDetail);
             window.location.href = projectHref + '/' + location;
         },

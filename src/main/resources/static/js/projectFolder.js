@@ -1,0 +1,1 @@
+const projectFolder = '/gg4nbp';

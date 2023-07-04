@@ -8,7 +8,9 @@
     height: 100%;
     position: absolute;
     right: 0;
+    top: 0;
     margin-right: 5px;
+    z-index: 99;
 }
 
 .shopmain .miniMenu .miniMenuContent {
@@ -18,6 +20,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    right: 0px;
 }
 
 .shopmain .miniMenu .miniMenuBut {
@@ -26,7 +29,7 @@
     border-radius: 3px;
     width: 30px;
     top: 200px;
-    height: 84px;
+    height: 100px;
     background-color: #FAFAFA;
 }
 
@@ -43,4 +46,34 @@
     max-height: 100%;
     width: auto;
     height: auto;
+}
+
+.shopmain .miniMenu div.viewRecord {
+    height: 180px;
+    background-color: #fff;
+    width: 60px;
+    top: 200px;
+    display: none;
+}
+
+.shopmain .miniMenu div.viewRecord img {
+    width: 60px;
+    height: 60px;
+    object-fit: fill;
+    margin: 1px;
+}
+
+.expend_outline {
+    width: 100px;
+    height: 300px;
+    background: rgb(213, 213, 213);
+    /* position: relative; */
+    /* display: flex; */
+    position: absolute;
+    top: 60px;
+    right: 25px;
+}
+
+.hidden {
+    display: none;
 }

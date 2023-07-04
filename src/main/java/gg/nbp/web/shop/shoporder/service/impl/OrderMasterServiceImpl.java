@@ -56,8 +56,6 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 	@Autowired
 	private MemberDao mbDao;
 	@Autowired
-	private CouponDao cpDao;
-	@Autowired
 	private JedisOrderMasterDao jdOmDao;
 	@Autowired
 	private ProductService pService;
@@ -440,7 +438,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				MemberViewOrder mvod = new MemberViewOrder();
 				mvod.setOrderMaster(om);
 				if (om.getCouponId() != null) {
-					mvod.setCoupon(cpDao.selectById(om.getCouponId()));
+					mvod.setCoupon(cService.getCouponById(om.getCouponId()));
 				}
 				
 				mvod.setGetBonus((int)(om.getTotalPrice() * OrderMasterService.BONUS_RATE));

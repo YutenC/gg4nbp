@@ -71,7 +71,6 @@ public class OrderMasterController extends HttpServlet {
 		HttpSession httpSession = req.getSession();
 		
 		if (httpSession.getAttribute("member") == null) {
-			res.sendRedirect("/gg4nbp");
 			Member failLogin = new Member();
 			failLogin.setSuccessful(false);
 			pw.println(gson.toJson(failLogin));
@@ -302,7 +301,6 @@ public class OrderMasterController extends HttpServlet {
 		HttpSession httpSession = req.getSession();
 		
 		if (httpSession.getAttribute("member") == null) {
-			res.sendRedirect("/gg4nbp");
 			Member failLogin = new Member();
 			failLogin.setSuccessful(false);
 			pw.println(gson.toJson(failLogin));

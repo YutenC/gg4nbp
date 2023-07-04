@@ -1,8 +1,3 @@
-// 路徑常數
-const href = window.location.href;
-const host = href.substring(0, href.indexOf('/', 8));
-const projectHref = href.substring(0, href.lastIndexOf('gg4nbp') + 6);
-const projectFolder = '/gg4nbp';
 
 const omManage = Vue.createApp({
     data() {

@@ -11,12 +11,9 @@ $("input.login_btn1").on("click", () => {
     })
         .then(resp => resp.json())
         .then(body => {
-
-            console.log(body);
-            const { successful, redirectUrl } = body;
+            const { successful, redirectUrl, message } = body;
 
             if (successful) {
-                alert("登入成功");
                 const { manager_id, account } = body;
 
                 sessionStorage.setItem('logged_id', manager_id);
@@ -24,7 +21,11 @@ $("input.login_btn1").on("click", () => {
 
                 window.location.href = redirectUrl;
             } else {
-                alert("登入失敗")
+                Swal.fire({
+                    title: "登入失敗",
+                    text: message,
+                    icon: "error"
+                });
             }
         })
 })

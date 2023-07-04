@@ -57,7 +57,9 @@ public class OrderDetailController extends HttpServlet {
     	Integer memberId;
     	
     	if (getMember == null) {
-    		res.sendRedirect("/gg4nbp");
+    		Member failLogin = new Member();
+    		failLogin.setSuccessful(false);
+    		pw.println(failLogin);
     		return;
     	} else {
     		memberId = getMember.getMember_id();
@@ -92,7 +94,9 @@ public class OrderDetailController extends HttpServlet {
     	Integer memberId;
     	
     	if (getMember == null) {
-    		res.sendRedirect("/gg4nbp");
+    		Member failLogin = new Member();
+    		failLogin.setSuccessful(false);
+    		pw.println(gson.toJson(failLogin));
     		return;
     	} else {
     		memberId = getMember.getMember_id();
