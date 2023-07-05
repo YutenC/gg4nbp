@@ -118,15 +118,27 @@
                                                     </td>
                                                     <td><input :value="item.price" v-model="item.price"
                                                             style="width: 80px;"
-                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff"
+                                                            @input="checkNumber_update(item,'price',item.price)">
+                                                        <div v-if="item.showError_price">
+                                                            <p> 格式錯誤</p>
+                                                        </div>
                                                     </td>
                                                     <td><input :value="item.amount" v-model="item.amount"
                                                             style="width: 80px;"
-                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff"
+                                                            @input="checkNumber_update(item,'amount',item.amount)">
+                                                        <div v-if="item.showError_amount">
+                                                            <p> 格式錯誤</p>
+                                                        </div>
                                                     </td>
                                                     <td><input :value="item.buyTimes" v-model="item.buyTimes"
                                                             style="width: 80px;"
-                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff"
+                                                            @input="checkNumber_update(item,'buyTimes',item.buyTimes)">
+                                                        <div v-if="item.showError_buyTimes">
+                                                            <p> 格式錯誤</p>
+                                                        </div>
                                                     </td>
                                                     <td><input :value="item.brand" v-model="item.brand"
                                                             style="width: 80px;"
@@ -134,11 +146,19 @@
                                                     </td>
                                                     <td><input :value="item.rate" v-model="item.rate"
                                                             style="width: 60px;"
-                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff"
+                                                            @input="checkNumber_update(item,'rate',item.rate)">
+                                                        <div v-if="item.showError_rate">
+                                                            <p> 格式錯誤</p>
+                                                        </div>
                                                     </td>
                                                     <td><input :value="item.revieweCount" v-model="item.revieweCount"
                                                             style="width: 60px;"
-                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff">
+                                                            :disabled="item.state != enumProductState.new && item.state != enumProductState.takeOff"
+                                                            @input="checkNumber_update(item,'revieweCount',item.revieweCount)">
+                                                        <div v-if="item.showError_revieweCount">
+                                                            <p> 格式錯誤</p>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <!-- <div style="width: 100px;">{{item.showLaunchTime}}</div> -->
@@ -309,14 +329,22 @@
                                                     </option>
                                                 </select>
                                             </td>
-                                            <td><input v-model.lazy="newProduct.price"
-                                                    class="form-control form-control-sm">
+                                            <td><input v-model="newProduct.price" :value="newProduct.price"
+                                                    class="form-control form-control-sm"
+                                                    @input="checkNumber_update(newProduct,'price',newProduct.price)">
+                                                <div v-if="newProduct.showError_price">
+                                                    <p> 格式錯誤</p>
+                                                </div>
                                             </td>
                                             <td><input v-model.lazy="newProduct.brand"
                                                     class="form-control form-control-sm">
                                             </td>
-                                            <td><input v-model.lazy="newProduct.amount"
-                                                    class="form-control form-control-sm">
+                                            <td><input v-model="newProduct.amount" :value="newProduct.amount"
+                                                    class="form-control form-control-sm"
+                                                    @input="checkNumber_update(newProduct,'amount',newProduct.amount)">
+                                                <div v-if="newProduct.showError_amount">
+                                                    <p> 格式錯誤</p>
+                                                </div>
                                             </td>
 
                                             <!-- <td><input v-model.lazy="newProduct.content"
