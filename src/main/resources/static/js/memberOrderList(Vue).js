@@ -115,7 +115,7 @@ const memberOrder = Vue.createApp({
 
             for (let i = 0; i < this.orders.length; i++) {
                 if (this.orders[i].orderMaster.orderId === orderId) {
-                    this.orders[i].trList.comment = comment;
+                    this.orders[i].trList.comment = star;
                 }
             }
         },

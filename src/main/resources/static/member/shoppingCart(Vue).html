@@ -272,10 +272,10 @@
         <ul>
             <template v-for="item in promoProduct">
                 <li>
-                    <a href="" @click="goProduct('/shop/shopProductDetail.html', item.productId, $event)">
+                    <a href="" @click="goProduct('shop/shopProductDetail.html', item.productId, $event)">
                         <img :src="item.productIndexImage.image" :alt="item.productName">
                     </a>
-                    <a href="" @click="goProduct('/shop/shopProductDetail.html', item.productId, $event)">
+                    <a href="" @click="goProduct('shop/shopProductDetail.html', item.productId, $event)">
                         <span>{{ item.productName }}</span>
                     </a>
                     <span>${{ item.price }}</span>
