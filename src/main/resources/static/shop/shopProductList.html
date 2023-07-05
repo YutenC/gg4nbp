@@ -338,13 +338,17 @@
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
-
-                        <a id="vue-member" href="/gg4nbp/member_login.html" id="login">
-                            <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
-                            <!-- <span>會員登入</span> -->
-                            <span v-if="login">會員登出</span>
-                            <span v-else="login">會員登入</span>
-                        </a>
+                        <!-- id="login" -->
+                        <!-- /gg4nbp/member_login.html -->
+                        <span id="vue-member">
+                            <a href="#">
+                                <img @click="loginBtn($event.target)" class="bigicon" src="../img/icon/user-regular.svg"
+                                    alt="">
+                                <!-- <span>會員登入</span> -->
+                                <span v-if="login">會員登出</span>
+                                <span v-else="login">會員登入</span>
+                            </a>
+                        </span>
                         <a href="/gg4nbp/member/member_home.html" id="memberCenter">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
                             <span>會員中心</span>

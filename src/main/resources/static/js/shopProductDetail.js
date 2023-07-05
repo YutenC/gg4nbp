@@ -204,6 +204,29 @@ const topNav = Vue.createApp({
         getProductByType(type) {
 
         },
+        loginBtn(event) {
+
+            if (topNav.login) {
+                axios({
+                    method: "POST",
+                    url: host_context + "member/memberLogoutServlet",
+                    // withCredentials: true,
+                    // crossDomain: true,
+                },)
+                    .then(function (value) {
+                        console.log("memberLogoutServlet then");
+                        getProductDetail();
+                        topNav.login = false;
+                    })
+                    .catch(function (e) {
+                        console.log("memberLogoutServlet error " + e);
+                    });
+            }
+            else {
+                window.location.href = "/gg4nbp/member_login.html";
+            }
+
+        }
     }
 }).mount('#vue-member');
 
@@ -229,7 +252,6 @@ function getProductDetail() {
             if (vm.product.revieweCount != 0) {
                 let score = vm.product.rate / (vm.product.revieweCount * 5.0);
                 score = score * 5;
-                // score = Math.round10(score, -2);
                 vm.productScore = score + "/5";
             }
             else {
