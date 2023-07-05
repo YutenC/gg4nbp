@@ -18,7 +18,8 @@ $('.helping').on('click', 'a#goCart', function (event) {
     event.preventDefault();
     axios.post(projectFolder + '/ShoppingList')
         .then(res => {
-            if (!res.data.successful) {
+            console.log(res.data.redirect);
+            if (res.data.redirect === true) {
                 let timerInterval
                 Swal.fire({
                     title: '您尚未登入！',

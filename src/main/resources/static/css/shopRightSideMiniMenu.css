@@ -73,6 +73,12 @@
     right: 25px;
 }
 
+.expend_outline span {
+    display: block;
+    font-size: 14px;
+    text-align: center;
+}
+
 .hidden {
     display: none;
 }

@@ -27,7 +27,7 @@ const omManage = Vue.createApp({
         watchDetail: function (omid) {
             sessionStorage.setItem('orderId', omid);
             sessionStorage.setItem('offset', this.nowPage - 1);
-            window.location.href = projectHref + '/manager/orderManageDetail.html';
+            window.location.href = projectFolder + '/manager/orderManageDetail.html';
         },
         renewList: function (pageNum) {
             this.nowPage = pageNum;

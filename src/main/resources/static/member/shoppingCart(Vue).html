@@ -128,7 +128,7 @@
                                 </a>
                             </td>
                             <td>
-                                {{ item.brand }}
+                                {{ type[item.type] }}
                             </td>
                             <td>
                                 <select name="amount1" v-model="item.buyAmount" @changed="couponCondition()">
@@ -165,7 +165,7 @@
                         <li>
                             <input type="radio" id="bonus" name="discount" value="bonus" v-model="discountRadio">
                             <label for="bonus">使用紅利點數折抵：</label>
-                            <input type="text" id="bonusInput" v-model="bonus" @keyup="bonusValid"
+                            <input type="text" id="bonusInput" v-model.lazy="bonus" @keyup="bonusValid"
                                 :disabled="discountRadio === 'coupon'" v-show="discountRadio === 'bonus'">
                         </li>
                 </form>
@@ -272,10 +272,10 @@
         <ul>
             <template v-for="item in promoProduct">
                 <li>
-                    <a href="" @click="goProduct('/shop/shopProductDetail.html', item.productId, $event)">
+                    <a href="" @click="goProduct('shop/shopProductDetail.html', item.productId, $event)">
                         <img :src="item.productIndexImage.image" :alt="item.productName">
                     </a>
-                    <a href="" @click="goProduct('/shop/shopProductDetail.html', item.productId, $event)">
+                    <a href="" @click="goProduct('shop/shopProductDetail.html', item.productId, $event)">
                         <span>{{ item.productName }}</span>
                     </a>
                     <span>${{ item.price }}</span>

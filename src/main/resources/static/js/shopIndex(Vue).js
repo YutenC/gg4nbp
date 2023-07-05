@@ -99,7 +99,7 @@ const newProdcut = Vue.createApp({
             newProdcut: []
         }
     },
-    method: {
+    methods: {
         goProduct: function (location, otherDetail) {
             sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.href = projectFolder + '/' + location;
@@ -136,7 +136,7 @@ const secondSP = Vue.createApp({
         }
     },
     created() {
-        axios.get(projectFolder + '/shop/shpView')
+        axios.get(projectFolder + '/secondhand/shp_main')
             .then(res => this.secondhandproduct = res.data)
             .catch(err => console.log(err))
     }

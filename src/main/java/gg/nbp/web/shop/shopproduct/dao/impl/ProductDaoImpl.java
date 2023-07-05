@@ -180,7 +180,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
 
     @Override
     public List<Product> searchProducts(String search) {
-        String hql = "from Product  where Product.state=1 productName like '%" + search + "%'";
+        String hql = "from Product  where state=1 AND productName like '%" + search + "%'";
 //        System.out.println("hql: "+hql);
         return session.createQuery(hql, Product.class).getResultList();
     }

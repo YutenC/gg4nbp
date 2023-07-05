@@ -24,7 +24,7 @@ const vm = Vue.createApp({
             longTimeAction: '',
             sendEmailTime: '',
             sendEmailState: "",
-            limitNumOfSelect: [5, 10, 15, 20],
+            limitNumOfSelect: [5, 10, 15, 20, 100],
             limitNum: "20",
             selectedCoupon: '',
             initSelectedCoupon: ''
@@ -350,6 +350,7 @@ function getAllCouponActivity() {
         method: "GET",
         // url: host_context + "shopDispatcher/getAllCouponActivity",
         url: host_context + "shopDispatcher/getCouponActivityByCondition",
+        // url: "shopDispatcher/getCouponActivityByCondition",
         params: {
             params: encodedJsonObject
         }

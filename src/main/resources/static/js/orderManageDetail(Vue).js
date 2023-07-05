@@ -53,7 +53,7 @@ const orderContent = Vue.createApp({
         },
         goProduct: function (location, otherDetail) {
             sessionStorage.setItem('productId', otherDetail);
-            window.location.href = projectHref + '/' + location;
+            window.location.href = projectFolder + '/' + location;
         },
         cancel: function () {
             for (let key in this.updateOrder) {

@@ -19,6 +19,7 @@
     <script src="../js/projectFolder.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         * {
@@ -222,10 +223,15 @@
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
-                        <a href="/gg4nbp/member_login.html" id="login">
-                            <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
-                            <span>會員登入</span>
-                        </a>
+                        <span id="vue-member">
+                            <a href="#">
+                                <img @click="loginBtn($event.target)" class="bigicon" src="../img/icon/user-regular.svg"
+                                    alt="">
+                                <!-- <span>會員登入</span> -->
+                                <span v-if="login">會員登出</span>
+                                <span v-else="login">會員登入</span>
+                            </a>
+                        </span>
                         <a href="/gg4nbp/member/member_home.html" id="memberCenter">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
                             <span>會員中心</span>
@@ -258,6 +264,7 @@
                 </div>
                 <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
                     @mouseleave="historymouseleave($event.targer)">
+                    <span>近期看過</span>
                     <div v-for="item in productHistory">
                         <button style="font-size: 0.75rem;"
                             @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>
@@ -281,9 +288,12 @@
                         </div>
                         <div class="productsmallimgs-container">
                             <a class="prev" @click="clickPrevNext($event.target)">&#10094;</a>
-                            <a class="productImg" v-for="(item,index) in productDetail.productImages" :data-pic=index>
-                                <img :src=item.image>
-                            </a>
+                            <template v-for="(item,index) in productDetail.productImages">
+                                <a v-if="index < 3" class="productImg" :data-pic=index>
+                                    <img :src=item.image>
+                                </a>
+                            </template>
+
                             <!-- <a class="productImg" data-pic="1"><img
                                     src="../img/gameSoftware/PS5/Final_Fantasy_XVI/19e80490e9e052547c129845bc1liee5.jpg"></a>
                             <a class="productImg" data-pic="2"><img
@@ -359,7 +369,7 @@
                     </div>
 
                     <div class="contentPage" v-if="currentMainguideContent==1">
-                        <div class="tab tab1 -on">商品特色描述：圖文
+                        <div class="tab tab1 -on">
                             <div>
                                 {{product.content}}
                             </div>

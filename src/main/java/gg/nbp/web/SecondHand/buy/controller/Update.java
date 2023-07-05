@@ -34,7 +34,7 @@ public class Update extends HttpServlet {
 			BuyEvent be = CommonUtil.json2pojo(req,BuyEvent.class);
 			CommonUtil.writepojo2Json(resp, service.update4Mana(be));
 		}catch (Exception e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			CommonUtil.writepojo2Json(resp, new OneString("更新失敗"));
 		}
 		

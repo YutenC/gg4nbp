@@ -20,7 +20,19 @@ const shoppingContent = Vue.createApp({
     methods: {
         leave: function (location, otherDetail) {
             sessionStorage.setItem('productId', otherDetail);
-            window.location.replace(projectHref + '/' + location);
+            Swal.fire({
+                title: '確定離開?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '是',
+                cancelButtonText: '否'
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.replace(projectHref + '/' + location);
+                }
+            });
         }
     },
     computed: {
@@ -70,10 +82,38 @@ const promoProduct = Vue.createApp({
             amount: 5
         }
     },
+    methods: {
+        leave: function (location, otherDetail) {
+            sessionStorage.setItem('productId', otherDetail);
+            Swal.fire({
+                title: '確定離開?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '是',
+                cancelButtonText: '否'
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.replace(projectHref + '/' + location);
+                }
+            });
+        }
+    },
     created() {
-        axios.get(projectFolder + '/shopDispatcher/getProdcutsBuyTimes?amount=' + this.amount + '&type=""')
-            .then(res => this.promoProduct = res.data)
-            .catch(err => console.log(err))
+        const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
+        const require = ['productIndexImage'];
+        const sqlConditions = [{ key: 'limit', value: this.recomendAmount }];
+        const conditions = [{ key: "state", value: 1 }];
+        const req = { sort: sort, required: require, sqlConditions: sqlConditions, conditions: conditions };
+        axios({
+            method: 'get',
+            url: projectFolder + '/shopDispatcher/getAllProductByCondition',
+            params: {
+                params: encodeURIComponent(JSON.stringify(req))
+            }
+        }).then(res => this.promoProduct = res.data)
+            .catch(err => console.log(err));
     }
 }).mount('#promoProduct');
 
@@ -90,6 +130,22 @@ window.addEventListener('popstate', () => {
     }).then(function (result) {
         if (result.isConfirmed) {
 
+        }
+    });
+});
+
+$('.logo').on('click', () => {
+    Swal.fire({
+        title: '確定離開?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '是',
+        cancelButtonText: '否'
+    }).then(function (result) {
+        if (result.isConfirmed) {
+            location.href = projectFolder + '/shop/shopIndex(Vue).html';
         }
     });
 });

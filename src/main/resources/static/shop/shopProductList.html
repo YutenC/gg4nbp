@@ -19,6 +19,8 @@
     <script src="../js/projectFolder.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -336,10 +338,17 @@
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
-                        <a href="/gg4nbp/member_login.html" id="login">
-                            <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
-                            <span>會員登入</span>
-                        </a>
+                        <!-- id="login" -->
+                        <!-- /gg4nbp/member_login.html -->
+                        <span id="vue-member">
+                            <a href="#">
+                                <img @click="loginBtn($event.target)" class="bigicon" src="../img/icon/user-regular.svg"
+                                    alt="">
+                                <!-- <span>會員登入</span> -->
+                                <span v-if="login">會員登出</span>
+                                <span v-else="login">會員登入</span>
+                            </a>
+                        </span>
                         <a href="/gg4nbp/member/member_home.html" id="memberCenter">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
                             <span>會員中心</span>
@@ -359,26 +368,12 @@
         </nav>
     </header>
     <div class="shopmain">
-        <div class="miniMenu">
-            <div class="miniMenuContent">
-                <div class="miniMenuBut">
-                    <a href="" class="goTop" @click="goTop"><img src="../img/icon/square-caret-up-regular.svg"
-                            alt="回到頂端"></a>
-                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
-                            @mouseenter="historymouseenter($event.targer)"></a>
-                    <a href="" class="shoppingCart" @click="goCart"><img src="../img/icon/cart-shopping-solid.svg"
-                            alt="購物車"></a>
-                </div>
-                <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
-                    @mouseleave="historymouseleave($event.targer)">
-                    <div v-for="item in productHistory">
-                        <button style="font-size: 0.75rem;"
-                            @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <aside class="sidebar">
+            <div class="brandlist" @click="getProductByType(enumPageCurrentType.ALL)">
+                <span class="P_brand">
+                    全部商品
+                </span>
+            </div>
             <div class="brandlist" @click="getProductByType(enumPageCurrentType.NS)">
                 <span class="N_brand">
                     Nitendo
@@ -396,6 +391,26 @@
             </div>
         </aside>
         <main>
+            <div class="miniMenu">
+                <div class="miniMenuContent">
+                    <div class="miniMenuBut">
+                        <a href="" class="goTop" @click="goTop"><img src="../img/icon/square-caret-up-regular.svg"
+                                alt="回到頂端"></a>
+                        <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
+                                @mouseenter="historymouseenter($event.targer)"></a>
+                        <a href="" class="shoppingCart" @click="goCart"><img src="../img/icon/cart-shopping-solid.svg"
+                                alt="購物車"></a>
+                    </div>
+                    <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
+                        @mouseleave="historymouseleave($event.targer)">
+                        <span>近期看過</span>
+                        <div v-for="item in productHistory">
+                            <button style="font-size: 0.75rem;"
+                                @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="innerFunc">
                 <button @click="salseNumberBtn()">依銷售量排序</button>
                 <div class="search">
@@ -415,8 +430,8 @@
                                 {{item.productName}}
                             </a>
                             <div>
-                                <button @click="addCart(item.id)">直接購買</button>
-                                <button @click="addCart(item.id)"><img src="../img/icon/cart-shopping-solid.svg"
+                                <button @click="addCart(1,item.id)">直接購買</button>
+                                <button @click="addCart(0,item.id)"><img src="../img/icon/cart-shopping-solid.svg"
                                         alt=""></button>
                                 <button @click="addFollow(index,item.id)">
                                     <img v-if="item.follow==0" src="../img/icon/heart-regular.svg" alt="">

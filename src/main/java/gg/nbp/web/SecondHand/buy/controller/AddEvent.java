@@ -72,7 +72,6 @@ public class AddEvent extends HttpServlet  {
 		}
 		
 		
-		
 		try {
 			SecondhandBuylist buylist = json2pojo(req, SecondhandBuylist.class);
 			

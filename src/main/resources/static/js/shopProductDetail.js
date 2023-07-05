@@ -63,13 +63,26 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (response) {
-                    let result = response.value;
-                    if (!result.successful) {
-                        window.location.href = "./member_login.html";
+
+
+                    let result = response.data;
+                    if (result != null && result.redirect) {
+                        window.location.href = "/gg4nbp/member_login.html";
                     }
                     else {
-
+                        if (action == 1) {
+                            window.location.href = "../member/shoppingCart(Vue).html";
+                        }
                     }
+
+
+                    // let result = response.value;
+                    // if (!result.successful) {
+                    //     window.location.href = "./member_login.html";
+                    // }
+                    // else {
+
+                    // }
 
                     // // <button @click="addCart(1,product.id)">直接購買</button>
                     // // <button @click="addCart(0,product.id)">加入購物車</button>
@@ -90,8 +103,6 @@ const vm = Vue.createApp({
                 .catch(function (e) {
                     console.log("addCart error " + e);
                 });
-
-
         },
         addFollow: function (id) {
             axios({
@@ -170,15 +181,54 @@ const vm = Vue.createApp({
                 vm.smallImageIndex = (++vm.smallImageIndex > 2) ? 2 : vm.smallImageIndex;
             }
         },
-        historymouseenter: function () {
-            vm.isHistoryAreaHidden = false;
-        },
-        historymouseleave() {
-            vm.isHistoryAreaHidden = true;
-        }
+        // historymouseenter: function () {
+        //     vm.isHistoryAreaHidden = false;
+        // },
+        // historymouseleave() {
+        //     vm.isHistoryAreaHidden = true;
+        // }
 
     },
-}).mount(".shopmain");
+}).mount("main");
+
+const topNav = Vue.createApp({
+    data() {
+        return {
+            login: false,
+        }
+    },
+    mounted() {
+        checkLogin();
+    },
+    methods: {
+        getProductByType(type) {
+
+        },
+        loginBtn(event) {
+
+            if (topNav.login) {
+                axios({
+                    method: "POST",
+                    url: host_context + "member/memberLogoutServlet",
+                    // withCredentials: true,
+                    // crossDomain: true,
+                },)
+                    .then(function (value) {
+                        console.log("memberLogoutServlet then");
+                        getProductDetail();
+                        topNav.login = false;
+                    })
+                    .catch(function (e) {
+                        console.log("memberLogoutServlet error " + e);
+                    });
+            }
+            else {
+                window.location.href = "/gg4nbp/member_login.html";
+            }
+
+        }
+    }
+}).mount('#vue-member');
 
 vm.initSelectedAmountIndex = 0;
 // getProductDetail();
@@ -194,6 +244,7 @@ function getProductDetail() {
         params: { id: ProductDetail_id }
     })
         .then(function (value) {
+
             vm.productDetail = value.data;
             vm.product = vm.productDetail.product;
             vm.ProductDetail_id = ProductDetail_id;
@@ -201,7 +252,6 @@ function getProductDetail() {
             if (vm.product.revieweCount != 0) {
                 let score = vm.product.rate / (vm.product.revieweCount * 5.0);
                 score = score * 5;
-                // score = Math.round10(score, -2);
                 vm.productScore = score + "/5";
             }
             else {
@@ -230,5 +280,32 @@ function getProductHistory() {
         })
         .catch(function (e) {
             console.log("getProductHistory error " + e);
+        });
+}
+
+
+
+function checkLogin() {
+    axios({
+        method: "GET",
+        url: host_context + "shopDispatcher/checkLogin",
+
+    })
+        .then(function (value) {
+            let state = value.data.state;
+            if (state === "ok") {
+                let msg = value.data.msg;
+                if (msg === "login") {
+                    topNav.login = true;
+                }
+                else if (msg === "nologin") {
+                    topNav.login = false;
+                }
+
+            }
+
+        })
+        .catch(function (e) {
+            console.log("checkLogin error " + e);
         });
 }

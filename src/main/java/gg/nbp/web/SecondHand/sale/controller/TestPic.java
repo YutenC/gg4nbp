@@ -40,25 +40,26 @@ public class TestPic extends HttpServlet {
 
 			for (Part part : parts) {
 //				String url = "C:\\CHA101G5_workspace\\Five_NBP.gg\\src\\main\\webapp\\img\\secondHand\\" + part.getName();
-				String url = SecondhandProductConstants.SAVE_URL + part.getName();
-//				String url = req.getContextPath() + "src/main/resources/static/img" + part.getName();
+
+//				String url = SecondhandProductConstants.SAVE_URL + part.getName();
+//				String url = req.getContextPath() + "src/main/resources/static/img/secondHand/" + part.getName();
 
 
 
-//				String storageFolder = "src/main/resources/static/img/secondHand";
-//				//      定義圖片存儲的資料夾路徑（相對於專案的位置）
-//
-//				String storagePath = System.getProperty("user.dir") + "/" + storageFolder;
-//				//      獲取目標資料夾的動態路徑（相對於專案的位置）
-//
-//				String imgName = part.getSubmittedFileName();
-//				//      獲取圖片的檔名
-//
-//				String absolutePath = MemberCommonUitl.getAbsolutePath(storagePath);
-//				//      將相對路徑轉換為絕對路徑
-//
-//				String url = absolutePath + File.separator + imgName;
-//				//      將圖片儲存到目標路徑
+				String storageFolder = "src/main/resources/static/img/secondHand";
+				//      定義圖片存儲的資料夾路徑（相對於專案的位置）
+
+				String storagePath = System.getProperty("user.dir") + "/" + storageFolder;
+				//      獲取目標資料夾的動態路徑（相對於專案的位置）
+
+				String imgName = part.getSubmittedFileName();
+				//      獲取圖片的檔名
+
+				String absolutePath = MemberCommonUitl.getAbsolutePath(storagePath);
+				//      將相對路徑轉換為絕對路徑
+
+				String url = absolutePath + File.separator + imgName;
+				//      將圖片儲存到目標路徑
 
 
 

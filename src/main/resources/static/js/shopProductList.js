@@ -2,13 +2,59 @@ import { host_context, nowDate } from './shopproductCommon.js';
 import { saveDataToSessionStorage, getURLSearch } from './shopproductCommon.js';
 
 let pageCurrentType = -1;
-let enumPageCurrentType = { NS: 2, PS: 22, XBOX: 12 };
+let enumPageCurrentType = { ALL: -1, NS: 2, PS: 22, XBOX: 12 };
 let enumProductState = { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 }
-const vm = Vue.createApp({
+
+const sidebar = Vue.createApp({
     data() {
         return {
             enumProductState: { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 },
             enumPageCurrentType: enumPageCurrentType,
+        }
+    },
+    methods: {
+        getProductByType(type) {
+            pageCurrentType = type;
+
+            let conditions = [];
+            let required = [];
+            if (pageCurrentType != -1) {
+                conditions.push({ key: "type", value: pageCurrentType });
+            }
+            conditions.push({ key: "state", value: enumProductState.takeOn });
+            required.push("productIndexImage", "follow");
+
+            let params = { msg: "getAllProduct", "conditions": conditions, "required": required };
+
+            let jsonObject = JSON.stringify(params);
+            let encodeObject = encodeURIComponent(jsonObject);
+
+
+            axios({
+                method: "Get",
+                // url: host_context + "shopDispatcher/getProductByType",
+                url: host_context + "shopDispatcher/getAllProductByCondition",
+                // withCredentials: true,
+                // crossDomain: true,
+                // params: { type: type }
+                params: { params: encodeObject }
+            },)
+                .then(function (value) {
+                    vm.products = value.data;
+
+                    console.log("getProductByType then");
+
+                })
+                .catch(function (e) {
+                    console.log("getProductByType error " + e);
+                });
+        },
+    }
+}).mount('.sidebar');
+
+const vm = Vue.createApp({
+    data() {
+        return {
             nowDate: '',
             minDate: '',
             products: [],
@@ -28,12 +74,13 @@ const vm = Vue.createApp({
             }
         });
         getAllProduct();
+        checkLogin();
     },
     methods: {
         getAllProduct: function () {
             getAllProduct();
         },
-        addCart: function (id) {
+        addCart: function (action, id) {
             let transObj = { productId: id, buyAmount: 1 };
             axios({
                 method: "Post",
@@ -46,23 +93,61 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (response) {
-                    let result = response.value;
-                    if (!result.successful) {
-                        window.location.href = "./member_login.html";
+                    let result = response.data;
+                    if (result != null && result.redirect) {
+                        window.location.href = "/gg4nbp/member_login.html";
                     }
                     else {
-
+                        if (action == 1) {
+                            window.location.href = "../member/shoppingCart(Vue).html";
+                        }
                     }
 
-                    console.log("addCart then");
 
                 })
                 .catch(function (e) {
                     console.log("addCart error " + e);
                 });
-
-
         },
+        // addCart: function (id) {
+        //     let transObj = { productId: id, buyAmount: 1 };
+        //     axios({
+        //         method: "Post",
+        //         url: host_context + "ShoppingList",
+        //         // withCredentials: true,
+        //         // crossDomain: true,
+        //         params: {
+        //             demand: "addOneShoppingList",
+        //             transObj: JSON.stringify(transObj),
+        //         }
+        //     })
+        //         .then(function (response) {
+        //             let result = response.data;
+        //             if (result != null && result.redirect) {
+        //                 window.location.href = "./member_login.html";
+        //             }
+        //             else {
+
+        //             }
+
+
+        //             // let result = response.value;
+        //             // if (!result.successful) {
+        //             //     window.location.href = "./member_login.html";
+        //             // }
+        //             // else {
+
+        //             // }
+
+        //             // console.log("addCart then");
+
+        //         })
+        //         .catch(function (e) {
+        //             console.log("addCart error " + e);
+        //         });
+
+
+        // },
         // addCart: function (id) {
         //     axios({
         //         method: "Get",
@@ -136,93 +221,24 @@ const vm = Vue.createApp({
             saveDataToSessionStorage("currentShopProductDetail_id", id);
             // window.location.href = "./shopProductDetail.html";
         },
-        getProductByType(type) {
-            pageCurrentType = type;
-
-            let conditions = [];
-            let required = [];
-            if (pageCurrentType != -1) {
-                conditions.push({ key: "type", value: pageCurrentType });
-            }
-            conditions.push({ key: "state", value: enumProductState.takeOn });
-            required.push("productIndexImage", "follow");
-
-            let params = { msg: "getAllProduct", "conditions": conditions, "required": required };
-
-            let jsonObject = JSON.stringify(params);
-            let encodeObject = encodeURIComponent(jsonObject);
-
-
-            axios({
-                method: "Get",
-                // url: host_context + "shopDispatcher/getProductByType",
-                url: host_context + "shopDispatcher/getAllProductByCondition",
-                // withCredentials: true,
-                // crossDomain: true,
-                // params: { type: type }
-                params: { params: encodeObject }
-            },)
-                .then(function (value) {
-                    vm.products = value.data;
-
-                    console.log("getProductByType then");
-
-                })
-                .catch(function (e) {
-                    console.log("getProductByType error " + e);
-                });
-        },
-        salseNumberBtn() {
-            let conditions = [];
-            let required = [];
-
-            if (pageCurrentType != -1) {
-                conditions.push({ action: "=", key: "type", value: pageCurrentType });
-            }
-            conditions.push({ key: "state", value: enumProductState.takeOn });
-            conditions.push({ action: "like", key: "productName", value: vm2.searchText });
-
-            let sort = { action: "order", key: "", value: "buyTimes" };//DESC
-
-            required.push("productIndexImage", "follow");
-
-            let params = { msg: "salseNumberBtn", "conditions": conditions, "required": required, "sort": sort };
-            let jsonObject = JSON.stringify(params);
-            let encodeObject = encodeURIComponent(jsonObject);
-            axios({
-                method: "Get",
-                url: host_context + "shopDispatcher/getAllProductByCondition",
-                // withCredentials: true,
-                // crossDomain: true,
-                // params: { type: pageCurrentType }
-                params: { params: encodeObject }
-            },)
-                .then(function (value) {
-                    vm.products = value.data;
-
-                    console.log("salseNumberBtn then");
-
-                })
-                .catch(function (e) {
-                    console.log("salseNumberBtn error " + e);
-                });
-        },
-        historymouseenter: function () {
-            vm.isHistoryAreaHidden = false;
-        },
-        historymouseleave() {
-            vm.isHistoryAreaHidden = true;
-        }
+        // historymouseenter: function () {
+        //     vm.isHistoryAreaHidden = false;
+        // },
+        // historymouseleave() {
+        //     vm.isHistoryAreaHidden = true;
+        // }
 
     }
-}).mount(".shopmain");
+}).mount(".productShowcase");
+
 
 
 
 const vm2 = Vue.createApp({
     data() {
         return {
-            searchText: ''
+            searchText: '',
+            manyToless: true
         };
     },
     created() {
@@ -267,9 +283,94 @@ const vm2 = Vue.createApp({
                 .catch(function (e) {
                     console.log("searchProducts error " + e);
                 });
+        },
+        salseNumberBtn() {
+            let conditions = [];
+            let required = [];
+
+            if (pageCurrentType != -1) {
+                conditions.push({ action: "=", key: "type", value: pageCurrentType });
+            }
+            conditions.push({ key: "state", value: enumProductState.takeOn });
+            conditions.push({ action: "like", key: "productName", value: vm2.searchText });
+
+
+            let sort = { action: "order", key: "DESC", value: "buyTimes" };//DESC
+            if (vm2.manyToless) {
+                sort = { action: "order", key: "DESC", value: "buyTimes" };//DESC
+                // vm2.manyToless = false;
+            }
+            else {
+                sort = { action: "order", key: "", value: "buyTimes" };//DESC
+                // vm2.manyToless = true;
+            }
+
+
+            required.push("productIndexImage", "follow");
+
+            let params = { msg: "salseNumberBtn", "conditions": conditions, "required": required, "sort": sort };
+            let jsonObject = JSON.stringify(params);
+            let encodeObject = encodeURIComponent(jsonObject);
+            axios({
+                method: "Get",
+                url: host_context + "shopDispatcher/getAllProductByCondition",
+                // withCredentials: true,
+                // crossDomain: true,
+                // params: { type: pageCurrentType }
+                params: { params: encodeObject }
+            },)
+                .then(function (value) {
+                    vm.products = value.data;
+
+                    console.log("salseNumberBtn then");
+
+                })
+                .catch(function (e) {
+                    console.log("salseNumberBtn error " + e);
+                });
+        },
+    },
+}).mount(".innerFunc");
+
+
+
+const topNav = Vue.createApp({
+    data() {
+        return {
+            login: false,
         }
     },
-}).mount(".productline");
+    mounted() {
+        checkLogin();
+    },
+    methods: {
+        getProductByType(type) {
+
+        },
+        loginBtn(event) {
+            if (topNav.login) {
+                axios({
+                    method: "POST",
+                    url: host_context + "member/memberLogoutServlet",
+                    // withCredentials: true,
+                    // crossDomain: true,
+                },)
+                    .then(function (value) {
+                        getAllProduct();
+                        console.log("memberLogoutServlet then");
+                        topNav.login = false;
+                    })
+                    .catch(function (e) {
+                        console.log("memberLogoutServlet error " + e);
+                    });
+            }
+            else {
+                window.location.href = "/gg4nbp/member_login.html";
+            }
+
+        }
+    }
+}).mount('#vue-member');
 
 
 
@@ -292,7 +393,6 @@ function getAllProduct() {
 
     axios({
         method: "GET",
-        // url: host_context + "shopDispatcher/getAllProductWithIndexImg",
         url: host_context + "shopDispatcher/getAllProductByCondition",
         // withCredentials: true,
         params: { params: encodeObject }
@@ -310,26 +410,6 @@ function getAllProduct() {
 
 }
 
-// function getFollows() {
-//     console.log(getFollows)
-//     axios({
-//         method: "Get",
-//         url: host_context + "shopDispatcher/getFollowByMemberId",
-//         // withCredentials: true,
-//         // crossDomain: true,
-//         params: { memberId: vm2.searchText }
-//     },)
-//         .then(function (value) {
-//             vm.followLists = value.data;
-
-//             console.log("searchProducts then");
-
-//         })
-//         .catch(function (e) {
-//             console.log("searchProducts error " + e);
-//         });
-// }
-
 function getProductHistory() {
     axios({
         method: "GET",
@@ -343,5 +423,29 @@ function getProductHistory() {
         })
         .catch(function (e) {
             console.log("getProductHistory error " + e);
+        });
+}
+
+
+function checkLogin() {
+    axios({
+        method: "GET",
+        url: host_context + "shopDispatcher/checkLogin",
+
+    })
+        .then(function (value) {
+            let state = value.data.state;
+            if (state === "ok") {
+                let msg = value.data.msg;
+                if (msg === "login") {
+                    topNav.login = true;
+                }
+                else if (msg === "nologin") {
+                    topNav.login = false;
+                }
+            }
+        })
+        .catch(function (e) {
+            console.log("checkLogin error " + e);
         });
 }

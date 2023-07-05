@@ -872,7 +872,7 @@
         Swal.fire({
             html: `
                 <div class="reviewMain">
-                    <div style="font-size: 2em;color: white;text-shadow: 0px 0px 2px burlywood;">收購審核</div>
+                    <div style="font-size: 2em;color: white;text-shadow: 0px 0px 2px burlywood;">收購進度</div>
                     <div class="barArea">
                         <div class="progressBar">
                             <div><div class="circle" ></div><span>案件成立</span></div>
@@ -1020,7 +1020,7 @@
         $('#type').val(obj.type);
 
         $('#applicantBankNumber').on('keydown', e => {
-            if (e.keyCode < 48 || e.keyCode > 57) {
+            if (e.keyCode != 8 && e.keyCode<48 || e.keyCode>57 ) {
                 e.preventDefault();
             }
         })

@@ -3,6 +3,7 @@ package gg.nbp.web.shop.shopproduct.service.impl;
 import gg.nbp.web.shop.shopproduct.dao.CouponDao;
 import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
+import gg.nbp.web.shop.shopproduct.util.CouponState;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -39,6 +40,21 @@ public class CouponServiceImpl implements CouponService {
         Coupon coupon=null;
         try {
             coupon=couponDao.selectByDiscountCode(discountCode);
+            if(coupon.getState()!= CouponState.publish.getValue()){//使用者使用，會判斷折價券是否有失效
+                coupon=null;
+            }
+        } catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+        return coupon;
+    }
+
+    @Override
+    public Coupon getCouponByDiscountCodeByManager(String discountCode) {
+        Coupon coupon=null;
+        try {
+            coupon=couponDao.selectByDiscountCode(discountCode);
+
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }

@@ -17,11 +17,14 @@ import gg.nbp.web.shop.shopproduct.util.CreateProductDB;
 import gg.nbp.web.shop.shopproduct.util.ProductState;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Base64;
 import java.util.List;
 import java.util.TimerTask;
@@ -92,6 +95,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 
         List<ProductImage> productImages= productPojo.getNewProduct().getProductImages();
 
+
         for (int i=0;i<productImages.size();i++) {
             ProductImage productImage= productImages.get(i);
 
@@ -101,11 +105,11 @@ public class ProductManagerServiceImpl implements ProductManagerService {
             try {
                 if(i==0){
                     fileName=productId+"_index"+".png";
-                    fos = new FileOutputStream(ConstUtil.DESIMGPATH+fileName);
+                    fos = new FileOutputStream(ConstUtil.getDESIMGPATH()+fileName);
                 }
                 else {
                     fileName=productId+"_"+i+".png";
-                    fos = new FileOutputStream(ConstUtil.DESIMGPATH+fileName);
+                    fos = new FileOutputStream(ConstUtil.getDESIMGPATH()+fileName);
                 }
 
                 fos.write(fromBase64str);
@@ -117,7 +121,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
                 throw new RuntimeException(e);
             }
 
-            productImage.setImage("../img/gameSoftware/test/"+fileName);
+            productImage.setImage(ConstUtil.getREL_DESIMGPATH()+fileName);
             productImage.setProduct(product);
             productImageDao.insert(productImage);
         }
@@ -142,7 +146,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
                 schedulerTasks.clear();
             }
         };
-
+        System.out.println("product.getLaunchTime(): "+product.getLaunchTime());
         SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
         schedulerTasks.addTimerTask(product.getId()+"takeOn",new SchedulerEntity(product.getLaunchTime(),timerTask));
         product.setState(ProductState.TakeOning.getValue());

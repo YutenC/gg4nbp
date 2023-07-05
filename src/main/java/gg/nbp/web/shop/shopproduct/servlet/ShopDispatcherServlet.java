@@ -6,22 +6,18 @@ import com.google.gson.internal.Primitives;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.shop.shopproduct.controller.*;
 import gg.nbp.web.shop.shopproduct.entity.Product;
-import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
-import gg.nbp.web.shop.shopproduct.pojo.DaoConditionSelect;
-import gg.nbp.web.shop.shopproduct.pojo.ProductPojo;
-import gg.nbp.web.shop.shopproduct.pojo.ProductSelect;
+import gg.nbp.web.shop.shopproduct.pojo.*;
 import gg.nbp.web.shop.shopproduct.util.ConvertJson;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
+//import org.apache.commons.csv.CSVFormat;
+//import org.apache.commons.csv.CSVParser;
+//import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -80,25 +76,35 @@ public class ShopDispatcherServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String strOut = "";
         DaoConditionSelect daoConditionSelect=null;
-        Member member = (Member) session.getAttribute("member");
+        Object objectMember =  session.getAttribute("member");
+        Member member=null;
+        if(objectMember!=null){
+            member = (Member)objectMember;
+        }
+        else{
+            member=new Member();
+            member.setMember_id(-1);
+        }
+
+
         switch (path) {
-            case "/ecPay":
-                StringBuilder requestData_ = new StringBuilder();
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        requestData_.append(line);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+            case "/checkLogin":
+
+                Object isLogin = session.getAttribute("isLogin");
+                ResponseMsg responseMsg=null;
+                if(isLogin==null){
+                    responseMsg= new ResponseMsg.Builder().setState("ok").setMsg("nologin").build();
                 }
-                String payloadData_ = requestData_.toString();
-                System.out.println(payloadData_);
+                else{
+                    if(member==null||member.getMember_id()==-1){
+                        responseMsg= new ResponseMsg.Builder().setState("ok").setMsg("nologin").build();
+                    }
+                    else{
+                        responseMsg= new ResponseMsg.Builder().setState("ok").setMsg("login").build();
+                    }
+                }
 
-                Member member_ = testMemberController.getDefaultMember();
-                Gson gson__ = new Gson();
-                strOut = gson__.toJson(member_);
-
+                strOut=ConvertJson.toJson(responseMsg);
                 break;
             case "/addProduct":
                 StringBuilder requestData = new StringBuilder();
@@ -117,6 +123,36 @@ public class ShopDispatcherServlet extends HttpServlet {
                 ProductPojo productPojo = gson_.fromJson(payloadData, ProductPojo.class);
                 productManagerController.addProduct(productPojo);
                 break;
+            case "/uploadCSV":
+//                Part filePart = null;
+//                try {
+//                    filePart = req.getPart("file");
+//                    String fileName = filePart.getSubmittedFileName();
+//                    InputStream fileContent = filePart.getInputStream();
+//
+//                    // Process the uploaded CSV file as needed
+//                    // Here, you can use the Apache Commons CSV library or any other CSV parsing library to read the file
+//
+//                    // Example: Reading the CSV file using Apache Commons CSV
+//                    Reader reader = new InputStreamReader(fileContent);
+//                    CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT);
+//                    for (CSVRecord record : parser) {
+//                        // Process each CSV record
+//                        String value1 = record.get(0);
+//                        String value2 = record.get(1);
+//                        // ... process other values
+//                    }
+//
+//                    // Close resources
+//                    parser.close();
+//                    reader.close();
+//
+//                } catch (ServletException e) {
+//                    throw new RuntimeException(e);
+//                }
+
+                break;
+
 //            case "/uploadProduct":
 //                /* Receive file uploaded to the Servlet from the HTML5 form */
 //                Part filePart = null;
@@ -343,9 +379,9 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
             case "/login":
-                member = testMemberController.getDefaultMember();
-                session.setAttribute("isLogin", true);
-                session.setAttribute("member", member);
+//                member = testMemberController.getDefaultMember();
+//                session.setAttribute("isLogin", true);
+//                session.setAttribute("member", member);
 
                 break;
         }

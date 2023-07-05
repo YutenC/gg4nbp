@@ -2,6 +2,7 @@ package gg.nbp.web.SecondHand.buy.dto;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import gg.nbp.core.pojo.Core;
 import gg.nbp.web.Member.dao.MemberDao;
@@ -138,6 +139,16 @@ public class BuyEvent extends Core {
 				.setPayState(getPayState(sl.getPayState()));
 		sl.setPrice(be.price < 0 ? null : be.price);
 		sl.setConfirmTime(Toolbox.getNow());
+		
+		List<SecondhandBuyPicture> addPic = sl.getImage().stream()
+					 									 .map(sp -> {
+					 										 SecondhandBuyPicture ss = new SecondhandBuyPicture();
+					 										 ss.setImage(sp.getImage());
+					 										 return ss ;
+					 									 })
+					 									 .collect(Collectors.toList());
+		sl.setImage(addPic);
+		
 		switch (be.progress) {
 		case 0:
 			if(be.agree) 
