@@ -113,7 +113,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         RedisContent redisService = new RedisContent() {
             @Override
             public int run() {
-                Coupon coupon_ = couponService.getCouponByDiscountCode(coupon.getDiscountCode());
+                Coupon coupon_ = couponService.getCouponByDiscountCodeByManager(coupon.getDiscountCode());
                 couponActivity.setCoupon(coupon_);
                 couponActivityRedisDao.addCouponActivity(couponActivity);
                 return 0;
@@ -132,7 +132,7 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         RedisContent redisService = new RedisContent() {
             @Override
             public int run() {
-                Coupon coupon_ = couponService.getCouponByDiscountCode(coupon.getDiscountCode());
+                Coupon coupon_ = couponService.getCouponByDiscountCodeByManager(coupon.getDiscountCode());
                 couponActivity.setCoupon(coupon_);
                 couponActivityRedisDao.updateCouponActivity(couponActivity);
                 return 0;

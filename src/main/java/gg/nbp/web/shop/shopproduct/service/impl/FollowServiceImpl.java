@@ -70,7 +70,8 @@ public class FollowServiceImpl implements FollowService {
 
         for(int i=0;i<followLists.size();i++){
             Product product=productDao.selectById(followLists.get(i).getId().getProductId());
-            ProductImage productImage=productImageDao.getIndexImgByProductId(followLists.get(i).getId().getProductId());
+            List<ProductImage> productImages=productImageDao.getIndexImgByProductId(followLists.get(i).getId().getProductId());
+            ProductImage  productImage=productImages.get(0);
             resFollowLists.add(new ResFollowList(product.getId(),product.getProductName(),product.getPrice(),product.getAmount(),productImage.getImage()));
         }
 

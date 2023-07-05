@@ -2,7 +2,7 @@ import { host_context, nowDate } from './shopproductCommon.js';
 import { saveDataToSessionStorage, getURLSearch } from './shopproductCommon.js';
 
 let pageCurrentType = -1;
-let enumPageCurrentType = { NS: 2, PS: 22, XBOX: 12 };
+let enumPageCurrentType = { ALL: -1, NS: 2, PS: 22, XBOX: 12 };
 let enumProductState = { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 }
 
 const sidebar = Vue.createApp({
@@ -74,12 +74,13 @@ const vm = Vue.createApp({
             }
         });
         getAllProduct();
+        checkLogin();
     },
     methods: {
         getAllProduct: function () {
             getAllProduct();
         },
-        addCart: function (id) {
+        addCart: function (action, id) {
             let transObj = { productId: id, buyAmount: 1 };
             axios({
                 method: "Post",
@@ -92,23 +93,61 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (response) {
-                    let result = response.value;
-                    if (!result.successful) {
-                        window.location.href = "./member_login.html";
+                    let result = response.data;
+                    if (result != null && result.redirect) {
+                        window.location.href = "/gg4nbp/member_login.html";
                     }
                     else {
-
+                        if (action == 1) {
+                            window.location.href = "../member/shoppingCart(Vue).html";
+                        }
                     }
 
-                    console.log("addCart then");
 
                 })
                 .catch(function (e) {
                     console.log("addCart error " + e);
                 });
-
-
         },
+        // addCart: function (id) {
+        //     let transObj = { productId: id, buyAmount: 1 };
+        //     axios({
+        //         method: "Post",
+        //         url: host_context + "ShoppingList",
+        //         // withCredentials: true,
+        //         // crossDomain: true,
+        //         params: {
+        //             demand: "addOneShoppingList",
+        //             transObj: JSON.stringify(transObj),
+        //         }
+        //     })
+        //         .then(function (response) {
+        //             let result = response.data;
+        //             if (result != null && result.redirect) {
+        //                 window.location.href = "./member_login.html";
+        //             }
+        //             else {
+
+        //             }
+
+
+        //             // let result = response.value;
+        //             // if (!result.successful) {
+        //             //     window.location.href = "./member_login.html";
+        //             // }
+        //             // else {
+
+        //             // }
+
+        //             // console.log("addCart then");
+
+        //         })
+        //         .catch(function (e) {
+        //             console.log("addCart error " + e);
+        //         });
+
+
+        // },
         // addCart: function (id) {
         //     axios({
         //         method: "Get",
@@ -198,7 +237,8 @@ const vm = Vue.createApp({
 const vm2 = Vue.createApp({
     data() {
         return {
-            searchText: ''
+            searchText: '',
+            manyToless: true
         };
     },
     created() {
@@ -254,7 +294,17 @@ const vm2 = Vue.createApp({
             conditions.push({ key: "state", value: enumProductState.takeOn });
             conditions.push({ action: "like", key: "productName", value: vm2.searchText });
 
-            let sort = { action: "order", key: "", value: "buyTimes" };//DESC
+
+            let sort = { action: "order", key: "DESC", value: "buyTimes" };//DESC
+            if (vm2.manyToless) {
+                sort = { action: "order", key: "DESC", value: "buyTimes" };//DESC
+                // vm2.manyToless = false;
+            }
+            else {
+                sort = { action: "order", key: "", value: "buyTimes" };//DESC
+                // vm2.manyToless = true;
+            }
+
 
             required.push("productIndexImage", "follow");
 
@@ -281,6 +331,24 @@ const vm2 = Vue.createApp({
         },
     },
 }).mount(".innerFunc");
+
+
+
+const topNav = Vue.createApp({
+    data() {
+        return {
+            login: false,
+        }
+    },
+    mounted() {
+        checkLogin();
+    },
+    methods: {
+        getProductByType(type) {
+
+        },
+    }
+}).mount('#vue-member');
 
 
 
@@ -354,5 +422,31 @@ function getProductHistory() {
         })
         .catch(function (e) {
             console.log("getProductHistory error " + e);
+        });
+}
+
+
+function checkLogin() {
+    axios({
+        method: "GET",
+        url: host_context + "shopDispatcher/checkLogin",
+
+    })
+        .then(function (value) {
+            let state = value.data.state;
+            if (state === "ok") {
+                let msg = value.data.msg;
+                if (msg === "login") {
+                    topNav.login = true;
+                }
+                else if (msg === "nologin") {
+                    topNav.login = false;
+                }
+
+            }
+
+        })
+        .catch(function (e) {
+            console.log("checkLogin error " + e);
         });
 }
