@@ -35,7 +35,7 @@ public class CreateProductDB<T, P> {
     }
 
     public List<T> readCSV() throws NoSuchFieldException, IllegalAccessException {
-        String csvFile = ConstUtil.CSVPATH;
+        String csvFile = ConstUtil.getCSVPATH();
         String line;
         String csvDelimiter = ",";
 
@@ -87,7 +87,7 @@ public class CreateProductDB<T, P> {
     }
 
     public List<P> createImgEntity() throws NoSuchFieldException, IllegalAccessException {
-        List<String> fileNames = getListFile(ConstUtil.SRCIMGPATH);
+        List<String> fileNames = getListFile(ConstUtil.getSRCIMGPATH());
 
 
         String newFileName = null;
@@ -109,10 +109,10 @@ public class CreateProductDB<T, P> {
 
             for (int j = 0; j < 3; j++) {
                 if (j != 0) {
-                    pathName = ConstUtil.SRCIMGPATH + fileName + "_" + j + ".PNG";
+                    pathName = ConstUtil.getSRCIMGPATH() + fileName + "_" + j + ".PNG";
                     newFileName = p_id + "_" + j + ".PNG";
                 } else {
-                    pathName = ConstUtil.SRCIMGPATH + fileName + ".PNG";
+                    pathName = ConstUtil.getSRCIMGPATH() + fileName + ".PNG";
                     newFileName = p_id + "_index" + ".PNG";
                 }
 
@@ -124,7 +124,7 @@ public class CreateProductDB<T, P> {
                 // Check if the file exists
                 if (file.exists()) {
 
-                    File file2 = new File(ConstUtil.DESIMGPATH + newFileName);
+                    File file2 = new File(ConstUtil.getDESIMGPATH() + newFileName);
                     copyFile(file, file2);
 
                 } else {

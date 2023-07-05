@@ -345,3 +345,30 @@ function getProductHistory() {
             console.log("getProductHistory error " + e);
         });
 }
+
+
+function checkLogin() {
+    axios({
+        method: "GET",
+        url: host_context + "shopDispatcher/checkLogin",
+
+    })
+        .then(function (value) {
+            let state = value.data.state;
+            if (state === "ok") {
+                let msg = value.data.msg;
+                if (msg === "login") {
+
+                }
+                else if (msg === "nologin") {
+
+                }
+
+
+            }
+
+        })
+        .catch(function (e) {
+            console.log("checkLogin error " + e);
+        });
+}

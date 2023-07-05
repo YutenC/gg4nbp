@@ -62,6 +62,17 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
     }
 
     @Override
+    public Coupon selectByDiscountCodeByManager(String discountCode) {
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Coupon> criteriaQuery = criteriaBuilder.createQuery(Coupon.class);
+        Root<Coupon> root = criteriaQuery.from(Coupon.class);
+        criteriaQuery.where(criteriaBuilder.equal(root.get("discountCode"), discountCode));
+        Query<Coupon> query = session.createQuery(criteriaQuery);
+        query.setMaxResults(1);
+        return query.getSingleResult();
+    }
+
+    @Override
     public List<Coupon> selectByCondition(DaoConditionSelect daoSelect) {
 
         String conditionStr = "";
