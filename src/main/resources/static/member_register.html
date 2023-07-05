@@ -298,16 +298,40 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
 </body>
 <script>
-    const account = $("input#account").val();
-    const nickname = $("input#nickname").val();
-    const password = $("input#password").val();
-    const confirmPassword = $("input#confirm_password").val();
-    const idNumber = $("input#id_number").val();
-    const phoneNumber = $("input#phone_number").val();
-    const email = $("input#email").val();
-
+    $("button#cancel").on("click", function (){
+        window.location.href = "index.html";
+    })
     $("button#submit").on("click", function () {
-        if(checkAccount(account)){
+        if (isEmpty($("input#account").val())) {
+            errMessage();
+            return;
+        }
+        if (isEmpty($("input#nickname").val())) {
+            errMessage();
+            return;
+        }
+        if (isEmpty($("input#password").val())) {
+            errMessage();
+            return;
+        }
+        if (isEmpty($("input#confirm_password").val())) {
+            errMessage();
+            return;
+        }
+        if (isEmpty($("input#id_number").val())) {
+            errMessage();
+            return;
+        }
+        if (isEmpty($("input#phone_number").val())) {
+            errMessage();
+            return;
+        }
+        if (isEmpty($("input#email").val())) {
+            errMessage();
+            return;
+        }
+
+        if(!checkAccount($("input#account").val())){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -315,7 +339,7 @@
             })
             return;
         }
-        if(checkNickname(nickname)){
+        if(!checkNickname($("input#nickname").val())){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -323,7 +347,7 @@
             })
             return;
         }
-        if(checkPassword(password)){
+        if(!checkPassword($("input#password").val())){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -331,7 +355,7 @@
             })
             return;
         }
-        if(checkConfirmPassword(confirmPassword)){
+        if(!checkConfirmPassword($("input#confirm_password").val())){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -339,7 +363,7 @@
             })
             return;
         }
-        if(checkIdNumber(idNumber)){
+        if(!checkIdNumber($("input#id_number").val())){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -347,7 +371,7 @@
             })
             return;
         }
-        if(checkPhoneNumber(phoneNumber)){
+        if(!checkPhoneNumber($("input#phone_number").val())){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -355,7 +379,7 @@
             })
             return;
         }
-        if(checkEmail(email)){
+        if(!checkEmail($("input#email").val())){
             Swal.fire({
                 icon: 'error',
                 title: '格式錯誤',
@@ -435,6 +459,18 @@
     function checkEmail(email){
         let pattern =/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
         return pattern.test(email);
+    }
+
+    function errMessage() {
+        Swal.fire({
+            icon: 'error',
+            title: '輸入欄位不得空白',
+            text: '請輸入資料！',
+        })
+    }
+
+    function isEmpty(e) {
+        return e.trim() === "";
     }
 
 
