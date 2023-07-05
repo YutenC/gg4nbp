@@ -1020,7 +1020,7 @@
         $('#type').val(obj.type);
 
         $('#applicantBankNumber').on('keydown', e => {
-            if (e.keyCode < 48 || e.keyCode > 57) {
+            if (e.keyCode != 8 && e.keyCode<48 || e.keyCode>57 ) {
                 e.preventDefault();
             }
         })
