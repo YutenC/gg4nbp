@@ -23,7 +23,7 @@ public class EventController {
 
 	
 	@GetMapping("/deleteBuyEvent/{id}")
-    public Object delete(@PathVariable("id") int EventId,HttpServletRequest req) {
+    public Object delete(@PathVariable("id") int EventId, HttpServletRequest req) {
 		try {
 			Member member = (Member) req.getSession().getAttribute("member");
 			service.delete(member.getMember_id(), EventId);

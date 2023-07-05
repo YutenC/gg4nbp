@@ -44,8 +44,8 @@ public class AddEvent extends HttpServlet  {
             }
         };
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 7);
-        calendar.set(Calendar.MINUTE, 10); 
+        calendar.set(Calendar.HOUR_OF_DAY, 4);
+        calendar.set(Calendar.MINUTE, 0); 
         timer.schedule(task, calendar.getTime(), 24 * 60 * 60 * 1000);
 	}
 	
