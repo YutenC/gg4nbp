@@ -10,6 +10,8 @@ import java.util.List;
 public interface CouponDao extends CoreDao<Coupon,Integer> {
     Coupon selectByDiscountCode(String discountCode);
 
+    Coupon selectByDiscountCodeByManager(String discountCode);
+
     List<Coupon> selectByCondition(DaoConditionSelect daoSelect);
 
 }

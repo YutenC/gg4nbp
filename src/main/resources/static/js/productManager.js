@@ -11,8 +11,8 @@ const vm = Vue.createApp({
             enumProductType: [{ type: 2, content: "NS遊戲片" }, { type: 12, content: "XBOX遊戲片" }, { type: 22, content: "PS遊戲片" }],
             enumProductState: { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 },
             mainguideContent: [{ id: 1, text: "商品管理", action: "manageProduct" },
-            { id: 2, text: "商品新增", action: "addProduct" },
-            { id: 3, text: "其他", action: "otherSetting" }],
+            { id: 2, text: "商品新增", action: "addProduct" }
+            ],
             currentMainguideContent: 1,
             nowDate: '',
             minDate: '',
@@ -24,7 +24,9 @@ const vm = Vue.createApp({
             productSelectAction: ['排定上架', '排定下架', "移除排定上架", "移除排定下架"],
             currentProductSelectAction: '',
             limitNumOfSelect: [5, 10, 15, 20],
-            limitNum: 5
+            limitNum: 5,
+            pageIndex: 1,//pageIndex 初始值為1
+            showPageDot: true
         };
     },
     methods: {
@@ -181,20 +183,35 @@ const vm = Vue.createApp({
                 vm.newProductImg.push({ id: index, image: reader.result, name: file.name });
             });
         },
-        pageBtn(pageIndex) {
-            axios({
-                method: "GET",
-                url: host_context + "shopDispatcher/getSomeProduct",
-                params: {
-                    "pageIndex": pageIndex
+        pageBtn(event, pageIndex) {
+            event.preventDefault();
+            event.target.blur();
+            let newPageIndex = vm.pageIndex;
+
+            if (pageIndex == -100) {
+                if (newPageIndex <= 1) {
+                    newPageIndex = 1;
                 }
-            })
-                .then(function (value) {
-                    console.log("getSomeProduct then");
-                })
-                .catch(function (e) {
-                    console.log("getSomeProduct error " + e);
-                });
+                else {
+                    newPageIndex--;
+                }
+
+
+            } else if (pageIndex == -10) {
+                if (vm.showPageDot) {
+                    newPageIndex++;
+                }
+            }
+            else {
+                newPageIndex = pageIndex;
+
+            }
+
+            if (newPageIndex != vm.pageIndex) {
+                vm.pageIndex = newPageIndex;
+                vm.getallproduct();
+            }
+
         },
 
         updateProductInfo(index) {
@@ -280,6 +297,7 @@ const vm = Vue.createApp({
         },
         limitNumOfSelectChanre(limit) {
             vm.limitNum = parseInt(limit);
+            vm.pageIndex = 1;
             getAllProduct();
         },
         changeProductType(product, type) {
@@ -302,8 +320,11 @@ function getAllProduct() {
     let sqlConditions = [];
     let conditions = [];
 
-    sqlConditions.push({ "key": "limit", "value": vm.limitNum });
-    sqlConditions.push({ "key": "offset", "value": 0 });
+    let limit = vm.limitNum + 1;//為了要判斷頁碼
+    let offset = (vm.pageIndex - 1) * vm.limitNum;//pageIndex 初始值為1
+
+    sqlConditions.push({ "key": "limit", "value": limit });
+    sqlConditions.push({ "key": "offset", "value": offset });
     // conditions.push({ "key": "type", "value": 2 });
 
     let object = {
@@ -317,15 +338,31 @@ function getAllProduct() {
     axios({
         method: "Get",
         url: host_context + "shopDispatcher/getAllProductByCondition",
-        withCredentials: true,
-        crossDomain: true,
+        // withCredentials: true,
+        // crossDomain: true,
         params: {
             params: encodedJsonObject
         }
     })
         .then(function (value) {
             let products_ = value.data;
-            products_.forEach(element => {
+            let totalNum = products_.length;
+
+            let processNum = products_.length;
+
+            if (totalNum <= vm.limitNum) {
+                vm.showPageDot = false;
+            }
+            else {
+                products_.pop();
+                vm.showPageDot = true;
+                processNum = vm.limitNum;
+            }
+
+            //vm.limitNum
+            // products_.forEach(element => 
+            for (let i = 0; i < processNum; i++) {
+                let element = products_[i];
                 let originalDate = element.launchTime;
                 let dateObject = new Date(originalDate);
                 let showLaunchTime = dateObject.toLocaleString('zh-TW', { TimeZone: 'Asia/Taipei' });
@@ -366,7 +403,9 @@ function getAllProduct() {
                 //enumProductType
 
 
-            });
+            }
+
+
 
             // { 排定上架,排定下架,移除排定上架,移除排定下架  }
 
@@ -397,4 +436,5 @@ function productOperate(action, id) {
             console.log("productOperate error " + e);
         });
 }
+
 

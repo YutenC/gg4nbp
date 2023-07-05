@@ -42,14 +42,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
-    public ProductServiceImpl() {
-    }
+
 
     @Override
     public List<Product> getAllProduct(Integer memId, Integer limit) {
         List<Product> products = productDao.selectAll();
 //        setProductIndexImage(products);
         setFollows(memId,products);
+
 
         return products;
     }
@@ -75,6 +75,7 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
+
 
         return products;
     }
@@ -174,11 +175,12 @@ public class ProductServiceImpl implements ProductService {
 
         ProductImage productImage;
         try {
-            productImage = productImageDao.getIndexImgByProductId(id);
+            List<ProductImage> productImages = productImageDao.getIndexImgByProductId(id);
+            productImage=productImages.get(0);
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
             productImage = new ProductImage();
-            productImage.setImage(ConstUtil.DEFAULTIMG);
+            productImage.setImage(ConstUtil.getDEFAULTIMG());
         }
 
         return productImage;
@@ -192,7 +194,7 @@ public class ProductServiceImpl implements ProductService {
         } catch (RuntimeException e) {
             e.printStackTrace();
             ProductImage productImage = new ProductImage();
-            productImage.setImage(ConstUtil.DEFAULTIMG);
+            productImage.setImage(ConstUtil.getDEFAULTIMG());
             productImages = new ArrayList<>();
             productImages.add(productImage);
         }

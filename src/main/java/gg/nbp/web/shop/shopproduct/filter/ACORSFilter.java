@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 //@WebFilter("/*")
-//@WebFilter("/shopDispatcher/*")
+@WebFilter("/shopDispatcher/*")
 public class ACORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
