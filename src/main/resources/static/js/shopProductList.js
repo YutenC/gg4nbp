@@ -2,7 +2,7 @@ import { host_context, nowDate } from './shopproductCommon.js';
 import { saveDataToSessionStorage, getURLSearch } from './shopproductCommon.js';
 
 let pageCurrentType = -1;
-let enumPageCurrentType = { NS: 2, PS: 22, XBOX: 12 };
+let enumPageCurrentType = { ALL: -1, NS: 2, PS: 22, XBOX: 12 };
 let enumProductState = { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 }
 
 const sidebar = Vue.createApp({
@@ -198,7 +198,8 @@ const vm = Vue.createApp({
 const vm2 = Vue.createApp({
     data() {
         return {
-            searchText: ''
+            searchText: '',
+            manyToless: true
         };
     },
     created() {
@@ -254,7 +255,17 @@ const vm2 = Vue.createApp({
             conditions.push({ key: "state", value: enumProductState.takeOn });
             conditions.push({ action: "like", key: "productName", value: vm2.searchText });
 
-            let sort = { action: "order", key: "", value: "buyTimes" };//DESC
+
+            let sort = { action: "order", key: "DESC", value: "buyTimes" };//DESC
+            if (vm2.manyToless) {
+                sort = { action: "order", key: "DESC", value: "buyTimes" };//DESC
+                // vm2.manyToless = false;
+            }
+            else {
+                sort = { action: "order", key: "", value: "buyTimes" };//DESC
+                // vm2.manyToless = true;
+            }
+
 
             required.push("productIndexImage", "follow");
 

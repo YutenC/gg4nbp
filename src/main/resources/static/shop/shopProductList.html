@@ -362,6 +362,11 @@
     </header>
     <div class="shopmain">
         <aside class="sidebar">
+            <div class="brandlist" @click="getProductByType(enumPageCurrentType.ALL)">
+                <span class="P_brand">
+                    全部商品
+                </span>
+            </div>
             <div class="brandlist" @click="getProductByType(enumPageCurrentType.NS)">
                 <span class="N_brand">
                     Nitendo

@@ -283,9 +283,12 @@
                         </div>
                         <div class="productsmallimgs-container">
                             <a class="prev" @click="clickPrevNext($event.target)">&#10094;</a>
-                            <a class="productImg" v-for="(item,index) in productDetail.productImages" :data-pic=index>
-                                <img :src=item.image>
-                            </a>
+                            <template v-for="(item,index) in productDetail.productImages">
+                                <a v-if="index < 3" class="productImg" :data-pic=index>
+                                    <img :src=item.image>
+                                </a>
+                            </template>
+
                             <!-- <a class="productImg" data-pic="1"><img
                                     src="../img/gameSoftware/PS5/Final_Fantasy_XVI/19e80490e9e052547c129845bc1liee5.jpg"></a>
                             <a class="productImg" data-pic="2"><img
