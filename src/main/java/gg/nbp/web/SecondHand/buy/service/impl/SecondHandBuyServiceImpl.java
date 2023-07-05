@@ -91,10 +91,10 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 **************************************************************************************/
 		// 有辦法優化 ?
 		List<BuyEvent> listDTO = dao.selectAll().stream()
-					   				.filter(p -> p.getPayState() != 2)  //篩選掉已經完成的案件
-					   				.filter(p -> !(p.getApprovalState().equals("7") || p.getApprovalState().equals("3") || p.getApprovalState().equals("4")))  //篩選掉不成立的案件
-					   				.map(sl -> new BuyEvent(sl,daoMember))
-					   				.collect(Collectors.toList());
+					   							.filter(p -> p.getPayState() != 2)  //篩選掉已經完成的案件
+					   							.filter(p -> !(p.getApprovalState().equals("7") || p.getApprovalState().equals("3") || p.getApprovalState().equals("4")))  //篩選掉不成立的案件
+					   							.map(sl -> new BuyEvent(sl,daoMember))
+					   							.collect(Collectors.toList());
 
 		/* 如果抓到 0 筆資料，則拋出例外 */
 		if (listDTO.size() == 0)

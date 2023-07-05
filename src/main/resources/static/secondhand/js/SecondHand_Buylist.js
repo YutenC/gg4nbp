@@ -175,7 +175,7 @@ if($('img').hasClass('-warning')){
 
 function checkpage(obj) {
     reqaa = obj;
-    if (obj.eventId) {
+    if (obj?.eventId) {
         $('.inputBlock').remove();
         const div = document.createElement('div');
         div.innerHTML += `
@@ -195,7 +195,7 @@ function checkpage(obj) {
     <button onclick="gohome(event || window.event)">回首頁</button>
     </div>
     `;
-        div.setAttribute('class', 'return');
+        div.setAttribute('class', 'return_box');
         $('.showArea').append(div);
         $('.content').attr('style', 'width : 40%');
     } else {
