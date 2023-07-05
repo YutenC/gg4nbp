@@ -43,8 +43,10 @@ public class Update4Member extends HttpServlet {
 					String[] checks = {	be.getProductName(),
 										be.getContent(),
 										be.getApplicantBankNumber()};
-					if (Toolbox.isEmpty4Strings(checks)) 
+					if (Toolbox.isEmpty4Strings(checks)){
+						CommonUtil.writepojo2Json(resp, new OneString("請輸入完整資料"));
 						return;						
+					}
 					
 				}
 				
