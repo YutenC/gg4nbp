@@ -38,7 +38,7 @@ const miniMenuContent = Vue.createApp({
             event.preventDefault();
             axios.post(projectFolder + '/ShoppingList')
                 .then(res => {
-                    if (!res.data.successful) {
+                    if (res.data.redirect === true) {
                         let timerInterval
                         Swal.fire({
                             title: '您尚未登入！',

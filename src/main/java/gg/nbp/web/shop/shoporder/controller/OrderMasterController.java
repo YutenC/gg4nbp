@@ -69,16 +69,19 @@ public class OrderMasterController extends HttpServlet {
     	PrintWriter pw = res.getWriter();
 		
 		HttpSession httpSession = req.getSession();
+		Member getmember = (Member) httpSession.getAttribute("member");
 		
-		if (httpSession.getAttribute("member") == null) {
-			Member failLogin = new Member();
-			failLogin.setSuccessful(false);
+		Integer memberId = null;
+		if (getmember == null || getmember.isSuccessful() == false) {
+			JsonObject failLogin = new JsonObject();
+			failLogin.addProperty("redirect", true);
 			pw.println(gson.toJson(failLogin));
+			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
 			return;
+		} else {
+			memberId = getmember.getMember_id();
 		}
 		
-		Member member = (Member)httpSession.getAttribute("member");
-		Integer memberId = member.getMember_id();
     	
     	if (req.getParameter("manageAll") != null) {
     		int limit = 10;
@@ -201,7 +204,7 @@ public class OrderMasterController extends HttpServlet {
     				}
     			}
     		} else if ("member".equals(character)) {
-    			condition.put("memberId", member.getMember_id());
+    			condition.put("memberId", getmember.getMember_id());
     		}
     		pw.println(gson.toJson(orderMasterService.countDataNum(condition)));
     	}
@@ -278,7 +281,7 @@ public class OrderMasterController extends HttpServlet {
     	
     	String nowBonus = req.getParameter("nowBonus");
     	if (nowBonus != null) {
-    		pw.println(gson.toJson(member.getBonus()));
+    		pw.println(gson.toJson(getmember.getBonus()));
     		return;
     	}
     	
@@ -299,16 +302,19 @@ public class OrderMasterController extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 		
 		HttpSession httpSession = req.getSession();
+		Member getmember = (Member) httpSession.getAttribute("member");
 		
-		if (httpSession.getAttribute("member") == null) {
-			Member failLogin = new Member();
-			failLogin.setSuccessful(false);
+		Integer memberId = null;
+		if (getmember == null || getmember.isSuccessful() == false) {
+			JsonObject failLogin = new JsonObject();
+			failLogin.addProperty("redirect", true);
 			pw.println(gson.toJson(failLogin));
+			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
 			return;
+		} else {
+			memberId = getmember.getMember_id();
 		}
 		
-		Member member = (Member)httpSession.getAttribute("member");
-		Integer memberId = member.getMember_id();
 		
 		String demand = req.getParameter("demand");
 		
@@ -353,10 +359,10 @@ public class OrderMasterController extends HttpServlet {
 			String couponCode = req.getParameter("couponCode");	// 取得輸入的優惠卷折購代碼
 			String bonus = req.getParameter("bonus");	// 取得所使用的紅利
 			
-			OrderMaster om = orderMasterService.createNewOrderMaster(trObjList, cardDetail, addressDetail, member, commitType,
+			OrderMaster om = orderMasterService.createNewOrderMaster(trObjList, cardDetail, addressDetail, getmember, commitType,
 																				pickType, discountRadio, couponCode, bonus);
 			
-			orderMasterService.establishNewOrder(om, purchaseProducts, member);
+			orderMasterService.establishNewOrder(om, purchaseProducts, getmember);
 			
 			OrderMaster insertOk = orderMasterService.getOne(om.getOrderId());
 			
@@ -367,7 +373,7 @@ public class OrderMasterController extends HttpServlet {
 			// 寄送成功下單通知
 			Notice notice = new Notice();
 			notice.setMember_id(memberId);
-			notice.setNotice_value("會員 " + member.getNick() + " 您已於" + om.getCommitDate() + "完成下單，訂單編號" + om.getOrderId());
+			notice.setNotice_value("會員 " + getmember.getNick() + " 您已於" + om.getCommitDate() + "完成下單，訂單編號" + om.getOrderId());
 			
 			noticeService.addNotice(notice);
 			return;
@@ -387,7 +393,7 @@ public class OrderMasterController extends HttpServlet {
 			Notice notice = new Notice();
 			notice.setMember_id(memberId);
 			Format sfm1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			notice.setNotice_value("會員 " + member.getNick() + " 您已於" + sfm1.format(new Date()) + "完成取消，訂單編號" + fromManager.getOrderId());
+			notice.setNotice_value("會員 " + getmember.getNick() + " 您已於" + sfm1.format(new Date()) + "完成取消，訂單編號" + fromManager.getOrderId());
 			
 			noticeService.addNotice(notice);
 			return;

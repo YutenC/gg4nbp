@@ -99,7 +99,7 @@ const newProdcut = Vue.createApp({
             newProdcut: []
         }
     },
-    method: {
+    methods: {
         goProduct: function (location, otherDetail) {
             sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.href = projectFolder + '/' + location;

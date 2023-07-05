@@ -199,6 +199,7 @@ const shoppingContent = Vue.createApp({
         return {
             // 購物商品明細
             shoppingList: [],
+            type: { 2: 'NS', 22: 'PS', 12: 'XBOX' },
             shopTotal: 0,
             // 消費折抵
             discountRadio: 'coupon',
