@@ -4,11 +4,57 @@ import { saveDataToSessionStorage, getURLSearch } from './shopproductCommon.js';
 let pageCurrentType = -1;
 let enumPageCurrentType = { NS: 2, PS: 22, XBOX: 12 };
 let enumProductState = { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 }
-const vm = Vue.createApp({
+
+const sidebar = Vue.createApp({
     data() {
         return {
             enumProductState: { new: 0, takeOn: 1, takeOning: 2, takeOff: 11, takeOffing: 12 },
             enumPageCurrentType: enumPageCurrentType,
+        }
+    },
+    methods: {
+        getProductByType(type) {
+            pageCurrentType = type;
+
+            let conditions = [];
+            let required = [];
+            if (pageCurrentType != -1) {
+                conditions.push({ key: "type", value: pageCurrentType });
+            }
+            conditions.push({ key: "state", value: enumProductState.takeOn });
+            required.push("productIndexImage", "follow");
+
+            let params = { msg: "getAllProduct", "conditions": conditions, "required": required };
+
+            let jsonObject = JSON.stringify(params);
+            let encodeObject = encodeURIComponent(jsonObject);
+
+
+            axios({
+                method: "Get",
+                // url: host_context + "shopDispatcher/getProductByType",
+                url: host_context + "shopDispatcher/getAllProductByCondition",
+                // withCredentials: true,
+                // crossDomain: true,
+                // params: { type: type }
+                params: { params: encodeObject }
+            },)
+                .then(function (value) {
+                    vm.products = value.data;
+
+                    console.log("getProductByType then");
+
+                })
+                .catch(function (e) {
+                    console.log("getProductByType error " + e);
+                });
+        },
+    }
+}).mount('.sidebar');
+
+const vm = Vue.createApp({
+    data() {
+        return {
             nowDate: '',
             minDate: '',
             products: [],
@@ -136,86 +182,16 @@ const vm = Vue.createApp({
             saveDataToSessionStorage("currentShopProductDetail_id", id);
             // window.location.href = "./shopProductDetail.html";
         },
-        getProductByType(type) {
-            pageCurrentType = type;
-
-            let conditions = [];
-            let required = [];
-            if (pageCurrentType != -1) {
-                conditions.push({ key: "type", value: pageCurrentType });
-            }
-            conditions.push({ key: "state", value: enumProductState.takeOn });
-            required.push("productIndexImage", "follow");
-
-            let params = { msg: "getAllProduct", "conditions": conditions, "required": required };
-
-            let jsonObject = JSON.stringify(params);
-            let encodeObject = encodeURIComponent(jsonObject);
-
-
-            axios({
-                method: "Get",
-                // url: host_context + "shopDispatcher/getProductByType",
-                url: host_context + "shopDispatcher/getAllProductByCondition",
-                // withCredentials: true,
-                // crossDomain: true,
-                // params: { type: type }
-                params: { params: encodeObject }
-            },)
-                .then(function (value) {
-                    vm.products = value.data;
-
-                    console.log("getProductByType then");
-
-                })
-                .catch(function (e) {
-                    console.log("getProductByType error " + e);
-                });
-        },
-        salseNumberBtn() {
-            let conditions = [];
-            let required = [];
-
-            if (pageCurrentType != -1) {
-                conditions.push({ action: "=", key: "type", value: pageCurrentType });
-            }
-            conditions.push({ key: "state", value: enumProductState.takeOn });
-            conditions.push({ action: "like", key: "productName", value: vm2.searchText });
-
-            let sort = { action: "order", key: "", value: "buyTimes" };//DESC
-
-            required.push("productIndexImage", "follow");
-
-            let params = { msg: "salseNumberBtn", "conditions": conditions, "required": required, "sort": sort };
-            let jsonObject = JSON.stringify(params);
-            let encodeObject = encodeURIComponent(jsonObject);
-            axios({
-                method: "Get",
-                url: host_context + "shopDispatcher/getAllProductByCondition",
-                // withCredentials: true,
-                // crossDomain: true,
-                // params: { type: pageCurrentType }
-                params: { params: encodeObject }
-            },)
-                .then(function (value) {
-                    vm.products = value.data;
-
-                    console.log("salseNumberBtn then");
-
-                })
-                .catch(function (e) {
-                    console.log("salseNumberBtn error " + e);
-                });
-        },
-        historymouseenter: function () {
-            vm.isHistoryAreaHidden = false;
-        },
-        historymouseleave() {
-            vm.isHistoryAreaHidden = true;
-        }
+        // historymouseenter: function () {
+        //     vm.isHistoryAreaHidden = false;
+        // },
+        // historymouseleave() {
+        //     vm.isHistoryAreaHidden = true;
+        // }
 
     }
-}).mount(".shopmain");
+}).mount(".productShowcase");
+
 
 
 
@@ -267,9 +243,44 @@ const vm2 = Vue.createApp({
                 .catch(function (e) {
                     console.log("searchProducts error " + e);
                 });
-        }
+        },
+        salseNumberBtn() {
+            let conditions = [];
+            let required = [];
+
+            if (pageCurrentType != -1) {
+                conditions.push({ action: "=", key: "type", value: pageCurrentType });
+            }
+            conditions.push({ key: "state", value: enumProductState.takeOn });
+            conditions.push({ action: "like", key: "productName", value: vm2.searchText });
+
+            let sort = { action: "order", key: "", value: "buyTimes" };//DESC
+
+            required.push("productIndexImage", "follow");
+
+            let params = { msg: "salseNumberBtn", "conditions": conditions, "required": required, "sort": sort };
+            let jsonObject = JSON.stringify(params);
+            let encodeObject = encodeURIComponent(jsonObject);
+            axios({
+                method: "Get",
+                url: host_context + "shopDispatcher/getAllProductByCondition",
+                // withCredentials: true,
+                // crossDomain: true,
+                // params: { type: pageCurrentType }
+                params: { params: encodeObject }
+            },)
+                .then(function (value) {
+                    vm.products = value.data;
+
+                    console.log("salseNumberBtn then");
+
+                })
+                .catch(function (e) {
+                    console.log("salseNumberBtn error " + e);
+                });
+        },
     },
-}).mount(".productline");
+}).mount(".innerFunc");
 
 
 

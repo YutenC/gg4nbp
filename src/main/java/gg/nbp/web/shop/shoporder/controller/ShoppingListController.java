@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
@@ -43,13 +44,14 @@ public class ShoppingListController extends HttpServlet {
 		Member getmember = (Member)httpSession.getAttribute("member");
 		Integer memberId = null;
 		
-		if (getmember != null) {
-			memberId = getmember.getMember_id();
-		} else {
-			Member failLogin = new Member();
-			failLogin.setSuccessful(false);
+		if (getmember == null || getmember.isSuccessful() == false) {
+			JsonObject failLogin = new JsonObject();
+			failLogin.addProperty("redirect", true);
 			pw.println(gson.toJson(failLogin));
+			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
 			return;
+		} else {
+			memberId = getmember.getMember_id();
 		}
 		
 		if (req.getParameter("getAll") != null) {
@@ -80,16 +82,19 @@ public class ShoppingListController extends HttpServlet {
 		PrintWriter pw = res.getWriter();
 		
 		HttpSession httpSession = req.getSession();
+		Member getmember = (Member) httpSession.getAttribute("member");
 		
-		if (httpSession.getAttribute("member") == null) {
-			Member failLogin = new Member();
-			failLogin.setSuccessful(false);
+		Integer memberId = null;
+		if (getmember == null || getmember.isSuccessful() == false) {
+			JsonObject failLogin = new JsonObject();
+			failLogin.addProperty("redirect", true);
 			pw.println(gson.toJson(failLogin));
+			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
 			return;
+		} else {
+			memberId = getmember.getMember_id();
 		}
 		
-		Member member = (Member)httpSession.getAttribute("member");
-		Integer memberId = member.getMember_id();
 		
 		String demand = req.getParameter("demand");
 		

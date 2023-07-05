@@ -6,8 +6,8 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuyPicture;
+import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistPictureDao;
-import gg.nbp.web.SecondHand.buy.dto.BuyEvent;
 import jakarta.persistence.PersistenceContext;
 
 
@@ -26,8 +26,7 @@ public class SecondHandBuylistPictureDaoimpl implements SecondHandBuylistPicture
 
 	@Override
 	public int deleteById(Integer id) {
-		SecondhandBuyPicture pic = session.get(SecondhandBuyPicture.class, id);
-		session.remove(pic);
+		session.remove(session.get(SecondhandBuyPicture.class, id));
 		return 1;
 	}
 
@@ -39,31 +38,37 @@ public class SecondHandBuylistPictureDaoimpl implements SecondHandBuylistPicture
 	
 	public int deleteByListId(Integer id) {
 		final String sql = "DELETE FROM secondhand_buy_picture WHERE  BuyList_id = :id";
-		session.createNativeQuery(sql, SecondhandBuyPicture.class).setParameter("id", id).executeUpdate();
+		session.createNativeQuery(sql, SecondhandBuyPicture.class)
+			   .setParameter("id", id)
+			   .executeUpdate();
 		return 1;
 	}
 	
 	
 	@Override
-	public int update(BuyEvent be) {
-		deleteByListId(be.getEventId());
-		for (SecondhandBuyPicture sp : be.getImage()) {
-			sp.setBuylistId(be.getEventId());
-			session.persist(sp);
-		}
+	public int update(SecondhandBuylist sl) {
+		deleteByListId(sl.getBuylistId());
+		sl.getImage().stream()
+					 .forEach(sp ->{
+						 sp.setBuylistId(sl.getBuylistId());
+						 session.persist(sp);
+					 });
 		return 1;
 	}
 
 	@Override
 	public SecondhandBuyPicture selectById(Integer id) {
 		final String sql = "SELECT * FROM Secondhand_Buy_Picture where image_id = :id  ";
-		return session.createNativeQuery(sql, SecondhandBuyPicture.class).setParameter("id", id).getSingleResult();
+		return session.createNativeQuery(sql, SecondhandBuyPicture.class)
+					  .setParameter("id", id)
+					  .getSingleResult();
 	}
 
 	@Override
 	public List<SecondhandBuyPicture> selectAll() {
 		final String sql = "SELECT * FROM Secondhand_Buy_Picture ";
-		return session.createNativeQuery(sql, SecondhandBuyPicture.class).getResultList();
+		return session.createNativeQuery(sql, SecondhandBuyPicture.class)
+					  .getResultList();
 	}
 
 	@Override

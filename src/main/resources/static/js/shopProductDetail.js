@@ -29,7 +29,7 @@ const vm = Vue.createApp({
     },
     mounted() {
         getProductDetail();
-        getProductHistory();
+        // getProductHistory();
     },
     methods: {
         getProduct: function () {
@@ -170,15 +170,15 @@ const vm = Vue.createApp({
                 vm.smallImageIndex = (++vm.smallImageIndex > 2) ? 2 : vm.smallImageIndex;
             }
         },
-        historymouseenter: function () {
-            vm.isHistoryAreaHidden = false;
-        },
-        historymouseleave() {
-            vm.isHistoryAreaHidden = true;
-        }
+        // historymouseenter: function () {
+        //     vm.isHistoryAreaHidden = false;
+        // },
+        // historymouseleave() {
+        //     vm.isHistoryAreaHidden = true;
+        // }
 
     },
-}).mount(".shopmain");
+}).mount("main");
 
 vm.initSelectedAmountIndex = 0;
 // getProductDetail();

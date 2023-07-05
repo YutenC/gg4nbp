@@ -84,6 +84,10 @@ const memberOrder = Vue.createApp({
                 .then(res => this.orders = res.data)
                 .catch(err => console.log(err))
         },
+        leave: function (location, otherDetail) {
+            sessionStorage.setItem('productId', otherDetail);
+            window.location.replace(projectHref + '/' + location);
+        },
         sendComment: function (orderId, productId, event) {
             let star = $(event.target).closest('.rankDetail').find('input:checked').val();
             let comment = $(event.target).closest('.rankDetail').find('textarea.commentContent').val();

@@ -167,7 +167,7 @@
 
         div.toShow article.ItemList>div>span {
             display: inline-block;
-            width: 120px;
+            width: 140px;
             white-space: pre;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -183,11 +183,11 @@
         }
 
         div.toShow article.ItemList>div>span>button {
-            margin-right: 15px;
+            margin-right: 0px;
             padding: 0px;
             text-align: center;
             border-radius: 25px;
-            width: 90px;
+            width: 100px;
             height: 30px;
             font-size: .6em;
             font-weight: bold;
@@ -197,6 +197,23 @@
             box-shadow: 0px 0px 3px gray;
         }
 
+        div.toShow article.ItemList>div>span>button:first-child {
+            margin-right: 15px;
+            padding: 0px;
+            text-align: center;
+            border-radius: 25px;
+            width: 80px;
+            height: 30px;
+            font-size: .6em;
+            font-weight: bold;
+            background-color: rgb(151, 50, 50);
+            border: none;
+            color: aliceblue;
+            box-shadow: 0px 0px 3px gray;
+        }
+        div.toShow article.ItemList>div>span>button.cannotDel{
+            background-color: rgb(77, 51, 51);
+        }
 
         div.toShow div.hrLine {
             height: 1px;
@@ -327,6 +344,7 @@
             width: 6%;
             top: -3px;
             left: -3px;
+            max-width: 100%;
         }
 
 
@@ -480,6 +498,8 @@
             border-radius: 5px;
             width: 220px;
             height: 25px;
+            padding-top: 3px;
+
         }
 
         div.reviewMain div.editMain div.notChange>div.change>select,
@@ -543,15 +563,21 @@
 
         div.reviewMain div.editMain div.notChange div.agreeArea>label{
             font-size: .9em;
-            width: 50px;
+            width: 70px;
             text-align: left;
+            padding-left: 10px;
         }
 
 
         div.reviewMain div.editMain div.notChange div.agreeArea>input{
             width: 15px;
             height: 15px;
-            margin:  0px 10px ;
+            margin:  0px 0px 0px 10px;
+            padding: 0px;
+        }
+
+        div.reviewMain div.editMain div.Pic div.imgArea img.-warning {
+            box-shadow: 0px 0px 3px rgb(255, 0, 0);
         }
 
     </style>
@@ -931,7 +957,6 @@
             $('#getshot').on('click', function(e){
                 $(this).next().click();
             })
-
             $('#getshot').next().on('change',function(e){
                 let uploadImg = e.target.files || e.dataTransfer.files;
 
@@ -952,7 +977,7 @@
                 const btn = document.createElement('button');
                 $(btn).attr('class', 'del_btn').text('✖');
                 const reader = new FileReader();
-                if (uploadImg.size >= 5242880) {
+                if (uploadImg[0].size >= 5242880) {
                     $(img).addClass('-warning');
                 }
                 $('.imgArea').append(div);
@@ -970,7 +995,6 @@
                     div.remove();
                 })
             })
-
         }
 
         if (obj.progress == 2) {
@@ -1008,8 +1032,8 @@
             const img = document.createElement('img');
             const btn = document.createElement('button');
             $(btn).attr('class', 'del_btn').text('✖');
-            img.src = 'select?imgname='  + obj.image[i].image;
-            div.append(img);
+            img.src = 'select?imgname='  + obj.image[i].image +'&eventId='+obj.eventId;
+            div.append(img);  
             if(obj.progress<3)
                 div.append(btn);
             $('.imgArea').append(div);
@@ -1032,6 +1056,16 @@
             let img_list = [];
    
 
+            if($('img').hasClass('-warning')){
+                Swal.fire({
+                icon: 'error',
+                title: '圖片過大(超過5MB)'
+                })
+                return;
+            }
+
+
+
 
             /* 上傳圖片到本機指定位置 */
             filter:
@@ -1042,8 +1076,8 @@
                 for (let j = 0; j < upfiledel.length; j++) 
                     if (upfile[i][0].name == upfiledel[j])
                         continue filter;
-              
-                formData.append(upfile[i][0].name, upfile[i][0]);
+
+                formData.append(obj.eventId+"/"+upfile[i][0].name, upfile[i][0]);
                 img_list.push({ image: upfile[i][0].name });
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', '../secondhand/upFile', true);
@@ -1084,7 +1118,10 @@
             })
         } else {
             sessionStorage.setItem('ButEventResult', JSON.stringify(obj));
-            $('.swal2-container').remove();
+            Swal.fire({
+            icon: 'success',
+            title: '更新成功'
+            })
             itemDisplay();
         }
 
@@ -1144,6 +1181,7 @@
                     <span>${obj[i].price ?? ''}</span>
                     <span>${getProgress(obj[i].progress)}</span>
                     <span>
+                        <button id="delEvent_${obj[i].eventId}" onclick="delEvent(${obj[i].eventId})">刪除</button>
                         <button class="Review_${i}" onclick="ReviewBox(${i})">查看詳情</button>
                     </span>
                 </div>
@@ -1151,11 +1189,18 @@
 
                 `;
             div.append(article);
+
         }
         $('.toItem').remove();
         $('.pageBar').remove();
         $('.toShow')[0].append(div);
         $('.toShow')[0].append(pageBar);
+
+        for (let i = (page - 1) * onePage; i < lastNum; i++){
+            if(obj[i].progress >= 3){
+                $(`#delEvent_${obj[i].eventId}`).addClass('cannotDel');
+            }
+        }
     }
 
     $('.searchBar>span>button').on('click', () => {
@@ -1219,7 +1264,7 @@
     function getProgress(i){
         switch (i) {
             case 0:
-                return "完成申請";
+                return "申請中";
             case 1:
                 return "貨品查驗中";
             case 2:
@@ -1231,6 +1276,35 @@
             default:
                 return "未通過";
         }
+    }
+
+
+
+
+    function delEvent(id){
+        if($(`#delEvent_${id}`).hasClass('cannotDel'))
+            return;
+
+
+        fetch(`deleteBuyEvent/${id}`,{
+            method: "GET"
+        })
+        .then(res => res.json())
+        .then( body => {
+            let str = body.str ?? '刪除成功';
+            let icon = "success"
+            if( str == '刪除失敗')
+                icon = "error";
+                else{
+                    sessionStorage.setItem('ButEventResult', JSON.stringify(body));
+                    itemDisplay();
+                }
+                Swal.fire({
+                        icon: icon,
+                        title: str
+                    })
+        } );
+
     }
 
 </script>
