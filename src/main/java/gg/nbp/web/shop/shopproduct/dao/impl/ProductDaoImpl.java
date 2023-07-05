@@ -101,7 +101,9 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 ProductSelect.Condition condition = productSelect.getSqlConditions().get(i);
                 if ("limit".equals(condition.getKey())) {
                     Object oValue = condition.getValue();
-                    limit = ((Double) oValue).intValue();
+                    if(oValue!=null){
+                        limit = ((Double) oValue).intValue();
+                    }
                 } else if ("offset".equals(condition.getKey())) {
                     Object oValue = condition.getValue();
                     offset = ((Double) oValue).intValue();
