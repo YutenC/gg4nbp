@@ -19,6 +19,8 @@
     <script src="../js/projectFolder.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -359,25 +361,6 @@
         </nav>
     </header>
     <div class="shopmain">
-        <div class="miniMenu">
-            <div class="miniMenuContent">
-                <div class="miniMenuBut">
-                    <a href="" class="goTop" @click="goTop"><img src="../img/icon/square-caret-up-regular.svg"
-                            alt="回到頂端"></a>
-                    <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
-                            @mouseenter="historymouseenter($event.targer)"></a>
-                    <a href="" class="shoppingCart" @click="goCart"><img src="../img/icon/cart-shopping-solid.svg"
-                            alt="購物車"></a>
-                </div>
-                <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
-                    @mouseleave="historymouseleave($event.targer)">
-                    <div v-for="item in productHistory">
-                        <button style="font-size: 0.75rem;"
-                            @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <aside class="sidebar">
             <div class="brandlist" @click="getProductByType(enumPageCurrentType.NS)">
                 <span class="N_brand">
@@ -396,6 +379,26 @@
             </div>
         </aside>
         <main>
+            <div class="miniMenu">
+                <div class="miniMenuContent">
+                    <div class="miniMenuBut">
+                        <a href="" class="goTop" @click="goTop"><img src="../img/icon/square-caret-up-regular.svg"
+                                alt="回到頂端"></a>
+                        <a href="" class="viewRecord"><img src="../img/icon/clock-regular.svg" alt="瀏覽紀錄"
+                                @mouseenter="historymouseenter($event.targer)"></a>
+                        <a href="" class="shoppingCart" @click="goCart"><img src="../img/icon/cart-shopping-solid.svg"
+                                alt="購物車"></a>
+                    </div>
+                    <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
+                        @mouseleave="historymouseleave($event.targer)">
+                        <span>近期看過</span>
+                        <div v-for="item in productHistory">
+                            <button style="font-size: 0.75rem;"
+                                @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="innerFunc">
                 <button @click="salseNumberBtn()">依銷售量排序</button>
                 <div class="search">

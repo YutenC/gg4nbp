@@ -19,6 +19,7 @@
     <script src="../js/projectFolder.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         * {
@@ -258,6 +259,7 @@
                 </div>
                 <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
                     @mouseleave="historymouseleave($event.targer)">
+                    <span>近期看過</span>
                     <div v-for="item in productHistory">
                         <button style="font-size: 0.75rem;"
                             @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>
