@@ -74,12 +74,13 @@ const vm = Vue.createApp({
             }
         });
         getAllProduct();
+        checkLogin();
     },
     methods: {
         getAllProduct: function () {
             getAllProduct();
         },
-        addCart: function (id) {
+        addCart: function (action, id) {
             let transObj = { productId: id, buyAmount: 1 };
             axios({
                 method: "Post",
@@ -92,23 +93,61 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (response) {
-                    let result = response.value;
-                    if (!result.successful) {
-                        window.location.href = "./member_login.html";
+                    let result = response.data;
+                    if (result != null && result.redirect) {
+                        window.location.href = "/gg4nbp/member_login.html";
                     }
                     else {
-
+                        if (action == 1) {
+                            window.location.href = "../member/shoppingCart(Vue).html";
+                        }
                     }
 
-                    console.log("addCart then");
 
                 })
                 .catch(function (e) {
                     console.log("addCart error " + e);
                 });
-
-
         },
+        // addCart: function (id) {
+        //     let transObj = { productId: id, buyAmount: 1 };
+        //     axios({
+        //         method: "Post",
+        //         url: host_context + "ShoppingList",
+        //         // withCredentials: true,
+        //         // crossDomain: true,
+        //         params: {
+        //             demand: "addOneShoppingList",
+        //             transObj: JSON.stringify(transObj),
+        //         }
+        //     })
+        //         .then(function (response) {
+        //             let result = response.data;
+        //             if (result != null && result.redirect) {
+        //                 window.location.href = "./member_login.html";
+        //             }
+        //             else {
+
+        //             }
+
+
+        //             // let result = response.value;
+        //             // if (!result.successful) {
+        //             //     window.location.href = "./member_login.html";
+        //             // }
+        //             // else {
+
+        //             // }
+
+        //             // console.log("addCart then");
+
+        //         })
+        //         .catch(function (e) {
+        //             console.log("addCart error " + e);
+        //         });
+
+
+        // },
         // addCart: function (id) {
         //     axios({
         //         method: "Get",
@@ -295,6 +334,24 @@ const vm2 = Vue.createApp({
 
 
 
+const topNav = Vue.createApp({
+    data() {
+        return {
+            login: false,
+        }
+    },
+    mounted() {
+        checkLogin();
+    },
+    methods: {
+        getProductByType(type) {
+
+        },
+    }
+}).mount('#vue-member');
+
+
+
 // vm.getAllProduct();
 
 function getAllProduct() {
@@ -380,12 +437,11 @@ function checkLogin() {
             if (state === "ok") {
                 let msg = value.data.msg;
                 if (msg === "login") {
-
+                    topNav.login = true;
                 }
                 else if (msg === "nologin") {
-
+                    topNav.login = false;
                 }
-
 
             }
 

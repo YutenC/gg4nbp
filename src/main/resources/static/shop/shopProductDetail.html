@@ -223,9 +223,11 @@
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
-                        <a href="/gg4nbp/member_login.html" id="login">
+                        <a id="vue-member" href="/gg4nbp/member_login.html" id="login">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
-                            <span>會員登入</span>
+                            <!-- <span>會員登入</span> -->
+                            <span v-if="login">會員登出</span>
+                            <span v-else="login">會員登入</span>
                         </a>
                         <a href="/gg4nbp/member/member_home.html" id="memberCenter">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
@@ -364,7 +366,7 @@
                     </div>
 
                     <div class="contentPage" v-if="currentMainguideContent==1">
-                        <div class="tab tab1 -on">商品特色描述：圖文
+                        <div class="tab tab1 -on">
                             <div>
                                 {{product.content}}
                             </div>

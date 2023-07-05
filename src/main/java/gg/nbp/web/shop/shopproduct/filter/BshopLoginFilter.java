@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 //,"/shopDispatcher/login/*"
-@WebFilter(urlPatterns = {"/shopDispatcher/addFollow/*","/shopDispatcher/addCart/*"})
+@WebFilter(urlPatterns = {"/shopDispatcher/addFollow/*"})
 public class BshopLoginFilter extends HttpFilter implements Filter {
 
 

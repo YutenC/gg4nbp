@@ -338,9 +338,12 @@
                             <img class="bigicon" src="../img/icon/champagne-glasses-solid.svg" alt="">
                             <span>活動專區</span>
                         </a>
-                        <a href="/gg4nbp/member_login.html" id="login">
+
+                        <a id="vue-member" href="/gg4nbp/member_login.html" id="login">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
-                            <span>會員登入</span>
+                            <!-- <span>會員登入</span> -->
+                            <span v-if="login">會員登出</span>
+                            <span v-else="login">會員登入</span>
                         </a>
                         <a href="/gg4nbp/member/member_home.html" id="memberCenter">
                             <img class="bigicon" src="../img/icon/user-regular.svg" alt="">
@@ -423,8 +426,8 @@
                                 {{item.productName}}
                             </a>
                             <div>
-                                <button @click="addCart(item.id)">直接購買</button>
-                                <button @click="addCart(item.id)"><img src="../img/icon/cart-shopping-solid.svg"
+                                <button @click="addCart(1,item.id)">直接購買</button>
+                                <button @click="addCart(0,item.id)"><img src="../img/icon/cart-shopping-solid.svg"
                                         alt=""></button>
                                 <button @click="addFollow(index,item.id)">
                                     <img v-if="item.follow==0" src="../img/icon/heart-regular.svg" alt="">
