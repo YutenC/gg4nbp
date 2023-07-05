@@ -347,6 +347,28 @@ const topNav = Vue.createApp({
         getProductByType(type) {
 
         },
+        loginBtn(event) {
+            if (topNav.login) {
+                axios({
+                    method: "POST",
+                    url: host_context + "member/memberLogoutServlet",
+                    // withCredentials: true,
+                    // crossDomain: true,
+                },)
+                    .then(function (value) {
+                        getAllProduct();
+                        console.log("memberLogoutServlet then");
+                        topNav.login = false;
+                    })
+                    .catch(function (e) {
+                        console.log("memberLogoutServlet error " + e);
+                    });
+            }
+            else {
+                window.location.href = "/gg4nbp/member_login.html";
+            }
+
+        }
     }
 }).mount('#vue-member');
 
@@ -371,7 +393,6 @@ function getAllProduct() {
 
     axios({
         method: "GET",
-        // url: host_context + "shopDispatcher/getAllProductWithIndexImg",
         url: host_context + "shopDispatcher/getAllProductByCondition",
         // withCredentials: true,
         params: { params: encodeObject }
@@ -388,26 +409,6 @@ function getAllProduct() {
         });
 
 }
-
-// function getFollows() {
-//     console.log(getFollows)
-//     axios({
-//         method: "Get",
-//         url: host_context + "shopDispatcher/getFollowByMemberId",
-//         // withCredentials: true,
-//         // crossDomain: true,
-//         params: { memberId: vm2.searchText }
-//     },)
-//         .then(function (value) {
-//             vm.followLists = value.data;
-
-//             console.log("searchProducts then");
-
-//         })
-//         .catch(function (e) {
-//             console.log("searchProducts error " + e);
-//         });
-// }
 
 function getProductHistory() {
     axios({
@@ -442,9 +443,7 @@ function checkLogin() {
                 else if (msg === "nologin") {
                     topNav.login = false;
                 }
-
             }
-
         })
         .catch(function (e) {
             console.log("checkLogin error " + e);
