@@ -8,8 +8,8 @@ import gg.nbp.web.Member.dao.MemberDao;
 import gg.nbp.web.Member.entity.Notice;
 import gg.nbp.web.SecondHand.buy.VO.SecondhandBuylist;
 
-
 public class Toolbox {
+	
 	
 	
 	public static boolean isEmpty4Strings(String... args) {
@@ -44,6 +44,7 @@ public class Toolbox {
 		nt.setNotice_value(sl.getMessage());
 		return nt ;
 	}
+	
 	
 	
 }
