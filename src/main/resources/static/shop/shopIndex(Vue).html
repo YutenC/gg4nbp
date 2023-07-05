@@ -299,6 +299,7 @@
                     </div>
                     <div id="historyArea" :class="{expend_outline:true, hidden:isHistoryAreaHidden}"
                         @mouseleave="historymouseleave($event.targer)">
+                        <span>近期看過</span>
                         <div v-for="item in productHistory">
                             <button style="font-size: 0.75rem;"
                                 @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">{{item.productName}}</button>

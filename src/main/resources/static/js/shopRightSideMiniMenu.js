@@ -30,8 +30,7 @@ const miniMenuContent = Vue.createApp({
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         },
-        goProduct: function (location, otherDetail, event) {
-            event.preventDefault();
+        goProduct: function (location, otherDetail) {
             sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.href = projectFolder + '/' + location;
         },
