@@ -152,7 +152,7 @@ if($('img').hasClass('-warning')){
                     }
                 })
             } else {
-                return resp.json();
+                return resp?.json();
             }
         })
         .then(obj => {
