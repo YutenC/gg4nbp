@@ -20,10 +20,17 @@ public class ProductImageDaoImpl extends CoreDaoImpl<ProductImage, Integer> impl
         return (List<ProductImage>) session.createQuery(hql, ProductImage.class).getResultList();
     }
 
+//    @Override
+//    public ProductImage getIndexImgByProductId(Integer id) {
+//        String hql = "from ProductImage where product.id = " + id + " and image like '%index%'";
+//        ProductImage productImage= (ProductImage) session.createQuery(hql, ProductImage.class).getSingleResult();
+//        return productImage;
+//    }
+
     @Override
-    public ProductImage getIndexImgByProductId(Integer id) {
+    public List<ProductImage> getIndexImgByProductId(Integer id) {
         String hql = "from ProductImage where product.id = " + id + " and image like '%index%'";
-        ProductImage productImage= (ProductImage) session.createQuery(hql, ProductImage.class).getSingleResult();
-        return productImage;
+        List<ProductImage> productImages= (List<ProductImage>) session.createQuery(hql, ProductImage.class).getResultList();
+        return productImages;
     }
 }

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/projectFolder.js"></script>
     <link rel="stylesheet" href="../css/shoppingCart(Vue).css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +27,7 @@
 <body>
     <header class="cartHeader">
         <div class="ctHeaderUp">
-            <a href="shopIndex.html" class="logo">
+            <a href="/gg4nbp/shop/shopIndex(Vue).html" class="logo">
                 <img src="../img/Logo-removebg.png" alt="">
             </a>
             <span>
@@ -52,10 +53,13 @@
                     <template v-for="(item, index) in odProducts">
                         <tr>
                             <td class="productImg">
-                                <img :src="item.productImgUrl" :alt="item.productName">
+                                <a href="" @click.prevent="leave('shop/shopProductDetail.html', item.productId)">
+                                    <img :src="item.productImgUrl" :alt="item.productName">
+                                </a>
                             </td>
                             <td>
-                                <a :href="'/gg4nbp/' + item.productId"> <!--獲取-->
+                                <a href="" @click.prevent="leave('shop/shopProductDetail.html', item.productId)">
+                                    <!--獲取-->
                                     {{ item.productName }}
                                 </a>
                             </td>
@@ -75,12 +79,12 @@
             <div>
                 <form action="" id="discount">
                     <ul>
-                        <li v-if="checkCoupon !== ''">
+                        <li v-if="checkCoupon !== null">
                             <input type="radio" id="coupon" checked>
                             <span>使用優惠券折購代碼：{{ checkCoupon.discountCode }}</span>
                             <span>折購額度：{{ checkCoupon.discount }}</span>
                         </li>
-                        <li v-if="usedBonus !== ''">
+                        <li v-if="usedBonus !== null">
                             <input type="radio" id="bonus" checked>
                             <span>使用點數：{{ usedBonus }}</span>
                         </li>
@@ -118,8 +122,8 @@
         </div>
         <div class="brLine"></div>
         <div class="billTotal">
-            結帳總金額<span>NTD$</span><span>{{ productSubtotal + deliverCal}}</span><a
-                href="/gg4nbp/shopIndex.html">回賣場選購</a>
+            結帳總金額<span>NTD$</span><span>{{ productSubtotal + deliverCal}}</span><a href=""
+                @click.prevent="leave('shop/shopIndex(Vue).html', '')">回賣場選購</a>
         </div>
         <div class="brLine"></div>
         <h3>付款方式</h3>
@@ -165,10 +169,10 @@
         <ul>
             <template v-for="item in promoProduct">
                 <li>
-                    <a :href="item.link" @click="getLink(item.id)">
-                        <img :src="item.productImg" alt="">
+                    <a href="" @click.prevent="leave('shop/shopProductDetail.html', item.productId)">
+                        <img :src="item.productImgUrl" alt="">
                     </a>
-                    <a :href="item.link" @click="getLink(item.id)">
+                    <a href="" @click.prevent="leave('shop/shopProductDetail.html', item.productId)">
                         <span>{{ item.productName }}</span>
                     </a>
                     <span>${{ item.price }}</span>

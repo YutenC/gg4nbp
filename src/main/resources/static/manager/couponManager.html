@@ -76,7 +76,7 @@
                                                 <th>折扣金額</th>
                                                 <th>滿額金額</th>
                                                 <th>使用期限</th>
-                                                <td>折價券狀態</td>
+                                                <th>折價券狀態</th>
                                                 <th>更新</th>
                                                 <th>發佈</th>
                                             </tr>
@@ -86,18 +86,23 @@
                                                 <template v-for="item in couponActivity">
                                                     <tr>
                                                         <td><input v-model="item.activityName" type="text"
-                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                                :disabled="item.coupon.state >= enumCouponState.publish"
+                                                                style="width: 120px;">
                                                         <td><input v-model="item.activityCode" type="text"
-                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                                :disabled="item.coupon.state >= enumCouponState.publish"
+                                                                style="width: 120px;">
                                                         <td><input v-model="item.coupon.discountCode" type="text"
-                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                                :disabled="item.coupon.state >= enumCouponState.publish"
+                                                                style="width: 120px;">
                                                         </td>
 
                                                         <td><input v-model="item.coupon.discount" type="text"
-                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                                :disabled="item.coupon.state >= enumCouponState.publish"
+                                                                style="width: 80px;">
                                                         </td>
                                                         <td><input v-model="item.coupon.conditionPrice" type="text"
-                                                                :disabled="item.coupon.state >= enumCouponState.publish">
+                                                                :disabled="item.coupon.state >= enumCouponState.publish"
+                                                                style="width: 80px;">
                                                         </td>
                                                         <td>
                                                             <input type="datetime-local"
@@ -107,15 +112,15 @@
                                                                 :disabled="item.coupon.state >= enumCouponState.publish">
                                                         </td>
                                                         <td>
-                                                            <button style="width: 70px; height: 20px;">
+                                                            <button style="width: 70px; height: 25px;" disabled>
                                                                 {{enumCouponStateInfo[item.coupon.state]}}</button>
 
                                                         </td>
-                                                        <td><button style="width: 50px; height: 20px;"
+                                                        <td><button style="width: 50px; height: 25px;"
                                                                 @click="updateCouponActivity(item)"
                                                                 :disabled="item.coupon.state >= enumCouponState.publish">更新</button>
                                                         </td>
-                                                        <td><button style="width: 50px; height: 20px;"
+                                                        <td><button style="width: 50px; height: 25px;"
                                                                 @click="publishCouponActivity(item)"
                                                                 :disabled="item.coupon.state >= enumCouponState.publish">發佈</button>
                                                         </td>
@@ -150,10 +155,10 @@
                                 <div class="row">
                                     <div class="col-md-6 align-self-center">
                                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                            Showing 1 to 10 of 27</p>
+                                        </p>
                                     </div>
                                     <div class="col-md-6">
-                                        <nav
+                                        <!-- <nav
                                             class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                             <ul class="pagination">
                                                 <li class="page-item disabled">
@@ -176,7 +181,7 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </nav>
+                                        </nav> -->
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +250,7 @@
                                         <td><input type="date" v-bind:value="newCoupon.deadline" v-bind:min="minDate"
                                                 v-model.lazy="newCoupon.deadline" class="form-control form-control-sm">
 
-                                        <td><button style="width: 50px; height: 20px;"
+                                        <td><button style="width: 50px; height: 25px;"
                                                 @click="addCouponActivity()">新增</button>
                                         </td>
                                     </tr>
@@ -280,15 +285,16 @@
                         <br>
                         <div>設定傳送郵件時間:</div>
                         <div>
-                            <input type="datetime-local" v-model="sendEmailTime" class="form-control form-control-sm">
+                            <input type="datetime-local" v-model="sendEmailTime" class="form-control form-control-sm"
+                                style="width: 200px;">
                         </div>
 
 
                         <div>
                             <br>
                             <div>選擇折價券</div>
-                            <select class="d-inline-block form-select form-select-sm"
-                                @change="discountCodeSelectChange($event.target.value)">
+                            <select class=" d-inline-block form-select form-select-sm"
+                                @change="discountCodeSelectChange($event.target.value)" style="width: 200px;">
                                 <option v-for="(item,index) in couponActivity" :value="item.coupon.discountCode"
                                     :hidden="item.coupon.state!=enumCouponState.publish"
                                     :selected="index==initSelectedCouponIndex">

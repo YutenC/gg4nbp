@@ -199,6 +199,7 @@ const shoppingContent = Vue.createApp({
         return {
             // 購物商品明細
             shoppingList: [],
+            type: { 2: 'NS', 22: 'PS', 12: 'XBOX' },
             shopTotal: 0,
             // 消費折抵
             discountRadio: 'coupon',
@@ -463,7 +464,8 @@ const promoProduct = Vue.createApp({
         const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
         const require = ['productIndexImage'];
         const sqlConditions = [{ key: 'limit', value: this.recomendAmount }];
-        const req = { sort: sort, required: require, sqlConditions: sqlConditions };
+        const conditions = [{ key: "state", value: 1 }];
+        const req = { sort: sort, required: require, sqlConditions: sqlConditions, conditions: conditions };
         axios({
             method: 'get',
             url: projectFolder + '/shopDispatcher/getAllProductByCondition',

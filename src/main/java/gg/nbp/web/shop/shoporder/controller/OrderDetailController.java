@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
@@ -53,17 +54,18 @@ public class OrderDetailController extends HttpServlet {
     	
     	HttpSession httpSession = req.getSession();
     	
-    	Member getMember = (Member)httpSession.getAttribute("member");
+    	Member getmember = (Member)httpSession.getAttribute("member");
     	Integer memberId;
     	
-    	if (getMember == null) {
-    		Member failLogin = new Member();
-    		failLogin.setSuccessful(false);
-    		pw.println(failLogin);
-    		return;
-    	} else {
-    		memberId = getMember.getMember_id();
-    	}
+    	if (getmember == null || getmember.isSuccessful() == false) {
+			JsonObject failLogin = new JsonObject();
+			failLogin.addProperty("redirect", true);
+			pw.println(gson.toJson(failLogin));
+			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+			return;
+		} else {
+			memberId = getmember.getMember_id();
+		}
     	
     	if (req.getParameter("getMemberAll") != null) {
     		Collection<ResOrderDetail> rsODList = oDetailService.getMemberAllOrderDetail(memberId);
@@ -90,17 +92,18 @@ public class OrderDetailController extends HttpServlet {
 		
 		HttpSession httpSession = req.getSession();
 		
-    	Member getMember = (Member)httpSession.getAttribute("member");
+    	Member getmember = (Member)httpSession.getAttribute("member");
     	Integer memberId;
     	
-    	if (getMember == null) {
-    		Member failLogin = new Member();
-    		failLogin.setSuccessful(false);
-    		pw.println(gson.toJson(failLogin));
-    		return;
-    	} else {
-    		memberId = getMember.getMember_id();
-    	}
+    	if (getmember == null || getmember.isSuccessful() == false) {
+			JsonObject failLogin = new JsonObject();
+			failLogin.addProperty("redirect", true);
+			pw.println(gson.toJson(failLogin));
+			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+			return;
+		} else {
+			memberId = getmember.getMember_id();
+		}
 		
     	String comment = req.getParameter("comment");
     	if (comment != null) {

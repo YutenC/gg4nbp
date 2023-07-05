@@ -30,16 +30,15 @@ const miniMenuContent = Vue.createApp({
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         },
-        goProduct: function (location, otherDetail, event) {
-            event.preventDefault();
+        goProduct: function (location, otherDetail) {
             sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.href = projectFolder + '/' + location;
         },
         goCart(event) {
             event.preventDefault();
-            axios.post(projectFolder + '/memberGetPictureServlet')
+            axios.post(projectFolder + '/ShoppingList')
                 .then(res => {
-                    if (!res.data.successful) {
+                    if (res.data.redirect === true) {
                         let timerInterval
                         Swal.fire({
                             title: '您尚未登入！',

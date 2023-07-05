@@ -213,6 +213,11 @@
             margin: 5px;
         }
 
+        span.tks {
+            background-color: #FFED85;
+            color: blue;
+        }
+
         /* --------------------------------------------------------------------------------------------- */
     </style>
 </head>
@@ -332,7 +337,7 @@
                                 <option value="5">未出貨</option>
                             </select>
                         </form>
-                        <span>共{{ listLength }}筆資料</span>
+                        <span>共{{ orders.length }}筆資料</span>
                     </div>
                     <div class="detailArea">
                         <div class="detailUnit" v-for="(item, index) in orders">
@@ -418,7 +423,8 @@
                                                 <tr>
                                                     <td>{{ index+1 }}</td>
                                                     <td>
-                                                        <a href="" @click="checkProduct(index)">
+                                                        <a href=""
+                                                            @click.prevent="leave('shop/shopProductDetail.html', item.productId)">
                                                             {{ od.productName }}
                                                         </a>
                                                     </td>
@@ -479,10 +485,10 @@
                                                         <div>
                                                             <button
                                                                 @click="sendComment(item.orderMaster.orderId, od.productId, $event)"
-                                                                :disabled="od.comment > 0" v-if="!od.comment">
+                                                                :disabled="od.comment > 0" v-show="!od.comment">
                                                                 送出評價
                                                             </button>
-                                                            <span v-if="od.comment > 0">
+                                                            <span v-show="od.comment > 0" class="tks">
                                                                 感謝您的寶貴意見
                                                             </span>
                                                         </div>

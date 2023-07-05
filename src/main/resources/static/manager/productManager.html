@@ -63,12 +63,12 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                        <!-- <div class="text-md-end dataTables_filter" id="dataTable_filter">
                                             <label class="form-label">
                                                 <input type="search" class="form-control form-control-sm"
                                                     aria-controls="dataTable" placeholder="Search">
                                             </label>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="table-responsive table mt-2" id="dataTable" role="grid"
@@ -219,23 +219,33 @@
                                 <div class="row">
                                     <div class="col-md-6 align-self-center">
                                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                            Showing 1 to 10 of 27</p>
+                                        </p>
                                     </div>
                                     <div class="col-md-6">
                                         <nav
                                             class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                             <ul class="pagination">
-                                                <li class="page-item disabled">
-                                                    <a class="page-link" aria-label="Previous" href="#">
+                                                <li class="page-item" :class="{ disabled: pageIndex === 1 }">
+                                                    <a class="page-link" aria-label="Previous" href="#"
+                                                        @click="pageBtn($event, -100)">
                                                         <span aria-hidden="true">«</span>
                                                     </a>
                                                 </li>
 
-
-
-                                                <li class="page-item " v-for="index in 3" :key="index">
-                                                    <a class="page-link" @click="pageBtn(index)" href="#">{{index}}</a>
+                                                <li class="page-item " v-for="index in (pageIndex)"
+                                                    :class="{ disabled: (index) === pageIndex }">
+                                                    <a class="page-link" @click="pageBtn($event, (index))"
+                                                        href="#">{{index}}</a>
                                                 </li>
+
+                                                <template v-if="showPageDot">
+                                                    <li class="page-item"> <a class="page-link">...</a></li>
+                                                </template>
+
+                                                <!-- <li class="page-item " v-for="index in 3" :key="index">
+                                                    <a class="page-link" @click="pageBtn($event, index)"
+                                                        href="#">{{index}}</a>
+                                                </li> -->
                                                 <!-- <li class="page-item active">
                                                     <a class="page-link" href="#">2</a>
                                                 </li>
@@ -243,7 +253,8 @@
                                                     <a class="page-link" href="#">3</a>
                                                 </li> -->
                                                 <li class="page-item">
-                                                    <a class="page-link" aria-label="Next" href="#">
+                                                    <a class="page-link" aria-label="Next" href="#"
+                                                        @click="pageBtn($event, -10)">
                                                         <span aria-hidden="true">»</span>
                                                     </a>
                                                 </li>
@@ -277,7 +288,7 @@
                                             <td><strong>產品價格</strong></td>
                                             <td><strong>產品品牌</strong></td>
                                             <td><strong>產品庫存</strong></td>
-                                            <td><strong>產品內容</strong></td>
+
                                             <td><strong>產品上架日期</strong></td>
                                             <td><strong>新增產品</strong></td>
                                         </tr>
@@ -308,9 +319,9 @@
                                                     class="form-control form-control-sm">
                                             </td>
 
-                                            <td><input v-model.lazy="newProduct.content"
+                                            <!-- <td><input v-model.lazy="newProduct.content"
                                                     class="form-control form-control-sm">
-                                            </td>
+                                            </td> -->
                                             <td><input type="date" v-bind:value="newProduct.launchTime"
                                                     v-bind:min="minDate" v-model.lazy="newProduct.launchTime"
                                                     class="form-control form-control-sm">
@@ -332,7 +343,7 @@
                                             <td><strong>產品價格</strong></td>
                                             <td><strong>產品品牌</strong></td>
                                             <td><strong>產品庫存</strong></td>
-                                            <td><strong>產品內容</strong></td>
+
                                             <td><strong>產品上架日期</strong></td>
                                             <td><strong>新增產品</strong></td>
                                         </tr>

@@ -31,7 +31,7 @@ public class ShopDispatcherFilter extends HttpFilter {
 
         try {
 //            HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-            testSetMember(req.getSession());
+//            testSetMember(req.getSession());
             chain.doFilter(req, res);
 //            transaction.commit();
 //            HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
@@ -49,14 +49,14 @@ public class ShopDispatcherFilter extends HttpFilter {
     }
 
 
-    private void testSetMember(HttpSession session){
-        Object isLogin__ = session.getAttribute("isLogin");
-        if (isLogin__ != null) {
-        } else {
-            Member member=new Member();
-            member.setMember_id(-1);
-            session.setAttribute("member",member);
-        }
-    }
+//    private void testSetMember(HttpSession session){
+//        Object isLogin__ = session.getAttribute("isLogin");
+//        if (isLogin__ != null) {
+//        } else {
+//            Member member=new Member();
+//            member.setMember_id(-1);
+//            session.setAttribute("member",member);
+//        }
+//    }
 
 }
