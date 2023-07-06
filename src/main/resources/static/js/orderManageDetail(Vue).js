@@ -4,6 +4,7 @@ const orderContent = Vue.createApp({
             order: {},
             orderDetails: [],
             orderMember: {},
+            coupon: {},
             updateOrder: { orderStatus: '1', deliverNumber: '', deliverState: '0', payStatus: '1' },
             showPickType: ['', '宅配', '超商店取'],
             showCommitType: ['', '信用卡', '轉帳', '貨到付款'],
@@ -48,9 +49,12 @@ const orderContent = Vue.createApp({
                     }).then(res => console.log(res))
                         .catch(err => console.log(err));
                 } else {
-                    cancel();
+                    this.cancel();
                 }
             });
+
+            axios.get(projectFolder + '/OrderMaster?fresh=y');
+
         },
         goProduct: function (location, otherDetail) {
             sessionStorage.setItem('productId', otherDetail);
@@ -59,6 +63,15 @@ const orderContent = Vue.createApp({
         cancel: function () {
             for (let key in this.updateOrder) {
                 this.updateOrder[`${key}`] = this.order[`${key}`];
+            }
+        },
+    },
+    computed: {
+        orderEdit() {
+            for (let key in this.updateOrder) {
+                if (this.updateOrder[`${key}`] !== this.order[`${key}`]) {
+                    return true;
+                }
             }
         }
     },
@@ -71,6 +84,9 @@ const orderContent = Vue.createApp({
                 this.updateOrder.deliverNumber = this.order.deliverNumber;
                 this.updateOrder.deliverState = this.order.deliverState;
                 this.updateOrder.payStatus = this.order.payStatus;
+                axios.get(projectFolder + '/OrderDetail?couponId=' + (this.order.couponId ?? ''))
+                    .then(res => this.coupon = res.data)
+                    .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
 

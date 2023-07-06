@@ -81,6 +81,10 @@
             margin: 8px;
         }
 
+        div.discount span {
+            margin: 5px;
+        }
+
         .row div.comfirmBtn {
             text-align: right;
         }
@@ -174,10 +178,12 @@
                                     <td>運費：$<span>{{ order.deliverFee }}</span></td>
                                     <td><label for="deliverNumber">填入物流編號：</label></td>
                                     <td>
-                                        <input type="text" id="deliverNumber" v-model="updateOrder.deliverNumber">
+                                        <input type="text" id="deliverNumber" v-model="updateOrder.deliverNumber"
+                                            :disabled="order.orderStatus === 2">
                                     </td>
                                     <span>出貨狀態：</span>
-                                    <select name="deliverState" id="" v-model="updateOrder.deliverState">
+                                    <select name="deliverState" id="" v-model="updateOrder.deliverState"
+                                        :disabled="order.orderStatus === 2">
                                         <option value="0">未出貨</option>
                                         <option value="1">已出貨</option>
                                         <option value="2">已到貨</option>
@@ -186,11 +192,23 @@
                                 <div class="payment">
                                     <td><span>付款方式：<span>{{ showCommitType[order.commitType] }}</span></span></td>
                                     <span>付款狀態：</span>
-                                    <select name="payStatus" id="" v-model="updateOrder.payStatus">
+                                    <select name="payStatus" id="" v-model="updateOrder.payStatus"
+                                        :disabled="order.orderStatus === 2">
                                         <option value="1">待付款</option>
                                         <option value="2">已付款</option>
                                         <option value="3">貨到付款</option>
                                     </select>
+                                </div>
+                                <div class="discount">
+                                    <td><span>使用紅利點數：{{ order.bonusUse }}</span></td>
+                                    <div v-if="!coupon">
+                                        <td>
+                                            <span>使用優惠券：</span>
+                                            <span>優惠券代碼：{{ coupon.discountCode}}</span>
+                                            <span>優惠卷折抵額：{{ coupon.discount }}</span>
+                                            <span>優惠卷消費門檻：{{ coupon.conditionPrice}}</span>
+                                        </td>
+                                    </div>
                                 </div>
                                 <div>
                                     <td><span>訂單總價：$<strong>{{ order.totalPrice }}</strong></span></td>
@@ -204,8 +222,9 @@
                                     </nav>
                                 </div>
                                 <div class="comfirmBtn">
-                                    <button @click="confirm()">確認修改訂單</button>
-                                    <button @click="cancel()">重置輸入項目</button>
+                                    <button @click="confirm()" :disabled="!orderEdit"
+                                        v-show="order.orderStatus !== 2">確認修改訂單</button>
+                                    <button disabled v-show="order.orderStatus === 2">訂單已取消</button>
                                 </div>
                             </div>
                         </div>

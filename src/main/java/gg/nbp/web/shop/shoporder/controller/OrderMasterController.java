@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.entity.Notice;
 import gg.nbp.web.Member.service.MemberService;
@@ -73,16 +74,9 @@ public class OrderMasterController extends HttpServlet {
 		Member getmember = (Member) httpSession.getAttribute("member");
 		
 		Integer memberId = null;
-		if (getmember == null || getmember.isSuccessful() == false) {
-			JsonObject failLogin = new JsonObject();
-			failLogin.addProperty("redirect", true);
-			pw.println(gson.toJson(failLogin));
-			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
-			return;
-		} else {
+		if(getmember != null && getmember.isSuccessful() == true) {
 			memberId = getmember.getMember_id();
 		}
-		
     	
     	if (req.getParameter("manageAll") != null) {
     		int limit = 10;
@@ -246,6 +240,13 @@ public class OrderMasterController extends HttpServlet {
     	
     	String memberAll = req.getParameter("memberAll");
     	if (memberAll != null) {
+    		if (getmember == null || getmember.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+    			return;
+    		} 
     		String criteria = req.getParameter("criteria");
     		
     		Integer setNum = 0;
@@ -291,11 +292,25 @@ public class OrderMasterController extends HttpServlet {
     	
     	String nowBonus = req.getParameter("nowBonus");
     	if (nowBonus != null) {
+    		if (getmember == null || getmember.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+    			return;
+    		} 
     		pw.println(gson.toJson(getmember.getBonus()));
     		return;
     	}
     	
     	if (req.getParameter("getOneProduct") != null) {
+    		if (getmember == null || getmember.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+    			return;
+    		} 
 			Integer productId = Integer.valueOf(req.getParameter("getOneProduct"));
 			TransOrderProduct trpd = orderMasterService.getOneProduct(productId);
 			pw.println(gson.toJson(trpd));
@@ -315,20 +330,21 @@ public class OrderMasterController extends HttpServlet {
 		Member getmember = (Member) httpSession.getAttribute("member");
 		
 		Integer memberId = null;
-		if (getmember == null || getmember.isSuccessful() == false) {
-			JsonObject failLogin = new JsonObject();
-			failLogin.addProperty("redirect", true);
-			pw.println(gson.toJson(failLogin));
-			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
-			return;
-		} else {
+		if (getmember != null && getmember.isSuccessful() == true) {
 			memberId = getmember.getMember_id();
 		}
-		
 		
 		String demand = req.getParameter("demand");
 		
 		if ("checkOut".equals(demand)) {
+			if (getmember == null || getmember.isSuccessful() == false) {
+				JsonObject failLogin = new JsonObject();
+				failLogin.addProperty("redirect", true);
+				pw.println(gson.toJson(failLogin));
+				httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+				return;
+			} 
+			
 			// 取得前端回傳購物列表(使用axios params傳參數會遇到[]中括號無法放在query string的異常問題(或許改tomcat設定就可解決?)
 			// 因此改放在axios data，用reader讀取request body內部資料
 			Reader rd = req.getReader();
@@ -410,6 +426,14 @@ public class OrderMasterController extends HttpServlet {
 		}
 		
 		if ("updateOMFromMember".equals(demand)) {
+			if (getmember == null || getmember.isSuccessful() == false) {
+				JsonObject failLogin = new JsonObject();
+				failLogin.addProperty("redirect", true);
+				pw.println(gson.toJson(failLogin));
+				httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+				return;
+			}
+			
 			Reader rd = req.getReader();
 			BufferedReader brd = new BufferedReader(rd);
 			String reqStr = brd.readLine();
