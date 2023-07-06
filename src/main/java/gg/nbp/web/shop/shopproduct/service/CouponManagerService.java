@@ -12,6 +12,7 @@ public interface CouponManagerService {
     void generateCouponActivity();
     void addCouponActivity(CouponActivity couponActivity);
 
+    String generateDiscountCode();
     List<CouponActivity> getAllCouponActivity();
 
     List<CouponActivity> getCouponActivityByCondition(DaoConditionSelect daoConditionSelect) throws RuntimeException;

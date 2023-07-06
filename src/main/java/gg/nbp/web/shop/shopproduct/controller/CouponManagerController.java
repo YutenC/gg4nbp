@@ -112,5 +112,9 @@ public class CouponManagerController {
     }
 
 
-
+    public String generateDiscountCode() {
+        String newDiscountCode= couponManagerService.generateDiscountCode();
+        ResponseMsg responseMsg=new ResponseMsg.Builder().setState("ok").setContent(newDiscountCode).build();
+        return ConvertJson.toJson(responseMsg);
+    }
 }

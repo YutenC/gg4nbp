@@ -162,7 +162,17 @@ const vm = Vue.createApp({
                     // if (result.state.toLowerCase() === "ok") {
                     //     vm.product.follow = result.content;
                     // }
-                    vm.comments = result;
+
+                    let temp = [];
+                    result.forEach(element => {
+                        if (element.commentContent != null && !("" == element.commentContent)) {
+                            temp.push(element);
+                        }
+                    });
+
+                    vm.comments = temp;
+
+
 
                     console.log("getProductCommen then");
 

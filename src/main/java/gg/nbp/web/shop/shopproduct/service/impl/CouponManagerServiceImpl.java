@@ -58,20 +58,44 @@ public class CouponManagerServiceImpl implements CouponManagerService {
 
     @Override
     public List<CouponActivity> getAllCouponActivity() throws RuntimeException {
-        return couponActivityRedisDao.getAllCouponActivity();
+//        List<CouponActivity> couponActivities= couponActivityRedisDao.getAllCouponActivity();
+
+        List<Coupon> coupons = couponDao.selectAll();
+        List<CouponActivity> couponActivities=new ArrayList<>();
+        for (Coupon coupon:coupons){
+            CouponActivity couponActivity=new CouponActivity();
+            couponActivity.setCoupon(coupon);
+            couponActivities.add(couponActivity);
+        }
+        return couponActivities;
     }
 
     @Override
     public List<CouponActivity> getCouponActivityByCondition(DaoConditionSelect daoConditionSelect) throws RuntimeException {
         List<Coupon> coupons = couponDao.selectByCondition(daoConditionSelect);
-        List<CouponActivity> couponActivities = couponActivityRedisDao.getCouponActivitiesByCoupons(coupons);
+//        List<CouponActivity> couponActivities = couponActivityRedisDao.getCouponActivitiesByCoupons(coupons);
+
+        List<CouponActivity> couponActivities=new ArrayList<>();
+        for (Coupon coupon:coupons){
+            CouponActivity couponActivity=new CouponActivity();
+            couponActivity.setCoupon(coupon);
+            couponActivities.add(couponActivity);
+        }
+
         return couponActivities;
+
     }
 
 
     @Override
     public CouponActivity getCouponActivityByCouponId(Integer couponId) {
-        return couponActivityRedisDao.getCouponActivityByCouponId(couponId);
+//        CouponActivity couponActivity= couponActivityRedisDao.getCouponActivityByCouponId(couponId);
+
+        Coupon coupon =couponDao.selectById(couponId);
+        CouponActivity couponActivity=new CouponActivity();
+        couponActivity.setCoupon(coupon);
+
+        return couponActivity;
     }
 
     @Override
@@ -110,49 +134,71 @@ public class CouponManagerServiceImpl implements CouponManagerService {
         coupon.setState(CouponState.unPublish.getValue());
         couponService.addCoupon(coupon);
 
-        RedisContent redisService = new RedisContent() {
-            @Override
-            public int run() {
-                Coupon coupon_ = couponService.getCouponByDiscountCodeByManager(coupon.getDiscountCode());
-                couponActivity.setCoupon(coupon_);
-                couponActivityRedisDao.addCouponActivity(couponActivity);
-                return 0;
-            }
-        };
-        RedisFactory.getRedisServiceInstance().registerRedisService(redisService);
+//        RedisContent redisService = new RedisContent() {
+//            @Override
+//            public int run() {
+//                Coupon coupon_ = couponService.getCouponByDiscountCodeByManager(coupon.getDiscountCode());
+//                couponActivity.setCoupon(coupon_);
+//                couponActivityRedisDao.addCouponActivity(couponActivity);
+//                return 0;
+//            }
+//        };
+//        RedisFactory.getRedisServiceInstance().registerRedisService(redisService);
     }
+
+    @Override
+    public String generateDiscountCode() {
+        List<Coupon> coupons = couponDao.selectAll();
+
+
+        String newDiscountCode="";
+        Optional<Coupon> optional;
+        do{
+            newDiscountCode= genCouponCode();
+            String finalNewDiscountCode = newDiscountCode;
+
+            optional= coupons.stream().filter(p->
+                    Objects.equals(p.getDiscountCode(), finalNewDiscountCode)
+            ).findFirst();;
+
+        }while(optional.isPresent());
+
+        return newDiscountCode;
+    }
+
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateCouponActivity(CouponActivity couponActivity) {
         Coupon coupon = couponActivity.getCoupon();
-
         couponDao.update(coupon);
 
-        RedisContent redisService = new RedisContent() {
-            @Override
-            public int run() {
-                Coupon coupon_ = couponService.getCouponByDiscountCodeByManager(coupon.getDiscountCode());
-                couponActivity.setCoupon(coupon_);
-                couponActivityRedisDao.updateCouponActivity(couponActivity);
-                return 0;
-            }
-        };
-        RedisFactory.getRedisServiceInstance().registerRedisService(redisService);
+//        RedisContent redisService = new RedisContent() {
+//            @Override
+//            public int run() {
+//                Coupon coupon_ = couponService.getCouponByDiscountCodeByManager(coupon.getDiscountCode());
+//                couponActivity.setCoupon(coupon_);
+//                couponActivityRedisDao.updateCouponActivity(couponActivity);
+//                return 0;
+//            }
+//        };
+//        RedisFactory.getRedisServiceInstance().registerRedisService(redisService);
     }
 
 
     @Override
     @Transactional
     public void publishCouponActivity(Integer couponId) {
-
         Coupon coupon = publishCouponActivity_1(couponId);
         setAutoCouponState(coupon);
     }
 
     public Coupon publishCouponActivity_1(Integer couponId) {
         Coupon coupon = couponService.getCouponById(couponId);
-        CouponActivity couponActivity = couponActivityRedisDao.getCouponActivityByCouponId(couponId);
+
+//        CouponActivity couponActivity = couponActivityRedisDao.getCouponActivityByCouponId(couponId);
+        CouponActivity couponActivity=new CouponActivity();
+
         coupon.setState(CouponState.publish.getValue());
         couponActivity.setCoupon(coupon);
         updateCouponActivity(couponActivity);
@@ -167,14 +213,14 @@ public class CouponManagerServiceImpl implements CouponManagerService {
             couponService.deleteCoupon(couponId);
         }
 
-        RedisContent redisService = new RedisContent() {
-            @Override
-            public int run() {
-                couponActivityRedisDao.deleteCouponActivity(couponId);
-                return 0;
-            }
-        };
-        RedisFactory.getRedisServiceInstance().registerRedisService(redisService);
+//        RedisContent redisService = new RedisContent() {
+//            @Override
+//            public int run() {
+//                couponActivityRedisDao.deleteCouponActivity(couponId);
+//                return 0;
+//            }
+//        };
+//        RedisFactory.getRedisServiceInstance().registerRedisService(redisService);
 
         return true;
     }
@@ -282,7 +328,8 @@ public class CouponManagerServiceImpl implements CouponManagerService {
             public void run() {
                 Coupon coupon_ = coupon;
 
-                CouponActivity couponActivity = couponActivityRedisDao.getCouponActivityByCouponId(coupon_.getId());
+//                CouponActivity couponActivity = couponActivityRedisDao.getCouponActivityByCouponId(coupon_.getId());
+                CouponActivity couponActivity=new CouponActivity();
                 coupon_.setState(CouponState.inValid.getValue());
                 couponActivity.setCoupon(coupon_);
                 updateCouponActivity(couponActivity);

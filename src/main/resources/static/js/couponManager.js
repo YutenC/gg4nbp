@@ -36,6 +36,24 @@ const vm = Vue.createApp({
         },
         updateCouponActivity: function (couponActivity) {
 
+            let updateCoupon = couponActivity.coupon;
+
+            if (typeof updateCoupon.showError_discount === 'undefined') {
+                updateCoupon.showError_discount = true;
+            }
+
+            if (typeof updateCoupon.showError_conditionPrice === 'undefined') {
+                updateCoupon.showError_conditionPrice = true;
+            }
+            let flag = updateCoupon.showError_discount | updateCoupon.showError_conditionPrice |
+                typeof updateCoupon.showError_discount === 'undefined' |
+                typeof updateCoupon.showError_conditionPrice === 'undefined';
+            if (flag) {
+                return;
+            }
+
+
+
             let coupon_ = Object.assign({}, couponActivity.coupon);
 
             const date = new Date(coupon_.deadline);
@@ -76,7 +94,6 @@ const vm = Vue.createApp({
             console.log("deleteCouponActivity: id " + id);
             axios({
                 method: "GET",
-                // url: "http://localhost:8080/MyShop/demo/deleteCoupon",
                 url: host_context + "shopDispatcher/deleteCoupon",
                 params: {
                     couponId: id
@@ -92,6 +109,23 @@ const vm = Vue.createApp({
 
         },
         addCouponActivity: function () {
+
+            if (typeof vm.newCoupon.showError_discount === 'undefined') {
+                vm.newCoupon.showError_discount = true;
+            }
+
+            if (typeof vm.newCoupon.showError_conditionPrice === 'undefined') {
+                vm.newCoupon.showError_conditionPrice = true;
+            }
+            let flag = vm.newCoupon.showError_discount | vm.newCoupon.showError_conditionPrice |
+                typeof vm.newCoupon.showError_discount === 'undefined' |
+                typeof vm.newCoupon.showError_conditionPrice === 'undefined';
+            if (flag) {
+                return;
+            }
+
+
+
             vm.newcouponActivity.coupon = vm.newCoupon;
             let jsonnewcouponActivity = JSON.stringify(vm.newcouponActivity);
             axios({
@@ -126,8 +160,6 @@ const vm = Vue.createApp({
         },
         changeMainContent(action) {
             vm.currentMainguideContent = action;
-
-
             if (vm.currentMainguideContent == 3) {
                 for (let i = 0; i < vm.couponActivity.length; i++) {
                     if (vm.couponActivity[i].coupon.state == vm.enumCouponState.publish) {
@@ -164,10 +196,6 @@ const vm = Vue.createApp({
         },
         sendEmail(action) {
             console.log(vm.couponMembers)
-
-
-
-
             switch (action) {
                 case 0://立即發送
                     vm.sendEmailState = "傳送中";
@@ -195,15 +223,12 @@ const vm = Vue.createApp({
                         if (element.check) {
                             element.sendEmailTime = formattedDateTime;
                         }
-
-
                     });
                     vm.sendEmailState = "時間已設定";
                     break;
             }
 
             if (vm.selectedCoupon === "") {
-
                 vm.selectedCoupon
                 vm.sendEmailState = "沒有選擇折價券";
             }
@@ -226,7 +251,6 @@ const vm = Vue.createApp({
             })
                 .then(function (value) {
                     let temp = value.data;
-
                     switch (temp.state) {
                         case "longTime":
                             vm.longTimeAction = temp.msg;
@@ -257,9 +281,7 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (value) {
-
                     const result = value.data;
-
                     if (result.state === "ok") {
                         item.coupon.state = vm.enumCouponState.publish;
                     }
@@ -287,10 +309,69 @@ const vm = Vue.createApp({
             getAllCouponActivity()
         },
         discountCodeSelectChange(value) {
-            // vm.selectedCoupon = vm.couponActivity[value].coupon;
             vm.selectedCoupon = value;
+        },
+        generateDiscountCode() {
+            axios({
+                method: "GET",
+                url: host_context + "shopDispatcher/generateDiscountCode",
+            })
+                .then(function (value) {
+                    const result = value.data;
+                    if (result.state === "ok") {
+                        vm.newCoupon.discountCode = result.content;
+                    }
+
+                    console.log("generateDiscountCode then");
+                })
+                .catch(function (e) {
+                    console.log("generateDiscountCode error " + e);
+                });
+        },
+        checkNumber(key, value) {
+            let result = Number(value);
+
+            let isShow = false;
+            if (typeof result === 'number' && !isNaN(result)) {
+                isShow = false;
+            }
+            else {
+                isShow = true;
+            }
+
+            switch (key) {
+                case 'discount':
+                    vm.newCoupon.showError_discount = isShow;
+                    break;
+                case 'conditionPrice':
+                    vm.newCoupon.showError_conditionPrice = isShow;
+                    break;
+
+            }
+
+        },
+        checkNumber_update(item, key, value) {
+            let result = Number(value);
+
+            let isShow = false;
+            if (typeof result === 'number' && !isNaN(result)) {
+                isShow = false;
+            }
+            else {
+                isShow = true;
+            }
+
+            switch (key) {
+                case 'discount':
+                    item.showError_discount = isShow;
+                    break;
+                case 'conditionPrice':
+                    item.showError_conditionPrice = isShow;
+                    break;
+
+            }
         }
-    },
+    }
 }).mount("#vue-body");
 
 // vm.$data.message = 'SSSSS';
@@ -367,13 +448,11 @@ function getAllCouponActivity() {
                     deadline.setHours(deadline.getHours() + 8);
                     deadline = deadline.toISOString();
                     deadline = deadline.slice(0, 16);//16
-                    // deadline = deadline.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
                     couponActivity[i].coupon.deadline = deadline;
                 }
 
                 vm.showCouponActivity = true;
                 vm.couponActivity = couponActivity;
-
 
             }
             else {
@@ -383,7 +462,6 @@ function getAllCouponActivity() {
             }
 
             console.log("getAllCouponActivity then");
-
         })
         .catch(function (e) {
             console.log("getAllCouponActivity error " + e);

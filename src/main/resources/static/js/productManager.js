@@ -50,10 +50,22 @@ const vm = Vue.createApp({
                 });
         },
         addProduct: function () {
-            // console.log("message: " + vm.message);
-            // console.log("newProduct: " + vm.newProduct);
-            // console.log("newProduct.product_name: " + vm.newProduct.product_name);
-            // console.log("newProduct.launch_time: " + vm.newProduct.launch_time);
+
+            if (typeof vm.newProduct.showError_price === 'undefined') {
+                vm.newProduct.showError_price = true;
+            }
+
+            if (typeof vm.newProduct.showError_amount === 'undefined') {
+                vm.newProduct.showError_amount = true;
+            }
+
+
+            let flag = vm.newProduct.showError_price | vm.newProduct.showError_amount;
+
+            if (flag) {
+                return;
+            }
+
             vm.newProduct.productImages = vm.newProductImg;
 
             if (vm.newProduct.type == null) {
@@ -215,7 +227,39 @@ const vm = Vue.createApp({
         },
 
         updateProductInfo(index) {
+
             let product = Object.assign({}, vm.products[index]);
+
+            if (typeof product.showError_price === 'undefined') {
+                product.showError_price = true;
+            }
+
+            if (typeof product.showError_amount === 'undefined') {
+                product.showError_amount = true;
+            }
+
+            if (typeof product.showError_rate === 'undefined') {
+                product.showError_rate = true;
+            }
+
+            if (typeof product.showError_buyTimes === 'undefined') {
+                product.showError_buyTimes = true;
+            }
+
+            if (typeof product.showError_revieweCount === 'undefined') {
+                product.showError_revieweCount = true;
+            }
+
+            let flag = product.showError_price | product.showError_amount | product.showError_rate |
+                product.showError_buyTimes | product.showError_revieweCount;
+
+            if (flag) {
+                return;
+            }
+
+
+
+
 
             const dateObject = new Date(product.launchTime);
             const formattedDateTime = dateObject.toLocaleString('en-US', {
@@ -302,6 +346,35 @@ const vm = Vue.createApp({
         },
         changeProductType(product, type) {
             product.type = type;
+        },
+        checkNumber_update(item, key, value) {
+            let result = Number(value);
+
+            let isShow = false;
+            if (typeof result === 'number' && !isNaN(result)) {
+                isShow = false;
+            }
+            else {
+                isShow = true;
+            }
+
+            switch (key) {
+                case 'price':
+                    item.showError_price = isShow;
+                    break;
+                case 'amount':
+                    item.showError_amount = isShow;
+                    break;
+                case 'buyTimes':
+                    item.showError_buyTimes = isShow;
+                    break;
+                case 'rate':
+                    item.showError_rate = isShow;
+                    break;
+                case 'revieweCount':
+                    item.showError_revieweCount = isShow;
+                    break;
+            }
         }
 
     },
@@ -400,14 +473,13 @@ function getAllProduct() {
                         break;
                 }
 
-                //enumProductType
-
+                element.showError_price = false;
+                element.showError_amount = false;
+                element.showError_rate = false;
+                element.showError_buyTimes = false;
+                element.showError_revieweCount = false;
 
             }
-
-
-
-            // { 排定上架,排定下架,移除排定上架,移除排定下架  }
 
             vm.products = products_;
 
