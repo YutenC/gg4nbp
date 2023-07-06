@@ -29,7 +29,7 @@ const vm = Vue.createApp({
     },
     mounted() {
         getProductDetail();
-        getProductHistory();
+        // getProductHistory();
     },
     methods: {
         getProduct: function () {

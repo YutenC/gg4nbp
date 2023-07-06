@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -72,20 +73,76 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     public List<Product> selectByCondition(ProductSelect productSelect) {
 
         String conditionStr = "";
-
+        String conditionStateStr="";
+        List<Double> stateArray=new ArrayList<>();
+        int stateNum=0;
+        boolean other_flag=false;
         if (productSelect.getConditions() != null) {
             for (int i = 0; i < productSelect.getConditions().size(); i++) {
+                ProductSelect.Condition condition = productSelect.getConditions().get(i);
                 if (i == 0) {
                     conditionStr += " where ";
-                } else {
-                    conditionStr += " AND ";
                 }
-                ProductSelect.Condition condition = productSelect.getConditions().get(i);
+                else if("state".equals(condition.getKey())){
+//                    if(stateNum>=1){
+//                        conditionStateStr += " OR ";
+//                    }
+//                    else{
+//                        conditionStateStr += " AND ";
+//                    }
+                }
+                else {
+                    if(other_flag){
+                        conditionStr += " AND ";
+                    }
 
-                if (condition.getAction() == null || "=".equals(condition.getAction())) {
+
+                }
+
+
+                if("state".equalsIgnoreCase(condition.getKey())){
+                        stateArray.add((Double) condition.getValue());
+                        stateNum++;
+                }
+                else if (condition.getAction() == null || "=".equals(condition.getAction())) {
+//                    if("state".equalsIgnoreCase(condition.getKey())){
+//                        stateArray.add((Double) condition.getValue());
+//                        stateNum++;
+////                        conditionStateStr+=" " + condition.getKey() + " = " + condition.getValue() + " ";
+//                    }
+//                    else{
+//
+//                    }
                     conditionStr += " " + condition.getKey() + " = " + condition.getValue() + " ";
-                } else if ("like".equals(condition.getAction())) {
+
+                    other_flag=true;
+                }
+                else if ("like".equals(condition.getAction())) {
                     conditionStr += " " + condition.getKey() + " like '%" + condition.getValue() + "%' ";
+                    other_flag=true;
+                }
+
+            }
+
+            if(stateNum!=0){
+
+                conditionStateStr+="(";
+
+                for (int i=0;i<stateArray.size();i++) {
+                    if(i>0){
+                        conditionStateStr+=" or ";
+                    }
+                    Double v=stateArray.get(i);
+                    conditionStateStr += " " + "state" + " = " + v + " ";
+                }
+
+                conditionStateStr+=")";
+
+                if(other_flag){
+                    conditionStr=conditionStr +"  AND "+ conditionStateStr;
+                }
+                else{
+                    conditionStr+= conditionStateStr;
                 }
 
             }

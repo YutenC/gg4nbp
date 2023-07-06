@@ -277,7 +277,7 @@ const vm = Vue.createApp({
                 method: "GET",
                 url: host_context + "shopDispatcher/publishCouponActivity",
                 params: {
-                    couponId: item.couponId
+                    couponId: item.coupon.id
                 }
             })
                 .then(function (value) {
@@ -453,6 +453,12 @@ function getAllCouponActivity() {
 
                 vm.showCouponActivity = true;
                 vm.couponActivity = couponActivity;
+
+                vm.couponActivity.forEach(element => {
+                    element.coupon.showError_discount = false;
+                    element.coupon.showError_conditionPrice = false;
+                });
+
 
             }
             else {
