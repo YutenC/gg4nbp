@@ -79,7 +79,7 @@ const promoProduct = Vue.createApp({
     data() {
         return {
             promoProduct: [],
-            amount: 5
+            recomendAmount: 5
         }
     },
     methods: {
