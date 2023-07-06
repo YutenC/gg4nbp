@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.shop.shoporder.service.OrderDetailService;
+import gg.nbp.web.shop.shoporder.util.ResOrderDetail;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
 import gg.nbp.web.shop.shopproduct.entity.Coupon;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
@@ -54,18 +56,17 @@ public class OrderDetailController extends HttpServlet {
     	HttpSession httpSession = req.getSession();
     	
     	Manager manager = (Manager)httpSession.getAttribute("manager");
-    	
-    	if (manager == null || manager.isSuccessful() == false) {
-			JsonObject failLogin = new JsonObject();
-			failLogin.addProperty("redirect", true);
-			pw.println(gson.toJson(failLogin));
-			httpSession.setAttribute("location", req.getHeader("referer"));
-			return;
-		} 
-    	
+    	Member member = (Member)httpSession.getAttribute("member");
     	
     	String orderStr = req.getParameter("getByOrderId");
     	if (orderStr != null) {
+    		if (manager == null || manager.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("location", req.getHeader("referer"));
+    			return;
+    		} 
     		Integer orderId = Integer.valueOf(orderStr);
     		List<TransOrderProduct> trOPList = oDetailService.getOrderDetailByOrderId(orderId);
     		pw.println(gson.toJson(trOPList));
@@ -74,6 +75,13 @@ public class OrderDetailController extends HttpServlet {
     	
     	String couponStr = req.getParameter("couponId");
     	if (couponStr != null) {
+    		if (manager == null || manager.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("location", req.getHeader("referer"));
+    			return;
+    		} 
     		if (couponStr.trim().length() == 0) {
     			pw.println(gson.toJson(null));
     			return;
@@ -81,6 +89,19 @@ public class OrderDetailController extends HttpServlet {
     		Integer couponId = Integer.valueOf(couponStr);
     		Coupon coupon = cpService.getCouponById(couponId);
     		pw.println(gson.toJson(coupon));
+    		return;
+    	}
+    	
+    	if (req.getParameter("getMemberAll") != null) {
+    		if (member == null || member.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+    			return;
+    		}
+    		Collection<ResOrderDetail> rsOdList = oDetailService.getMemberAllOrderDetail(member.getMember_id());
+    		pw.println(gson.toJson(rsOdList));
     		return;
     	}
     	
