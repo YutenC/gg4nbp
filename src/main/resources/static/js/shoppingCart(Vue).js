@@ -455,8 +455,7 @@ const promoProduct = Vue.createApp({
         }
     },
     methods: {
-        goProduct: function (location, otherDetail, event) {
-            event.preventDefault();
+        goProduct: function (location, otherDetail) {
             sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.replace(projectFolder + '/' + location);
         }
