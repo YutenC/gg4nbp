@@ -10,7 +10,6 @@ header.innerHTML = `
 <div class="search">
     <div class="nav">
        <div>回首頁</div>
-       <div>客服中心</div>
        <div>一般商城</div>
        <div>二手商城</div>
        <div>我的訂單</div>

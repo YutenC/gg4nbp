@@ -36,111 +36,6 @@ for (let i = 0; i < type_btn.length; i++) {
     })
 }
     
-
-
-
-
-
-// // NS
-// nMain.addEventListener("click", function (){
-//     typeValue = "00";
-//     goSearch(typeValue);
-
-// })
-// nHandle.addEventListener("click", function (){
-//     typeValue = "01";
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-// nGame.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "02";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-// nOther.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "03";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-
-// // xbox
-// bMain.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "10";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-// bHandle.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "11";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-// bGame.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "12";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-// bOther.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "13";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-
-// // PS
-// pMain.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "20";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-// pHandle.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "21";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-// pGame.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "22";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-// pOther.addEventListener("click", function (){
-//     sessionStorage.removeItem("keyword", keywordValue);
-//     sessionStorage.removeItem("type");
-//     typeValue = "23";
-//     console.log(typeValue)
-//     sessionStorage.setItem("type", typeValue);
-//     history.go(0);
-// })
-
-
 // 搜尋keyword
 
 keywordInput.addEventListener('keydown', function(e) {
@@ -276,17 +171,17 @@ function btnSubmit() {
 }
 
 function showList() {
-
-            let html = "";
-            Mainshp_array.forEach(
-                secondhandproduct => {
-
+    let html = "";
+    Mainshp_array.forEach(
+        secondhandproduct => {
+            let url = secondhandproduct.image[0].split("\\");
+            
                     html += `
        
                      <div class="showItem">
                         <div class="showItem_img" onclick="clickShp(${secondhandproduct.productId})">
                             <a href="sh_Mall.html">
-                                <img src= "../${secondhandproduct.image[0]}" alt="商品圖片" class="showItem_img">
+                                <img src= "shp_view?url=${url[2]}" alt="商品圖片" class="showItem_img">
                             </a>
 
                         </div>

@@ -1,4 +1,4 @@
-package com.chat.redis;
+package gg.nbp.web.shop.shopproduct.test;
 
 import com.alibaba.fastjson.JSON;
 

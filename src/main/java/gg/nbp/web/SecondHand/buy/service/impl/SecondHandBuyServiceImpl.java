@@ -130,9 +130,8 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	/* ID 搜尋 */
 	@Override
 	public List<BuyEvent> searchById(Integer id) {
-		SecondhandBuylist sl = dao.selectById(id);
 		List<BuyEvent> list = new ArrayList<>();
-		list.add(new BuyEvent(sl,daoMember));
+		list.add(new BuyEvent(dao.selectById(id),daoMember));
 		return list;
 	}
 	
@@ -167,8 +166,6 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 	@Override
 	public List<BuyEvent> searchByName(String name, Member member) throws SQLException {
 		
-		/* 建立回傳用的List */
-		List<BuyEvent> listDTO = new ArrayList<>();
 		
 		/* 如果傳入空字串，就去搜尋全部*/
 		if(name.isEmpty())
@@ -178,9 +175,11 @@ public class SecondHandBuyServiceImpl implements SecondHandBuyService {
 		 * 因為 SecondhandBuylist 的 image 沒有被持久化(Transient)，所以圖片必須自己搜尋再注入 順便遍歷一下 dao
 		 * 抓回來的結果，將其轉化為 DTO
 		 **************************************************************************************/
-		dao.selectByName4Member(name,member.getMember_id()).stream()
-														   .filter(sl -> !sl.getApprovalState().equals("7"))
-														   .forEach(sl -> listDTO.add(new BuyEvent(sl,daoMember)));
+		List<BuyEvent> listDTO = dao.selectByName4Member(name,member.getMember_id())
+									.stream()
+									.filter(sl -> !sl.getApprovalState().equals("7"))
+									.map(sl -> new BuyEvent(sl,daoMember))
+									.collect(Collectors.toList());
 		
 		
 		/* 如果抓到 0 筆資料，則拋出例外 */

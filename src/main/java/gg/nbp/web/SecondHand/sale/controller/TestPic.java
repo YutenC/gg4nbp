@@ -1,19 +1,25 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+
+import gg.nbp.core.pojo.OneString;
+import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.SecondHand.buy.util.Constant;
-import gg.nbp.web.SecondHand.sale.service.SecondhandProductService;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import org.springframework.beans.factory.annotation.Autowired;
-
-
-import java.io.*;
-import java.util.Collection;
 
 @WebServlet("/manager/testpic")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, // 设置文件大小阈值
@@ -23,8 +29,6 @@ import java.util.Collection;
 public class TestPic extends HttpServlet {
 	private static final long serialVersionUID = -6139457402422576192L;
 
-	@Autowired
-	private SecondhandProductService SERVICE;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,8 +43,7 @@ public class TestPic extends HttpServlet {
 				String url = Constant.SAVE_URL + part.getName();
 				File upfile = new File(url);
 				try (InputStream reader = part.getInputStream();
-					 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(upfile)))
-				{
+						BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(upfile))) {
 					byte[] buffer = new byte[1024];
 					int s;
 					while ((s = reader.read(buffer)) != -1) {
@@ -58,5 +61,7 @@ public class TestPic extends HttpServlet {
 		}
 
 	}
+
+	
 
 }
