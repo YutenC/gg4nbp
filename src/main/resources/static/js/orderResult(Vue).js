@@ -30,7 +30,7 @@ const shoppingContent = Vue.createApp({
                 cancelButtonText: '否'
             }).then(function (result) {
                 if (result.isConfirmed) {
-                    window.location.replace(projectHref + '/' + location);
+                    window.location.replace(projectFolder + '/' + location);
                 }
             });
         }
