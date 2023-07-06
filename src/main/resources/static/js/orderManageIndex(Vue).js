@@ -27,6 +27,14 @@ const omManage = Vue.createApp({
         watchDetail: function (omid) {
             sessionStorage.setItem('orderId', omid);
             sessionStorage.setItem('offset', this.nowPage - 1);
+            let orderMember = {};
+            for (let order of this.omList) {
+                if (order.orderId === omid) {
+                    orderMember.memberId = order.memberId;
+                    orderMember.buyer = order.buyer;
+                }
+            }
+            sessionStorage.setItem('orderMember', JSON.stringify(orderMember));
             window.location.href = projectFolder + '/manager/orderManageDetail.html';
         },
         renewList: function (pageNum) {
@@ -156,10 +164,3 @@ const omManage = Vue.createApp({
         sessionStorage.removeItem('offset');
     }
 }).mount('#omManage');
-
-// 測試能否解決快取造成的頁面資訊顯示錯誤
-window.onpageshow = function (event) {
-    if (event.persisted) {
-        window.location.reload()
-    }
-};

@@ -2,8 +2,8 @@ package gg.nbp.web.shop.shoporder.util;
 
 public enum OrderSelection {
 
-	ALL(1), UNPAID(2), PAID(3), PAIDONEDELI(4),DELIVERD(5), UNDELI(6),
-	DONE(7), CANCELED(8), APPLYCAN(9), APPLYRETURN(10);
+	ALL(1), UNPAID(2), PAID(3), PAIDONEDELI(4), DELIVERD(5), UNDELI(6), ARRIVED(7),
+	DONE(8), CANCELED(9), APPLYCAN(10), APPLYRETURN(11);
 	
 	private int code;
 	
