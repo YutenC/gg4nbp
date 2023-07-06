@@ -16,6 +16,7 @@ import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -166,11 +167,14 @@ public class OrderMasterController extends HttpServlet {
     	String character = req.getParameter("countListLength");
     	if (character != null) {
     		Map<String, Integer> condition = new HashMap<>();
-    		if ("manager".equals(character)) {
-    			String criteria = req.getParameter("criteria");
-    			if (criteria != null) {
-    				Integer criteriaValue = Integer.valueOf(criteria);
-    				OrderSelection os = OrderSelection.values()[criteriaValue - 1];
+    		String criteria = req.getParameter("criteria");
+    		Integer criteriaValue = null;
+    		OrderSelection os = OrderSelection.ALL;
+    		if (criteria != null) {
+    			criteriaValue = Integer.valueOf(criteria);
+    			os = OrderSelection.values()[criteriaValue - 1];
+    		}
+//    		if ("manager".equals(character)) {
     				switch (os) {
 					case ALL:
 						break;
@@ -189,6 +193,9 @@ public class OrderMasterController extends HttpServlet {
 					case UNDELI:
 						condition.put("deliverState", 0);
 						break;
+					case ARRIVED:
+						condition.put("deliverState", 2);
+						break;
 					case DONE:
 						condition.put("orderStatus", 1);
 						break;
@@ -202,12 +209,12 @@ public class OrderMasterController extends HttpServlet {
 						condition.put("orderStatus", 4);
 						break;
     				}
-    			}
-    		} else if ("member".equals(character)) {
+//    		} else if ("member".equals(character)) {
+    		if ("member".equals(character)) {
     			condition.put("memberId", getmember.getMember_id());
     		}
     		pw.println(gson.toJson(orderMasterService.countDataNum(condition)));
-    	}
+    }
     	
     	String getOne = req.getParameter("getOne");
     	if (getOne != null) {
@@ -271,6 +278,9 @@ public class OrderMasterController extends HttpServlet {
 				break;
 			case 5:
 				whereCondition.put("deliverState", 0);
+				break;
+			case 6:
+				whereCondition.put("deliverState", 2);
 				break;
 			}
 

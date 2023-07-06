@@ -58,6 +58,11 @@ const memberOrder = Vue.createApp({
             });
             this.orders[index].orderMaster.orderStatus = asignOrder.orderStatus;
         },
+        getListLength: function () {
+            axios.get(projectFolder + '/OrderMaster?countListLength=member&criteria=' + this.filterSelect)
+                .then(res => this.listLength = res.data)
+                .catch(err => console.log(err));
+        },
         checkPay(index) {
             let msg = this.showCommitType[this.orders[index].orderMaster.commitType] + '\n';
             switch (this.orders[index].orderMaster.commitType) {
@@ -83,10 +88,11 @@ const memberOrder = Vue.createApp({
             axios.get(projectFolder + '/OrderMaster?memberAll=0&criteria=' + this.filterSelect)
                 .then(res => this.orders = res.data)
                 .catch(err => console.log(err))
+            this.getListLength();
         },
         leave: function (location, otherDetail) {
             sessionStorage.setItem('productId', otherDetail);
-            window.location.replace(projectHref + '/' + location);
+            window.location.replace(projectFolder + '/' + location);
         },
         sendComment: function (orderId, productId, event) {
             let star = $(event.target).closest('.rankDetail').find('input:checked').val();
@@ -115,7 +121,12 @@ const memberOrder = Vue.createApp({
 
             for (let i = 0; i < this.orders.length; i++) {
                 if (this.orders[i].orderMaster.orderId === orderId) {
-                    this.orders[i].trList.comment = star;
+                    for (let j = 0; j < this.orders[i].trList.length; j++) {
+                        if (this.orders[i].trList[j].productId === productId) {
+                            this.orders[i].trList[j].comment = star;
+                            return;
+                        }
+                    }
                 }
             }
         },

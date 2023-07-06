@@ -174,9 +174,9 @@ public class OrderMasterDaoImpl implements OrderMasterDao {
 	@Override
 	public long countdataNumWithCondition(Map<String, Integer> condition) {
 		StringBuilder hql = new StringBuilder();
-		hql.append("SELECT COUNT(*) FROM OrderMaster ");
+		hql.append("SELECT COUNT(*) FROM OrderMaster WHERE ");
 		for (String key : condition.keySet()) {
-				hql.append("WHERE " + key + " = :" + key + " AND ");
+				hql.append(key + " = :" + key + " AND ");
 		}
 		
 		hql.delete(hql.lastIndexOf("AND"), hql.length());

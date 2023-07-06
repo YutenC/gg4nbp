@@ -518,6 +518,7 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 					saveOrderMasterResults(OrderSelection.values()[i]);
 				}
 				checkTime = jdOmDao.getResults("Order:SaveTime");
+				retrieve = jdOmDao.getResults("Order:" + selectionCode.getCode());
 			}
 			
 			Long saveTimeValue = Long.valueOf(checkTime);
@@ -624,6 +625,10 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 		case UNDELI:
 			newResults = omdao.selectByDeliverState(0);
 			Collections.sort(newResults, dlcom);
+			break;
+		case ARRIVED:
+			newResults = omdao.selectByDeliverState(2);
+			System.out.println(newResults);
 			break;
 		case DONE:
 			newResults = omdao.selectByOrderStatus(1);

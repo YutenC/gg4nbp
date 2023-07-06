@@ -77,7 +77,11 @@
             text-align: center;
         }
 
-        .row div {
+        .row div span {
+            margin: 8px;
+        }
+
+        .row div.comfirmBtn {
             text-align: right;
         }
     </style>
@@ -123,6 +127,11 @@
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                        購買會員資訊：
+                                        <div>
+                                            <span>會員ID：{{ orderMember.memberId }}</span>
+                                            <span>會員名稱：{{ orderMember.buyer }}</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -194,7 +203,7 @@
                                         <a href="" @click.prevent="goBack()">回上一頁</a>
                                     </nav>
                                 </div>
-                                <div>
+                                <div class="comfirmBtn">
                                     <button @click="confirm()">確認修改訂單</button>
                                     <button @click="cancel()">重置輸入項目</button>
                                 </div>

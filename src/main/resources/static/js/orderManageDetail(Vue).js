@@ -3,6 +3,7 @@ const orderContent = Vue.createApp({
         return {
             order: {},
             orderDetails: [],
+            orderMember: {},
             updateOrder: { orderStatus: '1', deliverNumber: '', deliverState: '0', payStatus: '1' },
             showPickType: ['', '宅配', '超商店取'],
             showCommitType: ['', '信用卡', '轉帳', '貨到付款'],
@@ -76,5 +77,7 @@ const orderContent = Vue.createApp({
         axios.get(projectFolder + '/OrderDetail?getByOrderId=' + orderId)
             .then(res => this.orderDetails = res.data)
             .catch(err => console.log(err));
+
+        this.orderMember = JSON.parse(sessionStorage.getItem('orderMember'));
     }
 }).mount('#orderContent');

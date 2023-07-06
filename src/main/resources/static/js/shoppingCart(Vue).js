@@ -204,7 +204,7 @@ const shoppingContent = Vue.createApp({
             // 消費折抵
             discountRadio: 'coupon',
             couponCode: '',
-            resCoupon: '',
+            resCoupon: null,
             bonusStock: 0,
             bonus: '',
             // 配送方式
@@ -259,11 +259,11 @@ const shoppingContent = Vue.createApp({
             // 查詢到資料後更新this.resCoupon
             axios.get(projectFolder + '/shopDispatcher/getCouponByDiscountCode?discountCode=' + this.couponCode)
                 .then(res => {
-                    if (res.data != '') {
+                    if (res.data != null) {
                         this.resCoupon = res.data;
                         this.couponCondition();
                     } else {
-                        this.resCoupon = '';
+                        this.resCoupon = null;
                         Swal.fire('折價券號碼錯誤')
                     }
                 })
@@ -277,24 +277,24 @@ const shoppingContent = Vue.createApp({
         },
         // 判斷優惠券條件
         couponCondition: function () {
-            if (this.resCoupon === '') {
+            if (this.resCoupon === null) {
                 return;
             }
             if (this.resCoupon.state !== 1) {  // 確認狀態
-                this.resCoupon = '';
+                this.resCoupon = null;
                 this.couponCode = '';
                 Swal.fire('此優惠卷不可使用');
                 return;
             }
             let now = new Date();
             if (now > new Date(this.resCoupon.deadline)) {  // 確認到期
-                this.resCoupon = '';
+                this.resCoupon = null;
                 this.couponCode = '';
                 Swal.fire('此優惠卷代碼已到期');
             }
             if (this.shopTotal < this.resCoupon.conditionPrice) {  // 確認消費門檻
                 let conditionPrice = this.resCoupon.conditionPrice;
-                this.resCoupon = '';
+                this.resCoupon = null;
                 this.couponCode = '';
                 Swal.fire('購買金額未達門檻，不可使用' + '\n此張優惠卷需消費達：\n' + conditionPrice + '元後 方可使用');
             }
@@ -330,23 +330,24 @@ const shoppingContent = Vue.createApp({
                     checkedItemAmount++;
                 }
             }
-            if (checkedItemAmount === 0) {
-                Swal.fire('未選擇結帳商品');
-                return;
-            }
-            if (this.address.address === '' ||
+            if (checkedItemAmount === 0 || this.address.address === '' ||
                 ((this.payment === 'credit' && ecpay === false) &&
                     (this.card.cardNum.length < 16 || this.card.cardValidMon.length < 2 ||
                         this.card.cardValidYr.length < 4 || this.card.cardValidNum.length < 3))) {
                 let alertMsg = '以下資料不完整：';
+                checkedItemAmount === 0 ? alertMsg += '\n未選擇結帳商品' : '';
                 this.address.address === '' ? alertMsg += '\n配送地址' : '';
-                if (this.payment === 'credit') {
+                if (this.payment === 'credit' && ecpay === false) {
                     this.card.cardNum.length < 16 ? alertMsg += '\n信用卡號' : '';
                     this.card.cardValidMon.length < 2 ? alertMsg += '\n信用卡有效月份' : '';
                     this.card.cardValidYr.length < 4 ? alertMsg += '\n信用卡有效年份' : '';
                     this.card.cardValidNum.length < 3 ? alertMsg += '\n信用卡驗證碼' : '';
                 }
-                Swal.fire(alertMsg);
+                Swal.fire({
+                    title: alertMsg,
+                    position: 'bottom',
+                    target: 'div.paymentContent'
+                });
                 return;
             }
             axios({
@@ -418,7 +419,7 @@ const shoppingContent = Vue.createApp({
             this.couponCondition();
 
             if (this.discountRadio === 'coupon') {
-                couponDiscount = this.resCoupon === '' ? 0 : Number.parseInt(this.resCoupon.discount);
+                couponDiscount = this.resCoupon === null ? 0 : Number.parseInt(this.resCoupon.discount);
             } else {
                 bonus = Number.parseInt(this.bonus);
             }
