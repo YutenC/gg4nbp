@@ -55,7 +55,7 @@ const detailUnit = Vue.createApp({
                     detailUnit.mypick.splice(index, 1);
                     axios({
                         method: "Get",
-                        url: projectFolder + "shopDispatcher/addFollow",
+                        url: projectFolder + "/shopDispatcher/addFollow",
                         params: {
                             id: id,
                             redirectUrl: "http://localhost:8080/gg4nbp/shop/shopProductDetail.html"
@@ -68,16 +68,10 @@ const detailUnit = Vue.createApp({
                                 console.log(result.msg);
                                 window.location.href = result.msg;
                             }
-                            else if (result.state.toLowerCase() === "ok") {
-                                this.mypick[index].follow = result.content;
-                            }
-
-                            if (this.mypick[index].follow === 0) {
-                                Toast.fire({
-                                    icon: 'error',
-                                    title: '已從追蹤清單移除'
-                                })
-                            }
+                            Toast.fire({
+                                icon: 'error',
+                                title: '已從追蹤清單移除'
+                            })
                         })
                         .catch(function (e) {
                             console.log("addFollow error " + e);

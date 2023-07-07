@@ -130,7 +130,7 @@ const vm = Vue.createApp({
                         vm.product.follow = result.content;
                     }
 
-                    if (vm.products.follow === 0) {
+                    if (vm.product.follow === 0) {
                         Toast.fire({
                             icon: 'error',
                             title: '已從追蹤清單移除'
