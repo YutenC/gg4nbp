@@ -245,13 +245,19 @@ const shoppingContent = Vue.createApp({
                         .then(res => console.log(res))
                         .catch(err => console.log(err));
                     shoppingList.splice(index, 1);
+                    console.log(shoppingList.length);
+                    if (shoppingList.length === 0) {
+                        Swal.fire({
+                            title: '購物車內已無商品，快去逛逛吧!',
+                            timer: '1000',
+                            timerProgressBar: true,
+                        }).then(() => {
+                            let newHref = projectFolder + '/shop/shopIndex(Vue).html';
+                            window.location.replace(newHref);
+                        });
+                    }
                 }
             });
-            if (this.shoppingList.length === 0) {
-                Swal.fire('購物車內已無商品，快去逛逛吧!');
-                let newHref = projectFolder + '/shop/shopIndex.html';
-                window.location.replace(newHref);
-            }
         },
         // 消費折抵選擇
         checkCoupon: function () {
@@ -455,8 +461,7 @@ const promoProduct = Vue.createApp({
         }
     },
     methods: {
-        goProduct: function (location, otherDetail, event) {
-            event.preventDefault();
+        goProduct: function (location, otherDetail) {
             sessionStorage.setItem('currentShopProductDetail_id', otherDetail);
             window.location.replace(projectFolder + '/' + location);
         }
