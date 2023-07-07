@@ -9,7 +9,10 @@ import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebFilter("/member/*")
 @Order(1)
@@ -25,7 +28,7 @@ public class MemberFilter extends HttpFilter implements Filter {
         if(isLogin != null ){
             chain.doFilter(request,response);
         } else {
-            session.setAttribute("memberLocation", request.getRequestURI());
+            session.setAttribute("memberLocation", request.getHeader("referer"));
             response.sendRedirect(request.getContextPath()+"/member_login.html");
         }
     }

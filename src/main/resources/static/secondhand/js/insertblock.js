@@ -124,6 +124,7 @@ fetch('../member/isLogin')
                     headers: { 'Content-Type': 'application/json' }
                 })
                 .then(()=>{
+                    sessionStorage.removeItem('EventId');
                     history.go(0);
                 })
             })

@@ -134,50 +134,47 @@ public class BuyEvent extends Core {
 	}
 
 	public static SecondhandBuylist trans4Mana(BuyEvent be, SecondHandBuylistDao dao) {
-		SecondhandBuylist sl = dao.selectById(be.eventId);
-		be.setApprovalState(getApprovalState(Integer.parseInt(sl.getApprovalState())))
-				.setPayState(getPayState(sl.getPayState()));
+		var sl = dao.selectById(be.eventId);
 		sl.setPrice(be.price < 0 ? null : be.price);
 		sl.setConfirmTime(Toolbox.getNow());
-		
-		List<SecondhandBuyPicture> addPic = sl.getImage().stream()
-					 									 .map(sp -> {
-					 										 SecondhandBuyPicture ss = new SecondhandBuyPicture();
-					 										 ss.setImage(sp.getImage());
-					 										 return ss ;
-					 									 })
-					 									 .collect(Collectors.toList());
+
+		var addPic = sl.getImage().stream()
+								  .map(sp -> {
+									  var ss = new SecondhandBuyPicture();
+									  ss.setImage(sp.getImage());
+									  return ss;
+								  })
+								  .collect(Collectors.toList());
 		sl.setImage(addPic);
-		
-		switch (be.progress) {
+
+		switch (getProgress(sl)) {
 		case 0:
-			if(be.agree) 
+			if (be.agree)
 				sl.setApprovalState("1");
 			else
 				sl.setApprovalState("3");
 			break;
 		case 1:
-			if(be.agree) {
+			if (be.agree) {
 				sl.setApprovalState("2");
-				if(sl.getPrice() != null) 
+				if (sl.getPrice() != null)
 					sl.setMessage("二手收購管理員以提供收購價，立即去看看價格滿不滿意吧˙");
-			} 
-			else
+			} else
 				sl.setApprovalState("4");
 			break;
 		case 2:
-			if(sl.getPrice() != null) 
+			if (sl.getPrice() != null)
 				sl.setMessage("二手收購管理員以提供收購價，立即去看看價格滿不滿意吧˙");
-			
+
 			break;
 		case 3:
-			if(be.agree) {
+			if (be.agree) {
 				sl.setPayState(2);
-				sl.setMessage("您申請的案件已經付款囉，趕快去看看吧˙");				
+				sl.setMessage("您申請的案件已經付款囉，趕快去看看吧˙");
 			}
 			break;
 		case 4:
-			
+
 			break;
 
 		default:
@@ -188,22 +185,35 @@ public class BuyEvent extends Core {
 
 	}
 
-	public static SecondhandBuylist trans4Mem(BuyEvent be, SecondHandBuylistDao dao) throws SQLException,NullPointerException {
+	public static SecondhandBuylist trans4Mem(BuyEvent be, SecondHandBuylistDao dao)
+			throws SQLException, NullPointerException {
 
 		SecondhandBuylist sl = dao.selectById(be.eventId);
-		if(sl.getApprovalState().equals("7")) 
+		if (sl.getApprovalState().equals("7"))
 			sl.setApprovalState("0");
-		
-		
-		
-		
-		be.setApprovalState(getApprovalState(Integer.parseInt(sl.getApprovalState())))
-		  .setPayState(getPayState(sl.getPayState()));
+
+		int progress = getProgress(sl);
 
 		/* 如果訂單已經完成，不接受再執行更新 */
 		if (sl.getPayState() > 0)
 			throw new SQLException();
-		
+		/* 如果賣家同意收購價，則將付款狀態改為待付款 */
+		if ( progress == 2 && be.agree) {
+			if (sl.getPrice() == null)
+				throw new NullPointerException();
+
+			var addPic = sl.getImage().stream()
+									  .map(sp -> {
+										  SecondhandBuyPicture ss = new SecondhandBuyPicture();
+										  ss.setImage(sp.getImage());
+										  return ss;
+									  })
+									  .collect(Collectors.toList());
+			sl.setImage(addPic);
+			sl.setPayState(1);
+			return sl;
+		} else
+			sl.setPrice(null);
 
 		sl.setProductName(be.productName);
 		sl.setContent(be.content);
@@ -215,16 +225,7 @@ public class BuyEvent extends Core {
 		System.out.println(be.type);
 		sl.setEstimate(be.estimate < 0 ? null : be.estimate);
 		sl.setApplicantBankNumber(be.applicantBankNumber);
-		sl.setImage(be.getImage());	
-		
-		if(sl.getPrice() == null && be.progress == 2)
-			throw new NullPointerException();
-
-		/* 如果賣家同意收購價，則將付款狀態改為待付款 */
-		if (be.progress == 2 && be.agree)
-			sl.setPayState(1);
-		else
-			sl.setPrice(null);
+		sl.setImage(be.getImage());
 
 		return sl;
 	}
@@ -333,12 +334,10 @@ public class BuyEvent extends Core {
 		this.progress = progress;
 		return this;
 	}
-	
+
 	public static int getProgress(SecondhandBuylist sl) {
-		return new BuyEvent()
-					.setApprovalState(getApprovalState(Integer.parseInt(sl.getApprovalState())))
-					.setPayState(getPayState(sl.getPayState()))
-					.getProgress();
+		return new BuyEvent().setApprovalState(getApprovalState(Integer.parseInt(sl.getApprovalState())))
+				.setPayState(getPayState(sl.getPayState())).getProgress();
 	}
 
 }
