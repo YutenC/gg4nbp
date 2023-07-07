@@ -103,7 +103,10 @@ const vm = Vue.createApp({
                         }
                     }
 
-
+                    Toast.fire({
+                        icon: 'success',
+                        title: '已加入購物車'
+                    });
                 })
                 .catch(function (e) {
                     console.log("addCart error " + e);
@@ -206,6 +209,18 @@ const vm = Vue.createApp({
                     }
                     else if (result.state.toLowerCase() === "ok") {
                         vm.products[index].follow = result.content;
+                    }
+
+                    if (vm.products[index].follow === 0) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: '已從追蹤清單移除'
+                        })
+                    } else {
+                        Toast.fire({
+                            icon: 'info',
+                            title: '已加入我的追蹤清單'
+                        })
                     }
 
                     console.log("addFollow then");
