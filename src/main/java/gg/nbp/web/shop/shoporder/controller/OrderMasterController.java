@@ -208,6 +208,7 @@ public class OrderMasterController extends HttpServlet {
     			condition.put("memberId", getmember.getMember_id());
     		}
     		pw.println(gson.toJson(orderMasterService.countDataNum(condition)));
+    		return;
     }
     	
     	String getOne = req.getParameter("getOne");

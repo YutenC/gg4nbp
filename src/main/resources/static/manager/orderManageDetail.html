@@ -201,7 +201,7 @@
                                 </div>
                                 <div class="discount">
                                     <td><span>使用紅利點數：{{ order.bonusUse }}</span></td>
-                                    <div v-if="!coupon">
+                                    <div v-if="coupon">
                                         <td>
                                             <span>使用優惠券：</span>
                                             <span>優惠券代碼：{{ coupon.discountCode}}</span>

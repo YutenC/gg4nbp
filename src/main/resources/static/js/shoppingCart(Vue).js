@@ -393,6 +393,7 @@ const shoppingContent = Vue.createApp({
                 sessionStorage.setItem("address", JSON.stringify(this.address));
                 sessionStorage.setItem("getBonus", getBonus);
                 if (ecpay === true) {
+                    history.replaceState(null, null, projectFolder + "/shop/shopIndex(Vue).html");
                     // $('input#orderId').val(this.orderId); // 透過jQuery即刻更新DOM
                     shoppingContent.$nextTick(() => {   // 透過Vue自身的nextTick方法，等Vue更新完DOM後再執行方法內的程序
                         event.target.submit();

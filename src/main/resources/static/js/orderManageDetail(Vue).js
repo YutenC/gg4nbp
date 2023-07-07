@@ -46,14 +46,15 @@ const orderContent = Vue.createApp({
                         data: {
                             order: order,
                         }
-                    }).then(res => console.log(res))
-                        .catch(err => console.log(err));
+                    }).then(res => {
+                        console.log(res);
+                        axios.get(projectFolder + '/OrderMaster?fresh=y');
+                    }).catch(err => console.log(err));
                 } else {
                     this.cancel();
                 }
             });
 
-            axios.get(projectFolder + '/OrderMaster?fresh=y');
 
         },
         goProduct: function (location, otherDetail) {
