@@ -111,6 +111,7 @@ public class MemberLoginServlet extends HttpServlet {
         responseJson.addProperty("account", visitor.getAccount());
         responseJson.addProperty("member_id", visitor.getMember_id());
         responseJson.addProperty("successful", visitor.isSuccessful());
+        System.out.println(request.getSession().getAttribute("memberLocation"));
         responseJson.addProperty("redirectUrl", (String) request.getSession().getAttribute("memberLocation")); // 設置重導的網址
 
         MemberCommonUitl.gsonToJson(response, responseJson);

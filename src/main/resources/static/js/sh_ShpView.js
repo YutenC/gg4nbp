@@ -27,7 +27,6 @@ fetch('shp_view', {
                 image,
             } = body;
 
-            console.log("傳入session並回傳取得DB資料")
 
             SHproName.innerHTML = name;
             SHproPrice.innerHTML = price;

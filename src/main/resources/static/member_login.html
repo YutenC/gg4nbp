@@ -294,6 +294,7 @@
                         sessionStorage.setItem("id", response.account);
                         if(redirectUrl){
                             window.location.href = response.redirectUrl;
+                            console.log(redirectUrl);
                         } else {
                             window.location.href = "index.html";
                         }

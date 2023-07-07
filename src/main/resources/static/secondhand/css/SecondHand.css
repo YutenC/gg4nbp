@@ -14,7 +14,7 @@ header{
     background-size: cover;
     background-position: center;
 
-
+    height: 300px;
 
     width: 100%;
     display: inline-block;
@@ -27,7 +27,7 @@ nav {
     display: flex;
     width: 100%;
     /* background-color: #ec7272; */
-    height: 150px;
+    height: 250px;
     justify-content: center;
     align-items: center;
     flex-direction: column;

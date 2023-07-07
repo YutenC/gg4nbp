@@ -1,7 +1,7 @@
 const header = document.createElement('header');
 header.innerHTML = `
 <nav>
- <div class ="login" ><span>登入</span> / <span>註冊</span></div>
+ <div class ="login" ><span id="login">登入</span> / <span id="register">註冊</span></div>
     <div class="mall_title">
         二手商城
     </div>
@@ -10,9 +10,9 @@ header.innerHTML = `
 <div class="search">
     <div class="nav">
        <div>回首頁</div>
-       <div>一般商城</div>
-       <div>二手商城</div>
-       <div>我的訂單</div>
+       <div id="goShopMall">一般商城</div>
+       <div id="goSecondMall">二手商城</div>
+       <div id="checkOrder">我的訂單</div>
 </div>
     <div class="search_div">
         <div id="input_search"><input type="text" placeholder="搜尋"></div>
@@ -81,6 +81,59 @@ side.innerHTML = `
 $('body').prepend(header).append(footer);
 
 
+$('#goShopMall').on('click', e => {
+    e.preventDefault;
+    location.href = '../shop/shopIndex(Vue).html'
+})
+
+$('#goSecondMall').on('click', e => {
+    e.preventDefault;
+    location.href = 'SecondHand_MainView.html';
+})
+
+$('#checkOrder').on('click', e => {
+    e.preventDefault;
+    location.href = '../member/member_shordersearch.html';
+})
+
+$('#login').on('click', e => {
+    fetch('addEvent')
+    .then(resp =>{
+        if (resp.redirected == true) {
+            location.href = resp.url;
+        }
+    } )
+})
+
+$('#register').on('click', e => {
+    e.preventDefault;
+    location.href = '../member_register.html';
+})
+
+
+fetch('../member/isLogin')
+    .then(res => res.json() ?? false )
+    .then(resp =>{
+        if (resp) {
+            document.querySelector('.login').innerHTML =`
+            <span id="logout">登出</span>
+            `;
+            $('#logout').on('click',()=>{
+                fetch('../member/memberLogoutServlet',{
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(()=>{
+                    history.go(0);
+                })
+            })
+        }
+
+    } )
+
+
+
+
 function insertSide() {
     $('main').prepend(side);
 }
@@ -118,34 +171,33 @@ document.addEventListener('DOMContentLoaded', e => {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
-        .then(resp => {
-            if (resp.redirected == true) {
-                let timerInterval
-                Swal.fire({
-                    title: '您尚未登入！',
-                    html: ' <b></b> 秒後跳轉到登入頁面',
-                    timer: 3000,
-                    timerProgressBar: false,
-                    didOpen: () => {
-                        Swal.showLoading()
-                        const b = Swal.getHtmlContainer().querySelector('b')
-                        timerInterval = setInterval(() => {
-                            b.textContent = Math.floor(Swal.getTimerLeft()/1000)
-                        }, 100)
-                    },
-                    willClose: () => {
-                        clearInterval(timerInterval)
-                    }
-                }).then((result) => {
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        sessionStorage.setItem('backTo',location.href);
-                        location.href = resp.url;
-                    }
-                })
-            } else {
-                location.href = 'SecondHand_Buylist.html';
-            }
-        })
+            .then(resp => {
+                if (resp.redirected == true) {
+                    let timerInterval
+                    Swal.fire({
+                        title: '您尚未登入！',
+                        html: ' <b></b> 秒後跳轉到登入頁面',
+                        timer: 3000,
+                        timerProgressBar: false,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                                b.textContent = Math.floor(Swal.getTimerLeft() / 1000)
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            location.href = resp.url;
+                        }
+                    })
+                } else {
+                    location.href = 'SecondHand_Buylist.html';
+                }
+            })
 
     })
 

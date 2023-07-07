@@ -66,6 +66,7 @@ public class Update4Member extends HttpServlet {
 			}
 		}else {
 			resp.sendRedirect(req.getContextPath()+"/member_login.html");
+			System.out.println(req.getHeader("referer"));
 			session.setAttribute("memberLocation", req.getHeader("referer"));
 		}
 	}
