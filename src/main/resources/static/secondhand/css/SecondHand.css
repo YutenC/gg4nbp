@@ -334,7 +334,7 @@ main div.side div.brandlist>span.buy_btn:hover {
 
 
 
-main div.content div.advs{
+main div.content img.advs{
 
     
     cursor: pointer;
@@ -366,35 +366,35 @@ main div.content div.advArea{
     justify-content: space-around
 }
 
-main div.content div.advs:hover{
+main div.content img.advs:hover{
     height: 160px;
     width: 35%;
 }
 
 
-main div.content div.advs:first-child{
+/* main div.content img.advs:first-child{
 /* 調整廣告 */
-background-image: url('../img/advs.jpg');
+/* background-image: url('../img/advs.jpg');
 background-size: cover;
 background-repeat: no-repeat;
 background-position: center;
-}
+} */
 
-main div.content div.advs:nth-child(2){
+/* main div.content img.advs:nth-child(2){ */
     /* 調整廣告 */
-    background-image: url('../img/advs2.jpg');
+    /* background-image: url('../img/advs2.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     }
 
-    main div.content div.advs:nth-child(3){
+    main div.content img.advs:nth-child(3){ */
         /* 調整廣告 */
-        background-image: url('../img/advs3.jpg');
+        /* background-image: url('../img/advs3.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        }
+        } */ 
 
 main div.content div.showArea{
 
@@ -838,6 +838,12 @@ span.inputNotice {
     color: red;
     font-size: 10px;
     min-width: 15px;
+}
+
+img#fullImage{
+    max-width: calc(100% - 3.2em);
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px white;
 }
 
 

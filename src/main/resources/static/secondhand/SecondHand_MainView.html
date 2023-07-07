@@ -17,7 +17,6 @@
             background-color: #fff;
             background-color: #599898;
             color: white;
-            box-shadow: 0px 0px 5px white;
         }
     </style>
 
@@ -29,9 +28,9 @@
 
         <div class="content">
             <div class="advArea">
-                <div class="advs"></div>
-                <div class="advs"></div>
-                <div class="advs"></div>
+                <img class="advs" src="img/advs.png">
+                <img class="advs" src="img/advs2.jpg">
+                <img class="advs" src="img/advs3.jpg">
             </div>
                 <div class="showArea">
 
@@ -49,6 +48,22 @@
 <script src="js/insertblock.js"></script>
 <script>
     insertSide();
+    let advs =  document.querySelectorAll('.advs');
+    for (let i = 0; i < advs.length; i++) {
+        advs[i].addEventListener('click', ()=>{
+            Swal.fire({
+                html: `<img id="fullImage" src="${advs[i].src}">`,
+                background: 'rgba(255, 255, 255, 0)',
+                padding: 0,
+                width: 900,
+                boxShadow : 'none',
+                showConfirmButton: false,
+            })
+        })
+        
+    }
+    
+
 
 </script>
 <script src="../js/sh_MainView.js"></script>
