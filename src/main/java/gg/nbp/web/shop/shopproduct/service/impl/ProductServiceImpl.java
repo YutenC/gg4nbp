@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
+//@Transactional
 public class ProductServiceImpl implements ProductService {
 
     @Autowired

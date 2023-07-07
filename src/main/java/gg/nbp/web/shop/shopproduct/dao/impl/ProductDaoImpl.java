@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Transactional
 public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements ProductDao {
 
     @PersistenceContext
     private Session session;
 
-    @Transactional
+//    @Transactional
     @Override
     public int update(Product product) {
         final StringBuilder hql = new StringBuilder()
@@ -262,6 +263,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
 
 
     @Override
+//    @Transactional
     public int updateProductScore(Product product) {
         final StringBuilder hql = new StringBuilder()
                 .append("UPDATE Product SET ");
@@ -281,6 +283,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     }
 
     @Override
+//    @Transactional
     public int updateProductAmountBuyTimes(Product product) {
         final StringBuilder hql = new StringBuilder()
                 .append("UPDATE Product SET ");
@@ -300,7 +303,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .executeUpdate();
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public int updateProductState(Product product) {
         final StringBuilder hql = new StringBuilder()

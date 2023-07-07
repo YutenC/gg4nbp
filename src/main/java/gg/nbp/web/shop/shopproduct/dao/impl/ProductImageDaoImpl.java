@@ -4,10 +4,12 @@ import gg.nbp.web.shop.shopproduct.core.CoreDaoImpl;
 import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
 import gg.nbp.web.shop.shopproduct.entity.ProductImage;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
+@Transactional
 public class ProductImageDaoImpl extends CoreDaoImpl<ProductImage, Integer> implements ProductImageDao {
     @Override
     public int update(ProductImage productImage) {
