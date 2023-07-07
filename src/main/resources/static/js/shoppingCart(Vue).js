@@ -245,10 +245,16 @@ const shoppingContent = Vue.createApp({
                         .then(res => console.log(res))
                         .catch(err => console.log(err));
                     shoppingList.splice(index, 1);
-                    if (this.shoppingList.length === 0) {
-                        Swal.fire('購物車內已無商品，快去逛逛吧!');
-                        let newHref = projectFolder + '/shop/shopIndex.html';
-                        window.location.replace(newHref);
+                    console.log(shoppingList.length);
+                    if (shoppingList.length === 0) {
+                        Swal.fire({
+                            title: '購物車內已無商品，快去逛逛吧!',
+                            timer: '1000',
+                            timerProgressBar: true,
+                        }).then(() => {
+                            let newHref = projectFolder + '/shop/shopIndex(Vue).html';
+                            window.location.replace(newHref);
+                        });
                     }
                 }
             });
