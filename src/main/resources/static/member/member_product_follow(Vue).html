@@ -20,6 +20,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../js/projectFolder.js"></script>
+    <script src="../js/toastAlert.js"></script>
     <style>
         div.row {
             width: 100%;
@@ -121,106 +123,125 @@
         .v-leave-from {
             opacity: 1;
         }
+
+        .colored-toast.swal2-icon-success {
+            background-color: #a5dc86 !important;
+            width: 200px !important;
+            font-size: 18px !important;
+        }
+
+        .colored-toast.swal2-icon-error {
+            background-color: #f27474 !important;
+            width: 200px !important;
+            font-size: 18px !important;
+        }
+
+        .colored-toast.swal2-icon-info {
+            background-color: #3fc3ee !important;
+            width: 200px !important;
+            font-size: 18px !important;
+        }
     </style>
 </head>
 
 <body>
-<header>
-    <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center"></a>
-            <a href="../index.html" style="width: 180px;height: 103.19px;">
-                <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
-            </a>
-            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
-                <span class="visually-hidden">Toggle navigation</span>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item" id="shop">
-                        <a class="nav-link active" data-bss-hover-animate="pulse" href="../shop/shopIndex(Vue).html"
-                           style="border-width: 20px;margin-top: 10px;">
-                            <img src="../img/gamepad-solid.svg">商城中心
-                        </a>
-                    </li>
-                    <li class="nav-item" id="shshop">
-                        <a class="nav-link" data-bss-hover-animate="pulse" href="../secondhand/SecondHand_MainView.html"
-                           style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
-                            <img src="../img/dice-solid.svg">二手商城
-                        </a>
-                    </li>
-                    <li class="nav-item" id="actitcle">
-                        <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
-                           style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="../acticle/article_main.html">
-                            <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
-                                 style="height: 50px;">論壇社群
-                        </a>
-                    </li>
-                    <li class="nav-item" id="activty">
-                        <a class="nav-link" data-bss-hover-animate="pulse" href="../activity/act_finder.html"
-                           style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
-                            <img src="../img/champagne-glasses-solid.svg">活動專區
-                        </a>
-                    </li>
-                    <li class="nav-item" id="member_home">
-                        <a class="nav-link active" data-bss-hover-animate="pulse" href="member_home.html"
-                           style="margin-top: 10px;">
-                            <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
-                                 style="height: 50px;">會員中心
-                        </a>
-                    </li>
-                    <li class="nav-item logout">
-                        <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
-                           style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
-                            <div id="member_pic-1" class="avatar-bg center"
-                                 style="width: 60px;height: 60px;margin-left: 0px;"></div>
-                            登出
-                        </a>
-                    </li>
-                </ul>
-                <footer id="footerpad-1"></footer>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md py-3" style="background: #82d6bd;height: 120px;">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center"></a>
+                <a href="../index.html" style="width: 180px;height: 103.19px;">
+                    <img data-bss-hover-animate="pulse" src="../img/Logo-removebg.png" style="width: 100%;">
+                </a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item" id="shop">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="../shop/shopIndex(Vue).html"
+                                style="border-width: 20px;margin-top: 10px;">
+                                <img src="../img/gamepad-solid.svg">商城中心
+                            </a>
+                        </li>
+                        <li class="nav-item" id="shshop">
+                            <a class="nav-link" data-bss-hover-animate="pulse"
+                                href="../secondhand/SecondHand_MainView.html"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/dice-solid.svg">二手商城
+                            </a>
+                        </li>
+                        <li class="nav-item" id="actitcle">
+                            <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
+                                style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);"
+                                href="../acticle/article_main.html">
+                                <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
+                                    style="height: 50px;">論壇社群
+                            </a>
+                        </li>
+                        <li class="nav-item" id="activty">
+                            <a class="nav-link" data-bss-hover-animate="pulse" href="../activity/act_finder.html"
+                                style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
+                                <img src="../img/champagne-glasses-solid.svg">活動專區
+                            </a>
+                        </li>
+                        <li class="nav-item" id="member_home">
+                            <a class="nav-link active" data-bss-hover-animate="pulse" href="member_home.html"
+                                style="margin-top: 10px;">
+                                <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
+                                    style="height: 50px;">會員中心
+                            </a>
+                        </li>
+                        <li class="nav-item logout">
+                            <a class="nav-link fs-6 text-center" data-bss-hover-animate="pulse" id="sign_out"
+                                style="margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;">
+                                <div id="member_pic-1" class="avatar-bg center"
+                                    style="width: 60px;height: 60px;margin-left: 0px;"></div>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                    <footer id="footerpad-1"></footer>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>
     <div class="main-content">
         <div class="row" style="height: 800px;">
             <div class="col-lg-4 col-xl-2 offset-xl-1" style="height: 600px;">
-                <div class="list-group" >
-                    <a data-bss-hover-animate="pulse" id="info"
-                       class="list-group-item list-group-item-action"
-                       href="./member_info.html" data-bs-toggle="list"
-                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
+                <div class="list-group">
+                    <a data-bss-hover-animate="pulse" id="info" class="list-group-item list-group-item-action"
+                        href="./member_info.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">基本資料管理
                     </a>
                     <a data-bss-hover-animate="pulse" id="trade" class="list-group-item list-group-item-action"
-                       href="./member_order_list(Vue).html" data-bs-toggle="list"
-                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢一般交易
+                        href="./member_order_list(Vue).html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢一般交易
                     </a>
                     <a data-bss-hover-animate="pulse" id="sh_trade" class="list-group-item list-group-item-action"
-                       href="./member_shordersearch.html" data-bs-toggle="list"
-                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手交易
+                        href="./member_shordersearch.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手交易
                     </a>
                     <a data-bss-hover-animate="pulse" id="sh_buy" class="list-group-item list-group-item-action"
-                       href="./member_CheckBuyEvent.html" data-bs-toggle="list"
-                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手收購進度
+                        href="./member_CheckBuyEvent.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查詢二手收購進度
                     </a>
                     <a data-bss-hover-animate="pulse" id="pro_follow" class="list-group-item list-group-item-action"
-                       href="./member_product_follow(Vue).html" data-bs-toggle="list"
-                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">一般商品追蹤清單
+                        href="./member_product_follow(Vue).html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">一般商品追蹤清單
                         <br>
                     </a>
                     <a data-bss-hover-animate="pulse" id="sh_follow" class="list-group-item list-group-item-action"
-                       href="./member_shloveList.html" data-bs-toggle="list"
-                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">二手商品追蹤清單
+                        href="./member_shloveList.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">二手商品追蹤清單
                     </a>
                     <a data-bss-hover-animate="pulse" id="notice" class="list-group-item list-group-item-action"
-                       href="member_noticelist.html" data-bs-toggle="list"
-                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看通知
+                        href="member_noticelist.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看通知
                     </a>
                     <a data-bss-hover-animate="pulse" id="login_his" class="list-group-item list-group-item-action"
-                       href="member_loginhistory.html" data-bs-toggle="list"
-                       style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看登入紀錄
+                        href="member_loginhistory.html" data-bs-toggle="list"
+                        style="background: var(--bs-light);border-top-color: var(--bs-gray-400);border-bottom-color: var(--bs-gray-400);">查看登入紀錄
                     </a>
                 </div>
             </div>
@@ -243,15 +264,18 @@
                                     </tr>
                                     <template v-if="mypick !== []" v-for="(item, index) in mypick">
                                         <tr>
-                                            <td class="productPic"><a :href="'/Five_NBP.gg/' + item.productId"><img
+                                            <td class="productPic"><a
+                                                    @click.prevent="goProduct('shop/shopProductDetail.html', item.productId)"><img
                                                         :src="item.productImgUrl" :alt="item.productName"></a>
                                             </td>
-                                            <td><a :href="'/Five_NBP.gg/' + item.productId">{{ item.productName
+                                            <td><a
+                                                    @click.prevent="goProduct('shop/shopProductDetail.html', item.productId)">{{
+                                                    item.productName
                                                     }}</a>
                                             </td>
-                                            <td>{{ item.productPrice }}</td>
-                                            <td><button @click="">加入購物車</button></td>
-                                            <td><button @click="">直接購買</button></td>
+                                            <td>${{ item.productPrice }}</td>
+                                            <td><button @click="addCart(0,item.productId)">加入購物車</button></td>
+                                            <td><button @click="addCart(1,item.productId)">直接購買</button></td>
                                             <td>{{ item.productAmount > 10? '足夠' : '數量有限'}}</td>
                                             <td class="followControl">
                                                 <button class="cancel" @click="remove(index, item.productId)">
