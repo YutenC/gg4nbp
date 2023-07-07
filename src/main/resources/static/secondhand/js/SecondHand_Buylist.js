@@ -158,7 +158,7 @@ if($('img').hasClass('-warning')){
         .then(obj => {
             reqaa = obj ;
             checkpage(obj[0]);
-            sessionStorage.removeItem('EventId');
+            
         })
 
 
@@ -198,6 +198,7 @@ function checkpage(obj) {
         div.setAttribute('class', 'return_box');
         $('.showArea').append(div);
         $('.content').attr('style', 'width : 40%');
+        sessionStorage.removeItem('EventId');
     } else {
         $('.inputNotice')[0].innerHTML = '* 輸入錯誤'
 

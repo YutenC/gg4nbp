@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>NBP.gg - 二手收購查詢</title>
+    <link rel="icon" href="../secondhand/img/title.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../bootstrap/css/bootstrap_member_infor.min.css">
     <link rel="stylesheet" href="../css/Footer-with-social-media-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -1024,7 +1025,7 @@
         $('#type').val(obj.type);
 
         $('#applicantBankNumber').on('keydown', e => {
-            if (e.keyCode < 48 || e.keyCode > 57) {
+            if ( e.keyCode != 8 && e.keyCode < 48 || e.keyCode > 57) {
                 e.preventDefault();
             }
         })
