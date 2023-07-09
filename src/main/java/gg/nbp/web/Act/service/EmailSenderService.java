@@ -1,17 +1,17 @@
 
 package gg.nbp.web.Act.service;
 
-import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundFactory;
-import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundHandler;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import java.util.concurrent.Callable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.lang.invoke.CallSite;
-import java.util.concurrent.Callable;
+import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundFactory;
+import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundHandler;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 
 @Service

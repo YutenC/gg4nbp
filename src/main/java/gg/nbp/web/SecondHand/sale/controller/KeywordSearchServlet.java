@@ -19,7 +19,11 @@ import java.util.List;
 @WebServlet("/secondhand/shp_keywordSearch")
 public class KeywordSearchServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7416683752690262604L;
+	@Autowired
     private SecondhandProductServiceImpl SERVICE;
 
     @Override

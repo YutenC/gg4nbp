@@ -26,7 +26,8 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
                 .append("discountCode = :discountCode ")
                 .append("WHERE id = :id");
 
-        Query<?> query=session.createQuery(hql.toString());
+        @SuppressWarnings("deprecation")
+		Query<?> query=session.createQuery(hql.toString());
 
         return query
                 .setParameter("discount",coupon.getDiscount())

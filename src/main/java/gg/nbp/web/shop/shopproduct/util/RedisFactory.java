@@ -13,7 +13,7 @@ public class RedisFactory  {
     private static ThreadLocal<RedisFactory> threadLocal = new ThreadLocal<>();
     private Jedis jedis=null;
 
-    private int selectIndex=0;
+//    private int selectIndex=0;
 
     public int process() {
         if(registerRedisService!=null){

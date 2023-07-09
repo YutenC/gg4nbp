@@ -21,7 +21,7 @@ public class ACORSFilter implements Filter {
 //        System.out.println(ss);
         // 設置"Access-Control-Allow-Origin"頭，允許任意來源訪問
 //        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
-        String oo=  httpRequest.getHeader("Origin");
+//        String oo=  httpRequest.getHeader("Origin");
         httpResponse.setHeader("Access-Control-Allow-Origin", httpRequest.getHeader("Origin"));
 //        httpResponse.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5501");
 

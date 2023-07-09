@@ -1,6 +1,12 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
@@ -10,16 +16,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/secondhand/shp_typeSearch")
 public class TypeSearchServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4710969012957605839L;
+	@Autowired
     private SecondhandProductServiceImpl SERVICE;
 
     @Override

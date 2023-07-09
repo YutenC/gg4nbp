@@ -1,17 +1,15 @@
 package gg.nbp.web.Member.controller;
 
+import java.io.IOException;
+import java.io.Serial;
+
 import gg.nbp.web.Member.entity.Member;
-import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.Member.util.MemberCommonUitl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.IOException;
-import java.io.Serial;
 
 @WebServlet({"/memberGetPictureServlet","/member/memberGetPictureServlet","/activity/memberGetPictureServlet"})
 public class MemberGetPictureServlet extends HttpServlet {

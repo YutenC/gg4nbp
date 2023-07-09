@@ -9,7 +9,11 @@ import java.io.IOException;
 
 //@WebFilter("/*")
 public class BPageFilter extends HttpFilter {
-//    String path = "/WEB-INF/pages";
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -708011002770310756L;
+	//    String path = "/WEB-INF/pages";
     String path = "/html";
 
     @Override

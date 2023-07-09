@@ -32,6 +32,7 @@ public class OrderDetailDaoImple implements OrderDetailDao {
 		return 1;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int update(OrderDetail orderDetail) {
 		session.update(orderDetail);

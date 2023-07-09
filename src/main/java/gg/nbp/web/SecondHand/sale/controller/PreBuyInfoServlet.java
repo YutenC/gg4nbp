@@ -19,7 +19,12 @@ import java.io.IOException;
 public class PreBuyInfoServlet extends HttpServlet {
 
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8848341903562310084L;
+
+	@Autowired
     private MemberServiceimpl MEMSERVICE;
 
     @Autowired

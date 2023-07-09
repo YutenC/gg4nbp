@@ -1,6 +1,5 @@
 package gg.nbp.web.shop.shopproduct.pojo;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

@@ -35,6 +35,7 @@ public class OrderMasterDaoImpl implements OrderMasterDao {
 		return 1;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int update(OrderMaster orderMaster) {
 		session.update(orderMaster);
@@ -202,6 +203,7 @@ public class OrderMasterDaoImpl implements OrderMasterDao {
 		
 		sb.delete(sb.lastIndexOf("AND"), sb.length());
 		sb.append("ORDER BY commitDate DESC");  // 以日期降冪
+		@SuppressWarnings({ "deprecation", "unchecked" })
 		Query<OrderMaster> query = session.createQuery(sb.toString());
 		for (String condition : whereCondition.keySet()) {
 			query.setParameter(condition, whereCondition.get(condition));

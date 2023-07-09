@@ -16,7 +16,11 @@ import java.io.IOException;
 @WebServlet("/member/orderMemChange")
 public class OrderMemChangeServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1870869297774410897L;
+	@Autowired
     private MemberServiceimpl SERVICE;
 
     @Override

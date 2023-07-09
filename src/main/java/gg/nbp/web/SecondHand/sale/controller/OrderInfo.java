@@ -24,6 +24,10 @@ public class OrderInfo extends HttpServlet {
 //    product
 //    order
 
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5999772871458031737L;
 int productId = 0;
 int orderId = 0;
 

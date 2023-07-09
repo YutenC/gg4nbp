@@ -1,13 +1,13 @@
 package gg.nbp.web.SecondHand.sale.dao.impl;
 
-import gg.nbp.web.SecondHand.sale.dao.SecondhandOrderDao;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
-import jakarta.persistence.PersistenceContext;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import gg.nbp.web.SecondHand.sale.dao.SecondhandOrderDao;
+import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
+import jakarta.persistence.PersistenceContext;
 
 @Repository
 public class SecondhandOrderDaoImpl implements SecondhandOrderDao {
@@ -23,14 +23,15 @@ public class SecondhandOrderDaoImpl implements SecondhandOrderDao {
 
     @Override
     public int deleteById(Integer orderId) {
-        SecondhandOrder pojo = session.load(SecondhandOrder.class, orderId);
+        @SuppressWarnings("deprecation")
+		SecondhandOrder pojo = session.load(SecondhandOrder.class, orderId);
         session.remove(pojo);
         return 1;
     }
 
     @Override
     public int update(SecondhandOrder pojo) {
-        session.update(pojo);
+        session.merge(pojo);
         return 1;
     }
 

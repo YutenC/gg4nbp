@@ -19,7 +19,11 @@ import java.util.List;
 @WebServlet("/shop/shpView")
 public class MainShopSHPViewServelet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8272762975667934573L;
+	@Autowired
     private SecondhandProductServiceImpl SERVICE;
 
     @Override

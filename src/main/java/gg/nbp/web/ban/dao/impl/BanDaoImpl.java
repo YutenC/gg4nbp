@@ -25,6 +25,7 @@ public class BanDaoImpl implements BanDao{
 		return 1;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public int deleteById(Integer ban_id) {
 		Ban ban= session.load(Ban.class, ban_id);
@@ -45,6 +46,7 @@ public class BanDaoImpl implements BanDao{
 			.append("ban_durationByDay = :ban_durationByDay,")
 			.append("WHERE ban_id = :ban_id");
 			
+		@SuppressWarnings("deprecation")
 		Query query = session.createQuery(hql.toString());
 		return query.setParameter("member_id", ban.getMember_id())
 				.setParameter("manager_id", ban.getManager_id())

@@ -21,7 +21,11 @@ import java.util.List;
 @WebServlet("/manager/shpImg_Select")
 public class SelectshpImgServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2208664328065662136L;
+	@Autowired
     private SecondhandProductService SERVICE;
 
     @Override

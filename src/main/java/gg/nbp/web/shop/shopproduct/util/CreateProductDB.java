@@ -21,12 +21,14 @@ public class CreateProductDB<T, P> {
 
     @Autowired
     ProductImageDao productImageDao;
-    private Class entityClass;
-    private Class entityClass_P;
+    @SuppressWarnings("rawtypes")
+	private Class entityClass;
+    @SuppressWarnings({ "unused", "rawtypes" })
+	private Class entityClass_P;
 
 //    public CreateProductDB(){}
 
-    public CreateProductDB(Class c, Class p) {
+    public CreateProductDB(@SuppressWarnings("rawtypes") Class c, @SuppressWarnings("rawtypes") Class p) {
         entityClass = c;
         entityClass_P = p;
 
@@ -34,7 +36,8 @@ public class CreateProductDB<T, P> {
 //        productImageDao = new ProductImageDaoImpl();
     }
 
-    public List<T> readCSV() throws NoSuchFieldException, IllegalAccessException {
+    @SuppressWarnings("unchecked")
+	public List<T> readCSV() throws NoSuchFieldException, IllegalAccessException {
         String csvFile = ConstUtil.CSVPATH;
         String line;
         String csvDelimiter = ",";
@@ -87,13 +90,14 @@ public class CreateProductDB<T, P> {
     }
 
     public List<P> createImgEntity() throws NoSuchFieldException, IllegalAccessException {
-        List<String> fileNames = getListFile(ConstUtil.SRCIMGPATH);
+//        List<String> fileNames = getListFile(ConstUtil.SRCIMGPATH);
 
 
         String newFileName = null;
         File file;
         String pathName;
-        List<T> products = (List<T>) productDao.selectAll();
+        @SuppressWarnings("unchecked")
+		List<T> products = (List<T>) productDao.selectAll();
 
         for (int i = 0; i < products.size(); i++) {
             T product = products.get(i);
@@ -170,7 +174,8 @@ public class CreateProductDB<T, P> {
 
     }
 
-    private List<String> getListFile(String dirPath) {
+    @SuppressWarnings("unused")
+	private List<String> getListFile(String dirPath) {
         List<String> fileNames = new ArrayList<>();
         File directory = new File(dirPath); // 目錄物件
         System.out.println(("File Name: " + directory.getName()));
@@ -194,7 +199,8 @@ public class CreateProductDB<T, P> {
     }
 
     private void setValue(T object, String property, Object propertyValue) {
-        Class objectClass = object.getClass();
+        @SuppressWarnings("rawtypes")
+		Class objectClass = object.getClass();
 
         try {
             Field field = objectClass.getDeclaredField(property);

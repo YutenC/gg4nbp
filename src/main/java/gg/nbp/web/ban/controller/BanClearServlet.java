@@ -3,8 +3,6 @@ package gg.nbp.web.ban.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -73,7 +71,7 @@ public class BanClearServlet extends HttpServlet{
 	    // 對會員做停權處理
 	    
 	    
-	    LocalDateTime now = LocalDateTime.now();
+//	    LocalDateTime now = LocalDateTime.now();
 
 	    		member.setMember_ver_state(1);
 	    		member.setSuspend_deadline(null);

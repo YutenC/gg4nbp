@@ -3,8 +3,6 @@ package gg.nbp.web.Member.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.Member.dao.NoticeDao;
@@ -17,7 +15,8 @@ public class NoticeDaoImpl implements NoticeDao {
 	@PersistenceContext
 	private Session session;
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int update(Notice notice) {
         final String sql = "UPDATE Notice SET is_read = :is_read WHERE notice_id = :notice_id";
         /*  原始寫法  */

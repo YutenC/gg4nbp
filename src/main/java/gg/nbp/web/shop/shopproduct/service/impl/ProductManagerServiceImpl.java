@@ -226,7 +226,8 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 
 
     String getSomeProduct(Integer pageIndex){
-        List<Product>products= productDao.selectAll();
+        @SuppressWarnings("unused")
+		List<Product>products= productDao.selectAll();
 
         return null;
     }

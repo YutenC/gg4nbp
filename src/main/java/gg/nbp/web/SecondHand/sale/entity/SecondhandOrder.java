@@ -18,7 +18,12 @@ import java.util.Objects;
 @Entity
 @Table(name = "secondhand_order")
 public class SecondhandOrder extends Core {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1726112827210069457L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Order_id", nullable = false)
     private Integer orderId;

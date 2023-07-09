@@ -9,21 +9,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import gg.nbp.web.power.entity.Power;
 import gg.nbp.web.power.service.PowerService;
-import gg.nbp.web.power.service.impl.PowerServiceImpl;
 import gg.nbp.web.power_of_manager.entity.Power_of_Manager;
 import gg.nbp.web.power_of_manager.service.Power_of_ManagerService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/manager/pom_add")
 public class PoMAddServlet extends HttpServlet{

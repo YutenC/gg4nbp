@@ -17,6 +17,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/manager/shp_Select")
 public class SelectshpServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1362342145936608929L;
 	@Autowired
 	private SecondhandProductService SERVICE;
 

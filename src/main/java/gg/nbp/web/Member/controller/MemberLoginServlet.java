@@ -3,14 +3,15 @@ package gg.nbp.web.Member.controller;
 import java.io.IOException;
 import java.io.Serial;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 
 import com.google.gson.JsonObject;
-import gg.nbp.web.Member.entity.Login_record;
-import gg.nbp.web.Member.service.LoginRecordService;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import gg.nbp.web.Member.entity.Login_record;
 import gg.nbp.web.Member.entity.Member;
+import gg.nbp.web.Member.service.LoginRecordService;
 import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.Member.util.MemberCommonUitl;
 import jakarta.servlet.ServletException;
@@ -19,7 +20,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.util.DigestUtils;
 
 @WebServlet("/memberLoginServlet")
 public class MemberLoginServlet extends HttpServlet {

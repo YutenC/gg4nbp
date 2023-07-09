@@ -1,9 +1,8 @@
 package gg.nbp.web.Member.dao;
 
-import gg.nbp.core.dao.CoreDao;
-import gg.nbp.web.Member.entity.Notice;
-
 import java.util.List;
+
+import gg.nbp.web.Member.entity.Notice;
 
 public interface NoticeDao {
     int insert(Notice notice);

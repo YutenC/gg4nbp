@@ -1,11 +1,11 @@
 package gg.nbp.web.shop.shopproduct.controller;
 
-import gg.nbp.web.shop.shopproduct.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import gg.nbp.web.shop.shopproduct.service.ProductService;
 
 @RestController
 public class testProductController {

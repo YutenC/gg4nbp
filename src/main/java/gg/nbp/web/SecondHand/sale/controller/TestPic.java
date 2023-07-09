@@ -1,19 +1,14 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
-import gg.nbp.core.pojo.OneString;
-import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.SecondHand.buy.util.Constant;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

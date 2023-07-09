@@ -15,7 +15,8 @@ public class Power_of_ManagerDAOImpl implements Power_of_ManagerDAO{
 	@PersistenceContext
 	private Session session;
 	
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int insert(Power_of_Manager powerOfManager) {
         session.save(powerOfManager);
         return 1; // 返回插入后的主键值，如果有需要的话
@@ -31,7 +32,8 @@ public class Power_of_ManagerDAOImpl implements Power_of_ManagerDAO{
         return 0; 
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int update(Power_of_Manager powerOfManager) {
         session.saveOrUpdate(powerOfManager);
         return 1; // 更新成功

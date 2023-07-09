@@ -22,7 +22,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
         final StringBuilder hql = new StringBuilder()
                 .append("UPDATE Product SET ");
 
-        final String productName = product.getProductName();
+//        final String productName = product.getProductName();
 
         hql.append("productName = :productName,")
                 .append("type = :type,")
@@ -41,7 +41,8 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
 
 
         hql.append("WHERE id = :id");
-        Query<?> query = session.createQuery(hql.toString());
+        @SuppressWarnings("deprecation")
+		Query<?> query = session.createQuery(hql.toString());
 
         query.setParameter("productName", product.getProductName())
                 .setParameter("type", product.getType())
@@ -189,7 +190,8 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .append("revieweCount = :revieweCount,")
                 .append("WHERE id = :id");
 
-        Query<?> query = session.createQuery(hql.toString());
+        @SuppressWarnings("deprecation")
+		Query<?> query = session.createQuery(hql.toString());
 
         return query
                 .setParameter("rate", product.getRate())
@@ -209,7 +211,8 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .append("buyTimes = :buyTimes,")
                 .append("WHERE id = :id");
 
-        Query<?> query = session.createQuery(hql.toString());
+        @SuppressWarnings("deprecation")
+		Query<?> query = session.createQuery(hql.toString());
 
         return query
                 .setParameter("amount", product.getAmount())
@@ -227,7 +230,8 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
         hql.append("state = :state,")
                 .append("WHERE id = :id");
 
-        Query<?> query = session.createQuery(hql.toString());
+        @SuppressWarnings("deprecation")
+		Query<?> query = session.createQuery(hql.toString());
 
         return query
                 .setParameter("state", product.getState())

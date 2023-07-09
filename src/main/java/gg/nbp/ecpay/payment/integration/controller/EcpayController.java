@@ -4,29 +4,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import gg.nbp.ecpay.payment.integration.service.EcpayService;
-import gg.nbp.web.Member.entity.Member;
-import gg.nbp.web.Member.service.MemberService;
-import gg.nbp.web.Member.util.MemberConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/Ecpay")
 public class EcpayController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	@Autowired
-	private MemberService memServ;
 	@Autowired
 	private EcpayService ecService;
 	

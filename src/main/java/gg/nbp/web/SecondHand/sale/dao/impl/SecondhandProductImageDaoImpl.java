@@ -3,7 +3,6 @@ package gg.nbp.web.SecondHand.sale.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.SecondHand.sale.dao.SecondhandProductImageDao;
@@ -31,7 +30,8 @@ public class SecondhandProductImageDaoImpl implements SecondhandProductImageDao 
 
 //        Session session = getSession();
 //        Transaction transaction = session.beginTransaction();
-        SecondhandProductImage shpImg = session.load(SecondhandProductImage.class, imageId);
+        @SuppressWarnings("deprecation")
+		SecondhandProductImage shpImg = session.load(SecondhandProductImage.class, imageId);
         session.remove(shpImg);
 
 //        transaction.commit();
@@ -63,7 +63,8 @@ public class SecondhandProductImageDaoImpl implements SecondhandProductImageDao 
 
 
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int update(SecondhandProductImage shpImg) {
 //        Session session = getSession();
         session.update("SecondhandProductImage", shpImg);

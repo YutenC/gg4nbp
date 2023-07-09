@@ -1,15 +1,14 @@
 package gg.nbp.web.Member.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
+
 import gg.nbp.web.Member.dao.LoginRecordDao;
 import gg.nbp.web.Member.entity.Login_record;
 import jakarta.persistence.PersistenceContext;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
-import org.hibernate.query.Query;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class LoginRecordDaoImpl implements LoginRecordDao {
@@ -31,7 +30,8 @@ public class LoginRecordDaoImpl implements LoginRecordDao {
                 .getResultList();
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public Boolean delectByMemberId(Login_record loginRecord) {
 //        try {
 //            Login_record login_record = session.getReference(Login_record.class, loginRecord.getMember_id());

@@ -1,12 +1,7 @@
 package gg.nbp.web.SecondHand.sale.test;
 
-import java.util.Date;
-
-import gg.nbp.web.SecondHand.sale.dao.SecondhandProductDao;
 import gg.nbp.web.SecondHand.sale.dao.SecondhandProductImageDao;
-import gg.nbp.web.SecondHand.sale.dao.impl.SecondhandProductDaoImpl;
 import gg.nbp.web.SecondHand.sale.dao.impl.SecondhandProductImageDaoImpl;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
 
 public class TestApp {
 

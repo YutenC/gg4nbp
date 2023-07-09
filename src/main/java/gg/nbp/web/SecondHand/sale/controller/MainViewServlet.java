@@ -20,7 +20,11 @@ import java.util.List;
 
 @WebServlet("/secondhand/shp_main")
 public class MainViewServlet extends HttpServlet {
-    // 找圖片
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3930145352835569330L;
+	// 找圖片
     // 找名字
     @Autowired
     private SecondhandProductService SERVICE;

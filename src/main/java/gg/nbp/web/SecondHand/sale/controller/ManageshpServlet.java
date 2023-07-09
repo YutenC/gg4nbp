@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import gg.nbp.web.Manager.entity.Manager;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.util.CommonUtil;
@@ -20,6 +18,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/manager/sh_productmanage")
 public class ManageshpServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 455255773997349060L;
 	@Autowired
 	private SecondhandProductService SERVICE;
 

@@ -2,18 +2,17 @@ package gg.nbp.web.power.dao.impl;
 
 import java.util.List;
 
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
-
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.power.dao.PowerDao;
 //import com.manager.entity.Manager;
 import gg.nbp.web.power.entity.Power;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 @Repository
 public class PowerDaoImpl implements PowerDao {
@@ -30,6 +29,7 @@ public class PowerDaoImpl implements PowerDao {
 	
 	@Override
 	public int deleteById(Integer power_id) {
+		@SuppressWarnings("deprecation")
 		Power power= session.load(Power.class, power_id);
 		session.remove(power);
 		
@@ -44,6 +44,7 @@ public class PowerDaoImpl implements PowerDao {
 			.append("power_content = :power_content,")
 			.append("WHERE power_id = :power_id");
 			
+		@SuppressWarnings("deprecation")
 		Query query = session.createQuery(hql.toString());
 		return query.setParameter("power_name", power.getPower_name())
 				.setParameter("power_content", power.getPower_content())

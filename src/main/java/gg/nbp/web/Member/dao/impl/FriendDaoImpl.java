@@ -47,7 +47,7 @@ public class FriendDaoImpl implements FriendDao {
 
     @Override
     public Friend selectByNick(Member member){
-        final String sql = "SELECT";
+//        final String sql = "SELECT";
         Friend friend = new Friend();
         return friend;
     }

@@ -4,7 +4,6 @@ package gg.nbp.web.SecondHand.sale.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import gg.nbp.web.SecondHand.sale.dao.SecondhandProductDao;
@@ -37,14 +36,16 @@ public class SecondhandProductDaoImpl implements SecondhandProductDao {
     public int deleteById(Integer productId) {
 //        Session session = getSession();
 //        Transaction transaction = session.beginTransaction();
-        SecondhandProduct secondhandproduct = session.load(SecondhandProduct.class, productId);
+        @SuppressWarnings("deprecation")
+		SecondhandProduct secondhandproduct = session.load(SecondhandProduct.class, productId);
         session.remove(secondhandproduct);
 //        transaction.commit();
         return 1;
     }
 
 
-    public int update(SecondhandProduct secondhandproduct) {
+    @SuppressWarnings("deprecation")
+	public int update(SecondhandProduct secondhandproduct) {
 //        Session session = getSession();
 //        session.beginTransaction();
         session.update(secondhandproduct);

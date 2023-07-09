@@ -1,22 +1,9 @@
 package gg.nbp.web.SecondHand.sale.test;
 
 
-import gg.nbp.web.Member.dao.BankDao;
-import gg.nbp.web.Member.dao.CreditDao;
-import gg.nbp.web.Member.dao.MemberDao;
-import gg.nbp.web.Member.dao.impl.BankDaoImpl;
-import gg.nbp.web.Member.dao.impl.CreditDapImpl;
-import gg.nbp.web.Member.dao.impl.MemberDaoImpl;
-import gg.nbp.web.Member.entity.Bank;
-import gg.nbp.web.Member.entity.Member;
-import gg.nbp.web.Member.entity.Member_credit;
-import gg.nbp.web.SecondHand.sale.dao.SecondhandOrderDao;
-import gg.nbp.web.SecondHand.sale.dao.impl.SecondhandOrderDaoImpl;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
-import gg.nbp.web.SecondHand.sale.service.SecondhandOrderService;
-import gg.nbp.web.SecondHand.sale.service.impl.SecondhandOrderServiceImpl;
-import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
+
+import jakarta.persistence.PersistenceContext;
 
 public class TestApp_Order {
 

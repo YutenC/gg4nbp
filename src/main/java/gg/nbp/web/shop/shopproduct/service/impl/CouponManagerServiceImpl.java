@@ -1,6 +1,14 @@
 package gg.nbp.web.shop.shopproduct.service.impl;
 
-import gg.nbp.web.Member.dao.MemberDao;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.shop.shopproduct.common.backgroundtask.BackgroundFactory;
@@ -12,14 +20,9 @@ import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
 import gg.nbp.web.shop.shopproduct.redisdao.CouponActivityRedisDao;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
-import gg.nbp.web.shop.shopproduct.util.*;
+import gg.nbp.web.shop.shopproduct.util.RedisContent;
+import gg.nbp.web.shop.shopproduct.util.RedisFactory;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.Callable;
 
 @Service
 @Transactional
@@ -131,9 +134,9 @@ public class CouponManagerServiceImpl implements CouponManagerService {
             case 0://立即發送
                 BackgroundHandler backgroundHandler = BackgroundFactory.getBackgroundHandler("shopProductBackground");
 
-                Callable<String> callable=new Callable() {
+                Callable<String> callable = new Callable<>() {
                     @Override
-                    public Object call() throws Exception {
+                    public String call() throws Exception {
                         List<CouponMember> couponMembers_=couponMembers;
                         for(int i=0;i<couponMembers_.size();i++){
                             System.out.println("send email"+couponMembers_.get(i).getEmail());
@@ -198,7 +201,8 @@ public class CouponManagerServiceImpl implements CouponManagerService {
 
     }
 
-    private Coupon genCouponData() {
+    @SuppressWarnings("unused")
+	private Coupon genCouponData() {
         Integer discount = ((int) (Math.random() * 50 + 51));
         Integer condition_price = ((int) (Math.random() * 500 + 501));
 

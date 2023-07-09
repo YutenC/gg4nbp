@@ -1,10 +1,34 @@
 package gg.nbp.web.shop.shopproduct.servlet;
 
+//import javax.servlet.ServletException;
+//import javax.servlet.annotation.MultipartConfig;
+//import javax.servlet.annotation.WebServlet;
+//import javax.servlet.http.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.internal.Primitives;
+
 import gg.nbp.web.Member.entity.Member;
-import gg.nbp.web.shop.shopproduct.controller.*;
+import gg.nbp.web.shop.shopproduct.controller.BackgroundMessageController;
+import gg.nbp.web.shop.shopproduct.controller.CouponController;
+import gg.nbp.web.shop.shopproduct.controller.CouponManagerController;
+import gg.nbp.web.shop.shopproduct.controller.FollowController;
+import gg.nbp.web.shop.shopproduct.controller.ProductController;
+import gg.nbp.web.shop.shopproduct.controller.ProductManagerController;
+import gg.nbp.web.shop.shopproduct.controller.testMemberController;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
 import gg.nbp.web.shop.shopproduct.pojo.ProductPojo;
@@ -15,24 +39,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.MultipartConfig;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Component
 @WebServlet("/shopDispatcher/*")
@@ -40,7 +46,12 @@ import java.util.Map;
 public class ShopDispatcherServlet extends HttpServlet {
 
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -736382580705654796L;
+
+	@Autowired
     BackgroundMessageController backgroundMessageController;
 
     @Autowired
@@ -401,7 +412,8 @@ public class ShopDispatcherServlet extends HttpServlet {
 
     }
 
-    private <T> T getObject(HttpServletRequest req, String parm, Class<T> classOfT) {
+    @SuppressWarnings("unused")
+	private <T> T getObject(HttpServletRequest req, String parm, Class<T> classOfT) {
         String result = req.getParameter(parm);
         Gson gson = new Gson();
         T obj = gson.fromJson(result, classOfT);
@@ -413,7 +425,8 @@ public class ShopDispatcherServlet extends HttpServlet {
 
     }
 
-    private <T> T getParameter(HttpServletRequest req, String parm, T c) {
+    @SuppressWarnings({ "unused", "unchecked" })
+	private <T> T getParameter(HttpServletRequest req, String parm, T c) {
         String result = req.getParameter(parm);
         return (T) result;
     }

@@ -1,12 +1,8 @@
 package gg.nbp.web.SecondHand.sale.service;
 
-import gg.nbp.web.Member.entity.Bank;
-import gg.nbp.web.Member.entity.Member;
-import gg.nbp.web.Member.entity.Member_credit;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
-
 import java.util.List;
+
+import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
 
 public interface SecondhandOrderService {
 

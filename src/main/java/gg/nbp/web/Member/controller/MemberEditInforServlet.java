@@ -17,6 +17,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/member/memberEditInforServlet")
 public class MemberEditInforServlet extends HttpServlet {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 606648385449474756L;
 	@Autowired
 	private MemberService service ;
 	

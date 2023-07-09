@@ -3,15 +3,15 @@ package gg.nbp.web.SecondHand.sale.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import gg.nbp.web.SecondHand.buy.util.Constant;
-import gg.nbp.web.SecondHand.sale.dao.SecondhandProductImageDao;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import gg.nbp.web.SecondHand.buy.util.Constant;
 import gg.nbp.web.SecondHand.sale.dao.SecondhandProductDao;
+import gg.nbp.web.SecondHand.sale.dao.SecondhandProductImageDao;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import gg.nbp.web.SecondHand.sale.service.SecondhandProductService;
 
 @Transactional
@@ -173,7 +173,7 @@ public class SecondhandProductServiceImpl implements SecondhandProductService {
 
     @Override
     public boolean updateimg(SecondhandProductImage img, Integer id) {
-        String url = Constant.SAVE_URL + img.getImage();
+//        String url = Constant.SAVE_URL + img.getImage();
         img = shpdaoPic.selectById(id);
         SecondhandProductImage pic = new SecondhandProductImage();
 //        pic.setProductId(id);

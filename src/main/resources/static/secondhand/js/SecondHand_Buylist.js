@@ -69,7 +69,6 @@ $('#getshot').next().on('change', function (e) {
                 background: 'rgba(255, 255, 255, 0)',
                 padding: 0,
                 width: 900,
-                boxShadow : 'none',
                 showConfirmButton: false,
             })
         })

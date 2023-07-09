@@ -28,6 +28,7 @@ public class ShoppingListDaoImpl implements ShoppingListDao {
 		return 1;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int update(ShoppingList shoppingList) {
 		session.update(shoppingList);

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.JsonObject;
 
-import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.Manager.service.ManagerService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,7 +22,7 @@ public class ManagerLogoutServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Manager manager = (Manager)request.getSession().getAttribute("manager");
+//		Manager manager = (Manager)request.getSession().getAttribute("manager");
 		
 		request.getSession().removeAttribute("manager_loggedin");
 		request.getSession().removeAttribute("manager");

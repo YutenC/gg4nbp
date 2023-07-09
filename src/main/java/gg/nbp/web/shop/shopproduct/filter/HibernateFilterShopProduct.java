@@ -15,7 +15,13 @@ import jakarta.servlet.http.HttpSession;
 @WebFilter("/shopDispatcher/*")
 public class HibernateFilterShopProduct extends HttpFilter {
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5681154667792380244L;
+
+
+	@Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) {
 //        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 

@@ -1,9 +1,14 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import gg.nbp.core.util.CommonUtil;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
 import gg.nbp.web.SecondHand.sale.service.impl.SecondhandProductServiceImpl;
 import jakarta.servlet.ServletException;
@@ -11,10 +16,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.BufferedReader;
-import java.io.IOException;
 
 
 @WebServlet("/member/priceChange")
@@ -25,7 +26,11 @@ public class PriceServlet extends HttpServlet {
 //加總
 //response
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2714287330548045797L;
+	@Autowired
     private SecondhandProductServiceImpl SERVICE;
 
     @Override

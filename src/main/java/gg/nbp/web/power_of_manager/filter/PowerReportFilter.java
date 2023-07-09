@@ -10,7 +10,6 @@ import gg.nbp.web.power.entity.Power;
 import gg.nbp.web.power_of_manager.entity.Power_of_Manager;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -27,17 +26,17 @@ import jakarta.servlet.http.HttpSession;
 @Order(2)
 public class PowerReportFilter extends HttpFilter implements Filter{
 	private static final long serialVersionUID = 1L;
-	private FilterConfig filterConfig;
-	
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		this.filterConfig= filterConfig;
-	}
-	
-	@Override
-	public void destroy() {
-		filterConfig= null;
-	}
+//	private FilterConfig filterConfig;
+//	
+//	@Override
+//	public void init(FilterConfig filterConfig) throws ServletException {
+//		this.filterConfig= filterConfig;
+//	}
+//	
+//	@Override
+//	public void destroy() {
+//		filterConfig= null;
+//	}
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -49,6 +48,7 @@ public class PowerReportFilter extends HttpFilter implements Filter{
 		HttpSession session= req.getSession();
 		// 判斷登入
 		
+		@SuppressWarnings("unchecked")
 		List<Power> powerList= (List<Power>) session.getAttribute("powerList");
 		Optional<Integer> powerMngIdOpt = powerList.stream()
 		        .filter(power -> "檢舉單管理員".equals(power.getPower_name()))
@@ -56,6 +56,7 @@ public class PowerReportFilter extends HttpFilter implements Filter{
 		        .findFirst();
 	    int powerMngId = powerMngIdOpt.get();
 		
+		@SuppressWarnings("unchecked")
 		List<Power_of_Manager> LoggedPomList= (List<Power_of_Manager>) session.getAttribute("loggedPomList");
 		
 		boolean hasPower = LoggedPomList.stream()

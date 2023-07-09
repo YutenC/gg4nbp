@@ -25,7 +25,12 @@ public class SecondhandProduct extends Core {
 
 
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9051340918420181235L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Integer productId;

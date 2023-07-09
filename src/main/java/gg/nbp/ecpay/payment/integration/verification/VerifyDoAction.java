@@ -42,8 +42,8 @@ public class VerifyDoAction extends PaymentVerifyBase {
 			Element tmpEle = (Element)nodeList.item(i);
 			
 			try {
-				method = cls.getMethod("get"+tmpEle.getAttribute("name"), null);
-				objValue = method.invoke(obj, null).toString();
+				method = cls.getMethod("get"+tmpEle.getAttribute("name"), String.class);
+				objValue = method.invoke(obj, "").toString();
 			} catch (Exception e) {
 				throw new EcpayException(ErrorMessage.OBJ_MISSING_FIELD);
 			}

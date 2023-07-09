@@ -28,6 +28,7 @@ public class ManagerDaoImpl implements ManagerDao{
 	
 	@Override
 	public int deleteById(Integer manager_id) {
+		@SuppressWarnings("deprecation")
 		Manager manager= session.load(Manager.class, manager_id);
 		session.remove(manager);
 		
@@ -50,6 +51,7 @@ public class ManagerDaoImpl implements ManagerDao{
 			.append("is_working = :is_working ")
 			.append("WHERE manager_id = :manager_id");
 			
+		@SuppressWarnings("deprecation")
 		Query query = session.createQuery(hql.toString());
 		if (password != null && !password.isEmpty()) {
 			query.setParameter("password", manager.getPassword());

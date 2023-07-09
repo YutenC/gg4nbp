@@ -2,12 +2,12 @@ package gg.nbp.web.Member.controller;
 
 import java.io.IOException;
 
-import gg.nbp.web.Member.entity.Notice;
-import gg.nbp.web.Member.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.web.Member.entity.Member;
+import gg.nbp.web.Member.entity.Notice;
 import gg.nbp.web.Member.service.MemberService;
+import gg.nbp.web.Member.service.NoticeService;
 import gg.nbp.web.Member.util.JedisCommonUtil;
 import gg.nbp.web.Member.util.MemberCommonUitl;
 import jakarta.servlet.ServletException;
@@ -19,6 +19,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/memberVertifyServlet")
 public class MemberVertifyServlet extends HttpServlet {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2498254180804033118L;
 	@Autowired
 	private MemberService SERVICE ;
     @Autowired

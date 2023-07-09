@@ -46,7 +46,8 @@ public class CreditDapImpl implements CreditDao {
         }
         hql.append("WHERE cred_number = :cred_number");
 
-        Query<?> query = session.createQuery(hql.toString());
+        @SuppressWarnings("deprecation")
+		Query<?> query = session.createQuery(hql.toString());
         if(creditNumber != null && !creditNumber.isEmpty()){
             query.setParameter("cred_number", creditNumber);
         }

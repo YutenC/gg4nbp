@@ -1,9 +1,12 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.Member.entity.Notice;
-import gg.nbp.web.Member.service.NoticeService;
 import gg.nbp.web.Member.service.impl.NoticeServiceImpl;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
 import gg.nbp.web.SecondHand.sale.service.SecondhandOrderService;
@@ -13,15 +16,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.IOException;
 
 
 @WebServlet("/manager/deliverState")
 public class ChangeDeliverStateServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4593366376313124156L;
+
+	@Autowired
     private SecondhandOrderService SERVICE;
 
     @Autowired

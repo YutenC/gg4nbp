@@ -1,13 +1,13 @@
 package gg.nbp.web.shop.shopproduct.core;
 
-import jakarta.persistence.PersistenceContext;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+
+import org.hibernate.Session;
+
+import jakarta.persistence.PersistenceContext;
 
 public abstract class CoreDaoImpl<P, I> implements CoreDao <P, I>{
     private Class<?> entityClass;
@@ -27,7 +27,8 @@ public abstract class CoreDaoImpl<P, I> implements CoreDao <P, I>{
         }
     }
 
-    @Override
+    @SuppressWarnings({ "unchecked", "deprecation" })
+	@Override
     public I insert(P pojo) {
 //        Session session = getSession();
 //        Transaction transaction= session.beginTransaction();
@@ -54,11 +55,13 @@ public abstract class CoreDaoImpl<P, I> implements CoreDao <P, I>{
     @Override
     public P selectById(I id) {
 //        Session session = getSession();
-        P coupon = (P) session.get(entityClass, (Serializable)id);
+        @SuppressWarnings("unchecked")
+		P coupon = (P) session.get(entityClass, (Serializable)id);
         return coupon;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<P> selectAll() {
         String hql = "from "+entityName;
 

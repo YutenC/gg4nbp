@@ -1,9 +1,15 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
 
-import gg.nbp.core.pojo.OneString;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import gg.nbp.core.util.CommonUtil;
-import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.SecondHand.buy.util.Constant;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
@@ -14,19 +20,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/secondhand/shp_view")
 public class ShpViewServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7587512000966514611L;
+	@Autowired
     private SecondhandProductService SERVICE;
 
     @Override

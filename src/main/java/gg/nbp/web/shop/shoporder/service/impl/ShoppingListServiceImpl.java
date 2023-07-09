@@ -12,9 +12,7 @@ import gg.nbp.web.shop.shoporder.entity.ShoppingList;
 import gg.nbp.web.shop.shoporder.service.ShoppingListService;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
 import gg.nbp.web.shop.shopproduct.dao.ProductDao;
-import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
 import gg.nbp.web.shop.shopproduct.entity.Product;
-import gg.nbp.web.shop.shopproduct.entity.ProductImage;
 import gg.nbp.web.shop.shopproduct.service.ProductService;
 import jakarta.transaction.Transactional;
 

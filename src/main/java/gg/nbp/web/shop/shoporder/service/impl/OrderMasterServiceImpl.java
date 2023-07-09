@@ -635,6 +635,8 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			newResults = omdao.selectByOrderStatus(4);
 			Collections.sort(newResults, odcom);
 			break;
+		default:
+			break;
 		}
 		
 		String key = "Order:" + selectCode.getCode();

@@ -22,16 +22,12 @@ import gg.nbp.web.Member.entity.Notice;
 import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.Member.service.NoticeService;
 import gg.nbp.web.shop.shoporder.entity.OrderMaster;
-import gg.nbp.web.shop.shoporder.service.OrderDetailService;
 import gg.nbp.web.shop.shoporder.service.OrderMasterService;
 import gg.nbp.web.shop.shoporder.util.ManageOrder;
 import gg.nbp.web.shop.shoporder.util.MemberViewOrder;
 import gg.nbp.web.shop.shoporder.util.OrderSelection;
 import gg.nbp.web.shop.shoporder.util.ResOrderMaster;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
-import gg.nbp.web.shop.shopproduct.entity.Coupon;
-import gg.nbp.web.shop.shopproduct.service.CouponService;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -51,14 +47,14 @@ public class OrderMasterController extends HttpServlet {
 	@Autowired
 	private OrderMasterService orderMasterService;
 	
-	@Autowired
-	private OrderDetailService orderDetailService;
+//	@Autowired
+//	private OrderDetailService orderDetailService;
 	
 	@Autowired
 	private NoticeService noticeService;
 	
-	@Autowired
-	private CouponService couponService;
+//	@Autowired
+//	private CouponService couponService;
  
 	public OrderMasterController() {
         super();
@@ -97,7 +93,7 @@ public class OrderMasterController extends HttpServlet {
     		Integer sortBy = Integer.valueOf(req.getParameter("sortBy"));
     		
     		Map<String, String> orderBy = new HashMap<>();
-    		String sortKey = null;
+//    		String sortKey = null;
     		switch (sortBy) {
 			case 1:
 				orderBy.put("orderBy", "orderId");

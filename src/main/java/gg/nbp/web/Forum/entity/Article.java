@@ -1,5 +1,7 @@
 package gg.nbp.web.Forum.entity;
 
+import java.io.Serializable;
+
 import com.google.protobuf.Timestamp;
 
 import jakarta.persistence.Column;
@@ -19,10 +21,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "article" ,schema = "five")
-public class Article {
+public class Article implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7628276938414018860L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Article_id")

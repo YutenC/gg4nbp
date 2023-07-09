@@ -10,7 +10,8 @@ public class JedisUtil {
     private JedisUtil() {
     }
 
-    public static JedisPool getJedisPool() {
+    @SuppressWarnings("deprecation")
+	public static JedisPool getJedisPool() {
         // double lock
         if (pool == null) {
             synchronized(JedisUtil.class) {

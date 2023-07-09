@@ -1,8 +1,6 @@
 package gg.nbp.web.Member.util;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import gg.nbp.web.Member.entity.Member;
 import redis.clients.jedis.Jedis;
 

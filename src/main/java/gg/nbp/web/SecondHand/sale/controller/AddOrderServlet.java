@@ -19,7 +19,12 @@ import java.io.IOException;
 @WebServlet("/secondhand/shp_buy")
 public class AddOrderServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3618550555647962439L;
+
+	@Autowired
     private SecondhandOrderServiceImpl SERVICE;
 
     @Autowired

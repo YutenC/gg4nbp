@@ -507,7 +507,7 @@ public class AllInOne extends AllInOneBase{
 			for(String name: parameterNames){
 				Method method;
 				try {
-					method = obj.getClass().getMethod("set"+name, null);
+					method = obj.getClass().getMethod("set"+name, String.class);
 					method.invoke(obj, req.getParameter(name));
 				} catch(Exception e){
 					throw new EcpayException(ErrorMessage.OBJ_MISSING_FIELD);
@@ -526,7 +526,7 @@ public class AllInOne extends AllInOneBase{
 			for(String name: parameterNames){
 				Method method;
 				try {
-					method = obj.getClass().getMethod("set"+name, null);
+					method = obj.getClass().getMethod("set"+name, String.class);
 					method.invoke(obj, req.getParameter(name));
 				} catch(Exception e){
 					throw new EcpayException(ErrorMessage.OBJ_MISSING_FIELD);

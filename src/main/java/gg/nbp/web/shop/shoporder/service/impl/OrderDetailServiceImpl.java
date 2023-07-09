@@ -80,7 +80,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	public Collection<ResOrderDetail> getMemberAllOrderDetail(Integer memberId) {
 		try {
 			List<OrderMaster> omList = omDao.selectByMemberId(memberId);
-			List<ResOrderDetail> resODList = new ArrayList<>();
+//			List<ResOrderDetail> resODList = new ArrayList<>();
 			Map<Integer, ResOrderDetail> checkMap = new HashMap<>();
 			
 			for (OrderMaster om : omList) {

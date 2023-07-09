@@ -3,11 +3,11 @@ package gg.nbp.web.SecondHand.sale.controller;
 import java.io.IOException;
 import java.util.List;
 
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import gg.nbp.web.SecondHand.sale.service.SecondhandProductService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +17,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/manager/shp_delete")
 public class DeleteshpServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6554147666652084904L;
 	@Autowired
 	private SecondhandProductService SERVICE;
 

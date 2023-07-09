@@ -1,37 +1,30 @@
 package gg.nbp.web.SecondHand.sale.service.impl;
 
-import gg.nbp.web.Member.dao.BankDao;
-import gg.nbp.web.Member.dao.CreditDao;
-import gg.nbp.web.Member.dao.MemberDao;
-import gg.nbp.web.Member.entity.Bank;
-import gg.nbp.web.Member.entity.Member;
-import gg.nbp.web.Member.entity.Member_credit;
-import gg.nbp.web.SecondHand.sale.dao.SecondhandOrderDao;
-import gg.nbp.web.SecondHand.sale.dao.SecondhandProductDao;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
-import gg.nbp.web.SecondHand.sale.service.SecondhandOrderService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import gg.nbp.web.SecondHand.sale.dao.SecondhandOrderDao;
+import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
+import gg.nbp.web.SecondHand.sale.service.SecondhandOrderService;
 
 @Transactional
 @Service
 public class SecondhandOrderServiceImpl implements SecondhandOrderService {
 
-    @Autowired
-    private MemberDao memdao;
-
-    @Autowired
-    private BankDao bankdao;
-
-    @Autowired
-    private CreditDao credao;
-
-    @Autowired
-    private SecondhandProductDao shpdao;
+//    @Autowired
+//    private MemberDao memdao;
+//
+//    @Autowired
+//    private BankDao bankdao;
+//
+//    @Autowired
+//    private CreditDao credao;
+//
+//    @Autowired
+//    private SecondhandProductDao shpdao;
 
     @Autowired
     private SecondhandOrderDao oddao;

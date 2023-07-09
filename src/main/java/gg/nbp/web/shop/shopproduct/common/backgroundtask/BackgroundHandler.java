@@ -71,7 +71,8 @@ public abstract class BackgroundHandler implements Runnable {
 //        return null;
 //    }
 
-    public <T> T getTaskResult(String name) {
+    @SuppressWarnings("unchecked")
+	public <T> T getTaskResult(String name) {
         TaskEntity taskEntity = backgroundTasks.getTask(name);
         Future<?> future = taskEntity.getResult();
 

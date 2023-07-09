@@ -34,7 +34,6 @@ public class VerifyQueryTradeInfo extends PaymentVerifyBase {
 	}
 	
 	public void verifyParams(QueryTradeInfoObj obj){
-		String result = "";
 		Class<?> cls = obj.getClass();
 		Method method;
 		String objValue;
@@ -43,8 +42,8 @@ public class VerifyQueryTradeInfo extends PaymentVerifyBase {
 		for(int i = 0; i < nodeList.getLength(); i++){
 			Element tmpEle = (Element)nodeList.item(i);
 			try {
-				method = cls.getMethod("get"+tmpEle.getAttribute("name"), null);
-				objValue = method.invoke(obj, null).toString();
+				method = cls.getMethod("get"+tmpEle.getAttribute("name"), String.class);
+				objValue = method.invoke(obj, "").toString();
 			} catch (Exception e) {
 				throw new EcpayException(ErrorMessage.OBJ_MISSING_FIELD);
 			}

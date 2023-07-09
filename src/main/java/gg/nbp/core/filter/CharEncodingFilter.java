@@ -12,7 +12,12 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class CharEncodingFilter extends HttpFilter implements Filter {
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4158429953793565686L;
+
+	@Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");

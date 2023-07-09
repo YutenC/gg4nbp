@@ -46,7 +46,8 @@ public class BankDaoImpl implements BankDao {
         }
         hql.append("WHERE bank_number = :bank_number");
 
-         Query<?> query = session.createQuery(hql.toString());
+         @SuppressWarnings("deprecation")
+		Query<?> query = session.createQuery(hql.toString());
         if(bankNumber != null && !bankNumber.isEmpty()){
             query.setParameter("bank_number", bankNumber);
         }

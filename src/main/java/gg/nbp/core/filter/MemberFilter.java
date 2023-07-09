@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.springframework.core.annotation.Order;
 
-import gg.nbp.web.Member.entity.Member;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,9 +16,13 @@ import jakarta.servlet.http.HttpSession;
 @WebFilter("/member/*")
 @Order(1)
 public class MemberFilter extends HttpFilter implements Filter {
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1996573696251669530L;
+
+	@Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        Member member = new Member();
         Object isLogin =  request.getSession().getAttribute("isLogin");
 
         // 存取會員當前請求的網址
@@ -30,6 +33,7 @@ public class MemberFilter extends HttpFilter implements Filter {
         } else {
             session.setAttribute("memberLocation", request.getHeader("referer"));
             response.sendRedirect(request.getContextPath()+"/member_login.html");
+            
         }
     }
 }

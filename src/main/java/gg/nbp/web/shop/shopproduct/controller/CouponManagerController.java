@@ -1,18 +1,19 @@
 package gg.nbp.web.shop.shopproduct.controller;
 
+//import javax.servlet.http.HttpSession;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.google.gson.Gson;
+
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
 import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
-import gg.nbp.web.shop.shopproduct.pojo.ErrorMsg;
 import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
 import gg.nbp.web.shop.shopproduct.util.ConvertJson;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-//import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Component
 public class CouponManagerController {
@@ -28,7 +29,7 @@ public class CouponManagerController {
         List<CouponActivity> couponActivities = null;
         String out = null;
         ResponseMsg requestMsg = null;
-        ErrorMsg errorMsg = null;
+//        ErrorMsg errorMsg = null;
 
         try {
             couponActivities = couponManagerService.getAllCouponActivity();

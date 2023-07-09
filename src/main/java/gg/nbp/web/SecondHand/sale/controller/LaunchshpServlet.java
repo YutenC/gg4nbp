@@ -15,7 +15,11 @@ import java.io.IOException;
 @WebServlet("/manager/shp_launch")
 public class LaunchshpServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2667937944184316971L;
+	@Autowired
     private SecondhandProductService SERVICE;
 
     @Override

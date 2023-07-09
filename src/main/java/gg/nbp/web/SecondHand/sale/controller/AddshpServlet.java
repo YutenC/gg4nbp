@@ -4,13 +4,11 @@ package gg.nbp.web.SecondHand.sale.controller;
 import java.io.IOException;
 import java.util.List;
 
-import gg.nbp.web.Manager.entity.Manager;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
+import gg.nbp.web.SecondHand.sale.entity.SecondhandProductImage;
 import gg.nbp.web.SecondHand.sale.service.SecondhandProductService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,6 +18,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/manager/sh_productmanageAdd")
 public class AddshpServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8656609715677632498L;
 	@Autowired
 	private SecondhandProductService SERVICE;
 
@@ -51,7 +53,7 @@ public class AddshpServlet extends HttpServlet {
             }
 
             SERVICE.addshp(shp);
-            shp.setSuccessful(true);
+            shp.setSuccessful(state);
             shpproductId = shp.getProductId();
 
 //            if (shp.isSuccessful()) {
@@ -64,7 +66,7 @@ public class AddshpServlet extends HttpServlet {
 
         } catch (Exception e) {
             shp = new SecondhandProduct();
-            shp.setSuccessful(false);
+            shp.setSuccessful(state);
         }
 
 

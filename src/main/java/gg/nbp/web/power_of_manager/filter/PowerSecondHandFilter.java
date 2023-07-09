@@ -1,24 +1,16 @@
 package gg.nbp.web.power_of_manager.filter;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.core.annotation.Order;
 
-import gg.nbp.web.power.entity.Power;
-import gg.nbp.web.power_of_manager.entity.Power_of_Manager;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {
 		"/manager/sh_ordermanage.html",
@@ -29,24 +21,24 @@ import jakarta.servlet.http.HttpSession;
 @Order(2)
 public class PowerSecondHandFilter extends HttpFilter implements Filter{
 	private static final long serialVersionUID = 1L;
-	private FilterConfig filterConfig;
-	
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		this.filterConfig= filterConfig;
-	}
-	
-	@Override
-	public void destroy() {
-		filterConfig= null;
-	}
+//	private FilterConfig filterConfig;
+//	
+//	@Override
+//	public void init(FilterConfig filterConfig) throws ServletException {
+//		this.filterConfig= filterConfig;
+//	}
+//	
+//	@Override
+//	public void destroy() {
+//		filterConfig= null;
+//	}
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest req= (HttpServletRequest) request;
-		HttpServletResponse resp= (HttpServletResponse) response;
-		
+//		HttpServletRequest req= (HttpServletRequest) request;
+//		HttpServletResponse resp= (HttpServletResponse) response;
+//		
 		// get Session
 //		HttpSession session= req.getSession();
 		// 判斷登入

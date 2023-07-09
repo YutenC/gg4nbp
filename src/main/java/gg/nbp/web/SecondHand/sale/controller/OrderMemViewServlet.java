@@ -1,32 +1,34 @@
 package gg.nbp.web.SecondHand.sale.controller;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import gg.nbp.core.util.CommonUtil;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.util.MemberCommonUitl;
 import gg.nbp.web.SecondHand.sale.entity.SecondhandOrder;
-import gg.nbp.web.SecondHand.sale.entity.SecondhandProduct;
 import gg.nbp.web.SecondHand.sale.service.impl.SecondhandOrderServiceImpl;
-import gg.nbp.web.SecondHand.sale.service.impl.SecondhandProductServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @WebServlet("/member/shp_allOrder")
 public class OrderMemViewServlet extends HttpServlet {
 
-    @Autowired
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5810670870595375656L;
+
+	@Autowired
     private SecondhandOrderServiceImpl SERVICE;
 
-    @Autowired
-    private SecondhandProductServiceImpl PROSERVICE;
+//    @Autowired
+//    private SecondhandProductServiceImpl PROSERVICE;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

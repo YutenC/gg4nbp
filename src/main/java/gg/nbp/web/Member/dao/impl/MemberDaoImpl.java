@@ -60,7 +60,8 @@ public class MemberDaoImpl implements MemberDao {
                 .append("violation = :violation ")
                 .append("where account = :account");
 
-        Query<?> query = session.createQuery(hql.toString());
+        @SuppressWarnings("deprecation")
+		Query<?> query = session.createQuery(hql.toString());
         if (password != null && !password.isEmpty()) {
             query.setParameter("password", password);
         }

@@ -33,7 +33,7 @@ public class ProductRedisDaoImpl implements ProductRedisDao {
                     List<String> values= jedis.lrange("HistoryProductBrowse",i+1,-1 );
                     jedis.ltrim("HistoryProductBrowse",0,i-1);
 
-                    String [] ss=  (String []) values.toArray(new String[0]);
+//                    String [] ss=  (String []) values.toArray(new String[0]);
                     String[] strarray = new String[values.size()];
                     values.toArray(strarray );
 
