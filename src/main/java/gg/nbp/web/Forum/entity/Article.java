@@ -1,8 +1,7 @@
 package gg.nbp.web.Forum.entity;
 
 import java.io.Serializable;
-
-import com.google.protobuf.Timestamp;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

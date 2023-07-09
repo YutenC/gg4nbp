@@ -81,7 +81,7 @@ $('#getshot').next().on('change', function (e) {
 
 
 $('#commit').on('click', function (e) {
-    let type = $('#type_1').val() + $('#type_2').val();
+    let type = $('#type_1').val() +" / "+ $('#type_2').val();
     let s_estimate = estimate.value || 0;
     let img_list = [];
     const file = $('#getshot').next()[0].files;
@@ -228,11 +228,11 @@ function gohome(e) {
 
 
 function testBlock(){
-    let type = $('#type_1').val() + $('#type_2').val();
+    let type = "00";
     let s_estimate = estimate.value || 0;
     let img_list = [];
     const file = $('#getshot').next()[0].files;
-
+    console.log(type);
     filter:
     for (let i = 0; i < file.length; i++) {
         const formData = new FormData();

@@ -14,8 +14,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/Ecpay")
 public class EcpayController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5838649231660091389L;
 	@Autowired
 	private EcpayService ecService;
 	

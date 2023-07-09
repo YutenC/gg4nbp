@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.1.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gg.nbp.web</groupId>
 	<artifactId>gg4nbp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>gg4nbp</name>
 	<description>A web belong gamer</description>
 	<properties>
@@ -37,14 +37,6 @@
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-
-
-		<!--		<dependency>-->
-		<!--			<groupId>javax.servlet</groupId>-->
-		<!--			<artifactId>javax.servlet-api</artifactId>-->
-		<!--			<version>3.1.0</version>-->
-		<!--			<scope>provided</scope>-->
-		<!--		</dependency>-->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
@@ -53,10 +45,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!--		<dependency>-->
-		<!--			<groupId>org.springframework.boot</groupId>-->
-		<!--			<artifactId>spring-boot-starter-data-redis</artifactId>-->
-		<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -88,50 +76,35 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-test</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 
-		<dependency>
-			<groupId>com.google.protobuf</groupId>
-			<artifactId>protobuf-java</artifactId>
-			<version>3.23.3</version>
-		</dependency>
-		<!-- 移除嵌入式tomcat插件 -->
-
-
-	<!--        添加tomcat支持-->
-
-
-	<!--    WebSocket   -->
+<!--		<dependency>-->
+<!--			<groupId>com.google.protobuf</groupId>-->
+<!--			<artifactId>protobuf-java</artifactId>-->
+<!--			<version>3.23.3</version>-->
+<!--		</dependency>-->
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-websocket</artifactId>
 	</dependency>
-
-	<!--    FastJson    -->
 	<dependency>
 		<groupId>com.alibaba</groupId>
 		<artifactId>fastjson</artifactId>
 		<version>1.2.28</version>
 	</dependency>
-
-	<!--    FastJson依赖    -->
-	<dependency>
-		<groupId>commons-beanutils</groupId>
-		<artifactId>commons-beanutils</artifactId>
-		<version>1.9.3</version>
-	</dependency>
-
-	<!-- Redis Jedis 客戶端 -->
-	<dependency>
-		<groupId>redis.clients</groupId>
-		<artifactId>jedis</artifactId>
-	</dependency>
-
-
+<!--	<dependency>-->
+<!--		<groupId>commons-beanutils</groupId>-->
+<!--		<artifactId>commons-beanutils</artifactId>-->
+<!--		<version>1.9.3</version>-->
+<!--	</dependency>-->
+<!--	<dependency>-->
+<!--		<groupId>redis.clients</groupId>-->
+<!--		<artifactId>jedis</artifactId>-->
+<!--	</dependency>-->
 </dependencies>
 
 	<build>
@@ -140,6 +113,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>gg.nbp.Gg4nbpApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -149,6 +123,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>nbp4gg</finalName>
 	</build>
 
 </project>
