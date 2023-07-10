@@ -29,7 +29,7 @@ const vm = Vue.createApp({
     },
     mounted() {
         getProductDetail();
-        getProductHistory();
+        // getProductHistory();
     },
     methods: {
         getProduct: function () {
@@ -75,6 +75,10 @@ const vm = Vue.createApp({
                         }
                     }
 
+                    Toast.fire({
+                        icon: 'success',
+                        title: '已加入購物車'
+                    });
 
                     // let result = response.value;
                     // if (!result.successful) {
@@ -126,6 +130,17 @@ const vm = Vue.createApp({
                         vm.product.follow = result.content;
                     }
 
+                    if (vm.product.follow === 0) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: '已從追蹤清單移除'
+                        })
+                    } else {
+                        Toast.fire({
+                            icon: 'info',
+                            title: '已加入我的追蹤清單'
+                        })
+                    }
 
                     console.log("addFollow then");
 
@@ -162,7 +177,17 @@ const vm = Vue.createApp({
                     // if (result.state.toLowerCase() === "ok") {
                     //     vm.product.follow = result.content;
                     // }
-                    vm.comments = result;
+
+                    let temp = [];
+                    result.forEach(element => {
+                        if (element.commentContent != null && !("" == element.commentContent)) {
+                            temp.push(element);
+                        }
+                    });
+
+                    vm.comments = temp;
+
+
 
                     console.log("getProductCommen then");
 

@@ -8,20 +8,18 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import gg.nbp.web.Manager.entity.Manager;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.service.MemberService;
 import gg.nbp.web.shop.shoporder.service.OrderDetailService;
 import gg.nbp.web.shop.shoporder.util.ResOrderDetail;
 import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
+import gg.nbp.web.shop.shopproduct.entity.Coupon;
+import gg.nbp.web.shop.shopproduct.service.CouponService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -39,6 +37,9 @@ public class OrderDetailController extends HttpServlet {
 	@Autowired
 	private OrderDetailService oDetailService;
 	
+	@Autowired
+	private CouponService cpService;
+	
 	private Gson gson;
 	
 	public OrderDetailController() {
@@ -54,30 +55,53 @@ public class OrderDetailController extends HttpServlet {
     	
     	HttpSession httpSession = req.getSession();
     	
-    	Member getmember = (Member)httpSession.getAttribute("member");
-    	Integer memberId;
-    	
-    	if (getmember == null || getmember.isSuccessful() == false) {
-			JsonObject failLogin = new JsonObject();
-			failLogin.addProperty("redirect", true);
-			pw.println(gson.toJson(failLogin));
-			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
-			return;
-		} else {
-			memberId = getmember.getMember_id();
-		}
-    	
-    	if (req.getParameter("getMemberAll") != null) {
-    		Collection<ResOrderDetail> rsODList = oDetailService.getMemberAllOrderDetail(memberId);
-    		pw.println(gson.toJson(rsODList));
-    		return;
-    	}
+    	Manager manager = (Manager)httpSession.getAttribute("manager");
+    	Member member = (Member)httpSession.getAttribute("member");
     	
     	String orderStr = req.getParameter("getByOrderId");
     	if (orderStr != null) {
+    		if (manager == null || manager.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("location", req.getHeader("referer"));
+    			return;
+    		} 
     		Integer orderId = Integer.valueOf(orderStr);
     		List<TransOrderProduct> trOPList = oDetailService.getOrderDetailByOrderId(orderId);
     		pw.println(gson.toJson(trOPList));
+    		return;
+    	}
+    	
+    	String couponStr = req.getParameter("couponId");
+    	if (couponStr != null) {
+    		if (manager == null || manager.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("location", req.getHeader("referer"));
+    			return;
+    		} 
+    		if (couponStr.trim().length() == 0) {
+    			pw.println(gson.toJson(null));
+    			return;
+    		}
+    		Integer couponId = Integer.valueOf(couponStr);
+    		Coupon coupon = cpService.getCouponById(couponId);
+    		pw.println(gson.toJson(coupon));
+    		return;
+    	}
+    	
+    	if (req.getParameter("getMemberAll") != null) {
+    		if (member == null || member.isSuccessful() == false) {
+    			JsonObject failLogin = new JsonObject();
+    			failLogin.addProperty("redirect", true);
+    			pw.println(gson.toJson(failLogin));
+    			httpSession.setAttribute("memberLocation", req.getHeader("referer"));
+    			return;
+    		}
+    		Collection<ResOrderDetail> rsOdList = oDetailService.getMemberAllOrderDetail(member.getMember_id());
+    		pw.println(gson.toJson(rsOdList));
     		return;
     	}
     	

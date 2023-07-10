@@ -33,9 +33,6 @@ public class ActReportList {
     private Byte reviewState;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Act_id", referencedColumnName = "Act_id")
-    private Act act;
     @Column(name="Report_Person" , nullable = false)
     private Integer reportPerson;
 

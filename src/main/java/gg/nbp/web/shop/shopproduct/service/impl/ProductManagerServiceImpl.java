@@ -31,7 +31,7 @@ import java.util.TimerTask;
 import java.util.concurrent.Callable;
 
 @Service
-@Transactional
+//@Transactional
 public class ProductManagerServiceImpl implements ProductManagerService {
 
     @Autowired
@@ -131,6 +131,8 @@ public class ProductManagerServiceImpl implements ProductManagerService {
     @Override
     public void takeOnProduct(Integer id) {
         Product product= productDao.selectById(id);
+        product.setState(ProductState.TakeOning.getValue());
+        productDao.updateProductState(product);
         TimerTask timerTask=new TimerTask() {
             @Override
             public void run() {
@@ -149,8 +151,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
         System.out.println("product.getLaunchTime(): "+product.getLaunchTime());
         SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
         schedulerTasks.addTimerTask(product.getId()+"takeOn",new SchedulerEntity(product.getLaunchTime(),timerTask));
-        product.setState(ProductState.TakeOning.getValue());
-        productDao.updateProductState(product);
+
     }
 
     @Override

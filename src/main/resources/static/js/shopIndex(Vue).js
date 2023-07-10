@@ -41,7 +41,7 @@ const cm = Vue.createApp({
         let randomNum = Math.floor(Math.random() * 3);
         let productType = enumPageCurrentType[Object.keys(enumPageCurrentType)[randomNum]];
         const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
-        const conditions = [{ key: "type", value: productType }, { key: "state", value: 1 }];
+        const conditions = [{ key: "type", value: productType }, { key: "state", value: 1 }, { key: "state", value: 12 }];
         const require = ['productIndexImage'];
         const sqlConditions = [{ key: 'limit', value: 5 }];
         const req = { sort: sort, required: require, sqlConditions: sqlConditions, conditions: conditions };
@@ -79,7 +79,7 @@ const popularPicks = Vue.createApp({
         const sort = { action: 'order', key: 'desc', value: 'buyTimes' };
         const require = ['productIndexImage'];
         const sqlConditions = [{ key: 'limit', value: 5 }];
-        const conditions = [{ key: "state", value: 1 }];
+        const conditions = [{ key: "state", value: 1 }, { key: "state", value: 12 }];
         const req = { sort: sort, required: require, sqlConditions: sqlConditions, conditions: conditions };
         axios({
             method: 'get',
@@ -109,7 +109,7 @@ const newProdcut = Vue.createApp({
         const sort = { action: 'order', key: 'desc', value: 'launchTime' };
         const require = ['productIndexImage'];
         const sqlConditions = [{ key: 'limit', value: 5 }];
-        const conditions = [{ key: "state", value: 1 }];
+        const conditions = [{ key: "state", value: 1 }, { key: "state", value: 12 }];
         const req = { sort: sort, required: require, sqlConditions: sqlConditions, conditions: conditions };
         axios({
             method: 'get',

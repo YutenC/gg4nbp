@@ -70,8 +70,8 @@
                                     <table class="table my-0" id="dataTable">
                                         <thead>
                                             <tr>
-                                                <th>活動名稱</th>
-                                                <th>活動代碼</th>
+                                                <!-- <th>活動名稱</th> -->
+                                                <!-- <th>活動代碼</th> -->
                                                 <th>折扣代碼</th>
                                                 <th>折扣金額</th>
                                                 <th>滿額金額</th>
@@ -85,24 +85,34 @@
                                             <template v-if="showCouponActivity">
                                                 <template v-for="item in couponActivity">
                                                     <tr>
-                                                        <td><input v-model="item.activityName" type="text"
+                                                        <!-- <td><input v-model="item.activityName" type="text"
                                                                 :disabled="item.coupon.state >= enumCouponState.publish"
-                                                                style="width: 120px;">
-                                                        <td><input v-model="item.activityCode" type="text"
+                                                                style="width: 120px;"> -->
+                                                        <!-- <td><input v-model="item.activityCode" type="text"
                                                                 :disabled="item.coupon.state >= enumCouponState.publish"
-                                                                style="width: 120px;">
+                                                                style="width: 120px;"> -->
                                                         <td><input v-model="item.coupon.discountCode" type="text"
                                                                 :disabled="item.coupon.state >= enumCouponState.publish"
                                                                 style="width: 120px;">
                                                         </td>
 
-                                                        <td><input v-model="item.coupon.discount" type="text"
+                                                        <td><input v-model="item.coupon.discount"
+                                                                :value="item.coupon.discount"
                                                                 :disabled="item.coupon.state >= enumCouponState.publish"
-                                                                style="width: 80px;">
+                                                                style="width: 80px;"
+                                                                @input="checkNumber_update(item.coupon,'discount',item.coupon.discount)">
+                                                            <div v-if="item.coupon.showError_discount">
+                                                                <p> 格式錯誤</p>
+                                                            </div>
                                                         </td>
-                                                        <td><input v-model="item.coupon.conditionPrice" type="text"
+                                                        <td><input v-model="item.coupon.conditionPrice"
+                                                                :value="item.coupon.conditionPrice"
                                                                 :disabled="item.coupon.state >= enumCouponState.publish"
-                                                                style="width: 80px;">
+                                                                style="width: 80px;"
+                                                                @input="checkNumber_update(item.coupon,'conditionPrice',item.coupon.conditionPrice)">
+                                                            <div v-if="item.coupon.showError_conditionPrice">
+                                                                <p> 格式錯誤</p>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <input type="datetime-local"
@@ -139,8 +149,8 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td><strong>活動名稱</strong></td>
-                                                <td><strong>活動代碼</strong></td>
+                                                <!-- <td><strong>活動名稱</strong></td>
+                                                <td><strong>活動代碼</strong></td> -->
                                                 <td><strong>折扣代碼</strong></td>
                                                 <td><strong>折扣金額</strong></td>
                                                 <td><strong>滿額金額</strong></td>
@@ -223,8 +233,8 @@
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                     <tr>
-                                        <th>活動名稱</th>
-                                        <th>活動代碼</th>
+                                        <!-- <th>活動名稱</th>
+                                        <th>活動代碼</th> -->
                                         <th>折扣代碼</th>
                                         <th>折扣金額</th>
                                         <th>滿額金額</th>
@@ -235,17 +245,27 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input v-model.lazy="newcouponActivity.activityName"
+                                        <!-- <td><input v-model.lazy="newcouponActivity.activityName"
                                                 class="form-control form-control-sm"></td>
                                         <td><input v-model.lazy="newcouponActivity.activityCode"
-                                                class="form-control form-control-sm"></td>
-                                        <td><input v-model.lazy="newCoupon.discountCode"
-                                                class="form-control form-control-sm"></td>
-                                        <td><input v-model.lazy="newCoupon.discount" type="number"
+                                                class="form-control form-control-sm"></td> -->
+                                        <td><input v-model.lazy="newCoupon.discountCode" disabled
                                                 class="form-control form-control-sm">
+                                            <button @click="generateDiscountCode">產生折扣碼</button>
                                         </td>
-                                        <td><input v-model.lazy="newCoupon.conditionPrice" type="number"
-                                                class="form-control form-control-sm"></td>
+                                        <td><input v-model="newCoupon.discount" :value="newCoupon.discount"
+                                                @input="checkNumber('discount',newCoupon.discount)"
+                                                class="form-control form-control-sm">
+                                            <template v-if="newCoupon.showError_discount">
+                                                <p> 格式錯誤</p>
+                                            </template>
+                                        </td>
+                                        <td><input v-model="newCoupon.conditionPrice" :value="newCoupon.conditionPrice"
+                                                class="form-control form-control-sm"
+                                                @input="checkNumber('conditionPrice',newCoupon.conditionPrice)">
+                                            <p v-if="newCoupon.showError_conditionPrice"> 格式錯誤</p>
+                                            <p v-else></p>
+                                        </td>
 
                                         <td><input type="date" v-bind:value="newCoupon.deadline" v-bind:min="minDate"
                                                 v-model.lazy="newCoupon.deadline" class="form-control form-control-sm">
@@ -257,8 +277,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td><strong>活動名稱</strong></td>
-                                        <td><strong>活動代碼</strong></td>
+                                        <!-- <td><strong>活動名稱</strong></td>
+                                        <td><strong>活動代碼</strong></td> -->
                                         <td><strong>折扣代碼</strong></td>
                                         <td><strong>折扣金額</strong></td>
                                         <td><strong>滿額金額</strong></td>

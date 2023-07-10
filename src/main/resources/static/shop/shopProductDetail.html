@@ -20,6 +20,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/toastAlert.js"></script>
 
     <style>
         * {
@@ -162,6 +163,24 @@
 
         .hidden {
             display: none;
+        }
+
+        .colored-toast.swal2-icon-success {
+            background-color: #a5dc86 !important;
+            width: 200px !important;
+            font-size: 18px !important;
+        }
+
+        .colored-toast.swal2-icon-error {
+            background-color: #f27474 !important;
+            width: 200px !important;
+            font-size: 18px !important;
+        }
+
+        .colored-toast.swal2-icon-info {
+            background-color: #3fc3ee !important;
+            width: 200px !important;
+            font-size: 18px !important;
         }
     </style>
 

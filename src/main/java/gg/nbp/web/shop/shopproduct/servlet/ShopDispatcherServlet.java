@@ -325,6 +325,9 @@ public class ShopDispatcherServlet extends HttpServlet {
                 String json_newCoupon = req.getParameter("json_newCoupon");
                 couponManagerController.addCouponActivity(session, json_newCoupon);
                 break;
+            case "/generateDiscountCode":
+                strOut =  couponManagerController.generateDiscountCode();
+                break;
             case "/deleteCoupon":
                 Integer couponId = Integer.parseInt(req.getParameter("couponId"));
                 couponManagerController.deleteCoupon(couponId);

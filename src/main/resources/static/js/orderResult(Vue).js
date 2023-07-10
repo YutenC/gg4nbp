@@ -30,7 +30,7 @@ const shoppingContent = Vue.createApp({
                 cancelButtonText: '否'
             }).then(function (result) {
                 if (result.isConfirmed) {
-                    window.location.replace(projectHref + '/' + location);
+                    window.location.replace(projectFolder + '/' + location);
                 }
             });
         }
@@ -79,7 +79,7 @@ const promoProduct = Vue.createApp({
     data() {
         return {
             promoProduct: [],
-            amount: 5
+            recomendAmount: 5
         }
     },
     methods: {
@@ -95,7 +95,7 @@ const promoProduct = Vue.createApp({
                 cancelButtonText: '否'
             }).then(function (result) {
                 if (result.isConfirmed) {
-                    window.location.replace(projectHref + '/' + location);
+                    window.location.replace(projectFolder + '/' + location);
                 }
             });
         }
@@ -134,7 +134,8 @@ window.addEventListener('popstate', () => {
     });
 });
 
-$('.logo').on('click', () => {
+$('.logo').on('click', (e) => {
+    e.preventDefault();
     Swal.fire({
         title: '確定離開?',
         icon: 'warning',

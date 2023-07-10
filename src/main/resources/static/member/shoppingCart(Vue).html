@@ -155,11 +155,11 @@
                         <li>
                             <input type="radio" id="coupon" name="discount" value="coupon" v-model.lazy="discountRadio">
                             <label for="coupon">折購代碼：</label>
-                            <input type="text" placeholder="請輸入欲使用的折扣代碼" maxlength="8" v-model.trim="couponCode"
+                            <input type="text" placeholder="請輸入欲使用的折扣代碼" v-model.trim="couponCode"
                                 :disabled="discountRadio === 'bonus'" v-show="discountRadio === 'coupon'"
                                 @change="checkCoupon">
                             <button @click.prevent="checkCoupon" v-show="discountRadio === 'coupon'">
-                                {{ resCoupon === ''? '確認優惠碼' : '可使用'}}
+                                {{ resCoupon === null? '確認優惠碼' : '可使用'}}
                             </button>
                         </li>
                         <li>
@@ -272,10 +272,10 @@
         <ul>
             <template v-for="item in promoProduct">
                 <li>
-                    <a href="" @click="goProduct('shop/shopProductDetail.html', item.productId, $event)">
+                    <a href="" @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">
                         <img :src="item.productIndexImage.image" :alt="item.productName">
                     </a>
-                    <a href="" @click="goProduct('shop/shopProductDetail.html', item.productId, $event)">
+                    <a href="" @click.prevent="goProduct('shop/shopProductDetail.html', item.id)">
                         <span>{{ item.productName }}</span>
                     </a>
                     <span>${{ item.price }}</span>

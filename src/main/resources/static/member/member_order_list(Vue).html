@@ -335,9 +335,10 @@
                                 <option value="3">已付款</option>
                                 <option value="4">已出貨</option>
                                 <option value="5">未出貨</option>
+                                <option value="6">已到貨</option>
                             </select>
                         </form>
-                        <span>共{{ orders.length }}筆資料</span>
+                        <span>共{{ listLength }}筆資料</span>
                     </div>
                     <div class="detailArea">
                         <div class="detailUnit" v-for="(item, index) in orders">
@@ -488,7 +489,7 @@
                                                                 :disabled="od.comment > 0" v-show="!od.comment">
                                                                 送出評價
                                                             </button>
-                                                            <span v-show="od.comment > 0" class="tks">
+                                                            <span v-show="od.comment" class="tks">
                                                                 感謝您的寶貴意見
                                                             </span>
                                                         </div>

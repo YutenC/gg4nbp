@@ -50,34 +50,34 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navcol-2" style="font-weight: bold;height: 100px;">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item" id="shop">
+                <ul class="navbar-nav ms-auto" id="navbar-nav">
+                    <li class="nav-item">
                         <a class="nav-link active" data-bss-hover-animate="pulse" href="../shop/shopIndex(Vue).html"
                            style="border-width: 20px;margin-top: 10px;">
                             <img src="../img/gamepad-solid.svg">商城中心
                         </a>
                     </li>
-                    <li class="nav-item" id="shshop">
+                    <li class="nav-item">
                         <a class="nav-link" data-bss-hover-animate="pulse" href="../sh_shop/sh_MainView.html"
                            style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
                             <img src="../img/dice-solid.svg">二手商城
                         </a>
                     </li>
-                    <li class="nav-item" id="actitcle">
+                    <li class="nav-item">
                         <a class="nav-link align-items-xl-center" data-bss-hover-animate="pulse"
-                           style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);" href="../acticle/article_main.html">
-                            <img class="d-flex mx-auto" src="../img/newspaper-regular.svg"
-                                 style="height: 50px;">論壇社群
+                           style="border-width: 20px;margin-top: 11px;color: var(--bs-dark);"
+                           href="../acticle/article_main.html">
+                            <img class="d-flex mx-auto" src="../img/newspaper-regular.svg" style="height: 50px;">論壇社群
                         </a>
                     </li>
-                    <li class="nav-item" id="activty">
+                    <li class="nav-item">
                         <a class="nav-link" data-bss-hover-animate="pulse" href="../activity/act_finder.html"
                            style="border-width: 20px;margin-top: 10px;color: var(--bs-dark);">
                             <img src="../img/champagne-glasses-solid.svg">活動專區
                         </a>
                     </li>
-                    <li class="nav-item" id="member_home">
-                        <a class="nav-link active" data-bss-hover-animate="pulse" href="member_home.html"
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bss-hover-animate="pulse" href="../member/member_home.html"
                            style="margin-top: 10px;">
                             <img class="d-flex mx-auto align-items-xl-center" src="../img/user-solid.svg"
                                  style="height: 50px;">會員中心
@@ -433,6 +433,7 @@
             rangeValue.textContent = range.value;
         });
     });
+
 </script>
 <script>
     const fileInput = document.getElementById("formFile");
@@ -452,6 +453,54 @@
 
         reader.readAsDataURL(file);
     });
+    $(window).on("load", function () {
+        $.ajax({
+            url: "memberGetPictureServlet",
+            method: "POST",
+            dataType: "json",
+            success: function (response) {
+                let member = response;
+                let isPass = member.successful;
+                if (isPass) {
+                    $("li.login").remove();
+
+                    const li = document.createElement('li');
+                    li.setAttribute('class', 'nav-item logout');
+                    const a = document.createElement("a");
+                    a.setAttribute('class', "nav-link fs-6 text-center");
+                    a.setAttribute('data-bss-hover-animate', 'pulse');
+                    a.setAttribute('id', 'sign_out');
+                    a.setAttribute('style', 'margin-top: 0px;color: var(--bs-dark);width: 80px;height: 100px;');
+                    a.innerHTML = `
+                    <div id="member_pic-1" class="avatar-bg center"style="width: 60px;height: 60px;margin-left: 0px;"></div>登出
+                    `;
+                    li.append(a);
+                    $('ul#navbar-nav').append(li);
+
+                    if(member.headshot){
+                        $("div#member_pic-1").css("background-image", `url(${member.headshot})`);
+                    } else {
+                        $("div#member_pic-1").css("background-image", `url(https://www.gravatar.com/avatar/1234566?size=200&d=mm)`);
+                    }
+                }
+            }
+        })
+
+
+        $("ul").on("click",'li.logout', function (){
+            $.ajax({
+                url: "memberLogoutServlet",
+                method: "POST",
+                dataType: "json",
+                success:function(){
+                    sessionStorage.clear();
+                    window.location.href="../index.html";
+                }
+            })
+        })
+    })
+
+
 </script>
 <footer id="footerpad">
     <div class="container">

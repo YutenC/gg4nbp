@@ -53,8 +53,10 @@ public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
         List<CouponActivity> couponActivities=new ArrayList<>();
         for(Coupon coupon:coupons){
             Map<String, String> couponActivityMap = jedis.hgetAll("CouponActivity:" + coupon.getId().toString());
-            CouponActivity couponActivity = StringToObjectUtil.mapStringToEntity(couponActivityMap, CouponActivity.class);
-            couponActivities.add(couponActivity);
+            if(couponActivityMap!=null && couponActivityMap.size()!=0){
+                CouponActivity couponActivity = StringToObjectUtil.mapStringToEntity(couponActivityMap, CouponActivity.class);
+                couponActivities.add(couponActivity);
+            }
         }
 
         return couponActivities;

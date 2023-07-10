@@ -170,7 +170,7 @@
             <template v-for="item in promoProduct">
                 <li>
                     <a href="" @click.prevent="leave('shop/shopProductDetail.html', item.productId)">
-                        <img :src="item.productImgUrl" alt="">
+                        <img :src="item.productIndexImage.image" alt="">
                     </a>
                     <a href="" @click.prevent="leave('shop/shopProductDetail.html', item.productId)">
                         <span>{{ item.productName }}</span>

@@ -21,7 +21,7 @@ const sidebar = Vue.createApp({
             if (pageCurrentType != -1) {
                 conditions.push({ key: "type", value: pageCurrentType });
             }
-            conditions.push({ key: "state", value: enumProductState.takeOn });
+            conditions.push({ key: "state", value: enumProductState.takeOn }, { key: "state", value: enumProductState.takeOffing });
             required.push("productIndexImage", "follow");
 
             let params = { msg: "getAllProduct", "conditions": conditions, "required": required };
@@ -103,7 +103,10 @@ const vm = Vue.createApp({
                         }
                     }
 
-
+                    Toast.fire({
+                        icon: 'success',
+                        title: '已加入購物車'
+                    });
                 })
                 .catch(function (e) {
                     console.log("addCart error " + e);
@@ -208,6 +211,18 @@ const vm = Vue.createApp({
                         vm.products[index].follow = result.content;
                     }
 
+                    if (vm.products[index].follow === 0) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: '已從追蹤清單移除'
+                        })
+                    } else {
+                        Toast.fire({
+                            icon: 'info',
+                            title: '已加入我的追蹤清單'
+                        })
+                    }
+
                     console.log("addFollow then");
 
                 })
@@ -256,7 +271,7 @@ const vm2 = Vue.createApp({
             if (pageCurrentType != -1) {
                 conditions.push({ action: "=", key: "type", value: pageCurrentType });
             }
-            conditions.push({ key: "state", value: enumProductState.takeOn });
+            conditions.push({ key: "state", value: enumProductState.takeOn }, { key: "state", value: enumProductState.takeOffing });
             conditions.push({ action: "like", key: "productName", value: vm2.searchText });
 
             required.push("productIndexImage", "follow");
@@ -291,7 +306,7 @@ const vm2 = Vue.createApp({
             if (pageCurrentType != -1) {
                 conditions.push({ action: "=", key: "type", value: pageCurrentType });
             }
-            conditions.push({ key: "state", value: enumProductState.takeOn });
+            conditions.push({ key: "state", value: enumProductState.takeOn }, { key: "state", value: enumProductState.takeOffing });
             conditions.push({ action: "like", key: "productName", value: vm2.searchText });
 
 
@@ -383,7 +398,7 @@ function getAllProduct() {
     if (pageCurrentType != -1) {
         conditions.push({ key: "type", value: pageCurrentType });
     }
-    conditions.push({ key: "state", value: enumProductState.takeOn });
+    conditions.push({ key: "state", value: enumProductState.takeOn }, { key: "state", value: enumProductState.takeOffing });
     required.push("productIndexImage", "follow");
 
     let params = { msg: "getAllProduct", "conditions": conditions, "required": required };
