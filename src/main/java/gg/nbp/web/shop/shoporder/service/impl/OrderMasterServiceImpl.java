@@ -170,7 +170,9 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 			Integer toCvsCode = 2;
 			om.setPickType(pickType.equals("takuhai")? takuhaiCode : toCvsCode);  // 取貨方式
 			
-			om.setDeliverLocation(addressDetail.get("county").toString().replace("\"", "") + addressDetail.get("address").toString().replace("\"", ""));
+			om.setDeliverLocation(addressDetail.get("county").toString().replace("\"", "") + 
+					addressDetail.get("area").toString().replace("\"", "") + 
+					addressDetail.get("address").toString().replace("\"", ""));
 
 			Integer productPrice = 0;	// 檢核消費是否達優惠券門檻，先計算消費金額
 			for (TransOrderProduct trObj : trObjList) {

@@ -187,7 +187,14 @@
             <div>
                 <div><span>配送地址：</span></div>
                 <select name="" id="" v-model="address.county">
-                    <option :value="county" v-for="county in countySelet">{{ county }}</option>
+                    <option :value="county" v-for="county in countySelet">
+                        {{ county }}
+                    </option>
+                </select>
+                <select v-model="address.area">
+                    <option :value="area" v-for="area in areaList">
+                        {{ area }}
+                    </option>
                 </select>
                 <input type="text" v-model="address.address" placeholder="請輸入詳細地址">
             </div>
