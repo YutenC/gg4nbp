@@ -42,6 +42,9 @@ public class ChangeDeliverStateServlet extends HttpServlet {
         od.setManagerId(managerId);
         od.setDeliverState(od.getDeliverState());
 
+        // paystate下拉式選單待處理的問題，暫寫死
+        od.setPayState((byte) 1);
+
         SERVICE.editOd(od);
 
         // 發送出貨通知

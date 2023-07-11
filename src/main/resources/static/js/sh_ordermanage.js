@@ -25,6 +25,7 @@ fetch('sh_ordermanage',{
                 managerId: order.managerId,
             };
             order_array[order.orderId] = (order_array_item);
+
             showList();
 
         }
@@ -62,7 +63,7 @@ order_array.forEach(
                 </div>
                 </td>
                 
-                <td><span id="managerID">${order.managerId}</span></td>
+                <td><span id="managerID">${order.managerId === undefined ? "尚未審核" : order.managerId}</span></td>
             </tr>
         `
     }
