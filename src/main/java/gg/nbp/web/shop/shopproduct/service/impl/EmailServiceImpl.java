@@ -4,7 +4,6 @@ import gg.nbp.web.shop.shopproduct.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,7 +15,7 @@ import java.io.File;
 @Component
 public class EmailServiceImpl implements EmailService {
 
-//    @Qualifier("shopSendEmail")
+
     @Autowired
     private JavaMailSender emailSender;
 
@@ -24,7 +23,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendMessage(
             String to, String subject, String text) {
 
-//        ...shopSendEmail
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("noreply@baeldung.com");
         message.setTo(to);
@@ -32,13 +31,13 @@ public class EmailServiceImpl implements EmailService {
         message.setText(text);
 
         emailSender.send(message);
-//        ...
+
     }
 
     @Override
     public void sendMessageWithAttachment(
             String to, String subject, String text, String pathToAttachment) {
-        // ...
+
 
         MimeMessage message = emailSender.createMimeMessage();
 
@@ -61,7 +60,5 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(e);
         }
 
-
-        // ...
     }
 }

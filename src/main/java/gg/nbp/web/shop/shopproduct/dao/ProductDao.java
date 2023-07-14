@@ -3,7 +3,6 @@ package gg.nbp.web.shop.shopproduct.dao;
 import gg.nbp.web.shop.shopproduct.core.CoreDao;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.pojo.ProductSelect;
-
 import java.util.List;
 
 public interface ProductDao extends CoreDao<Product,Integer> {

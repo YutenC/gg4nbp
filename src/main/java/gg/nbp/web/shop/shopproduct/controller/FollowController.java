@@ -8,7 +8,6 @@ import gg.nbp.web.shop.shopproduct.service.FollowService;
 import gg.nbp.web.shop.shopproduct.util.ConvertJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component

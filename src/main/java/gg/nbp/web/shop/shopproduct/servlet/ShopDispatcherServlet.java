@@ -2,18 +2,14 @@ package gg.nbp.web.shop.shopproduct.servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.internal.Primitives;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.shop.shopproduct.controller.*;
 import gg.nbp.web.shop.shopproduct.entity.Product;
 import gg.nbp.web.shop.shopproduct.pojo.*;
 import gg.nbp.web.shop.shopproduct.util.ConvertJson;
-import jakarta.servlet.ServletException;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-//import org.apache.commons.csv.CSVFormat;
-//import org.apache.commons.csv.CSVParser;
-//import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,10 +44,6 @@ public class ShopDispatcherServlet extends HttpServlet {
     @Autowired
     CouponController couponController;
 
-    @Autowired
-    testMemberController testMemberController;
-
-
     public ShopDispatcherServlet() {
     }
 
@@ -66,45 +58,39 @@ public class ShopDispatcherServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws IOException {
         req.setCharacterEncoding("utf-8");
-
         process(req, res);
     }
 
     private void process(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String path = req.getPathInfo();
-        System.out.println(path);
         HttpSession session = req.getSession();
         String strOut = "";
-        DaoConditionSelect daoConditionSelect=null;
-        Object objectMember =  session.getAttribute("member");
-        Member member=null;
-        if(objectMember!=null){
-            member = (Member)objectMember;
-        }
-        else{
-            member=new Member();
+        DaoConditionSelect daoConditionSelect = null;
+        Object objectMember = session.getAttribute("member");
+        Member member = null;
+        if (objectMember != null) {
+            member = (Member) objectMember;
+        } else {
+            member = new Member();
             member.setMember_id(-1);
         }
 
 
         switch (path) {
             case "/checkLogin":
-
                 Object isLogin = session.getAttribute("isLogin");
-                ResponseMsg responseMsg=null;
-                if(isLogin==null){
-                    responseMsg= new ResponseMsg.Builder().setState("ok").setMsg("nologin").build();
-                }
-                else{
-                    if(member==null||member.getMember_id()==-1){
-                        responseMsg= new ResponseMsg.Builder().setState("ok").setMsg("nologin").build();
-                    }
-                    else{
-                        responseMsg= new ResponseMsg.Builder().setState("ok").setMsg("login").build();
+                ResponseMsg responseMsg = null;
+                if (isLogin == null) {
+                    responseMsg = new ResponseMsg.Builder().setState("ok").setMsg("nologin").build();
+                } else {
+                    if (member == null || member.getMember_id() == -1) {
+                        responseMsg = new ResponseMsg.Builder().setState("ok").setMsg("nologin").build();
+                    } else {
+                        responseMsg = new ResponseMsg.Builder().setState("ok").setMsg("login").build();
                     }
                 }
 
-                strOut=ConvertJson.toJson(responseMsg);
+                strOut = ConvertJson.toJson(responseMsg);
                 break;
             case "/addProduct":
                 StringBuilder requestData = new StringBuilder();
@@ -117,60 +103,11 @@ public class ShopDispatcherServlet extends HttpServlet {
                     e.printStackTrace();
                 }
                 String payloadData = requestData.toString();
-//                System.out.println(payloadData);
 
                 Gson gson_ = new Gson();
                 ProductPojo productPojo = gson_.fromJson(payloadData, ProductPojo.class);
                 productManagerController.addProduct(productPojo);
                 break;
-            case "/uploadCSV":
-//                Part filePart = null;
-//                try {
-//                    filePart = req.getPart("file");
-//                    String fileName = filePart.getSubmittedFileName();
-//                    InputStream fileContent = filePart.getInputStream();
-//
-//                    // Process the uploaded CSV file as needed
-//                    // Here, you can use the Apache Commons CSV library or any other CSV parsing library to read the file
-//
-//                    // Example: Reading the CSV file using Apache Commons CSV
-//                    Reader reader = new InputStreamReader(fileContent);
-//                    CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT);
-//                    for (CSVRecord record : parser) {
-//                        // Process each CSV record
-//                        String value1 = record.get(0);
-//                        String value2 = record.get(1);
-//                        // ... process other values
-//                    }
-//
-//                    // Close resources
-//                    parser.close();
-//                    reader.close();
-//
-//                } catch (ServletException e) {
-//                    throw new RuntimeException(e);
-//                }
-
-                break;
-
-//            case "/uploadProduct":
-//                /* Receive file uploaded to the Servlet from the HTML5 form */
-//                Part filePart = null;
-//                try {
-//                    filePart = req.getPart("file");
-//                    String fileName = filePart.getSubmittedFileName();
-//                    for (Part part : req.getParts()) {
-//                        part.write("C:\\upload\\" + fileName);
-//                    }
-//
-//                    strOut = "The file uploaded sucessfully.";
-//
-//                } catch (ServletException e) {
-//                    throw new RuntimeException(e);
-//                }
-//
-//
-//                break;
 
             case "/getProductByType":
                 String type = req.getParameter("type");
@@ -203,13 +140,12 @@ public class ShopDispatcherServlet extends HttpServlet {
                 strOut = productController.getProductById(Integer.valueOf(req.getParameter("id")));
                 break;
 
-
             case "/getSomeProduct":
                 break;
 
             case "/updateProductInfo":
-                JsonElement jsonElement=(JsonElement) ConvertJson.getJsonDataMap(getPostData(req)).get("product");
-                Product p=new Gson().fromJson(jsonElement,Product.class);
+                JsonElement jsonElement = (JsonElement) ConvertJson.getJsonDataMap(getPostData(req)).get("product");
+                Product p = new Gson().fromJson(jsonElement, Product.class);
                 strOut = productController.updateProductInfo(p);
                 break;
 
@@ -226,23 +162,23 @@ public class ShopDispatcherServlet extends HttpServlet {
                 productManagerController.createProductFromcsv();
                 break;
             case "/getAllProduct":
-                String obj=req.getParameter("limit");
-                Integer limit=-1;
-                if(obj!=null){
-                    limit= Integer.valueOf(obj) ;
+                String obj = req.getParameter("limit");
+                Integer limit = -1;
+                if (obj != null) {
+                    limit = Integer.valueOf(obj);
                 }
 
-                strOut = productController.getAllProduct(member.getMember_id(),limit);
+                strOut = productController.getAllProduct(member.getMember_id(), limit);
                 break;
             case "/getAllProductByCondition":
                 String params = req.getParameter("params");
-                ProductSelect productSelect=null;
-                if(params!=null){
+                ProductSelect productSelect = null;
+                if (params != null) {
                     String params_encode = URLDecoder.decode(params, StandardCharsets.UTF_8);
-                    System.out.println(params_encode);
-                    productSelect=  new Gson().fromJson(params_encode, ProductSelect.class);
+
+                    productSelect = new Gson().fromJson(params_encode, ProductSelect.class);
                 }
-                strOut = productController.getAllProductByCondition(member.getMember_id(),productSelect);
+                strOut = productController.getAllProductByCondition(member.getMember_id(), productSelect);
                 break;
 
             case "/getAllProductWithIndexImg":
@@ -250,10 +186,10 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
             case "/getProductsWithRequired":
-                String obj_=req.getParameter("limit");
-                Integer limit_=-1;
-                if(obj_!=null){
-                    limit_= Integer.valueOf(obj_) ;
+                String obj_ = req.getParameter("limit");
+                Integer limit_ = -1;
+                if (obj_ != null) {
+                    limit_ = Integer.valueOf(obj_);
                 }
 
                 strOut = productController.getAllProduct(member.getMember_id(), limit_);
@@ -299,8 +235,8 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
             case "/getCouponActivityByCondition":
-                daoConditionSelect= getDaoConditionSelect(req);
-                if(daoConditionSelect!=null){
+                daoConditionSelect = getDaoConditionSelect(req);
+                if (daoConditionSelect != null) {
                     strOut = couponManagerController.getCouponActivityByCondition(daoConditionSelect);
                 }
                 break;
@@ -311,7 +247,6 @@ public class ShopDispatcherServlet extends HttpServlet {
 
             case "/addCouponActivity":
                 String newCouponActivity = req.getParameter("newCouponActivity");
-                System.out.println("newCouponActivity: " + newCouponActivity);
                 couponManagerController.addCouponActivity(session, newCouponActivity);
                 break;
 
@@ -326,7 +261,7 @@ public class ShopDispatcherServlet extends HttpServlet {
                 couponManagerController.addCouponActivity(session, json_newCoupon);
                 break;
             case "/generateDiscountCode":
-                strOut =  couponManagerController.generateDiscountCode();
+                strOut = couponManagerController.generateDiscountCode();
                 break;
             case "/deleteCoupon":
                 Integer couponId = Integer.parseInt(req.getParameter("couponId"));
@@ -334,27 +269,27 @@ public class ShopDispatcherServlet extends HttpServlet {
                 break;
 
             case "/publishCouponActivity":
-                String object= req.getParameter("couponId");
-                if(object!=null){
+                String object = req.getParameter("couponId");
+                if (object != null) {
                     Integer couponId_ = Integer.parseInt(object);
-                    strOut=  couponManagerController.publishCouponActivity(couponId_);
+                    strOut = couponManagerController.publishCouponActivity(couponId_);
                 }
 
                 break;
 
             case "/getCouponMemberInfo":
-                strOut= couponManagerController.getCouponMemberInfo();
+                strOut = couponManagerController.getCouponMemberInfo();
                 break;
 
             case "/sendEmail":
-                String params__ =getParameter(req,"params");
-                String params_= URLDecoder.decode(params__,StandardCharsets.UTF_8);
-                if(params_!=null){
-                    Map<String,JsonElement> map_= ConvertJson.getJsonDataMap(params_);
-                    int action= map_.get("action").getAsInt();
-                    List<CouponMember> couponMembers=ConvertJson.getFromArray(map_.get("couponMembers"), CouponMember.class);
+                String params__ = getParameter(req, "params");
+                String params_ = URLDecoder.decode(params__, StandardCharsets.UTF_8);
+                if (params_ != null) {
+                    Map<String, JsonElement> map_ = ConvertJson.getJsonDataMap(params_);
+                    int action = map_.get("action").getAsInt();
+                    List<CouponMember> couponMembers = ConvertJson.getFromArray(map_.get("couponMembers"), CouponMember.class);
 
-                    strOut= couponManagerController.sendEmail(action,couponMembers);
+                    strOut = couponManagerController.sendEmail(action, couponMembers);
                 }
                 break;
 
@@ -381,11 +316,10 @@ public class ShopDispatcherServlet extends HttpServlet {
 
                 break;
 
-            case "/login":
+            case "/login"://測試用
 //                member = testMemberController.getDefaultMember();
 //                session.setAttribute("isLogin", true);
 //                session.setAttribute("member", member);
-
                 break;
         }
 
@@ -395,24 +329,13 @@ public class ShopDispatcherServlet extends HttpServlet {
 
     }
 
-    private <T> T getObject(HttpServletRequest req, String parm, Class<T> classOfT) {
-        String result = req.getParameter(parm);
-        Gson gson = new Gson();
-        T obj = gson.fromJson(result, classOfT);
-        return Primitives.wrap(classOfT).cast(obj);
-    }
 
     private String getParameter(HttpServletRequest req, String parm) {
         return req.getParameter(parm);
 
     }
 
-    private <T> T getParameter(HttpServletRequest req, String parm, T c) {
-        String result = req.getParameter(parm);
-        return (T) result;
-    }
-
-    private String getPostData(HttpServletRequest req){
+    private String getPostData(HttpServletRequest req) {
         StringBuilder requestData = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
             String line;
@@ -423,18 +346,17 @@ public class ShopDispatcherServlet extends HttpServlet {
             e.printStackTrace();
         }
         String payloadData = requestData.toString();
-        System.out.println(payloadData);
+
 
         return payloadData;
     }
 
-    private DaoConditionSelect getDaoConditionSelect(HttpServletRequest req){
+    private DaoConditionSelect getDaoConditionSelect(HttpServletRequest req) {
         String params = req.getParameter("params");
-        DaoConditionSelect daoConditionSelect=null;
-        if(params!=null){
+        DaoConditionSelect daoConditionSelect = null;
+        if (params != null) {
             String params_encode = URLDecoder.decode(params, StandardCharsets.UTF_8);
-            System.out.println(params_encode);
-            daoConditionSelect=  new Gson().fromJson(params_encode, DaoConditionSelect.class);
+            daoConditionSelect = new Gson().fromJson(params_encode, DaoConditionSelect.class);
         }
         return daoConditionSelect;
     }

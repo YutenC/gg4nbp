@@ -5,7 +5,6 @@ import gg.nbp.web.shop.shoporder.entity.PKShoppingList;
 import gg.nbp.web.shop.shoporder.entity.ShoppingList;
 import gg.nbp.web.shop.shopproduct.dao.ProductDao;
 import gg.nbp.web.shop.shopproduct.dao.ProductImageDao;
-import gg.nbp.web.shop.shopproduct.dao.ProductRepository;
 import gg.nbp.web.shop.shopproduct.entity.*;
 import gg.nbp.web.shop.shopproduct.pojo.ProductSelect;
 import gg.nbp.web.shop.shopproduct.redisdao.ProductRedisDao;
@@ -16,13 +15,10 @@ import gg.nbp.web.shop.shopproduct.util.MyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.*;
 
 @Service
-//@Transactional
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
@@ -40,35 +36,29 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     FollowService followService;
 
-    @Autowired
-    ProductRepository productRepository;
-
 
     @Override
     public List<Product> getAllProduct(Integer memId, Integer limit) {
         List<Product> products = productDao.selectAll();
-//        setProductIndexImage(products);
-        setFollows(memId,products);
-
+        setFollows(memId, products);
 
         return products;
     }
 
     @Override
     public List<Product> getAllProductByCondition(Integer memId, ProductSelect productSelect) {
-        List<Product> products =  productDao.selectByCondition(productSelect);
+        List<Product> products = productDao.selectByCondition(productSelect);
 
-        List<String> required= productSelect.getRequired();
+        List<String> required = productSelect.getRequired();
         if (required != null) {
-            for(String key:required){
-                if(products!=null && products.size()!=0){
-                    if("follow".equals(key)){
-                        setFollows(memId,products);
-                    }
-                    else {
-                        Product product= products.get(0);
-                        if(MyUtil.checkNULL(key,product,Product.class)){
-                            MyUtil.runMethod(key,this,ProductServiceImpl.class,List.class,products);
+            for (String key : required) {
+                if (products != null && products.size() != 0) {
+                    if ("follow".equals(key)) {
+                        setFollows(memId, products);
+                    } else {
+                        Product product = products.get(0);
+                        if (MyUtil.checkNULL(key, product, Product.class)) {
+                            MyUtil.runMethod(key, this, ProductServiceImpl.class, List.class, products);
                         }
                     }
 
@@ -84,24 +74,24 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProductWithIndexImg(Integer memId) {
         List<Product> products = productDao.selectAll();
         setProductIndexImage(products);
-        setFollows(memId,products);
+        setFollows(memId, products);
         return products;
     }
 
     @Override
-    public List<Product> getProductByType(Integer memId,Integer type) {
+    public List<Product> getProductByType(Integer memId, Integer type) {
         List<Product> products = productDao.selectByType(type);
         setProductIndexImage(products);
-        setFollows(memId,products);
+        setFollows(memId, products);
         return products;
     }
 
 
     @Override
-    public List<Product> searchProducts(Integer memId,String search) {
+    public List<Product> searchProducts(Integer memId, String search) {
         List<Product> products = productDao.searchProducts(search);
         setProductIndexImage(products);
-        setFollows(memId,products);
+        setFollows(memId, products);
         return products;
     }
 
@@ -112,9 +102,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDetail getProductDetail(Integer memId,Integer id) {
+    public ProductDetail getProductDetail(Integer memId, Integer id) {
         Product product = getProductById(id);
-        setFollow_old(memId,product);
+        setFollow_old(memId, product);
 
         List<ProductImage> productImages = getProductImgs(id);
         ProductDetail productDetail = new ProductDetail(product, productImages);
@@ -123,13 +113,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductByBuyTimes(Map<String,Object> map,Integer type) {
-        Integer limit=(Integer)map.get("limit");
-        List<Product> products = productDao.selectByBuyTimes(limit,type);
+    public List<Product> getProductByBuyTimes(Map<String, Object> map, Integer type) {
+        Integer limit = (Integer) map.get("limit");
+        List<Product> products = productDao.selectByBuyTimes(limit, type);
         setProductIndexImage(products);
 
-        Integer memId=  (Integer)map.get("memId");
-        setFollows(memId,products);
+        Integer memId = (Integer) map.get("memId");
+        setFollows(memId, products);
         return products;
     }
 
@@ -169,14 +159,13 @@ public class ProductServiceImpl implements ProductService {
         productRedisDao.saveProductBrowseToRedis(product);
     }
 
-
     @Override
     public ProductImage getProductIndexImg(Integer id) {
 
         ProductImage productImage;
         try {
             List<ProductImage> productImages = productImageDao.getIndexImgByProductId(id);
-            productImage=productImages.get(0);
+            productImage = productImages.get(0);
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
             productImage = new ProductImage();
@@ -201,8 +190,6 @@ public class ProductServiceImpl implements ProductService {
         return productImages;
     }
 
-
-
     @Override
     public void addCart(Integer productId, Integer memId) {
         PKShoppingList pkShoppingList = new PKShoppingList(memId, productId);
@@ -217,9 +204,7 @@ public class ProductServiceImpl implements ProductService {
             shoppingList.setQuantity(shoppingList.getQuantity() + 1);
             shoppingListDao.update(shoppingList);
         }
-
     }
-
 
 
     private void setProductIndexImage(List<Product> products) {
@@ -229,70 +214,41 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-//, Map<String,Object> params
-    private void setFollows(Integer memId,List<Product> products) {
+    private void setFollows(Integer memId, List<Product> products) {
 
-        if(memId<0){
+        if (memId < 0) {
             return;
         }
 
-        List<FollowList> followLists= followService.getFollowByMemberId(memId);
-        HashMap<Integer,Product> map=new HashMap<>();
+        List<FollowList> followLists = followService.getFollowByMemberId(memId);
+        HashMap<Integer, Product> map = new HashMap<>();
 
-        for(int i=0;i<products.size();i++){
-            map.put(products.get(i).getId(),products.get(i));
+        for (int i = 0; i < products.size(); i++) {
+            map.put(products.get(i).getId(), products.get(i));
         }
 
-        for(int i=0;i<followLists.size();i++){
-            Product product= map.get(followLists.get(i).getId().getProductId());
-            if(product!=null){
+        for (int i = 0; i < followLists.size(); i++) {
+            Product product = map.get(followLists.get(i).getId().getProductId());
+            if (product != null) {
                 product.setFollow(1);
             }
         }
 
-
-
-//        for(int i=0;i<followLists.size();i++){
-//            Integer productId=followLists.get(i).getId().getProductId();
-//
-//            for(int j=0;j<products.size();j++){
-//
-//            }
-//        }
-
     }
 
-    private void setFollow_old(Integer memId,Product product){
-        if(memId<0){
+    private void setFollow_old(Integer memId, Product product) {
+        if (memId < 0) {
             return;
         }
 
-        List<FollowList> followLists= followService.getFollowByMemberId(memId);
+        List<FollowList> followLists = followService.getFollowByMemberId(memId);
 
-        for(int i=0;i<followLists.size();i++){
-            if(followLists.get(i).getId().getProductId()==product.getId()){
+        for (int i = 0; i < followLists.size(); i++) {
+            if (followLists.get(i).getId().getProductId() == product.getId()) {
                 product.setFollow(1);
             }
-
         }
     }
 
-    private void setFollow(Integer memId,List<Product> products){
-        if(memId<0){
-            return;
-        }
-
-        List<FollowList> followLists= followService.getFollowByMemberId(memId);
-        HashMap<Integer,Product> map=new HashMap<>();
-
-        for(int i=0;i<products.size();i++){
-            map.put(products.get(i).getId(),products.get(i));
-        }
-
-        for(int i=0;i<followLists.size();i++){
-            Product product= map.get(followLists.get(i).getId().getProductId());
-            product.setFollow(1);
-        }
-    }
 
 }

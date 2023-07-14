@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-//@Component
+
 public class CreateProductDB<T, P> {
 
     @Autowired
@@ -24,14 +24,10 @@ public class CreateProductDB<T, P> {
     private Class entityClass;
     private Class entityClass_P;
 
-//    public CreateProductDB(){}
 
     public CreateProductDB(Class c, Class p) {
         entityClass = c;
         entityClass_P = p;
-
-//        productDao = new ProductDaoImpl();
-//        productImageDao = new ProductImageDaoImpl();
     }
 
     public List<T> readCSV() throws NoSuchFieldException, IllegalAccessException {
@@ -131,9 +127,8 @@ public class CreateProductDB<T, P> {
                     System.out.println("File does not exist.");
                 }
 
-                ProductImage productImage = new ProductImage((Product)product, "../img/gameSoftware/test/" + newFileName);
+                ProductImage productImage = new ProductImage((Product) product, "../img/gameSoftware/test/" + newFileName);
                 productImageDao.insert(productImage);
-
             }
 
         }
@@ -173,9 +168,9 @@ public class CreateProductDB<T, P> {
     private List<String> getListFile(String dirPath) {
         List<String> fileNames = new ArrayList<>();
         File directory = new File(dirPath); // 目錄物件
-        System.out.println(("File Name: " + directory.getName()));
-        System.out.println(("File Path: " + directory.getPath()));
-        System.out.println(("File getAbsolutePath: " + directory.getAbsolutePath()));
+//        System.out.println(("File Name: " + directory.getName()));
+//        System.out.println(("File Path: " + directory.getPath()));
+//        System.out.println(("File getAbsolutePath: " + directory.getAbsolutePath()));
         // Check if the specified path is a directory
         if (directory.isDirectory()) {
             // Get all files in the directory
@@ -184,7 +179,7 @@ public class CreateProductDB<T, P> {
             // Iterate over the files and print their names
             if (files != null) {
                 for (File file : files) {
-                    System.out.println(file.getName());
+//                    System.out.println(file.getName());
                     fileNames.add(file.getName());
                 }
             }
@@ -199,12 +194,10 @@ public class CreateProductDB<T, P> {
         try {
             Field field = objectClass.getDeclaredField(property);
             if (("java.util.Date").equals(field.getType().getName())) {
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
-                propertyValue=simpleDateFormat.parse((String) propertyValue);
-//                GregorianCalendar cal = new GregorianCalendar();
-//                propertyValue = cal.getTime();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                propertyValue = simpleDateFormat.parse((String) propertyValue);
             } else if (("java.lang.Integer").equals(field.getType().getName())) {
-                if(!"type".equals(property)){
+                if (!"type".equals(property)) {
                     propertyValue = Integer.valueOf((String) propertyValue);
                 }
 
@@ -225,11 +218,6 @@ public class CreateProductDB<T, P> {
                         break;
                 }
             }
-//            else if ("launchTime".equals(property)) {
-////                String type_ = (String) propertyValue;
-////                type_ = type_.trim();
-//
-//            }
 
             if (field != null) {
                 field.setAccessible(true);

@@ -41,35 +41,11 @@ public class ConvertJson {
         List<T> list = new ArrayList<>();
         Gson gson = new Gson();
         for (JsonElement jsonElement1 : jsonArray) {
-//            jsonElement1.getAsJsonObject();
             T ob = gson.fromJson(jsonElement1, tClass);
-
             list.add(ob);
         }
         return list;
     }
 
-    //        ExclusionStrategy strategy = new ExclusionStrategy() {
-//            @Override
-//            public boolean shouldSkipField(FieldAttributes field) {
-//                if (field.getDeclaringClass() == MyClass.class && field.getName().equals("other")) {
-//                    return true;
-//                }
-//                if (field.getDeclaringClass() == MySubClass.class && field.getName().equals("otherVerboseInfo")) {
-//                    return true;
-//                }
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean shouldSkipClass(Class<?> clazz) {
-//                return false;
-//            }
-//        };
 
-
-//        Gson gson = new GsonBuilder()
-//                .excludeFieldsWithoutExposeAnnotation()
-//                .create();
-//        String jsonString = gson.toJson(products);
 }

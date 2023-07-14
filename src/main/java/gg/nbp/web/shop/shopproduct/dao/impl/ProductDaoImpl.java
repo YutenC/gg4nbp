@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,6 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     @PersistenceContext
     private Session session;
 
-//    @Transactional
     @Override
     public int update(Product product) {
         final StringBuilder hql = new StringBuilder()
@@ -185,7 +183,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
         }
 
         hql = hql + hql2+hql3;
-        System.out.println(hql);
+//        System.out.println(hql);
         Query<Product> query;
         if (limit == -1) {
             query = session.createQuery(hql, Product.class);
@@ -202,7 +200,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     @Override
     public List<Product> selectByType(Integer type) {
         String hql = "from Product  where type = " + type;
-        System.out.println("hql: " + hql);
+//        System.out.println("hql: " + hql);
         return session.createQuery(hql, Product.class).getResultList();
     }
 
@@ -246,24 +244,7 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     }
 
 
-    public List<Product> getProductWithFollow() {
-
-//    String hql =   " Product., Product_name, 'type', Price ,1, "+
-//            "not isnull(( select 1  from follow_list f  where Product_id=p.Product_id and  f.Member_id=145))  as follow"+
-//    "from product p";
-
-        String hql = "p.id, p.productName, p.type, p.price, " +
-                "CASE WHEN EXISTS (1 FROM FollowList f WHERE f.id.productId = p.id AND f.id.memberId = 145) THEN 1 ELSE 0 END AS follow " +
-                "FROM Product p";
-
-//    String hql = "from Product  where productName like '%"+search+"%'";
-
-        return session.createQuery(hql, Product.class).getResultList();
-    }
-
-
     @Override
-//    @Transactional
     public int updateProductScore(Product product) {
         final StringBuilder hql = new StringBuilder()
                 .append("UPDATE Product SET ");
@@ -283,7 +264,6 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
     }
 
     @Override
-//    @Transactional
     public int updateProductAmountBuyTimes(Product product) {
         final StringBuilder hql = new StringBuilder()
                 .append("UPDATE Product SET ");
@@ -303,7 +283,6 @@ public class ProductDaoImpl extends CoreDaoImpl<Product, Integer> implements Pro
                 .executeUpdate();
     }
 
-//    @Transactional
     @Override
     public int updateProductState(Product product) {
         final StringBuilder hql = new StringBuilder()

@@ -58,10 +58,8 @@ public abstract class BackgroundHandler implements Runnable {
                 Type[] types = future.getClass().getGenericInterfaces();
                 ParameterizedType parameterizedType = (ParameterizedType) types[0];
                 Type[] parameterizedTypes = parameterizedType.getActualTypeArguments();
-                System.out.println("parameterizedTypes[0].getTypeName(): " + parameterizedTypes[0].getTypeName());
 
                 T t = (T) future.get();
-                System.out.println("t.getClass().getName(): " + t.getClass().getName());
 
                 return (T) future.get();
             } catch (InterruptedException e) {

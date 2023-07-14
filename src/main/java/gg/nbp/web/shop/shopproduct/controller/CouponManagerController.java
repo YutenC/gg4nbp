@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import gg.nbp.web.shop.shopproduct.entity.CouponActivity;
 import gg.nbp.web.shop.shopproduct.pojo.CouponMember;
 import gg.nbp.web.shop.shopproduct.pojo.DaoConditionSelect;
-import gg.nbp.web.shop.shopproduct.pojo.ErrorMsg;
 import gg.nbp.web.shop.shopproduct.pojo.ResponseMsg;
 import gg.nbp.web.shop.shopproduct.service.CouponManagerService;
 import gg.nbp.web.shop.shopproduct.service.CouponService;
@@ -12,10 +11,7 @@ import gg.nbp.web.shop.shopproduct.util.ConvertJson;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-//import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Component
@@ -31,11 +27,9 @@ public class CouponManagerController {
     }
 
     public String getAllCouponActivity(HttpSession session) {
-//        System.out.println("getAllCouponActivity");
         List<CouponActivity> couponActivities = null;
         String out = null;
         ResponseMsg requestMsg = null;
-        ErrorMsg errorMsg = null;
 
         try {
             couponActivities = couponManagerService.getAllCouponActivity();
@@ -51,7 +45,6 @@ public class CouponManagerController {
 
         }
 
-
         return out;
     }
 
@@ -63,11 +56,8 @@ public class CouponManagerController {
     }
 
     public String addCouponActivity(HttpSession session, String newCouponActivity) {
-//        System.out.println("addCouponActivity");
-
         Gson gson = new Gson();
         CouponActivity couponActivity = gson.fromJson(newCouponActivity, CouponActivity.class);
-
         couponManagerService.addCouponActivity(couponActivity);
         return "";
     }
@@ -80,18 +70,15 @@ public class CouponManagerController {
         return "";
     }
 
-
     public void autoGenerateCouponActivity() {
         couponManagerService.generateCouponActivity();
     }
 
 
     public String deleteCoupon(Integer couponId) {
-//        System.out.println("deleteCoupon");
         couponManagerService.deleteCoupon(couponId);
         return "";
     }
-
 
     public String getCouponMemberInfo(){
         List<CouponMember> couponMembers= couponManagerService.getCouponMemberInfo();
@@ -103,14 +90,11 @@ public class CouponManagerController {
         return ConvertJson.toJson(responseMsg);
     }
 
-//    @Transactional
-//@Transactional(propagation = Propagation.NESTED)
     public String publishCouponActivity(Integer couponId) {
         couponManagerService.publishCouponActivity(couponId);
         ResponseMsg responseMsg=new ResponseMsg.Builder().setState("ok").build();
         return ConvertJson.toJson(responseMsg);
     }
-
 
     public String generateDiscountCode() {
         String newDiscountCode= couponManagerService.generateDiscountCode();

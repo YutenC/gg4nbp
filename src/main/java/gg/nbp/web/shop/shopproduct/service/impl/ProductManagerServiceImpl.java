@@ -15,16 +15,12 @@ import gg.nbp.web.shop.shopproduct.service.ProductManagerService;
 import gg.nbp.web.shop.shopproduct.util.ConstUtil;
 import gg.nbp.web.shop.shopproduct.util.CreateProductDB;
 import gg.nbp.web.shop.shopproduct.util.ProductState;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Base64;
 import java.util.List;
 import java.util.TimerTask;
@@ -43,13 +39,13 @@ public class ProductManagerServiceImpl implements ProductManagerService {
     @Autowired
     CreateProductDB<Product, ProductImage> createProductDB;
 
-    public ProductManagerServiceImpl(){
+    public ProductManagerServiceImpl() {
     }
 
     @Override
-    public void createProductFromcsv(){
+    public void createProductFromcsv() {
         try {
-            List<Product> products= createProductDB.readCSV();
+            List<Product> products = createProductDB.readCSV();
             for (Product value : products) {
                 productDao.insert(value);
             }
@@ -65,51 +61,45 @@ public class ProductManagerServiceImpl implements ProductManagerService {
     }
 
     @Override
-    public void longTimeProcess(){
-        BackgroundHandler backgroundHandler= BackgroundFactory.getBackgroundHandler("shopProductBackground");
+    public void longTimeProcess() {
+        BackgroundHandler backgroundHandler = BackgroundFactory.getBackgroundHandler("shopProductBackground");
 
-        Callable<String> task=new Callable<String>() {
+        Callable<String> task = new Callable<String>() {
             @Override
             public String call() throws Exception {
-
                 Thread.sleep(5000);
-
-//                return "finish longTimeProcess";
                 return "ok";
             }
         };
 
-        backgroundHandler.addTask( "readCSV",task);
-
+        backgroundHandler.addTask("readCSV", task);
     }
 
     @Override
     public void addProduct(ProductPojo productPojo) {
-        Product product=productPojo.getNewProduct();
+        Product product = productPojo.getNewProduct();
         product.setBuyTimes(0);
         product.setRate(0);
         product.setRevieweCount(0);
 
-        Integer productId= productDao.insert(product);
+        Integer productId = productDao.insert(product);
         product.setId(productId);
 
-        List<ProductImage> productImages= productPojo.getNewProduct().getProductImages();
+        List<ProductImage> productImages = productPojo.getNewProduct().getProductImages();
 
+        for (int i = 0; i < productImages.size(); i++) {
+            ProductImage productImage = productImages.get(i);
 
-        for (int i=0;i<productImages.size();i++) {
-            ProductImage productImage= productImages.get(i);
-
-            String fileName="";
+            String fileName = "";
             byte[] fromBase64str = Base64.getDecoder().decode(productImage.getImage().split(",")[1]);
             FileOutputStream fos = null;
             try {
-                if(i==0){
-                    fileName=productId+"_index"+".png";
-                    fos = new FileOutputStream(ConstUtil.getDESIMGPATH()+fileName);
-                }
-                else {
-                    fileName=productId+"_"+i+".png";
-                    fos = new FileOutputStream(ConstUtil.getDESIMGPATH()+fileName);
+                if (i == 0) {
+                    fileName = productId + "_index" + ".png";
+                    fos = new FileOutputStream(ConstUtil.getDESIMGPATH() + fileName);
+                } else {
+                    fileName = productId + "_" + i + ".png";
+                    fos = new FileOutputStream(ConstUtil.getDESIMGPATH() + fileName);
                 }
 
                 fos.write(fromBase64str);
@@ -121,7 +111,7 @@ public class ProductManagerServiceImpl implements ProductManagerService {
                 throw new RuntimeException(e);
             }
 
-            productImage.setImage(ConstUtil.getREL_DESIMGPATH()+fileName);
+            productImage.setImage(ConstUtil.getREL_DESIMGPATH() + fileName);
             productImage.setProduct(product);
             productImageDao.insert(productImage);
         }
@@ -130,83 +120,81 @@ public class ProductManagerServiceImpl implements ProductManagerService {
 
     @Override
     public void takeOnProduct(Integer id) {
-        Product product= productDao.selectById(id);
+        Product product = productDao.selectById(id);
         product.setState(ProductState.TakeOning.getValue());
         productDao.updateProductState(product);
-        TimerTask timerTask=new TimerTask() {
+        TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                Integer productId=id;
-                Product product= productDao.selectById(productId);
+                Integer productId = id;
+                Product product = productDao.selectById(productId);
                 product.setState(ProductState.TakeOn.getValue());
                 productDao.updateProductState(product);
 
-                System.out.println("take On" +product.getProductName());
+                System.out.println("take On" + product.getProductName());
                 cancel();
-                SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
-                schedulerTasks.removeTimerTask(productId+"takeOn");
+                SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("takeOnProduct");
+                schedulerTasks.removeTimerTask(productId + "takeOn");
                 schedulerTasks.clear();
             }
         };
-        System.out.println("product.getLaunchTime(): "+product.getLaunchTime());
-        SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
-        schedulerTasks.addTimerTask(product.getId()+"takeOn",new SchedulerEntity(product.getLaunchTime(),timerTask));
+        System.out.println("product.getLaunchTime(): " + product.getLaunchTime());
+        SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("takeOnProduct");
+        schedulerTasks.addTimerTask(product.getId() + "takeOn", new SchedulerEntity(product.getLaunchTime(), timerTask));
 
     }
 
     @Override
-    public void cancelTakeOnProduct(Integer id){
-        Product product= productDao.selectById(id);
+    public void cancelTakeOnProduct(Integer id) {
+        Product product = productDao.selectById(id);
 
-        SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
-        SchedulerEntity schedulerEntity=  schedulerTasks.getTimerTask(product.getId()+"takeOn");
-        if(schedulerEntity!=null){
+        SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("takeOnProduct");
+        SchedulerEntity schedulerEntity = schedulerTasks.getTimerTask(product.getId() + "takeOn");
+        if (schedulerEntity != null) {
             schedulerEntity.getTimerTask().cancel();
         }
 
     }
 
-
     @Override
     public void takeOffProduct(Integer id) {
-        Product product= productDao.selectById(id);
-        TimerTask timerTask=new TimerTask() {
+        Product product = productDao.selectById(id);
+        TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                Integer productId=id;
-                Product product= productDao.selectById(productId);
+                Integer productId = id;
+                Product product = productDao.selectById(productId);
 
                 product.setState(ProductState.TakeOff.getValue());
                 productDao.updateProductState(product);
 
-                System.out.println("take Off" +product.getProductName());
+                System.out.println("take Off" + product.getProductName());
                 cancel();
-                SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
-                schedulerTasks.removeTimerTask(productId+"takeOff");
+                SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("takeOffProduct");
+                schedulerTasks.removeTimerTask(productId + "takeOff");
                 schedulerTasks.clear();
             }
         };
 
-        SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
-        schedulerTasks.addTimerTask(product.getId()+"takeOff",new SchedulerEntity(product.getTakeoffTime(),timerTask));
+        SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("takeOffProduct");
+        schedulerTasks.addTimerTask(product.getId() + "takeOff", new SchedulerEntity(product.getTakeoffTime(), timerTask));
         product.setState(ProductState.TakeOffing.getValue());
         productDao.updateProductState(product);
     }
 
     @Override
-    public void removeTakeOningProduct(Integer id){
-        Product product= productDao.selectById(id);
+    public void removeTakeOningProduct(Integer id) {
+        Product product = productDao.selectById(id);
 
-        if(product.getState()==ProductState.TakeOning.getValue()){
-            String key=id+"takeOn";
-            SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOnProduct");
+        if (product.getState() == ProductState.TakeOning.getValue()) {
+            String key = id + "takeOn";
+            SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("takeOnProduct");
 
-            try{
+            try {
                 schedulerTasks.getTimerTask(key).getTimerTask().cancel();
                 schedulerTasks.removeTimerTask(key);
                 schedulerTasks.clear();
-            }
-            catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 e.printStackTrace();
             }
 
@@ -218,18 +206,17 @@ public class ProductManagerServiceImpl implements ProductManagerService {
     }
 
     @Override
-    public void removeTakeOffingProduct(Integer id){
-        Product product= productDao.selectById(id);
+    public void removeTakeOffingProduct(Integer id) {
+        Product product = productDao.selectById(id);
 
-        if(product.getState()==ProductState.TakeOffing.getValue()){
-            String key=id+"takeOff";
-            SchedulerTasks schedulerTasks= SchedulerFactory.getSchedulerTasks("takeOffProduct");
-            try{
+        if (product.getState() == ProductState.TakeOffing.getValue()) {
+            String key = id + "takeOff";
+            SchedulerTasks schedulerTasks = SchedulerFactory.getSchedulerTasks("takeOffProduct");
+            try {
                 schedulerTasks.getTimerTask(key).getTimerTask().cancel();
                 schedulerTasks.removeTimerTask(key);
                 schedulerTasks.clear();
-            }
-            catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 e.printStackTrace();
             }
 
@@ -238,13 +225,6 @@ public class ProductManagerServiceImpl implements ProductManagerService {
             productDao.updateProductState(product);
         }
 
-    }
-
-
-    String getSomeProduct(Integer pageIndex){
-        List<Product>products= productDao.selectAll();
-
-        return null;
     }
 
 }

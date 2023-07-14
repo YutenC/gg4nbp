@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @Transactional
 public class CouponServiceImpl implements CouponService {
@@ -18,43 +16,24 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     CouponDao couponDao;
 
-    public CouponServiceImpl(){
+    public CouponServiceImpl() {
     }
-
-    @Override
-    public List<Coupon> getAllCoupon() {
-        return couponDao.selectAll();
-    }
-
-
 
 
     @Override
     public Coupon getCouponById(Integer id) {
-        Coupon coupon=couponDao.selectById(id);
+        Coupon coupon = couponDao.selectById(id);
         return coupon;
     }
 
     @Override
     public Coupon getCouponByDiscountCode(String discountCode) {
-        Coupon coupon=null;
+        Coupon coupon = null;
         try {
-            coupon=couponDao.selectByDiscountCode(discountCode);
-            if(coupon.getState()!= CouponState.publish.getValue()){//使用者使用，會判斷折價券是否有失效
-                coupon=null;
+            coupon = couponDao.selectByDiscountCode(discountCode);
+            if (coupon.getState() != CouponState.publish.getValue()) {//使用者使用，會判斷折價券是否有失效
+                coupon = null;
             }
-        } catch (EmptyResultDataAccessException e) {
-            e.printStackTrace();
-        }
-        return coupon;
-    }
-
-    @Override
-    public Coupon getCouponByDiscountCodeByManager(String discountCode) {
-        Coupon coupon=null;
-        try {
-            coupon=couponDao.selectByDiscountCode(discountCode);
-
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }
