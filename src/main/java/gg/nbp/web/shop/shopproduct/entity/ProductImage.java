@@ -36,6 +36,7 @@ public class ProductImage {
     public ProductImage() {
 
     }
+
     public ProductImage(Product product, String image) {
         this.product = product;
         this.image = image;

@@ -8,17 +8,6 @@ import java.util.Map;
 
 public class StringToObjectUtil {
 
-
-//    private boolean checkJAVAType(Class<?> type) {
-//        if (type == Integer.class || type == String.class ||
-//                type == Double.class || type == java.util.Date.class ||
-//                type == Long.class || type == Float.class ||
-//                type == Byte.class || type == Short.class) {
-//            return true;
-//        }
-//        return false;
-//    }
-
     private static Object stringToType(String str, Class<?> type) {
         if (type == Integer.class) {
             return Integer.valueOf(str);
@@ -77,7 +66,6 @@ public class StringToObjectUtil {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 

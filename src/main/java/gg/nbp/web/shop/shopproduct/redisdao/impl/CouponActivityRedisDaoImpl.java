@@ -10,26 +10,11 @@ import gg.nbp.web.shop.shopproduct.util.StringToObjectUtil;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisException;
-
 import java.util.*;
 
 @Component
 public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
 
-//    @Override
-//    public List<String> getAllCouponActivity_string() throws JedisException {
-//        List<String> couponActivities = new ArrayList<String>();
-//        Jedis jedis = RedisFactory.getRedisServiceInstance().getJedis(ShopProductConst.REDIS_SELECT_INDEX);
-//
-//        Gson gson = new Gson();
-//        Set<String> items = jedis.smembers("CouponActivity:outline");
-//        for (String str : items) {
-//            Map<String, String> couponActivityMap = jedis.hgetAll("CouponActivity:" + str);
-//            String json = gson.toJson(couponActivityMap);
-//            couponActivities.add(json);
-//        }
-//        return couponActivities;
-//    }
 
     @Override
     public List<CouponActivity> getAllCouponActivity() throws JedisException {
@@ -99,9 +84,7 @@ public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
     @Override
     public void updateCouponActivity(CouponActivity couponActivity) {
         Jedis jedis = RedisFactory.getRedisServiceInstance().getJedis(ShopProductConst.REDIS_SELECT_INDEX);
-
         String cp_id_str = null;
-//        System.out.println("couponActivity.getCoupon(): " + couponActivity.getCoupon());
 
         cp_id_str = jedis.hget("CouponActivity:" + couponActivity.getCoupon().getId().toString(), "couponId");
         if (cp_id_str != null) {
@@ -130,8 +113,6 @@ public class CouponActivityRedisDaoImpl implements CouponActivityRedisDao {
             Map<String, String> couponActivityMap = jedis.hgetAll("CouponActivity:" + str);
             int field = Integer.parseInt(couponActivityMap.get("couponId"));
 
-            System.out.println("field: " + field);
-            System.out.println("couponId: " + couponId);
             if (field == (couponId)) {
                 jedis.del("CouponActivity:" + str);
                 jedis.srem("CouponActivity:outline", str);

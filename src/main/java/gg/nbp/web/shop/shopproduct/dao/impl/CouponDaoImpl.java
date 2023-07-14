@@ -9,14 +9,9 @@ import gg.nbp.web.shop.shopproduct.pojo.ProductSelect;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-
-//import org.hibernate.query.Query;
-//import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import java.util.List;
 
 
@@ -62,17 +57,6 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
     }
 
     @Override
-    public Coupon selectByDiscountCodeByManager(String discountCode) {
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Coupon> criteriaQuery = criteriaBuilder.createQuery(Coupon.class);
-        Root<Coupon> root = criteriaQuery.from(Coupon.class);
-        criteriaQuery.where(criteriaBuilder.equal(root.get("discountCode"), discountCode));
-        Query<Coupon> query = session.createQuery(criteriaQuery);
-        query.setMaxResults(1);
-        return query.getSingleResult();
-    }
-
-    @Override
     public List<Coupon> selectByCondition(DaoConditionSelect daoSelect) {
 
         String conditionStr = "";
@@ -106,7 +90,6 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
                 if ("limit".equals(condition.getKey())) {
                     Object oValue = condition.getValue();
                     limit = Integer.valueOf((String) oValue);
-//                    limit = ((Double) oValue).intValue();
                 } else if ("offset".equals(condition.getKey())) {
                     Object oValue = condition.getValue();
                     offset = ((Double) oValue).intValue();
@@ -130,7 +113,7 @@ public class CouponDaoImpl extends CoreDaoImpl<Coupon, Integer> implements Coupo
         }
 
         hql = hql + hql2 + hql3;
-        System.out.println(hql);
+//        System.out.println(hql);
         Query<Coupon> query;
         if (limit == -1) {
             query = session.createQuery(hql, Coupon.class);

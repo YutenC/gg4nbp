@@ -1,7 +1,5 @@
 package gg.nbp.web.shop.shopproduct.util;
 
-import gg.nbp.web.shop.shopproduct.entity.Product;
-import gg.nbp.web.shop.shopproduct.test.Test;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -23,7 +21,7 @@ public class MyUtil {
     public static void runMethod(String key,Object source,Class<?> class_,Class<?> parameterType, Object arg){
         String first= key.substring(0,1).toUpperCase();
         String newStr="set"+first+key.substring(1);
-        System.out.println(newStr);
+//        System.out.println(newStr);
 
         Method method= null;
         try {

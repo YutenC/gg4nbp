@@ -2,7 +2,6 @@ package gg.nbp.web.shop.shopproduct.common.backgroundtask;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 

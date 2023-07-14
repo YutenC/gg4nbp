@@ -8,7 +8,6 @@ import gg.nbp.web.shop.shopproduct.util.RedisFactory;
 import gg.nbp.web.shop.shopproduct.util.ShopProductConst;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

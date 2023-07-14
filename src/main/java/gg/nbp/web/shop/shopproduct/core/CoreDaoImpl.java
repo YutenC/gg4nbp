@@ -2,8 +2,6 @@ package gg.nbp.web.shop.shopproduct.core;
 
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -29,18 +27,11 @@ public abstract class CoreDaoImpl<P, I> implements CoreDao <P, I>{
 
     @Override
     public I insert(P pojo) {
-//        Session session = getSession();
-//        Transaction transaction= session.beginTransaction();
-//        session.persist(pojo);
-
-
-//        transaction.commit();
         return (I)session.save(pojo);
     }
 
     @Override
     public int deleteById(I id) {
-//        Session session = getSession();
         Object coupon = session.get(entityClass, (Serializable) id);
         session.remove(coupon);
         return 0;
@@ -60,7 +51,6 @@ public abstract class CoreDaoImpl<P, I> implements CoreDao <P, I>{
     @Override
     public List<P> selectAll() {
         String hql = "from "+entityName;
-
         return (List<P> )session.createQuery(hql,entityClass).getResultList();
     }
 }

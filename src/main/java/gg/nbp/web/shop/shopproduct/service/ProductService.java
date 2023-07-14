@@ -35,12 +35,9 @@ public interface ProductService {
 
     void addCart(Integer productId,Integer memId);
 
-
-
     List<Product> getProductByBuyTimes(Map<String,Object> map, Integer type);
 
     List<Product> getProductByBuyTimes(Integer amount,Integer type);
-
 
     int updateProductScore(Product product);
     int updateProductAmountBuyTimes(Product product);

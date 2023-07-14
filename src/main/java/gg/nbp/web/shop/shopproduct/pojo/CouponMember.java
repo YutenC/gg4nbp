@@ -1,8 +1,6 @@
 package gg.nbp.web.shop.shopproduct.pojo;
 
-import gg.nbp.web.shop.shopproduct.entity.Coupon;
-import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import lombok.Setter;
 

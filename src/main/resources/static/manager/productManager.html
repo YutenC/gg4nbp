@@ -358,6 +358,7 @@
                                             <td><button
                                                     class="d-sm-flex justify-content-between align-items-center mb-4"
                                                     @click="addProduct()">新增</button>
+                                                <div>{{addProductMsg}}</div>
                                             </td>
 
                                         </tr>
@@ -391,7 +392,8 @@
                                 <input type="submit" value="Upload" />
                             </form> -->
                             <div>
-                                <input type="file" name="file" @change="onFileChange($event.target)" />
+                                <input type="file" name="file" @change="onFileChange($event.target)"
+                                    :value="fileInput" />
                                 <!-- <button id="imgSubmit" @click="imgSubmit">Upload</button> -->
                                 <!-- <input type="file" name="file" onchange="onFileChange(this)" /> -->
                             </div>

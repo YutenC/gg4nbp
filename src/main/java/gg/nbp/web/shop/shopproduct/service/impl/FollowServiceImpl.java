@@ -60,19 +60,19 @@ public class FollowServiceImpl implements FollowService {
     public int deleteFollowById(FollowListId followListId) {
         return followDao.deleteById(followListId);
     }
-    
+
 
     @Override
     public List<ResFollowList> getFollowByMember(Member member) {
-        List<FollowList> followLists=  followDao.selectByMemberId(member.getMember_id());
-        List<ResFollowList> resFollowLists=new ArrayList<>();
+        List<FollowList> followLists = followDao.selectByMemberId(member.getMember_id());
+        List<ResFollowList> resFollowLists = new ArrayList<>();
 
 
-        for(int i=0;i<followLists.size();i++){
-            Product product=productDao.selectById(followLists.get(i).getId().getProductId());
-            List<ProductImage> productImages=productImageDao.getIndexImgByProductId(followLists.get(i).getId().getProductId());
-            ProductImage  productImage=productImages.get(0);
-            resFollowLists.add(new ResFollowList(product.getId(),product.getProductName(),product.getPrice(),product.getAmount(),productImage.getImage()));
+        for (int i = 0; i < followLists.size(); i++) {
+            Product product = productDao.selectById(followLists.get(i).getId().getProductId());
+            List<ProductImage> productImages = productImageDao.getIndexImgByProductId(followLists.get(i).getId().getProductId());
+            ProductImage productImage = productImages.get(0);
+            resFollowLists.add(new ResFollowList(product.getId(), product.getProductName(), product.getPrice(), product.getAmount(), productImage.getImage()));
         }
 
         return resFollowLists;

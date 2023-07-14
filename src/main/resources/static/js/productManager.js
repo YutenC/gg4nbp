@@ -19,14 +19,17 @@ const vm = Vue.createApp({
             newProduct: {},
             newProductImg: [],
             products: [],
-            file: null,
+            files: null,
             takeOffTime: '',
             productSelectAction: ['排定上架', '排定下架', "移除排定上架", "移除排定下架"],
             currentProductSelectAction: '',
             limitNumOfSelect: [5, 10, 15, 20],
             limitNum: 5,
             pageIndex: 1,//pageIndex 初始值為1
-            showPageDot: true
+            showPageDot: true,
+            addProductMsg: "",
+            fileInput: "",
+
         };
     },
     methods: {
@@ -81,6 +84,15 @@ const vm = Vue.createApp({
                 }
             })
                 .then(function (value) {
+
+                    vm.newProduct.productName = "";
+                    vm.newProduct.price = "";
+                    vm.newProduct.brand = "";
+                    vm.newProduct.amount = "";
+                    vm.newProduct.content = "";
+                    vm.newProductImg = [];
+                    vm.files = [];
+                    vm.fileInput = "";
                     console.log("addProduct then");
 
                 })
@@ -179,15 +191,16 @@ const vm = Vue.createApp({
                     console.log("imgSubmit error " + e);
                 });
         },
-        onFileChange(event) {
-            this.file = event.target.files[0];
-        },
+        // onFileChange(event) {
+        //     this.file = event.target.files[0];
+        // },
         changeMainContent(action) {
             vm.currentMainguideContent = action;
             console.log("action " + action);
         },
         onFileChange(e) {
             let file = e.files[0];
+            // vm.file = file;
             let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.addEventListener("load", function () {

@@ -62,11 +62,11 @@ public class Product {
     private java.util.Date launchTime;
 
     @Expose
-    @Column(name = "Takeoff_Time",insertable = false)
+    @Column(name = "Takeoff_Time", insertable = false)
     private java.util.Date takeoffTime;
 
     @Expose
-    @Column(name = "state",insertable = false)
+    @Column(name = "state", insertable = false)
     private Integer state;
 
 
