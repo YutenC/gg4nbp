@@ -11,6 +11,7 @@ import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistDao;
 import gg.nbp.web.SecondHand.buy.dao.SecondHandBuylistPictureDao;
 import jakarta.persistence.PersistenceContext;
 
+
 @Repository
 public class SecondHandBuylistDaoimpl implements SecondHandBuylistDao {
 
