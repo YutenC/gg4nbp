@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="fonpay.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+<body>
+
+    <header><h1>FonPay金流測試</h1></header>
+    <main>
+        <div id="createStearm">
+            建立網路金流
+        </div>
+
+        <div id="goPay">
+            我要付款
+        </div>
+
+        <div id="checkAndPay">
+            二次付款
+        </div>
+
+        <div id="cancel">
+            取消交易
+        </div>
+
+        <div id="refund">
+            金流交易退款
+        </div>
+
+
+
+    </main>
+    <footer></footer>
+    
+</body>
+
+<script>
+$('#createStearm').on('click',()=>{
+    Swal.fire({
+        title : '建立金流',
+        html : `
+        <div class="lightBox">
+            <div class="createEl">key<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="key">
+            <div class="createEl">secret<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="secret">
+            <div class="createEl">merchantCode<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="merchantCode">
+        </div>
+
+        `,
+        width: 500,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '新增',
+        cancelButtonText:'取消'
+
+    })
+    .then((result) => {
+  if (result.isConfirmed) {
+    fetch('https://test-api.fonpay.tw/api/payment/paymentAccountSummary',{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+                        'X-ignore':'true',
+                        'User-Agent':'aaapppaaappp',
+                        'key':'593833005619',     
+                        'secret':'Ln95pHin6gFE2ev3qXff',
+                        'merchantCode':'ME10679778'               
+    },
+        body: JSON.stringify({
+  "request":{
+  },
+  "basic":{
+     "appVersion":"0.9",
+     "os":"IOS",
+     "appName":"nbp4gg",
+     "latitude":24.25,
+     "clientIp":"61.216.102.83",
+     "lang":"zh_TW",
+     "deviceId":"123456789",
+     "longitude":124.25
+  }
+})
+    }).then(result => result.json())
+    .then(body => {
+        Swal.fire({
+            html: `${body}`
+        })
+    })
+
+
+
+  }
+})
+})
+
+
+</script>
+</html>
