@@ -95,3 +95,17 @@ div.lightBox input.createPara{
     margin: 3px;
     font-size: 20px;
 }
+
+
+
+div.returnBox>div {
+    display: flex;
+    width: 80%;
+    justify-content: start;
+}
+
+
+div.returnBox>div>span{
+    text-align: right;
+    margin-right: 5px;
+}

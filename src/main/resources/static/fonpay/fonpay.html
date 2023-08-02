@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
+
 <body>
 
-    <header><h1>FonPay金流測試</h1></header>
+    <header>
+        <h1>FonPay金流測試</h1>
+    </header>
     <main>
         <div id="createStearm">
-            建立網路金流
+            網路金流
         </div>
 
         <div id="goPay">
@@ -34,72 +38,410 @@
 
 
 
+
     </main>
     <footer></footer>
-    
+
 </body>
 
 <script>
-$('#createStearm').on('click',()=>{
-    Swal.fire({
-        title : '建立金流',
-        html : `
+    $('#createStearm').on('click', () => {
+        Swal.fire({
+            title: '建立金流',
+            html: `
         <div class="lightBox">
             <div class="createEl">key<span style="color: red;">*</span></div>
-            <input class="createPara" type="text" id="key">
+            <input class="createPara" type="text" id="key" value="593833005619">
             <div class="createEl">secret<span style="color: red;">*</span></div>
-            <input class="createPara" type="text" id="secret">
+            <input class="createPara" type="text" id="secret" value="Ln95pHin6gFE2ev3qXff">
             <div class="createEl">merchantCode<span style="color: red;">*</span></div>
-            <input class="createPara" type="text" id="merchantCode">
+            <input class="createPara" type="text" id="merchantCode" value="ME10679778">
         </div>
 
         `,
-        width: 500,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '新增',
-        cancelButtonText:'取消'
+            width: 500,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '新增',
+            cancelButtonText: '取消'
 
-    })
-    .then((result) => {
-  if (result.isConfirmed) {
-    fetch('https://test-api.fonpay.tw/api/payment/paymentAccountSummary',{
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-                        'X-ignore':'true',
-                        'User-Agent':'aaapppaaappp',
-                        'key':'593833005619',     
-                        'secret':'Ln95pHin6gFE2ev3qXff',
-                        'merchantCode':'ME10679778'               
-    },
-        body: JSON.stringify({
-  "request":{
-  },
-  "basic":{
-     "appVersion":"0.9",
-     "os":"IOS",
-     "appName":"nbp4gg",
-     "latitude":24.25,
-     "clientIp":"61.216.102.83",
-     "lang":"zh_TW",
-     "deviceId":"123456789",
-     "longitude":124.25
-  }
-})
-    }).then(result => result.json())
-    .then(body => {
-        Swal.fire({
-            html: `${body}`
         })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch('https://test-api.fonpay.tw/api/payment/paymentAccountSummary', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-ignore': 'true',
+                            'User-Agent': 'aaapppaaappp',
+                            'key': key.value,
+                            'secret': secret.value,
+                            'merchantCode': merchantCode.value
+                        },
+                        body: JSON.stringify({
+                            "request": {
+                            },
+                            "basic": {
+                                "appVersion": "0.9",
+                                "os": "IOS",
+                                "appName": "nbp4gg",
+                                "latitude": 24.25,
+                                "clientIp": "61.216.102.83",
+                                "lang": "zh_TW",
+                                "deviceId": "123456789",
+                                "longitude": 124.25
+                            }
+                        })
+                    }).then(result => result.json())
+                        .then(body => {
+                            const data = body.result.paymentSettingData;
+                            if (data) {
+                                Swal.fire({
+                                    title: '金流資料',
+                                    html: `
+                <div class ="returnBox">
+                <div><span style="display : inline-block ; width : 150px">金流提供商 : </span>${data.金流提供商}</div>
+                <div><span style="display : inline-block ; width : 150px">金流模式 : </span>${data.金流模式}</div>
+                <div><span style="display : inline-block ; width : 150px">金流類型 : </span>${data.金流類型}</div>
+                <div><span style="display : inline-block ; width : 150px">請款模式 : </span>${data.請款模式}</div>
+                <div><span style="display : inline-block ; width : 150px">退款模式 : </span>${data.退款模式}</div>
+                <div><span style="display : inline-block ; width : 150px">狀態 : </span>${data.狀態}</div>
+                <div><span style="display : inline-block ; width : 150px">請款送出時間 : </span>${data.請款送出時間}</div>
+                <div><span style="display : inline-block ; width : 150px">請款確認時間 : </span>${data.請款確認時間}</div>
+                </div>
+                `
+                                })
+                            } else {
+                                Swal.fire(
+                                    '失敗!',
+                                    '無此金流',
+                                    'error'
+                                )
+                            }
+                        })
+
+
+
+                }
+            })
     })
 
 
+    $('#goPay').on('click', () => {
+        Swal.fire({
+            title: '我要付款',
+            html: `
+        <div class="lightBox">
+            <div class="createEl">paymentNo<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="paymentNo">
+            <div class="createEl">totalPrice<span style="color: red;">*</span></div>
+            <input class="createPara" type="number" id="totalPrice">
+            <div class="createEl">itemName<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="itemName">
+        </div>
 
-  }
-})
-})
+        `,
+            width: 500,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '新增',
+            cancelButtonText: '取消'
 
+        })
+            .then((result) => {
+                let now = new Date();
+                let month = now.getMonth() + 1 >= 10 ? now.getMonth() + 1 + "" : "0" + (now.getMonth() + 1);
+                let day =  now.getDate() >= 10 ? now.getDate() : "0"+now.getDate() ;
+                let time = now.getFullYear() + "" + month + "" + day + "235959";
+                console.log(time);
+                let rd = location.href.split('?')[0];
+
+
+
+                if (result.isConfirmed) {
+                    fetch('https://test-api.fonpay.tw/api/payment/paymentCreateOrder', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-ignore': 'true',
+                            'User-Agent': 'aaapppaaappp',
+                            'key': '593833005619',
+                            'secret': 'Ln95pHin6gFE2ev3qXff',
+                            'merchantCode': 'ME10679778'
+                        },
+                        body: JSON.stringify({
+                            "request": {
+                                "note": "Test",
+                                "paymentNo": paymentNo.value,
+                                "legacyId": "TS1234567",
+                                "totalPrice": Number(totalPrice.value),
+                                "paymentDueDate": time,
+                                "itemName": itemName.value,
+                                "memberName": "memberNo12",
+                                "callbackUrl": rd,
+                                "redirectUrl": rd,
+                                "includeItemList": [
+                                    {
+                                        "itemName": "故宮北院參觀券",
+                                        "itemQuantity": 1
+                                    },
+                                    {
+                                        "itemName": "故宮南院參觀券",
+                                        "itemQuantity": 1
+                                    }
+                                ]
+                            },
+                            "basic": {
+                                "appVersion": "0.9",
+                                "os": "IOS",
+                                "appName": "webApp",
+                                "latitude": 24.25,
+                                "clientIp": "61.216.102.83",
+                                "lang": "zh_TW",
+                                "deviceId": "123456789",
+                                "longitude": 124.25
+                            }
+                        })
+                    }).then(result => result.json())
+                        .then(body => {
+                            alert(body?.result?.payment?.paymentTransactionId);
+                            const url = body?.result?.payment?.paymentUrl;
+                            if (url) {
+                                location.href = url;
+                            } else {
+                                Swal.fire(
+                                    '失敗!',
+                                    '無此金流',
+                                    'error'
+                                )
+                            }
+                        })
+
+
+
+                }
+            })
+    })
+
+
+    $('#checkAndPay').on('click', () => {
+        let rd = location.href.split('?')[0];
+        Swal.fire({
+            title: '查詢付款',
+            html: `
+        <div class="lightBox">
+            <div class="createEl">TransactionId<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="TransactionId">
+        </div>
+
+        `,
+            width: 500,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '新增',
+            cancelButtonText: '取消'
+
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch('https://test-api.fonpay.tw/api/payment/paymentQueryOrder', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-ignore': 'true',
+                            'User-Agent': 'aaapppaaappp',
+                            'key': '593833005619',
+                            'secret': 'Ln95pHin6gFE2ev3qXff',
+                            'merchantCode': 'ME10679778'
+                        },
+                        body: JSON.stringify({
+                            "request": {
+                                "paymentTransactionId": TransactionId.value,
+                                "callbackUrl": rd,
+                                "redirectUrl": rd
+                            },
+                            "basic": {
+                                "appVersion": "0.9",
+                                "os": "IOS",
+                                "appName": "POSTMAN",
+                                "latitude": 24.25,
+                                "clientIp": "61.216.102.83",
+                                "lang": "zh_TW",
+                                "deviceId": "123456789",
+                                "longitude": 124.25
+                            }
+                        })
+                    }).then(result => result.json())
+                        .then(body => {
+                            const url = body?.result?.payment?.paymentUrl;
+                            console.log(url);
+                            if (url) {
+                                location.href = url;
+                            } else {
+                                Swal.fire(
+                                    '失敗!',
+                                    '無此金流',
+                                    'error'
+                                )
+                            }
+                        })
+                       
+
+
+                }
+            })
+    })
+
+
+    $('#cancel').on('click', () => {
+        let rd = location.href.split('?')[0];
+        Swal.fire({
+            title: '查詢付款',
+            html: `
+        <div class="lightBox">
+            <div class="createEl">TransactionId<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="TransactionId">
+        </div>
+
+        `,
+            width: 500,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '新增',
+            cancelButtonText: '取消'
+
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch('https://test-api.fonpay.tw/api/payment/paymentCancelOrder', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-ignore': 'true',
+                            'User-Agent': 'aaapppaaappp',
+                            'key': '593833005619',
+                            'secret': 'Ln95pHin6gFE2ev3qXff',
+                            'merchantCode': 'ME10679778'
+                        },
+                        body: JSON.stringify({
+                            "request": {
+                                "paymentTransactionId": TransactionId.value
+                            },
+                            "basic": {
+                                "appVersion": "0.9",
+                                "os": "IOS",
+                                "appName": "POSTMAN",
+                                "latitude": 24.25,
+                                "clientIp": "61.216.102.83",
+                                "lang": "zh_TW",
+                                "deviceId": "123456789",
+                                "longitude": 124.25
+                            }
+                        })
+                    }).then(result => result.json())
+                        .then(body => {
+                            if(body?.response?.success){
+                                Swal.fire(
+                                    `${body.result.payment.statusName}`,
+                                    '成功',
+                                    'success'
+                                )
+                            } else {
+                                Swal.fire(
+                                    '失敗!',
+                                    '無此金流',
+                                    'error'
+                                )
+                            }
+                        })
+                       
+
+
+                }
+            })
+    })
+    
+
+
+    $('#refund').on('click', () => {
+        let rd = location.href.split('?')[0];
+        Swal.fire({
+            title: '查詢付款',
+            html: `
+        <div class="lightBox">
+            <div class="createEl">TransactionId<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="TransactionId">
+            <div class="createEl">refundPrice<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="refundPrice">
+            <div class="createEl">refundNo<span style="color: red;">*</span></div>
+            <input class="createPara" type="text" id="refundNo">
+        </div>
+
+        `,
+            width: 500,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '新增',
+            cancelButtonText: '取消'
+
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch('https://test-api.fonpay.tw/api/payment/paymentRefundOrder', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-ignore': 'true',
+                            'User-Agent': 'aaapppaaappp',
+                            'key': '593833005619',
+                            'secret': 'Ln95pHin6gFE2ev3qXff',
+                            'merchantCode': 'ME10679778'
+                        },
+                        body: JSON.stringify({
+                            "request": {
+                                "paymentTransactionId": TransactionId.value,
+                                "refundPrice": refundPrice.value,
+                                "refundNo": refundNo.value
+                            },
+                            "basic": {
+                                "appVersion": "0.9",
+                                "os": "IOS",
+                                "appName": "POSTMAN",
+                                "latitude": 24.25,
+                                "clientIp": "61.216.102.83",
+                                "lang": "zh_TW",
+                                "deviceId": "123456789",
+                                "longitude": 124.25
+                            }
+                        })
+                    }).then(result => result.json())
+                        .then(body => {
+                            if(body?.response?.success){
+                                Swal.fire(
+                                    `${body.result.statusName}`,
+                                    '成功',
+                                    'success'
+                                )
+                            } else {
+                                Swal.fire(
+                                    '失敗!',
+                                    `${body.response.msg}`,
+                                    'error'
+                                )
+                            }
+                        })
+                       
+
+
+                }
+            })
+    })
 
 </script>
+
 </html>
