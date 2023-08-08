@@ -464,18 +464,21 @@ public class OrderMasterServiceImpl implements OrderMasterService{
 				return null;
 			}
 			TransOrderProduct trpd = new TransOrderProduct();
-			trpd.setBrand(pd.getBrand());
-			trpd.setBuyAmount(1);
-			trpd.setPrice(pd.getPrice());
 			trpd.setProductId(pd.getId());
-		
 			if (pService.getProductIndexImg(pd.getId()) == null) {
 				trpd.setProductImgUrl(null);
 			} else {
 				trpd.setProductImgUrl(pService.getProductIndexImg(pd.getId()).getImage());
 			}
 			trpd.setProductName(pd.getProductName());
+			trpd.setBrand(pd.getBrand());
+			trpd.setBuyAmount(1);
+			trpd.setPrice(pd.getPrice());
 			trpd.setStockAmount(pd.getAmount());
+			trpd.setChecked(true);
+			trpd.setIsReturn(0);
+			trpd.setComment(0);
+			trpd.setCommentContent(null);
 			return trpd;
 		} catch (Exception e) {
 			e.printStackTrace();

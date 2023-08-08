@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.member;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +29,7 @@ import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
 
 @RequestMapping("/OrderForMember")
 @RestController
-public class MemberOrderInfo {
+public class MemberOrderInfoController {
 private static final long serialVersionUID = 1L;
     
 	private Gson gson;
@@ -42,9 +43,13 @@ private static final long serialVersionUID = 1L;
 	@Autowired
 	private NoticeService noticeService;
 	
-	@GetMapping("/listLength")
-	public long getListLength(@RequestParam Integer criteria, @SessionAttribute Member member) {
+	@GetMapping("/listLength/{criteria}")
+	public long getListLength(@PathVariable(required = false) Integer criteria, @SessionAttribute Member member) {
 
+		if (criteria == null) {
+			criteria = 1;
+		}
+		
    		Map<String, Integer> condition = new HashMap<>();
    		OrderSelection os = OrderSelection.values()[criteria - 1];
     	switch (os) {
@@ -86,15 +91,9 @@ private static final long serialVersionUID = 1L;
     	return orderMasterService.countDataNum(condition);
     }
     	
-	@GetMapping("/all")
-	public List<MemberViewOrder> memberAll(@SessionAttribute Member member, RedirectAttributes redirect, @RequestHeader("referer") String refer,
-											@RequestParam Integer criteria, @RequestParam Integer setNum) {
-   		if (member == null || member.isSuccessful() == false) {
-   			redirect.addAttribute("memberLocation", refer);
-   			ModelAndView mv = new ModelAndView("redirect:/notLogin");
-   			return null;
-    	} 
-    		
+	@GetMapping("/all/{setNum}/{criteria}")
+	public List<MemberViewOrder> memberAll(@SessionAttribute Member member, @PathVariable Integer setNum, @PathVariable(required = false) Integer criteria) {
+   		
    		int limit = 10;
    		Map<String, Integer> limitOffset = new TreeMap<>();
    		limitOffset.put("LIMIT", limit);
@@ -103,7 +102,11 @@ private static final long serialVersionUID = 1L;
     	Map<String, Integer> whereCondition = new HashMap<>();
     		
    		whereCondition.put("memberId", member.getMember_id());
-    		
+    	
+   		if (criteria == null) {
+   			criteria = 1;
+   		}
+   		
     	switch (criteria) {
 		case 1:
 			break;
@@ -138,14 +141,8 @@ private static final long serialVersionUID = 1L;
 		return member.getBonus();
 	}
 		
-    @GetMapping("/getOneProduct")
-	public TransOrderProduct getOneProduct(@SessionAttribute Member member, RedirectAttributes redirect, @RequestHeader("referer") String refer,
-											@RequestParam Integer productId) {
-    	if (member == null || member.isSuccessful() == false) {
-   			redirect.addAttribute("memberLocation", refer);
-   			ModelAndView mv = new ModelAndView("redirect:/notLogin");
-   			return null;
-    	} 
+    @GetMapping("/getOneProduct/{productId}")
+	public TransOrderProduct getOneProduct(@SessionAttribute Member member,	@PathVariable Integer productId) {
     	
     	return orderMasterService.getOneProduct(productId);
     }

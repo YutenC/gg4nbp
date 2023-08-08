@@ -1,11 +1,6 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.purchase;
 
-import java.io.BufferedReader;
-import java.io.Reader;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
-import gg.nbp.ecpay.payment.integration.service.EcpayService;
 import gg.nbp.web.Member.entity.Member;
 import gg.nbp.web.Member.entity.Notice;
 import gg.nbp.web.Member.service.NoticeService;
@@ -35,13 +28,10 @@ import gg.nbp.web.shop.shoporder.util.TransOrderProduct;
 
 @RestController
 @RequestMapping("/checkout")
-public class CheckOutOrder {
+public class CheckOutOrderController {
 	
 	@Autowired
 	private OrderMasterService orderMasterService;
-	
-	@Autowired
-	private EcpayService ecpayService;
 	
 	@Autowired
 	private NoticeService noticeService;
@@ -50,20 +40,13 @@ public class CheckOutOrder {
 	private Gson gson;
 
 	@PostMapping
-	public String checkOut(@SessionAttribute Member member, RedirectAttributes redirect, @RequestHeader("referer") String refer,
-									@RequestBody ObjectNode json, @RequestParam String payment, @RequestParam String deliver, @RequestParam String discountRadio,
+	public ResOrderMaster checkOut(@SessionAttribute Member member, RedirectAttributes redirect, @RequestHeader("referer") String refer,
+									@RequestBody String jsonStr, @RequestParam String payment, @RequestParam String deliver, @RequestParam String discountRadio,
 									@RequestParam String couponCode, @RequestParam String bonus) {
-		
-		if (member == null || member.isSuccessful() == false) {
-			redirect.addAttribute("memberLocation", refer);
-			ModelAndView mv = new ModelAndView("redirect:/notLogin");
-			return null;
-		} 
-		
-		List<TransOrderProduct> transObj = gson.fromJson(json.get("transObj").asText(), new TypeToken<List<TransOrderProduct>>() {});
-		
-		JsonObject card = ;
-		JsonObject address = ;
+		JsonArray jsonArr = gson.fromJson(jsonStr.substring(jsonStr.indexOf(":")+1, jsonStr.length()-1), JsonArray.class);
+		List<TransOrderProduct> transObj = gson.fromJson(jsonArr.get(0).getAsJsonObject().get("transObj"), new TypeToken<List<TransOrderProduct>>() {});
+		JsonObject card = gson.fromJson(jsonArr.get(1).getAsJsonObject().get("card"), JsonObject.class);
+		JsonObject address = gson.fromJson(jsonArr.get(2).getAsJsonObject().get("address"), JsonObject.class);
 		List<TransOrderProduct> purchaseProducts = new ArrayList<>();
 		for (TransOrderProduct trOdPd : transObj) {
 			if (trOdPd.isChecked() == true) {
@@ -85,7 +68,7 @@ public class CheckOutOrder {
 		
 		noticeService.addNotice(notice);
 		
-		return "redirect:" + ecpayService.ecpayCheckout(insertOk.getOrderId());
+		return orderMasterService.getOrderResult(insertOk);
 		
 	}
 	

@@ -1,4 +1,4 @@
-package gg.nbp.ecpay.payment.integration.controller;
+package gg.nbp.ecpay.payment.integration.controller.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -51,21 +51,5 @@ public class EcpayController extends HttpServlet {
     
 }
 
-//@Controller
-//@RequestMapping("/Ecpay")
-//public class EcpayController {
-//	
-//	@Autowired
-//	EcpayService ecpayService;
-//	
-//	@PostMapping
-//	public String ecpayCheckOut (@RequestParam Integer orderId, @SessionAttribute("member") Member member) {
-//		if (member == null) {
-//			return "redirect:/Five_NBP.gg";
-//		}
-//		
-//		return ecpayService.ecpayCheckout(orderId); 
-//	}
-//	
-//}
+
 

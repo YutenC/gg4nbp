@@ -60,7 +60,7 @@
                                 <td><button @click="addToCart(item.productId)">加入購物車</button></td>
                             </tr>
                         </template>
-                        <tr v-if="mypick.length < 1">
+                        <tr v-else>
                             <td></td>
                             <td colspan="3" style="text-align:center"><span>無追蹤商品</span></td>
                         </tr>
@@ -81,12 +81,12 @@
                             <tr>
                                 <td>{{ item.productId }}</td>
                                 <td>{{ item.productName }}</td>
-                                <td>{{ dateFormat(item.purchaseDate) }}</td>
+                                <td>{{ item.purchaseDate }}</td>
                                 <td>${{ item.productPrice }}</td>
                                 <td><button @click="addToCart(item.productId)">加入購物車</button></td>
                             </tr>
                         </template>
-                        <tr v-if="byPurchaseLog.length < 1">
+                        <tr v-else>
                             <td></td>
                             <td colspan="4" style="text-align:center"><span>無購買紀錄</span></td>
                         </tr>
@@ -248,7 +248,7 @@
                     </form>
                     <div>
                         <span>或第三方支付</span>
-                        <form action="/gg4nbp/Ecpay" method="post" @submit.prevent="checkOut(true, $event)">
+                        <form action="/gg4nbp/SpEcpay" method="post" @submit.prevent="checkOut(true, $event)">
                             <input type="hidden" :value="orderId" name="orderId" id="orderId">
                             <button type="submit">綠界金流支付</button>
                         </form>

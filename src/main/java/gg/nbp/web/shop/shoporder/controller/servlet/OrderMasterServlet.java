@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.servlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +43,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/OrderMaster")
-public class OrderMasterController extends HttpServlet {
+public class OrderMasterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	private Gson gson;
@@ -57,7 +57,7 @@ public class OrderMasterController extends HttpServlet {
 	@Autowired
 	private NoticeService noticeService;
 	
-	public OrderMasterController() {
+	public OrderMasterServlet() {
         super();
         this.gson = new Gson();
     }

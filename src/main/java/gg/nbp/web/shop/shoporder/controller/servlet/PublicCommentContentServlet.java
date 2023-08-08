@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/publicComment")
-public class PublicCommentContent extends HttpServlet {
+public class PublicCommentContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
@@ -25,7 +25,7 @@ public class PublicCommentContent extends HttpServlet {
 	
 	private Gson gson;
 	
-	public PublicCommentContent( ) {
+	public PublicCommentContentServlet( ) {
 		this.gson = new Gson();
 	}
        

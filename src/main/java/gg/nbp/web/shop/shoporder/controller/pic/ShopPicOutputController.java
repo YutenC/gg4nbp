@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.pic;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-public class ShopPicOutput {
+public class ShopPicOutputController {
 	
 	@RequestMapping(value = {"/ShopPic/{filename}", "/ShopPic/{folder}/{filename}", "/ShopPic/{folder}/{folder2}/{filename}"},
 					method = RequestMethod.GET,

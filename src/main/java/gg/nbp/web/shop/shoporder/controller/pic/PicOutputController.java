@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.pic;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,10 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/Pics")
-public class PicOutput extends HttpServlet {
+public class PicOutputController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public PicOutput() {
+    public PicOutputController() {
         super();
         // TODO Auto-generated constructor stub
     }

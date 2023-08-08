@@ -2,6 +2,8 @@ package gg.nbp.web.shop.shoporder.util;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +24,6 @@ public class ResOrderDetail implements Serializable{
 	
 	private Integer productAmount;
 	
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm", timezone = "GMT+8")
 	private java.sql.Timestamp purchaseDate;
 }

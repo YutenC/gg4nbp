@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/ShoppingList")
-public class ShoppingListController extends HttpServlet {
+public class ShoppingListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired

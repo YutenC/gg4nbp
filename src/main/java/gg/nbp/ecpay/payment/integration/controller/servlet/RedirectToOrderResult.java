@@ -1,4 +1,4 @@
-package gg.nbp.ecpay.payment.integration.controller;
+package gg.nbp.ecpay.payment.integration.controller.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

@@ -1,16 +1,19 @@
 package gg.nbp.web.shop.shoporder.util;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@Data
-public class TransOrderProduct implements java.io.Serializable{
-	
-	private static final long serialVersionUID = 5534147712252264664L;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TransOrderProduct {
+		
 	private Integer productId;
 	
 	private String productImgUrl;
@@ -32,4 +35,5 @@ public class TransOrderProduct implements java.io.Serializable{
 	private Integer comment;
 	
 	private String commentContent;
+		
 }

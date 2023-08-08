@@ -65,19 +65,15 @@
         methods: {
             addToCart: function (productId) {
                 // 提取商品資訊
-                axios.get(projectFolder + '/OrderMaster?getOneProduct=' + productId)
+                axios.get(projectFolder + '/OrderForMember/getOneProduct/' + productId)
                     .then(res => {
                         let newProduct = res.data;
+                        // 向後端請求購物清單增加此商品
                         axios({
                             method: 'post',
-                            url: projectFolder + '/ShoppingList',
-                            params: {
-                                demand: 'addOneShoppingList',
-                                transObj: JSON.stringify(newProduct)
-                            }
-                        })
-                            .then(res => console.log(res))
-                            .catch(err => console.log(err))
+                            url: projectFolder + '/AddShopList',
+                            data: newProduct
+                        }).catch(err => console.log(err))
 
                         // 前端調整畫面
                         for (let pd of shoppingContent.$data.shoppingList) {
@@ -92,8 +88,6 @@
                         // 讓shoppingContent自行更新
                         // shoppingContent.renewList();
                     }).catch(err => console.log(err));
-
-                // 回存到購物清單
             }
         },
         created() {
@@ -102,10 +96,6 @@
                 .catch(error => console.log(error))
         }
     }).mount("table.byMyPick");
-
-    $('div.addDetail').on('click', 'button', function (e) {
-        let productId = $(this).closest('tr').find('td.productId').text();
-    });
 
     // 從購買紀錄
     const byPurchaseLog = Vue.createApp({
@@ -129,27 +119,17 @@
             }
         },
         methods: {
-            dateFormat: function (dateStr) {
-                let elmArr = dateStr.split(',');
-                let monthKey = elmArr[0].split(' ')[0];
-                let dayKey = elmArr[0].split(' ')[1];
-                let formated = elmArr[1] + ' ' + this.month[monthKey] + '月 ' + dayKey + '日 ' + elmArr[2]
-                return formated;
-            },
             addToCart: function (productId) {
                 // 提取商品資訊
-                axios.get(projectFolder + '/OrderMaster?getOneProduct=' + productId)
+                axios.get(projectFolder + '/OrderForMember/getOneProduct/' + productId)
                     .then(res => {
                         let newProduct = res.data;
+                        // 向後端請求購物清單增加此商品
                         axios({
                             method: 'post',
-                            url: projectFolder + '/ShoppingList',
-                            params: {
-                                demand: 'addOneShoppingList',
-                                transObj: JSON.stringify(newProduct)
-                            }
-                        }).then(res => console.log(res))
-                            .catch(err => console.log(err))
+                            url: projectFolder + '/AddShopList',
+                            data: newProduct
+                        }).catch(err => console.log(err))
 
                         // 前端調整畫面
                         for (let pd of shoppingContent.$data.shoppingList) {
@@ -167,7 +147,7 @@
             }
         },
         created() {
-            axios.get(projectFolder + '/OrderDetail?getMemberAll=true')
+            axios.get(projectFolder + '/PurchaseLog/all')
                 .then(res => {
                     this.byPurchaseLog = res.data;
                 })
@@ -241,11 +221,9 @@
                 }).then(function (result) {
                     if (result.isConfirmed) {
                         // 向後端發送刪除
-                        axios.get(projectFolder + '/ShoppingList?removeItem=' + shoppingList[index].productId)
-                            .then(res => console.log(res))
+                        axios.get(projectFolder + '/RemoveShopList/' + shoppingList[index].productId)
                             .catch(err => console.log(err));
                         shoppingList.splice(index, 1);
-                        console.log(shoppingList.length);
                         if (shoppingList.length === 0) {
                             Swal.fire({
                                 title: '購物車內已無商品，快去逛逛吧!',
@@ -277,7 +255,7 @@
             },
             // (從後端)更新購物明細
             renewList: function () {
-                axios.get(projectFolder + '/ShoppingList?getAll=true')
+                axios.get(projectFolder + '/ShopListInfo/all')
                     .then(res => this.shoppingList = res.data)
                     .catch(err => console.log(err))
             },
@@ -356,9 +334,14 @@
                     });
                     return;
                 }
+                let orderPost = [
+                    {transObj: this.shoppingList.filter(item => item.checked === true)},
+                    {card: this.card},
+                    {address: this.address}
+                ];
                 axios({
                     method: 'post',
-                    url: projectFolder + '/OrderMaster',
+                    url: projectFolder + '/checkout',
                     params: {
                         demand: 'checkOut',
                         toEcpay: ecpay,
@@ -369,9 +352,7 @@
                         payment: this.payment,
                     },
                     data: {
-                        transObj: this.shoppingList.filter(item => item.checked === true),
-                        card: this.card,
-                        address: this.address
+                        orderPost: orderPost
                     }
                 }).then(res => {
                     let resJson = res.data;
@@ -404,9 +385,8 @@
                 }).catch(err => console.log(err))
 
             },
-            // 與會員功能詢問由哪個功能提供現有紅利點數資訊
             getBonusStock: function () {
-                axios.get(projectFolder + '/OrderMaster?nowBonus=y')
+                axios.get(projectFolder + '/OrderForMember/checkBonus')
                     .then(res => this.bonusStock = Math.floor(res.data))
                     .catch(err => console.log(err))
             }

@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
-public class NotLogin {
+public class NotLoginController {
 	
 	@RequestMapping("/notLogin")
 	public JsonObject notLogin(HttpSession session, @ModelAttribute("memberLocation") String refer) {

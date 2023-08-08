@@ -44,10 +44,7 @@ const memberOrder = Vue.createApp({
                     asignOrder.orderStatus = status;
                     axios({
                         method: 'post',
-                        url: projectFolder + '/OrderMaster',
-                        params: {
-                            demand: 'updateOMFromMember',
-                        },
+                        url: projectFolder + '/EditOrderFromMember',
                         data: {
                             order: asignOrder,
                         }
@@ -59,7 +56,7 @@ const memberOrder = Vue.createApp({
             this.orders[index].orderMaster.orderStatus = asignOrder.orderStatus;
         },
         getListLength: function () {
-            axios.get(projectFolder + '/OrderMaster?countListLength=member&criteria=' + this.filterSelect)
+            axios.get(projectFolder + '/OrderForMember/listLength/' + this.filterSelect)
                 .then(res => this.listLength = res.data)
                 .catch(err => console.log(err));
         },
@@ -85,7 +82,7 @@ const memberOrder = Vue.createApp({
         },
         renewListWithSelect: function () {
             this.offset = 0;
-            axios.get(projectFolder + '/OrderMaster?memberAll=0&criteria=' + this.filterSelect)
+            axios.get(projectFolder + '/OrderForMember/0/' + this.filterSelect)
                 .then(res => this.orders = res.data)
                 .catch(err => console.log(err))
             this.getListLength();
@@ -97,23 +94,19 @@ const memberOrder = Vue.createApp({
         sendComment: function (orderId, productId, event) {
             let star = $(event.target).closest('.rankDetail').find('input:checked').val();
             let comment = $(event.target).closest('.rankDetail').find('textarea.commentContent').val();
-            let commentDetail = {
-                orderId: orderId,
-                productId: productId,
-                star: star,
-                comment: comment
-            };
             axios({
                 method: 'post',
-                url: projectFolder + '/OrderDetail',
+                url: projectFolder + '/LeaveComment',
                 params: {
                     comment: 'y',
                 },
                 data: {
-                    commentDetail: commentDetail
+                    orderId: orderId,
+                    productId: productId,
+                    star: star,
+                    comment: comment
                 }
-            }).then(res => console.log(res))
-                .catch(err => console.log(err));
+            }).catch(err => console.log(err));
 
             $(event.target).closest('.rankDetail').find('input').prop('disabled', true);
             $(event.target).closest('.rankDetail').find('textarea.commentContent').prop('disabled', true);
@@ -132,11 +125,11 @@ const memberOrder = Vue.createApp({
         },
     },
     created() {
-        axios.get(projectFolder + '/OrderMaster?memberAll=0')
+        axios.get(projectFolder + '/OrderForMember/0')
             .then(res => this.orders = res.data)
             .catch(err => console.log(err));
 
-        axios.get(projectFolder + '/OrderMaster?countListLength=member&matchId=y')
+        axios.get(projectFolder + '/OrderForMember/listLength')
             .then(res => this.listLength = res.data)
             .catch(err => console.log(err));
     }
@@ -144,7 +137,7 @@ const memberOrder = Vue.createApp({
 
 function scrollList() {
     memberOrder.$data.offset += 10
-    axios.get(projectFolder + '/OrderMaster?memberAll=' + memberOrder.$data.offset + '&criteria=' + memberOrder.$data.filterSelect)
+    axios.get(projectFolder + '/OrderForMember/all/' + memberOrder.$data.offset + '/' + memberOrder.$data.filterSelect)
         .then(res => {
             for (let elm of res.data) {
                 memberOrder.$data.orders.push(elm);

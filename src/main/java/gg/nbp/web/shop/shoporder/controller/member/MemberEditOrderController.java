@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,21 +15,14 @@ import gg.nbp.web.shop.shoporder.service.OrderMasterService;
 
 @RestController
 @RequestMapping("/EditOrderFromMember")
-public class MemberEditOrder {
+public class MemberEditOrderController {
 	
 	@Autowired
 	private OrderMasterService orderMasterService;
 	
-	public void editOrderFromMember(@SessionAttribute Member member, RedirectAttributes redirect, @RequestHeader("referer") String refer,
-									@RequestBody OrderMaster fromMember) {
-		if (member == null || member.isSuccessful() == false) {
-			redirect.addAttribute("memberLocation", refer);
-			ModelAndView mv = new ModelAndView("redirect:/notLogin");
-			return;
-		} 
-		
+	public void editOrderFromMember(@RequestBody OrderMaster fromMember) {
+				
 		orderMasterService.updateFromMember(fromMember);
-		return;
 	}
 
 }

@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.manager;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -23,17 +23,21 @@ import gg.nbp.web.shop.shoporder.service.OrderMasterService;
 
 @RequestMapping("/EditOrderForManager")
 @RestController
-public class ManagerEditOrder {
+public class ManagerEditOrderController {
 private static final long serialVersionUID = 1L;
     
-	@Autowired
 	private MemberService memberService;
 	
-	@Autowired
 	private OrderMasterService orderMasterService;
 	
-	@Autowired
 	private NoticeService noticeService;
+
+	@Autowired
+	public ManagerEditOrderController(MemberService ms, OrderMasterService os, NoticeService ns) {
+		this.memberService = ms;
+		this.orderMasterService = os;
+		this.noticeService = ns;
+	}
 	
 	@PostMapping("/update")
 	public void updateOrder(@RequestBody OrderMaster om, @SessionAttribute Member member) {

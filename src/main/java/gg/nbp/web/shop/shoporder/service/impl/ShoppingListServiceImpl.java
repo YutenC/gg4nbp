@@ -65,6 +65,9 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 	@Transactional
 	@Override
 	public boolean addOneShoppingList(TransOrderProduct trpd, Integer memberId) {
+		if (memberId == null) {
+			return false;
+		}
 		try {
 			ShoppingList slist = new ShoppingList();
 			PKShoppingList pkslist = new PKShoppingList();

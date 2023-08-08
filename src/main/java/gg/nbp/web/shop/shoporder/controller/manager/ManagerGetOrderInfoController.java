@@ -1,4 +1,4 @@
-package gg.nbp.web.shop.shoporder.controller;
+package gg.nbp.web.shop.shoporder.controller.manager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +19,7 @@ import gg.nbp.web.shop.shoporder.util.OrderSelection;
 
 @RestController
 @RequestMapping("/OrderForManager")
-public class ManagerGetOrderInfo {
+public class ManagerGetOrderInfoController {
 	private static final long serialVersionUID = 1L;
     
 	@Autowired
